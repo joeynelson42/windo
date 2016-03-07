@@ -1,0 +1,408 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		634EEFA91C8CA255008591D3 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 634EEFA81C8CA255008591D3 /* iCarousel.m */; };
+		634EEFAB1C8CA2B7008591D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634EEFAA1C8CA2B7008591D3 /* QuartzCore.framework */; };
+		6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B12F1C741969008D0ED5 /* AppDelegate.swift */; };
+		6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1311C741969008D0ED5 /* LoginViewController.swift */; };
+		6395B1381C741969008D0ED5 /* Windo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */; };
+		6395B13A1C741969008D0ED5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6395B1391C741969008D0ED5 /* Assets.xcassets */; };
+		6395B13D1C741969008D0ED5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6395B13B1C741969008D0ED5 /* LaunchScreen.storyboard */; };
+		6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1441C741ADB008D0ED5 /* LoginView.swift */; };
+		6395B1471C741AFE008D0ED5 /* APConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1461C741AFE008D0ED5 /* APConstraints.swift */; };
+		6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B14A1C741BDD008D0ED5 /* UIColor+Windo.swift */; };
+		6395B14D1C741BEB008D0ED5 /* GHButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B14C1C741BEB008D0ED5 /* GHButton.swift */; };
+		6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1501C741C8B008D0ED5 /* HomeViewController.swift */; };
+		6395B1531C741C97008D0ED5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1521C741C97008D0ED5 /* HomeView.swift */; };
+		6395B1561C741D3F008D0ED5 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1551C741D3F008D0ED5 /* HomeTableViewCell.swift */; };
+		6395B1581C741E39008D0ED5 /* WindoSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1571C741E39008D0ED5 /* WindoSelectView.swift */; };
+		6395B15B1C741FE0008D0ED5 /* WindoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15A1C741FE0008D0ED5 /* WindoViewCell.swift */; };
+		6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15C1C742181008D0ED5 /* WindoConstants.swift */; };
+		6395B15F1C742676008D0ED5 /* WindoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15E1C742676008D0ED5 /* WindoButton.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		634EEFA61C8CA255008591D3 /* Windo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Windo-Bridging-Header.h"; sourceTree = "<group>"; };
+		634EEFA71C8CA255008591D3 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		634EEFA81C8CA255008591D3 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		634EEFAA1C8CA2B7008591D3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6395B12C1C741969008D0ED5 /* Windo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Windo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6395B12F1C741969008D0ED5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6395B1311C741969008D0ED5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6395B1371C741969008D0ED5 /* Windo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Windo.xcdatamodel; sourceTree = "<group>"; };
+		6395B1391C741969008D0ED5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6395B13C1C741969008D0ED5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6395B13E1C741969008D0ED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6395B1441C741ADB008D0ED5 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6395B1461C741AFE008D0ED5 /* APConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APConstraints.swift; sourceTree = "<group>"; };
+		6395B14A1C741BDD008D0ED5 /* UIColor+Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Windo.swift"; sourceTree = "<group>"; };
+		6395B14C1C741BEB008D0ED5 /* GHButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHButton.swift; sourceTree = "<group>"; };
+		6395B1501C741C8B008D0ED5 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6395B1521C741C97008D0ED5 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6395B1551C741D3F008D0ED5 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		6395B1571C741E39008D0ED5 /* WindoSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoSelectView.swift; sourceTree = "<group>"; };
+		6395B15A1C741FE0008D0ED5 /* WindoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoViewCell.swift; sourceTree = "<group>"; };
+		6395B15C1C742181008D0ED5 /* WindoConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoConstants.swift; sourceTree = "<group>"; };
+		6395B15E1C742676008D0ED5 /* WindoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoButton.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6395B1291C741969008D0ED5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				634EEFAB1C8CA2B7008591D3 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6395B1231C741969008D0ED5 = {
+			isa = PBXGroup;
+			children = (
+				634EEFAA1C8CA2B7008591D3 /* QuartzCore.framework */,
+				6395B12E1C741969008D0ED5 /* Windo */,
+				6395B12D1C741969008D0ED5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6395B12D1C741969008D0ED5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6395B12C1C741969008D0ED5 /* Windo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6395B12E1C741969008D0ED5 /* Windo */ = {
+			isa = PBXGroup;
+			children = (
+				6395B15C1C742181008D0ED5 /* WindoConstants.swift */,
+				6395B1541C741CB6008D0ED5 /* Login */,
+				6395B1481C741B9E008D0ED5 /* Main */,
+				6395B1591C741F26008D0ED5 /* EventCreation */,
+				6395B1391C741969008D0ED5 /* Assets.xcassets */,
+				6395B14E1C741C46008D0ED5 /* Model */,
+				6395B14F1C741C55008D0ED5 /* App Files */,
+				6395B1491C741BB4008D0ED5 /* Utility Extensions */,
+			);
+			path = Windo;
+			sourceTree = "<group>";
+		};
+		6395B1481C741B9E008D0ED5 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6395B1501C741C8B008D0ED5 /* HomeViewController.swift */,
+				6395B1521C741C97008D0ED5 /* HomeView.swift */,
+				6395B1551C741D3F008D0ED5 /* HomeTableViewCell.swift */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		6395B1491C741BB4008D0ED5 /* Utility Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				634EEFA71C8CA255008591D3 /* iCarousel.h */,
+				634EEFA81C8CA255008591D3 /* iCarousel.m */,
+				6395B1461C741AFE008D0ED5 /* APConstraints.swift */,
+				6395B14A1C741BDD008D0ED5 /* UIColor+Windo.swift */,
+				6395B14C1C741BEB008D0ED5 /* GHButton.swift */,
+				634EEFA61C8CA255008591D3 /* Windo-Bridging-Header.h */,
+			);
+			name = "Utility Extensions";
+			sourceTree = "<group>";
+		};
+		6395B14E1C741C46008D0ED5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		6395B14F1C741C55008D0ED5 /* App Files */ = {
+			isa = PBXGroup;
+			children = (
+				6395B12F1C741969008D0ED5 /* AppDelegate.swift */,
+				6395B13B1C741969008D0ED5 /* LaunchScreen.storyboard */,
+				6395B13E1C741969008D0ED5 /* Info.plist */,
+			);
+			name = "App Files";
+			sourceTree = "<group>";
+		};
+		6395B1541C741CB6008D0ED5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6395B1311C741969008D0ED5 /* LoginViewController.swift */,
+				6395B1441C741ADB008D0ED5 /* LoginView.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		6395B1591C741F26008D0ED5 /* EventCreation */ = {
+			isa = PBXGroup;
+			children = (
+				6395B1571C741E39008D0ED5 /* WindoSelectView.swift */,
+				6395B15A1C741FE0008D0ED5 /* WindoViewCell.swift */,
+				6395B15E1C742676008D0ED5 /* WindoButton.swift */,
+			);
+			name = EventCreation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6395B12B1C741969008D0ED5 /* Windo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6395B1411C741969008D0ED5 /* Build configuration list for PBXNativeTarget "Windo" */;
+			buildPhases = (
+				6395B1281C741969008D0ED5 /* Sources */,
+				6395B1291C741969008D0ED5 /* Frameworks */,
+				6395B12A1C741969008D0ED5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Windo;
+			productName = Windo;
+			productReference = 6395B12C1C741969008D0ED5 /* Windo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6395B1241C741969008D0ED5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = NelsonJE;
+				TargetAttributes = {
+					6395B12B1C741969008D0ED5 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 6395B1271C741969008D0ED5 /* Build configuration list for PBXProject "Windo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6395B1231C741969008D0ED5;
+			productRefGroup = 6395B12D1C741969008D0ED5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6395B12B1C741969008D0ED5 /* Windo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6395B12A1C741969008D0ED5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6395B13D1C741969008D0ED5 /* LaunchScreen.storyboard in Resources */,
+				6395B13A1C741969008D0ED5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6395B1281C741969008D0ED5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6395B15B1C741FE0008D0ED5 /* WindoViewCell.swift in Sources */,
+				6395B1531C741C97008D0ED5 /* HomeView.swift in Sources */,
+				6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */,
+				6395B1581C741E39008D0ED5 /* WindoSelectView.swift in Sources */,
+				6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */,
+				6395B1381C741969008D0ED5 /* Windo.xcdatamodeld in Sources */,
+				634EEFA91C8CA255008591D3 /* iCarousel.m in Sources */,
+				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
+				6395B15F1C742676008D0ED5 /* WindoButton.swift in Sources */,
+				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
+				6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */,
+				6395B1561C741D3F008D0ED5 /* HomeTableViewCell.swift in Sources */,
+				6395B1471C741AFE008D0ED5 /* APConstraints.swift in Sources */,
+				6395B14D1C741BEB008D0ED5 /* GHButton.swift in Sources */,
+				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6395B13B1C741969008D0ED5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6395B13C1C741969008D0ED5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6395B13F1C741969008D0ED5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6395B1401C741969008D0ED5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6395B1421C741969008D0ED5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Windo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = NelsonJE.Windo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Windo/Windo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6395B1431C741969008D0ED5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Windo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = NelsonJE.Windo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Windo/Windo-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6395B1271C741969008D0ED5 /* Build configuration list for PBXProject "Windo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6395B13F1C741969008D0ED5 /* Debug */,
+				6395B1401C741969008D0ED5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6395B1411C741969008D0ED5 /* Build configuration list for PBXNativeTarget "Windo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6395B1421C741969008D0ED5 /* Debug */,
+				6395B1431C741969008D0ED5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6395B1371C741969008D0ED5 /* Windo.xcdatamodel */,
+			);
+			currentVersion = 6395B1371C741969008D0ED5 /* Windo.xcdatamodel */;
+			path = Windo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6395B1241C741969008D0ED5 /* Project object */;
+}
