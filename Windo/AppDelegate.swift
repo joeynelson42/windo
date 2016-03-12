@@ -19,11 +19,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //MARK: Initial View Controller
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.makeKeyAndVisible()
-        let initialViewController = HomeViewController()
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        self.window?.rootViewController = initialViewController
+        let containerViewController = ContainerViewController()
+        window!.rootViewController = containerViewController
+        window!.makeKeyAndVisible()
+        
+        if let font = UIFont(name: "Graphik-Medium", size: 20) {
+            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
+        }
+        
+        //call this to see all the correct titles of the project's fonts
+//                for family: String in UIFont.familyNames()
+//                {
+//                    print("\(family)")
+//                    for names: String in UIFont.fontNamesForFamilyName(family)
+//                    {
+//                        print("== \(names)")
+//                    }
+//                }
         
         return true
     }

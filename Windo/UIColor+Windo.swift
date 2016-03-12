@@ -17,55 +17,58 @@ extension UIColor{
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
-    class func ghBrightRed() -> UIColor{
-        let color = UIColor.fromHex(0xE73E2E, alpha: 1.0)
+    class func teal() -> UIColor{
+        let color = UIColor.fromHex(0x0DB2B1, alpha: 1.0)
         return color
     }
     
-    class func halfAndHalf() -> UIColor{
-        let color = UIColor.fromHex(0xF1E9CA, alpha: 1.0)
+    class func lightTeal() -> UIColor{
+        let color = UIColor.fromHex(0x2ECECD, alpha: 1.0)
         return color
     }
     
-    class func halfAndHalf(alphaValue: Double) -> UIColor{
-        let color = UIColor.fromHex(0xF1E9CA, alpha:  alphaValue)
+    class func darkTeal() -> UIColor{
+        let color = UIColor.fromHex(0x088F8E, alpha: 1.0)
         return color
     }
     
-    class func crail() -> UIColor{
-        let color = UIColor.fromHex(0xBF4C41, alpha: 1.0)
+    class func purple() -> UIColor{
+        let color = UIColor.fromHex(0x9E65D1, alpha: 1.0)
         return color
     }
     
-    class func bud() -> UIColor{
-        let color = UIColor.fromHex(0xA9B49E, alpha: 1.0)
+    class func lightPurple() -> UIColor{
+        let color = UIColor.fromHex(0xCD96FF, alpha: 1.0)
         return color
     }
     
-    class func lapisLazuli() -> UIColor{
-        let color = UIColor.fromHex(0x2766A7, alpha: 1.0)
+    class func darkPurple() -> UIColor{
+        let color = UIColor.fromHex(0x6F3B9E, alpha: 1.0)
         return color
     }
     
-    class func parchment() -> UIColor{
-        let color = UIColor.fromHex(0xCDC6B0, alpha: 1.0)
+    class func blue() -> UIColor{
+        let color = UIColor.fromHex(0x4760EB, alpha: 1.0)
         return color
     }
     
-    class func nomad() -> UIColor{
-        let color = UIColor.fromHex(0x9E9785, alpha: 1.0)
+    class func lightBlue() -> UIColor{
+        let color = UIColor.fromHex(0x4C73FF, alpha: 1.0)
         return color
     }
     
-    class func bisonHide() -> UIColor{
-        let color = UIColor.fromHex(0xC3BCA7, alpha: 1.0)
+    class func darkBlue() -> UIColor{
+        let color = UIColor.fromHex(0x3340BA, alpha: 1.0)
         return color
     }
     
-    class func hampton() -> UIColor{
-        let color = UIColor.fromHex(0xE1D5B1, alpha: 1.0)
+    class func mikeBlue() -> UIColor{
+        let color = UIColor.fromHex(0x000667, alpha: 1.0)
         return color
     }
+    
+    
+    
     
     
     

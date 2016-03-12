@@ -43,8 +43,6 @@ class WindoButton: UIButton {
         case .SelectedTwice:
             buttonState = .Unselected
         }
-        
-        
     }
     
 

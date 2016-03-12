@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController{
+class HomeViewController: CenterViewController{
     
     //MARK: Properties
     
@@ -17,7 +17,10 @@ class HomeViewController: UIViewController{
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.view = homeView
+        title = "Events"
+        view.backgroundColor = UIColor.teal()
         
     }
 }

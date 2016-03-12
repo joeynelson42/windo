@@ -11,7 +11,7 @@ import UIKit
 class HomeView: UIView {
     
     //MARK: Properties
-    var windo = WindoSelectView()
+    
     
     //MARK: View Configuration
     
@@ -36,14 +36,13 @@ class HomeView: UIView {
     
     func configureSubviews(){
         
-        addSubview(windo)
     }
     
     func applyConstraints(){
-        windo.constrainUsing(constraints: [
-            .cxcx : (of: self, offset: 0),
-            .cycy : (of: self, offset: 0),
-            .w : (of: nil, offset: screenWidth),
-            .h : (of: nil, offset: screenHeight)])
+//        windo.constrainUsing(constraints: [
+//            .cxcx : (of: self, offset: 0),
+//            .cycy : (of: self, offset: 0),
+//            .w : (of: nil, offset: screenWidth),
+//            .h : (of: nil, offset: screenHeight)])
     }
 }
