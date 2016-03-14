@@ -67,7 +67,10 @@ extension UIColor{
         return color
     }
     
-    
+    class func mikeBlue(alpha: Double) -> UIColor{
+        let color = UIColor.fromHex(0x000667, alpha: alpha)
+        return color
+    }
     
     
     
