@@ -21,12 +21,32 @@ class HomeViewController: CenterViewController{
         configureTableView()
         view = homeView
         title = "Events"
-        view.backgroundColor = UIColor.teal()
+        
+        let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        sideMenuButton.setImage(UIImage(named: "SideMenuIcon"), forState: .Normal)
+        sideMenuButton.addTarget(self, action: "toggleOpen", forControlEvents: .TouchUpInside)
+        let sideMenuBarButton = UIBarButtonItem(customView: sideMenuButton)
+        self.navigationItem.setLeftBarButtonItem(sideMenuBarButton, animated: true)
+        
+        let addEventButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        addEventButton.setImage(UIImage(named: "AddButton"), forState: .Normal)
+        addEventButton.addTarget(self, action: "createNewEvent", forControlEvents: .TouchUpInside)
+        let addEventBarButton = UIBarButtonItem(customView: addEventButton)
+        self.navigationItem.setRightBarButtonItem(addEventBarButton, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.barTintColor = UIColor.teal()
+        navigationController?.navigationBar.barTintColor = UIColor.lightTeal()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
+    }
+    
+    func toggleOpen(){
+        delegate?.toggleLeftPanel?()
+    }
+    
+    func createNewEvent() {
+        let createEventVC = CreateEventViewController()
+        navigationController?.pushViewController(createEventVC, animated: true)
     }
 }
 
@@ -66,7 +86,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.titleLabel.text = "St. George Trip"
             cell.notificationDot.hidden = false
         case 2:
-            cell.backgroundColor = UIColor.lightGrayColor()
+            cell.backgroundColor = UIColor.darkTeal()
             cell.eventStatus.text = "February 4, 2016 8:00pm"
         default:
             break
@@ -125,7 +145,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             bgColor = UIColor.teal()
         case 2:
             label = "Past"
-            bgColor = UIColor.lightGrayColor()
+            bgColor = UIColor.darkTeal()
         default:
             label = "Error!"
         }

@@ -23,22 +23,8 @@ class CenterViewController: UIViewController {
         
 //        let addEventButton = UIBarButtonItem(image: UIImage(named: "AddButton"), style: UIBarButtonItemStyle.Plain, target: self, action: "toggleOpen")
         
-        let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        sideMenuButton.setImage(UIImage(named: "SideMenuIcon"), forState: .Normal)
-        sideMenuButton.addTarget(self, action: "toggleOpen", forControlEvents: .TouchUpInside)
-        let sideMenuBarButton = UIBarButtonItem(customView: sideMenuButton)
-        self.navigationItem.setLeftBarButtonItem(sideMenuBarButton, animated: true)
         
-        let addEventButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        addEventButton.setImage(UIImage(named: "AddButton"), forState: .Normal)
-        addEventButton.addTarget(self, action: "toggleOpen", forControlEvents: .TouchUpInside)
-        let addEventBarButton = UIBarButtonItem(customView: addEventButton)
-        self.navigationItem.setRightBarButtonItem(addEventBarButton, animated: true)
 
-    }
-    
-    func toggleOpen(){
-        delegate?.toggleLeftPanel?()
     }
     
 //    func addScreen(){

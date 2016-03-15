@@ -51,6 +51,7 @@ class EventDetailsView: UIView {
         
         response1.initials.text = "JN"
         response2.initials.text = "SK"
+        response3.initials.text = "YK"
         response4.initials.text = "RE"
         response3.alpha = 0.18
         
@@ -93,7 +94,6 @@ class EventDetailsView: UIView {
         addMemberLabel.font = UIFont.graphikRegular(16)
         
         addMemberButton.setImage(UIImage(named: "AddMemberButton"), forState: .Normal)
-        addMemberButton.addTarget(self, action: "addMemberTapped", forControlEvents: .TouchUpInside)
         
         memberTableView.backgroundColor = UIColor.purple()
         memberTableView.showsVerticalScrollIndicator = false
@@ -112,10 +112,6 @@ class EventDetailsView: UIView {
         addSubview(addMemberLabel)
         addSubview(addMemberButton)
         addSubview(memberTableView)
-    }
-    
-    func addMemberTapped(){
-        print("hey")
     }
     
     func applyConstraints(){
@@ -205,7 +201,6 @@ class ResponseCircleView: UIView {
         backgroundView.backgroundColor = UIColor.purple()
         backgroundView.layer.cornerRadius = 17
         
-        initials.text = "YD"
         initials.font = UIFont.graphikRegular(14)
         initials.textColor = UIColor.whiteColor()
         initials.textAlignment = .Center

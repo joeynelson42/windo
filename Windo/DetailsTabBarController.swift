@@ -19,4 +19,10 @@ class DetailsTabBarController: UITabBarController {
         tabBar.tintColor = UIColor.whiteColor()
         tabBar.barTintColor = UIColor.darkPurple()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBar.barTintColor = UIColor.purple()
+        navigationController?.navigationBar.tintColor = UIColor.darkPurple()
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkPurple()]
+    }
 }

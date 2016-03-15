@@ -26,18 +26,23 @@ class EventDetailsViewController: UIViewController {
         detailsView.memberTableView.dataSource = self
         
         members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk"]
+        detailsView.addMemberButton.addTarget(self, action: "addMemberTapped", forControlEvents: .TouchUpInside)
+        
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.barTintColor = UIColor.purple()
-        navigationController?.navigationBar.tintColor = UIColor.darkPurple()
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkPurple()]
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5, animations: { Void in
-            self.detailsView.alpha = 1.0
-        })
+    func addMemberTapped(){
+        let response5 = ResponseCircleView()
+        response5.initials.text = "TT"
+        members.append("Tucker Turner")
+        detailsView.memberTableView.reloadData()
+        
+        detailsView.respondedStackView.addArrangedSubview(response5)
+        detailsView.respondedStackView.constrainUsing(constraints: [
+            Constraint.tt : (of: self.detailsView, offset: 82),
+            Constraint.cxcx : (of: self.detailsView, offset: 0),
+            Constraint.w : (of: nil, offset: 44*5),
+            Constraint.h : (of: nil, offset: 40)])
+        detailsView.respondedStackView.spacing = 5
     }
 }
 
