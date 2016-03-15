@@ -47,6 +47,11 @@ extension UIColor{
         return color
     }
     
+    class func darkPurple(alpha: Double) -> UIColor{
+        let color = UIColor.fromHex(0x6F3B9E, alpha: alpha)
+        return color
+    }
+    
     class func blue() -> UIColor{
         let color = UIColor.fromHex(0x4760EB, alpha: 1.0)
         return color

@@ -38,7 +38,6 @@ class HomeView: UIView {
         eventTableView.backgroundColor = UIColor.teal()
         eventTableView.showsVerticalScrollIndicator = false
         eventTableView.separatorColor = UIColor.mikeBlue(0.34)
-        eventTableView.allowsSelection = false
         eventTableView.registerClass(EventCell.self, forCellReuseIdentifier: "eventCell")
         eventTableView.registerClass(EventHeaderCell.self, forHeaderFooterViewReuseIdentifier: "eventHeaderCell")
         
