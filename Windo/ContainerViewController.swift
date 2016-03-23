@@ -132,6 +132,8 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
     // MARK: Gesture recognizer
     
     func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+        if(centerNavigationController.viewControllers.count > 1) { return }
+        
         switch(recognizer.state) {
         case .Began:
             if (currentState == .BothCollapsed) {

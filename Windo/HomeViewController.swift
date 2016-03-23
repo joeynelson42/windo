@@ -45,8 +45,15 @@ class HomeViewController: CenterViewController{
     }
     
     func createNewEvent() {
-        let createEventVC = CreateEventViewController()
-        navigationController?.pushViewController(createEventVC, animated: true)
+        let createTabVC = CreateTabBarController()
+        let vc1 = InviteViewController()
+        let vc2 = CreateEventViewController()
+        let controllers = [vc1, vc2]
+        
+        createTabVC.viewControllers = controllers
+        createTabVC.selectedIndex = 0
+        navigationController?.pushViewController(createTabVC, animated: true)
+        
     }
 }
 

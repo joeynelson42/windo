@@ -12,10 +12,10 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //MARK: Properties
     
-    //chips
+    //invitees
     var inviteeCell = UIView()
     var inviteeTextField = UITextField()
-    var inviteeTableView = UITableView()
+    let inviteePlaceholderText = "Name, @username, email"
 //    var inviteeStackView = UIStackView()
     
     //location
@@ -36,15 +36,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         applyConstraints()
     }
     
-    func configureSubviews(){
+    func configureSubviews(){        
         backgroundColor = UIColor.blue()
         let keyboardDismiss = UITapGestureRecognizer(target: self, action: "keyboardDismiss")
         addGestureRecognizer(keyboardDismiss)
         
         inviteeCell.backgroundColor = UIColor.clearColor()
-        let inviteeTap = UITapGestureRecognizer(target: self, action: "inviteeTapped")
-        inviteeCell.addGestureRecognizer(inviteeTap)
-        
         
         locationCell.backgroundColor = UIColor.clearColor()
         let locationTap = UITapGestureRecognizer(target: self, action: "locationTapped")
@@ -73,8 +70,16 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTextField.tintColor = UIColor.whiteColor()
         nameTextField.tag = 1
         nameTextField.delegate = self
+        
+        inviteeTextField.textColor = UIColor.whiteColor()
+        inviteeTextField.font = UIFont.graphikRegular(18)
+        inviteeTextField.tintColor = UIColor.whiteColor()
+        inviteeTextField.text = inviteePlaceholderText
+        inviteeTextField.tag = 2
+        inviteeTextField.delegate = self
 
         addSubview(inviteeCell)
+        addSubview(inviteeTextField)
         addSubview(locationTextField)
         addSubview(locationTitleLabel)
         addSubview(locationCell)
@@ -89,6 +94,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.ll : (of: self, offset: 0),
             Constraint.w : (of: nil, offset: screenWidth),
             Constraint.h : (of: nil, offset: 60)])
+        
+        inviteeTextField.constrainUsing(constraints: [
+            Constraint.cycy : (of: inviteeCell, offset: 0),
+            Constraint.ll : (of: self, offset: 18),
+            Constraint.w : (of: nil, offset: screenWidth),
+            Constraint.h : (of: nil, offset: 18)])
         
         locationTitleLabel.constrainUsing(constraints: [
             Constraint.tt : (of: self, offset: 145),
@@ -157,28 +168,33 @@ class CreateEventView: UIView, UITextFieldDelegate {
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
             })
+//        case 2:
+//            if textField.text == inviteePlaceholderText{ textField.text = "" }
         default:
             break
         }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField.text != ""{
-            return
-        }
         
         let moveDown = CGAffineTransformMakeTranslation(0, 0)
         let grow = CGAffineTransformMakeScale(1.0, 1.0)
         
         switch(textField.tag){
         case 0:
+            if textField.text != ""{ return }
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.locationTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
             })
         case 1:
+            if textField.text != ""{ return }
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
             })
+//        case 2:
+//            if textField.text == ""{
+//                textField.text = inviteePlaceholderText
+//            }
         default:
             break
         }
@@ -186,11 +202,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func keyboardDismiss(){
         endEditing(true)
-    
-    }
-    
-    func inviteeTapped(){
-        print("hello!")
     }
     
     func nameTapped(){
@@ -199,6 +210,16 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func locationTapped(){
         locationTextField.becomeFirstResponder()
+    }
+    
+    func keyboardShown(notification: NSNotification) {
+        let info  = notification.userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+        
+        let rawFrame = value.CGRectValue
+        let keyboardFrame = convertRect(rawFrame, fromView: nil)
+        keyboardHeight = keyboardFrame.height
+        print("keyboardFrame: \(keyboardFrame)")
     }
 }
 
