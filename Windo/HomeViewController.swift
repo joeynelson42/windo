@@ -50,6 +50,16 @@ class HomeViewController: CenterViewController{
         let vc2 = CreateEventViewController()
         let controllers = [vc1, vc2]
         
+        vc1.tabBarItem = UITabBarItem(
+            title: "Invite",
+            image: UIImage(named: "MessageIcon"),
+            tag: 0)
+        
+        vc2.tabBarItem = UITabBarItem(
+            title: "Create",
+            image: UIImage(named: "HomeIcon"),
+            tag: 1)
+        
         createTabVC.viewControllers = controllers
         createTabVC.selectedIndex = 0
         navigationController?.pushViewController(createTabVC, animated: true)

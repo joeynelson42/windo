@@ -14,7 +14,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //invitees
     var inviteeCell = UIView()
-    var inviteeTextField = UITextField()
+    var inviteeLabel = UILabel()
     let inviteePlaceholderText = "Name, @username, email"
 //    var inviteeStackView = UIStackView()
     
@@ -38,13 +38,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func configureSubviews(){        
         backgroundColor = UIColor.blue()
-        let keyboardDismiss = UITapGestureRecognizer(target: self, action: "keyboardDismiss")
+        let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
         addGestureRecognizer(keyboardDismiss)
         
         inviteeCell.backgroundColor = UIColor.clearColor()
         
         locationCell.backgroundColor = UIColor.clearColor()
-        let locationTap = UITapGestureRecognizer(target: self, action: "locationTapped")
+        let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
         locationCell.addGestureRecognizer(locationTap)
         
         locationTitleLabel.text = "Location"
@@ -58,7 +58,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTextField.delegate = self
         
         nameCell.backgroundColor = UIColor.clearColor()
-        let nameTap = UITapGestureRecognizer(target: self, action: "nameTapped")
+        let nameTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.nameTapped))
         nameCell.addGestureRecognizer(nameTap)
         
         nameTitleLabel.text = "Name"
@@ -71,15 +71,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTextField.tag = 1
         nameTextField.delegate = self
         
-        inviteeTextField.textColor = UIColor.whiteColor()
-        inviteeTextField.font = UIFont.graphikRegular(18)
-        inviteeTextField.tintColor = UIColor.whiteColor()
-        inviteeTextField.text = inviteePlaceholderText
-        inviteeTextField.tag = 2
-        inviteeTextField.delegate = self
+        inviteeLabel.textColor = UIColor.whiteColor()
+        inviteeLabel.font = UIFont.graphikRegular(18)
+        inviteeLabel.tintColor = UIColor.whiteColor()
+        inviteeLabel.text = inviteePlaceholderText
+        inviteeLabel.tag = 2
 
         addSubview(inviteeCell)
-        addSubview(inviteeTextField)
+        addSubview(inviteeLabel)
         addSubview(locationTextField)
         addSubview(locationTitleLabel)
         addSubview(locationCell)
@@ -95,7 +94,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.w : (of: nil, offset: screenWidth),
             Constraint.h : (of: nil, offset: 60)])
         
-        inviteeTextField.constrainUsing(constraints: [
+        inviteeLabel.constrainUsing(constraints: [
             Constraint.cycy : (of: inviteeCell, offset: 0),
             Constraint.ll : (of: self, offset: 18),
             Constraint.w : (of: nil, offset: screenWidth),
@@ -191,10 +190,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
             })
-//        case 2:
-//            if textField.text == ""{
-//                textField.text = inviteePlaceholderText
-//            }
         default:
             break
         }

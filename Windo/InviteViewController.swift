@@ -18,10 +18,11 @@ class InviteViewController: UIViewController {
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         view = inviteView
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
-        self.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+//        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
+//        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
         
         inviteView.inviteeTableView.delegate = self
         inviteView.inviteeTableView.dataSource = self
@@ -30,8 +31,15 @@ class InviteViewController: UIViewController {
         members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk", "Tucker Turner", "Tyler Alden", "Kara Leigh Alden"]
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
+        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+    }
+    
     func doneTapped(){
-        navigationController?.popViewControllerAnimated(false)
+        tabBarController?.selectedIndex = 1
     }
 }
 
