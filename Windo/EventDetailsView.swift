@@ -116,7 +116,7 @@ class EventDetailsView: UIView {
     
     func applyConstraints(){
         respondedStackView.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 82),
+            Constraint.tt : (of: self, offset: 18),
             Constraint.cxcx : (of: self, offset: 0),
             Constraint.w : (of: nil, offset: 44*4),
             Constraint.h : (of: nil, offset: 40)])

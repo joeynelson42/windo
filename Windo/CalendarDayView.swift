@@ -14,7 +14,7 @@ class CalendarDayView: UIView {
     var selectedBackground = UIView()
     var dateButton = UIButton()
     
-    var day: Int!
+    var day = 1
     
     //MARK: Inits
     convenience init() {
@@ -44,8 +44,10 @@ class CalendarDayView: UIView {
     }
     
     func configureSubviews(){
-        selectedBackground.alpha = 0
+        backgroundColor = UIColor.blue()
+        selectedBackground.alpha = 0.0
         selectedBackground.backgroundColor = UIColor.darkBlue()
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         
         dateButton.setTitle("\(day)", forState: .Normal)
         dateButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -59,17 +61,24 @@ class CalendarDayView: UIView {
     
     func tapped(){
         if selectedBackground.alpha == 0 {
-            UIView.animateWithDuration(0.5, animations: { void in
-                self.selectedBackground.alpha = 1.0
-            })
+//            UIView.animateWithDuration(0.25, animations: { void in
+//                self.selectedBackground.alpha = 1.0
+//            })
+            
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                    self.selectedBackground.alpha = 1.0
+                    self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                }, completion: nil)
         }
         else {
-            UIView.animateWithDuration(0.5, animations: { void in
-                self.selectedBackground.alpha = 0
-            })
+//            UIView.animateWithDuration(0.25, animations: { void in
+//                self.selectedBackground.alpha = 0
+//            })
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                self.selectedBackground.alpha = 0.0
+                self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                }, completion: nil)
         }
-        
-        
     }
     
     func applyConstraints(){

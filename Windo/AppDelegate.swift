@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let font = UIFont(name: "Graphik-Medium", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
         }
-        
+            
         //call this to see all the correct titles of the project's fonts
 //                for family: String in UIFont.familyNames()
 //                {

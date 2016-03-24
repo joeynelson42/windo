@@ -21,6 +21,7 @@ class DetailsTabBarController: UITabBarController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBar.translucent = false
         navigationController?.navigationBar.barTintColor = UIColor.purple()
         navigationController?.navigationBar.tintColor = UIColor.darkPurple()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkPurple()]

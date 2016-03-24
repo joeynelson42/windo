@@ -51,16 +51,18 @@ class HomeView: UIView {
     }
     
     func applyConstraints(){
-        lowerBackgroundView.constrainUsing(constraints: [
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.bb : (of: self, offset: 0),
-            Constraint.Width : (of: nil, offset: screenWidth),
-            Constraint.Height : (of: nil, offset: screenHeight/2)])
+        lowerBackgroundView.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.bb.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(screenHeight/2)
+        )
         
-        eventTableView.constrainUsing(constraints: [
-            Constraint.CenterXToCenterX : (of: self, offset: 0),
-            Constraint.TopToTop : (of: self, offset: 64),
-            Constraint.Width : (of: nil, offset: screenWidth),
-            Constraint.Height : (of: nil, offset: screenHeight - 64)])
+        eventTableView.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.tt.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(screenHeight - 64)
+        )
     }
 }

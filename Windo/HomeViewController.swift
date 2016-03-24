@@ -36,6 +36,7 @@ class HomeViewController: CenterViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBar.translucent = false
         navigationController?.navigationBar.barTintColor = UIColor.lightTeal()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
     }

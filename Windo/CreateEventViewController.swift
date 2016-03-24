@@ -14,6 +14,7 @@ class CreateEventViewController: UIViewController {
     
     var createEventView: CreateEventView!
     var members = [String]()
+    var initialStates = [CGFloat]()
     
     //MARK: Lifecycle Methods
     
@@ -22,13 +23,19 @@ class CreateEventViewController: UIViewController {
         view = createEventView
         addTargets()
         title = "Create Event"
+        
+        let drag = UIPanGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
+        
+        createEventView.calendarContainer.dragView.addGestureRecognizer(drag)
+        createEventView.calendarContainer.dragView.addGestureRecognizer(tap)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
         let doneBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.doneTapped))
-        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -39,6 +46,28 @@ class CreateEventViewController: UIViewController {
     func addTargets(){
         let inviteeTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.inviteeTapped))
         createEventView.inviteeCell.addGestureRecognizer(inviteeTap)
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        initialStates.removeAll()
+        let days = createEventView.calendarContainer.days
+        for day in days {
+            initialStates.append(day.selectedBackground.alpha)
+        }
+        
+        print("hit touches began")
+    }
+    
+    func handleCalendarGesture(gesture: UIGestureRecognizer){
+        let days = createEventView.calendarContainer.days
+        
+        for (index,day) in days.enumerate() {
+            if day.frame.contains(gesture.locationInView(createEventView.calendarContainer)){
+                if (day.selectedBackground.alpha == initialStates[index]){
+                    day.tapped()
+                }
+            }
+        }
     }
     
     func updateInvitees(){

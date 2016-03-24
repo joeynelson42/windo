@@ -21,9 +21,6 @@ class InviteViewController: UIViewController {
         super.viewDidLoad()
         view = inviteView
         
-//        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
-//        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
-        
         inviteView.inviteeTableView.delegate = self
         inviteView.inviteeTableView.dataSource = self
         
