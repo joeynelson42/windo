@@ -41,6 +41,23 @@ class InviteViewController: UIViewController {
     func doneTapped(){
         tabBarController?.selectedIndex = 1
     }
+    
+    func updateInvitees(){
+        if(tabBarController as! CreateTabBarController).invitees.count < 1 {
+            inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
+            return
+        }
+        
+        for (index, name) in (tabBarController as! CreateTabBarController).invitees.enumerate() {
+            if index == 0 {
+                inviteView.inviteeLabel.text = name
+            }
+            else{
+                let currentText = inviteView.inviteeLabel.text!
+                inviteView.inviteeLabel.text! = "\(currentText), \(name)"
+            }
+        }
+    }
 }
 
 extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
@@ -58,13 +75,42 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.nameLabel.text = members[indexPath.row]
         cell.userHandleLabel.text = "@\(members[indexPath.row].lowercaseString)"
+        cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
         cell.initialsLabel.text = getInitials(members[indexPath.row])
+        
+        if(tabBarController as! CreateTabBarController).invitees.contains(members[indexPath.row]){
+            cell.checkmarkImageView.hidden = false
+            cell.infoButton.hidden = true
+        }
+        else{
+            cell.checkmarkImageView.hidden = true
+            cell.infoButton.hidden = false
+        }
         
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 65
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
+        
+        if(tabBarController as! CreateTabBarController).invitees.contains(members[indexPath.row]){
+            let index = (tabBarController as! CreateTabBarController).invitees.indexOf(members[indexPath.row])
+            (tabBarController as! CreateTabBarController).invitees.removeAtIndex(index!)
+            cell.checkmarkImageView.hidden = true
+            cell.infoButton.hidden = false
+        }
+        else{
+            (tabBarController as! CreateTabBarController).invitees.append(cell.nameLabel.text!)
+            cell.checkmarkImageView.hidden = false
+            cell.infoButton.hidden = true
+        }
+
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        updateInvitees()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

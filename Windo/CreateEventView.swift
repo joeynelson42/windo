@@ -28,6 +28,10 @@ class CreateEventView: UIView, UITextFieldDelegate {
     var nameTitleLabel = UILabel()
     var nameTextField = UITextField()
     
+    //calendar!
+    var calendarContainer = EventCalendarView()
+
+    
     //MARK: View Configuration
     
     override func updateConstraints() {
@@ -37,7 +41,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     }
     
     func configureSubviews(){        
-        backgroundColor = UIColor.blue()
+        backgroundColor = UIColor.lightBlue()
         let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
         addGestureRecognizer(keyboardDismiss)
         
@@ -74,22 +78,25 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeLabel.textColor = UIColor.whiteColor()
         inviteeLabel.font = UIFont.graphikRegular(18)
         inviteeLabel.tintColor = UIColor.whiteColor()
-        inviteeLabel.text = inviteePlaceholderText
         inviteeLabel.tag = 2
-
+        
+        //Calendar
+        calendarContainer.backgroundColor = UIColor.blue()
+        
         addSubview(inviteeCell)
+        addSubview(locationCell)
+        addSubview(nameCell)
         addSubview(inviteeLabel)
         addSubview(locationTextField)
         addSubview(locationTitleLabel)
-        addSubview(locationCell)
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
-        addSubview(nameCell)
+        addSubview(calendarContainer)
     }
     
     func applyConstraints(){
         inviteeCell.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 64),
+            Constraint.tt : (of: self, offset: 0),
             Constraint.ll : (of: self, offset: 0),
             Constraint.w : (of: nil, offset: screenWidth),
             Constraint.h : (of: nil, offset: 60)])
@@ -101,13 +108,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.h : (of: nil, offset: 18)])
         
         locationTitleLabel.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 145),
+            Constraint.tt : (of: self, offset: 81),
             Constraint.ll : (of: self, offset: 16),
             Constraint.w : (of: nil, offset: 100),
             Constraint.h : (of: nil, offset: 16)])
         
         locationTextField.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 149),
+            Constraint.tt : (of: self, offset: 85),
             Constraint.ll : (of: self, offset: 16),
             Constraint.w : (of: nil, offset: screenWidth),
             Constraint.h : (of: nil, offset: 16)])
@@ -135,11 +142,18 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.ll : (of: self, offset: 0),
             Constraint.w : (of: nil, offset: screenWidth),
             Constraint.h : (of: nil, offset: 60)])
+        
+        calendarContainer.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.tb.of(nameCell, offset: 1),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(screenHeight)
+        )
     }
     
     override func drawRect(rect: CGRect) {
         for i in 1...3 {
-            let y: CGFloat = CGFloat(i * 60) + 64
+            let y: CGFloat = CGFloat(i * 60)
             let startPoint = CGPoint(x: 0, y: y)
             let endPoint = CGPoint(x: screenWidth, y: y)
             

@@ -31,6 +31,7 @@ class CreateTabBarController: UITabBarController {
         navigationController?.navigationBar.barTintColor = UIColor.lightBlue()
         navigationController?.navigationBar.tintColor = UIColor.darkBlue()
         navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkBlue()]
+        navigationController?.navigationBar.translucent = false
     }
     
     func cancelTapped(){

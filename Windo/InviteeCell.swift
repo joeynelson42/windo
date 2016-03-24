@@ -16,6 +16,7 @@ class InviteeCell: UITableViewCell {
     var initialsIcon = UIView()
     var initialsLabel = UILabel()
     var checkmarkImageView = UIImageView()
+    var infoButton = UIButton()
     
     //MARK: Inits
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -46,6 +47,10 @@ class InviteeCell: UITableViewCell {
         userHandleLabel.alpha = 0.8
         
         checkmarkImageView.image = UIImage(named: "checkmarkIcon")
+        checkmarkImageView.contentMode = .ScaleAspectFit
+        
+        infoButton.setImage(UIImage(named: "BlueInfoIcon"), forState: .Normal)
+        //TODO: add target to button -> user profile
         
         initialsIcon.layer.borderWidth = 1.2
         initialsIcon.layer.borderColor = UIColor.blue().CGColor
@@ -60,6 +65,7 @@ class InviteeCell: UITableViewCell {
         addSubview(initialsIcon)
         addSubview(initialsLabel)
         addSubview(checkmarkImageView)
+        addSubview(infoButton)
     }
     
     func applyConstraints(){
@@ -87,6 +93,17 @@ class InviteeCell: UITableViewCell {
             Constraint.tb.of(nameLabel, offset: 3),
             Constraint.w.of(200),
             Constraint.h.of(14)
+        )
+        
+        checkmarkImageView.addConstraints(
+            Constraint.rr.of(self, offset: -24),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(24)
+        )
+        
+        infoButton.addConstraints(
+            Constraint.cxcx.of(checkmarkImageView),
+            Constraint.cycy.of(checkmarkImageView)
         )
     }
 }

@@ -13,6 +13,9 @@ class InviteView: UIView {
     //MARK: Properties
     var inviteeTableView = UITableView()
     var stackViewContainer = UIView()
+    var inviteeLabel = UILabel()
+    
+    var inviteePlaceholderText = "Name, @username, email"
     
     //MARK: View Configuration
     
@@ -24,30 +27,41 @@ class InviteView: UIView {
     }
     
     func configureSubviews(){        
-        inviteeTableView.backgroundColor = UIColor.whiteColor()
+        inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
         inviteeTableView.separatorColor = UIColor.blue()
         inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
         inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
         
+        inviteeLabel.textColor = UIColor.whiteColor()
+        inviteeLabel.font = UIFont.graphikRegular(18)
+        inviteeLabel.tintColor = UIColor.whiteColor()
+        
         stackViewContainer.backgroundColor = UIColor.blue()
         
         addSubview(stackViewContainer)
         addSubview(inviteeTableView)
+        addSubview(inviteeLabel)
     }
     
     func applyConstraints(){
         stackViewContainer.addConstraints(
-            Constraint.tt.of(self, offset: 64),
+            Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(60))
+        
+        inviteeLabel.addConstraints(
+            Constraint.cycy.of(stackViewContainer),
+            Constraint.ll.of(stackViewContainer, offset: 16),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(18)
+        )
         
         inviteeTableView.addConstraints(
             Constraint.tb.of(stackViewContainer, offset: 0),
             Constraint.llrr.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(screenHeight - 124))
-        
     }
 }
