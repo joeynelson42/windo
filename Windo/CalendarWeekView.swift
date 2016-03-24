@@ -12,13 +12,34 @@ class CalendarWeekView: UIView {
     
     //MARK: Properties
     var stackView = UIStackView()
-    var mondayView = UIView()
-    var tuesdayView = UIView()
-    var wednesdayView = UIView()
-    var thursdayView = UIView()
-    var fridayView = UIView()
-    var saturdayView = UIView()
-    var sundayView = UIView()
+    var mondayView = CalendarDayView()
+    var tuesdayView = CalendarDayView()
+    var wednesdayView = CalendarDayView()
+    var thursdayView = CalendarDayView()
+    var fridayView = CalendarDayView()
+    var saturdayView = CalendarDayView()
+    var sundayView = CalendarDayView()
+    
+    var startDay = 0
+    
+    //MARK: Inits
+    convenience init() {
+        self.init(frame: CGRectZero)
+    }
+    
+    convenience init(start: Int){
+        self.init(frame: CGRectZero)
+        startDay = start
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setNeedsUpdateConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: View Configuration
     
@@ -29,9 +50,18 @@ class CalendarWeekView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.darkBlue()
         
-        let dayColor = UIColor.darkBlue()
+        mondayView = CalendarDayView(dayNumber: startDay)
+        tuesdayView = CalendarDayView(dayNumber: startDay + 1)
+        wednesdayView = CalendarDayView(dayNumber: startDay + 2)
+        thursdayView = CalendarDayView(dayNumber: startDay + 3)
+        fridayView = CalendarDayView(dayNumber: startDay + 4)
+        saturdayView = CalendarDayView(dayNumber: startDay + 5)
+        sundayView = CalendarDayView(dayNumber: startDay + 6)
+        
+        
+        let dayColor = UIColor.blue()
         
         mondayView.backgroundColor = dayColor
         tuesdayView.backgroundColor = dayColor

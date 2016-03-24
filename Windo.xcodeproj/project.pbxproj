@@ -45,6 +45,7 @@
 		63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */; };
 		63A28B101CA36301000826DC /* EventCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0F1CA36301000826DC /* EventCalendarView.swift */; };
 		63A28B121CA36813000826DC /* CalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B111CA36813000826DC /* CalendarWeekView.swift */; };
+		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
 		63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E21C978EF70086B919 /* GroupMemberCell.swift */; };
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
 		63E7E17D1C939A8000AF6301 /* Graphik-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */; };
@@ -102,6 +103,7 @@
 		63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabBarViewController.swift; sourceTree = "<group>"; };
 		63A28B0F1CA36301000826DC /* EventCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCalendarView.swift; sourceTree = "<group>"; };
 		63A28B111CA36813000826DC /* CalendarWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarWeekView.swift; sourceTree = "<group>"; };
+		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		63AD31E21C978EF70086B919 /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
 		63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Black.otf"; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				6392EF681C9766F6003C29CE /* CreateEventView.swift */,
 				63A28B0F1CA36301000826DC /* EventCalendarView.swift */,
 				63A28B111CA36813000826DC /* CalendarWeekView.swift */,
+				63A28B131CA36EB0000826DC /* CalendarDayView.swift */,
 			);
 			name = CreateEventDetails;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */,
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				6395B15F1C742676008D0ED5 /* WindoButton.swift in Sources */,
+				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
 				63A28B121CA36813000826DC /* CalendarWeekView.swift in Sources */,
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,

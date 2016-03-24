@@ -41,6 +41,12 @@ class EventCalendarView: UIView {
     }
     
     func configureSubviews(){
+        week1 = CalendarWeekView(start: 1)
+        week2 = CalendarWeekView(start: 8)
+        week3 = CalendarWeekView(start: 15)
+        week4 = CalendarWeekView(start: 22)
+        week5 = CalendarWeekView(start: 29)
+        
         monthLabel.font = UIFont.graphikRegular(18)
         monthLabel.textColor = UIColor.darkBlue()
         monthLabel.text = "March"
