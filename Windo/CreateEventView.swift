@@ -30,7 +30,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //calendar!
     var calendarContainer = WindoCalendarView()
-
     
     //MARK: View Configuration
     

@@ -14,7 +14,7 @@ class CalendarDayView: UIView {
     var selectedBackground = UIView()
     var dateButton = UIButton()
     
-    var day = 1
+    var day = 0
     
     //MARK: Inits
     convenience init() {
@@ -49,21 +49,23 @@ class CalendarDayView: UIView {
         selectedBackground.backgroundColor = UIColor.darkBlue()
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         
-        dateButton.setTitle("\(day)", forState: .Normal)
-        dateButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        dateButton.titleLabel?.font = UIFont.graphikRegular(18)
-        
-        dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), forControlEvents: .TouchUpInside)
+        if day != 0 {
+            dateButton.setTitle("\(day)", forState: .Normal)
+            dateButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            dateButton.titleLabel?.font = UIFont.graphikRegular(18)
+            dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), forControlEvents: .TouchUpInside)
+        }
         
         addSubview(selectedBackground)
         addSubview(dateButton)
     }
     
     func tapped(){
+        if day == 0{
+            return
+        }
+        
         if selectedBackground.alpha == 0 {
-//            UIView.animateWithDuration(0.25, animations: { void in
-//                self.selectedBackground.alpha = 1.0
-//            })
             
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
                     self.selectedBackground.alpha = 1.0
@@ -71,14 +73,18 @@ class CalendarDayView: UIView {
                 }, completion: nil)
         }
         else {
-//            UIView.animateWithDuration(0.25, animations: { void in
-//                self.selectedBackground.alpha = 0
-//            })
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
                 self.selectedBackground.alpha = 0.0
                 self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
                 }, completion: nil)
         }
+    }
+    
+    func reset(){
+        dateButton.setTitle("", forState: .Normal)
+        day = 0
+        selectedBackground.alpha = 0.0
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
     }
     
     func applyConstraints(){

@@ -112,4 +112,86 @@ extension NSDate{
             return "Invalid month number ya ding dong"
         }
     }
+    
+    static func monthName(month: Int) -> String{
+        switch month{
+        case 1:
+            return "January"
+        case 2:
+            return "February"
+        case 3:
+            return "March"
+        case 4:
+            return "April"
+        case 5:
+            return "May"
+        case 6:
+            return "June"
+        case 7:
+            return "July"
+        case 8:
+            return "August"
+        case 9:
+            return "September"
+        case 10:
+            return "October"
+        case 11:
+            return "November"
+        case 12:
+            return "December"
+        default:
+            return "Invalid month number ya ding dong"
+        }
+    }
+    
+    func dayOfWeek() -> String{
+        switch self.month(){
+        case 1:
+            return "Monday"
+        case 2:
+            return "Tuesday"
+        case 3:
+            return "Wednesday"
+        case 4:
+            return "Thursday"
+        case 5:
+            return "Friday"
+        case 6:
+            return "Saturday"
+        case 7:
+            return "Sunday"
+        default:
+            return "Invalid weekday ya ding dong"
+        }
+    }
+    
+    func startOfMonth() -> NSDate? {
+        guard
+            let cal: NSCalendar = NSCalendar.currentCalendar(),
+            let comp: NSDateComponents = cal.components([.Year, .Month], fromDate: self) else { return nil }
+        comp.to12pm()
+        return cal.dateFromComponents(comp)!
+    }
+    
+    func endOfMonth() -> NSDate? {
+        guard
+            let cal: NSCalendar = NSCalendar.currentCalendar(),
+            let comp: NSDateComponents = NSDateComponents() else { return nil }
+        comp.month = 1
+        comp.day -= 1
+        comp.to12pm()
+        return cal.dateByAddingComponents(comp, toDate: self.startOfMonth()!, options: [])!
+    }
 }
+
+internal extension NSDateComponents {
+    func to12pm() {
+        self.hour = 12
+        self.minute = 0
+        self.second = 0
+    }
+}
+
+
+
+

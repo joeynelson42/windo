@@ -54,8 +54,6 @@ class CreateEventViewController: UIViewController {
         for day in days {
             initialStates.append(day.selectedBackground.alpha)
         }
-        
-        print("hit touches began")
     }
     
     func handleCalendarGesture(gesture: UIGestureRecognizer){

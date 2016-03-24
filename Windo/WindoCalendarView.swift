@@ -11,6 +11,9 @@ import UIKit
 class WindoCalendarView: UIView {
     
     //MARK: Properties
+    var month = 4
+    var year = 1991
+    
     var monthLabel = UILabel()
     var leftMonthButton = UIButton()
     var rightMonthButton = UIButton()
@@ -64,6 +67,8 @@ class WindoCalendarView: UIView {
     var day35 = CalendarDayView()
     
     var days = [CalendarDayView]()
+    var daysConfigured = false
+    
     
     //MARK: View Configuration
     
@@ -74,13 +79,26 @@ class WindoCalendarView: UIView {
     }
     
     func configureSubviews(){
+        let calendar = NSCalendar.currentCalendar()
+        let date = NSDate()
+        let components = calendar.components([.Month, .Year], fromDate: date)
+        
+        month = components.month
+        year = components.year
+        
+        days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35]
+        
+        configureMonth(date, currentMonth: true)
+        
         monthLabel.font = UIFont.graphikRegular(18)
         monthLabel.textColor = UIColor.darkBlue()
-        monthLabel.text = "ERROR"
         monthLabel.textAlignment = .Center
         
         rightMonthButton.setImage(UIImage(named: "RightCalendarArrow"), forState: .Normal)
+        rightMonthButton.addTarget(self, action: #selector(WindoCalendarView.nextMonth), forControlEvents: .TouchUpInside)
+        
         leftMonthButton.setImage(UIImage(named: "LeftCalendarArrow"), forState: .Normal)
+        leftMonthButton.addTarget(self, action: #selector(WindoCalendarView.previousMonth), forControlEvents: .TouchUpInside)
         
         mondayLabel.text = "M"
         mondayLabel.font = UIFont.graphikMedium(10)
@@ -97,7 +115,7 @@ class WindoCalendarView: UIView {
         wednesdayLabel.textColor = UIColor.darkBlue()
         wednesdayLabel.textAlignment = .Center
         
-        thursdayLabel.text = "TH"
+        thursdayLabel.text = "T"
         thursdayLabel.font = UIFont.graphikMedium(10)
         thursdayLabel.textColor = UIColor.darkBlue()
         thursdayLabel.textAlignment = .Center
@@ -121,8 +139,6 @@ class WindoCalendarView: UIView {
         dragView.backgroundColor = UIColor.clearColor()
         dragView.alpha = 1.0
         
-        days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35]
-        
         addSubview(monthLabel)
         addSubview(rightMonthButton)
         addSubview(leftMonthButton)
@@ -134,7 +150,7 @@ class WindoCalendarView: UIView {
         
         addSubview(dragView)
         
-        configureCurrentMonth()
+//        configureCurrentMonth()
     }
     
     func applyConstraints(){
@@ -148,55 +164,55 @@ class WindoCalendarView: UIView {
         leftMonthButton.addConstraints(
             Constraint.cycy.of(monthLabel),
             Constraint.ll.of(self, offset: 18),
-            Constraint.w.of(16),
-            Constraint.h.of(11)
+            Constraint.w.of(32),
+            Constraint.h.of(22)
         )
         
         rightMonthButton.addConstraints(
             Constraint.cycy.of(monthLabel),
             Constraint.rr.of(self, offset: -18),
-            Constraint.w.of(16),
-            Constraint.h.of(11)
+            Constraint.w.of(32),
+            Constraint.h.of(22)
         )
         
-        mondayLabel.addConstraints(
+        sundayLabel.addConstraints(
             Constraint.tb.of(monthLabel, offset: 22),
             Constraint.cxcx.of(self, offset: -3 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
         
-        tuesdayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        mondayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self, offset: -2 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
         
-        wednesdayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        tuesdayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self, offset: -(screenWidth/7)),
             Constraint.wh.of(18)
         )
         
-        thursdayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        wednesdayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self),
             Constraint.wh.of(18)
         )
         
-        fridayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        thursdayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self, offset: (screenWidth/7)),
             Constraint.wh.of(18)
         )
         
-        saturdayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        fridayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self, offset: 2 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
         
-        sundayLabel.addConstraints(
-            Constraint.cycy.of(mondayLabel),
+        saturdayLabel.addConstraints(
+            Constraint.cycy.of(sundayLabel),
             Constraint.cxcx.of(self, offset: 3 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
@@ -204,14 +220,14 @@ class WindoCalendarView: UIView {
         let daySize = (screenWidth - 8)/7
         
         dayBackground.addConstraints(
-            Constraint.tb.of(monthLabel, offset: 36),
+            Constraint.tt.of(day1, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of((daySize * 5) + 6)
         )
         
         dragView.addConstraints(
-            Constraint.tt.of(day1),
+            Constraint.tt.of(day1, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of((daySize * 5) + 6)
@@ -219,7 +235,7 @@ class WindoCalendarView: UIView {
         
         //week 1
         day1.addConstraints(
-            Constraint.tb.of(monthLabel, offset: 37),
+            Constraint.tb.of(monthLabel, offset: 45),
             Constraint.ll.of(self),
             Constraint.wh.of(daySize)
         )
@@ -434,19 +450,305 @@ class WindoCalendarView: UIView {
         
     }
     
-    func configureCurrentMonth(){
-        let calendar = NSCalendar.currentCalendar()
-        let date = NSDate()
-        let components = calendar.components([.Month, .Day], fromDate: date)
+    func configureMonth(date: NSDate, currentMonth: Bool){
+        if daysConfigured { return }
+        else { daysConfigured = true }
         
-        monthLabel.text = date.monthName()
+        let calendar = NSCalendar.currentCalendar()
+        let monthName = date.monthName()
+        
+        let firstDay = date.startOfMonth()
+        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
+        let firstWeekday = firstComponents.weekday
+        
+        
+        let components = calendar.components([.Year, .Month], fromDate: date)
+        let startOfMonth = calendar.dateFromComponents(components)!
+        let comps2 = NSDateComponents()
+        comps2.month = 1
+        comps2.day = -1
+        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
+        let dayCount = lastDay.day()
+        
+        configureMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
+    }
+
+    func configureMonthData(month: String, startWeekday: Int, dayCount: Int){
+//        monthLabel.text = month
+//        
+//        var dayNumber = 0
+//        switch startWeekday{
+//        case 1:
+//            day1 = CalendarDayView(dayNumber: 1)
+//            day2 = CalendarDayView(dayNumber: 2)
+//            day3 = CalendarDayView(dayNumber: 3)
+//            day4 = CalendarDayView(dayNumber: 4)
+//            day5 = CalendarDayView(dayNumber: 5)
+//            day6 = CalendarDayView(dayNumber: 6)
+//            day7 = CalendarDayView(dayNumber: 7)
+//            dayNumber = 8
+//        case 2:
+//            day2 = CalendarDayView(dayNumber: 1)
+//            day3 = CalendarDayView(dayNumber: 2)
+//            day4 = CalendarDayView(dayNumber: 3)
+//            day5 = CalendarDayView(dayNumber: 4)
+//            day6 = CalendarDayView(dayNumber: 5)
+//            day7 = CalendarDayView(dayNumber: 6)
+//            dayNumber = 7
+//        case 3:
+//            day3 = CalendarDayView(dayNumber: 1)
+//            day4 = CalendarDayView(dayNumber: 2)
+// //           day5 = CalendarDayView(dayNumber: 3)
+//            day6 = CalendarDayView(dayNumber: 4)
+//            day7 = CalendarDayView(dayNumber: 5)
+//            dayNumber = 6
+//        case 4:
+//            day4 = CalendarDayView(dayNumber: 1)
+//            day5 = CalendarDayView(dayNumber: 2)
+//            day6 = CalendarDayView(dayNumber: 3)
+//            day7 = CalendarDayView(dayNumber: 4)
+//            dayNumber = 5
+//        case 5:
+//            day5 = CalendarDayView(dayNumber: 1)
+//            day6 = CalendarDayView(dayNumber: 2)
+//            day7 = CalendarDayView(dayNumber: 3)
+//            dayNumber = 4
+//        case 6:
+//            day6 = CalendarDayView(dayNumber: 1)
+//            day7 = CalendarDayView(dayNumber: 2)
+//            dayNumber = 3
+//        case 7:
+//            day7 = CalendarDayView(dayNumber: 1)
+//            dayNumber = 2
+//        default:
+//            dayNumber = 1
+//        }
+//   //
+//        day8 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day9 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day10 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day11 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day12 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day13 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day14 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day15 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day16 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day17 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day18 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day19 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//     //   day20 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day21 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day22 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day23 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day24 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day25 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day26 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day27 = CalendarDayView(dayNumber: dayNumber)
+//        dayNumber += 1
+//        day28 = CalendarDayView(dayNumber: dayNumber)
+//        
+//        var remainingDays = dayCount - dayNumber
+//        dayNumber += 1
+//        switch remainingDays {
+//        case 1:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 2:
+//       //     day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 3:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day31 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 4:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day31 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day32 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 5:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//         //   day31 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day32 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day33 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 6:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day31 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day32 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day33 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day34 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        case 7:
+//            day29 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day30 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day31 = CalendarDayView(dayNumber: dayNumber)
+//           // dayNumber += 1
+//            day32 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day33 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day34 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//            day35 = CalendarDayView(dayNumber: dayNumber)
+//            dayNumber += 1
+//        default:
+//            return
+//        }
+        // 161 lines were condensed into 13
+        
+        monthLabel.text = month
+        var dayNumber = 1
+        for (index,day) in days.enumerate() {
+            if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
+                day.reset()
+            }
+            else{
+                days[index] = CalendarDayView(dayNumber: dayNumber)
+                day.day = dayNumber
+                dayNumber += 1
+            }
+        }
+    }
+    
+    func updateMonth(date: NSDate, currentMonth: Bool){
+        if daysConfigured { return }
+        else { daysConfigured = true }
+        
+        let calendar = NSCalendar.currentCalendar()
+        let monthName = date.monthName()
+        
+        let firstDay = date.startOfMonth()
+        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
+        let firstWeekday = firstComponents.weekday
+        
+        
+        let components = calendar.components([.Year, .Month], fromDate: date)
+        let startOfMonth = calendar.dateFromComponents(components)!
+        let comps2 = NSDateComponents()
+        comps2.month = 1
+        comps2.day = -1
+        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
+        let dayCount = lastDay.day()
+        
+        updateMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
+    }
+    
+    func updateMonthData(month: String, startWeekday: Int, dayCount: Int){
+        monthLabel.text = month
+        
+        var dayNumber = 1
+        
+        for (index,day) in days.enumerate() {
+            if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
+                day.reset()
+            }
+            else{
+                day.dateButton.setTitle("\(dayNumber)", forState: .Normal)
+                day.day = dayNumber
+                dayNumber += 1
+            }
+        }
     }
     
     func nextMonth(){
+        daysConfigured = false
         
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = NSDateComponents()
+        
+        month += 1
+        if month > 12 {
+            month = 1
+            year += 1
+        }
+        
+        components.year = year
+        components.month = month
+        components.day = 1
+        components.hour = 14
+        components.minute = 20
+        components.second = 0
+        let date = calendar?.dateFromComponents(components)
+        let current = isCurrentMonth(date!)
+        updateMonth(date!, currentMonth: current)
     }
     
     func previousMonth(){
+        daysConfigured = false
         
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = NSDateComponents()
+        
+        month -= 1
+        if month < 1 {
+            month = 12
+            year -= 1
+        }
+        
+        components.year = year
+        components.month = month
+        components.day = 1
+        components.hour = 14
+        components.minute = 20
+        components.second = 0
+        let date = calendar?.dateFromComponents(components)
+        let current = isCurrentMonth(date!)
+        updateMonth(date!, currentMonth: current)
+    }
+    
+    func isCurrentMonth(date: NSDate) -> Bool{
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month], fromDate: date)
+        
+        let currentDate = NSDate()
+        let currentComponents = calendar.components([.Year, .Month], fromDate: currentDate)
+        
+        if components.year == currentComponents.year && components.month == currentComponents.month {
+            return true
+        }
+        else {
+            return false
+        }
     }
 }
