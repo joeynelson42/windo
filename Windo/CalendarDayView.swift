@@ -52,6 +52,7 @@ class CalendarDayView: UIView {
         if day != 0 {
             dateButton.setTitle("\(day)", forState: .Normal)
             dateButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            dateButton.alpha = 0.75
             dateButton.titleLabel?.font = UIFont.graphikRegular(18)
             dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), forControlEvents: .TouchUpInside)
         }
@@ -66,14 +67,15 @@ class CalendarDayView: UIView {
         }
         
         if selectedBackground.alpha == 0 {
-            
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                    self.dateButton.alpha = 1.0
                     self.selectedBackground.alpha = 1.0
                     self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
                 }, completion: nil)
         }
         else {
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                self.dateButton.alpha = 0.75
                 self.selectedBackground.alpha = 0.0
                 self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
                 }, completion: nil)
@@ -85,6 +87,7 @@ class CalendarDayView: UIView {
         day = 0
         selectedBackground.alpha = 0.0
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        dateButton.alpha = 0.75
     }
     
     func applyConstraints(){

@@ -17,6 +17,8 @@ class WindoCalendarView: UIView {
     var monthLabel = UILabel()
     var leftMonthButton = UIButton()
     var rightMonthButton = UIButton()
+    var leftTapExtension = UIView()
+    var rightTapExtension = UIView()
     
     //weekday labels
     var mondayLabel = UILabel()
@@ -100,12 +102,25 @@ class WindoCalendarView: UIView {
         leftMonthButton.setImage(UIImage(named: "LeftCalendarArrow"), forState: .Normal)
         leftMonthButton.addTarget(self, action: #selector(WindoCalendarView.previousMonth), forControlEvents: .TouchUpInside)
         
+        rightTapExtension.backgroundColor = UIColor.clearColor()
+        let rightTapGR = UITapGestureRecognizer(target: self, action: #selector(WindoCalendarView.nextMonth))
+        rightTapExtension.addGestureRecognizer(rightTapGR)
+        
+        leftTapExtension.backgroundColor = UIColor.clearColor()
+        let leftTapGR = UITapGestureRecognizer(target: self, action: #selector(WindoCalendarView.previousMonth))
+        leftTapExtension.addGestureRecognizer(leftTapGR)
+        
+        sundayLabel.text = "S"
+        sundayLabel.font = UIFont.graphikMedium(10)
+        sundayLabel.textColor = UIColor.darkBlue()
+        sundayLabel.textAlignment = .Center
+        
         mondayLabel.text = "M"
         mondayLabel.font = UIFont.graphikMedium(10)
         mondayLabel.textColor = UIColor.darkBlue()
         mondayLabel.textAlignment = .Center
         
-        tuesdayLabel.text = "Tu"
+        tuesdayLabel.text = "T"
         tuesdayLabel.font = UIFont.graphikMedium(10)
         tuesdayLabel.textColor = UIColor.darkBlue()
         tuesdayLabel.textAlignment = .Center
@@ -130,11 +145,6 @@ class WindoCalendarView: UIView {
         saturdayLabel.textColor = UIColor.darkBlue()
         saturdayLabel.textAlignment = .Center
         
-        sundayLabel.text = "S"
-        sundayLabel.font = UIFont.graphikMedium(10)
-        sundayLabel.textColor = UIColor.darkBlue()
-        sundayLabel.textAlignment = .Center
-        
         dayBackground.backgroundColor = UIColor.darkBlue()
         dragView.backgroundColor = UIColor.clearColor()
         dragView.alpha = 1.0
@@ -142,6 +152,9 @@ class WindoCalendarView: UIView {
         addSubview(monthLabel)
         addSubview(rightMonthButton)
         addSubview(leftMonthButton)
+        addSubview(rightTapExtension)
+        addSubview(leftTapExtension)
+        
         addSubview(dayBackground)
 
         addSubviews(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel,saturdayLabel,sundayLabel)
@@ -149,8 +162,6 @@ class WindoCalendarView: UIView {
         addSubviews(day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35)
         
         addSubview(dragView)
-        
-//        configureCurrentMonth()
     }
     
     func applyConstraints(){
@@ -173,6 +184,18 @@ class WindoCalendarView: UIView {
             Constraint.rr.of(self, offset: -18),
             Constraint.w.of(32),
             Constraint.h.of(22)
+        )
+        
+        leftTapExtension.addConstraints(
+            Constraint.cycy.of(leftMonthButton),
+            Constraint.cxcx.of(leftMonthButton),
+            Constraint.wh.of(50)
+        )
+        
+        rightTapExtension.addConstraints(
+            Constraint.cycy.of(rightMonthButton),
+            Constraint.cxcx.of(rightMonthButton),
+            Constraint.wh.of(50)
         )
         
         sundayLabel.addConstraints(
@@ -684,6 +707,7 @@ class WindoCalendarView: UIView {
                 day.reset()
             }
             else{
+                day.reset()
                 day.dateButton.setTitle("\(dayNumber)", forState: .Normal)
                 day.day = dayNumber
                 dayNumber += 1
