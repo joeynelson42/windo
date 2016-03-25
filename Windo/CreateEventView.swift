@@ -81,7 +81,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeLabel.tintColor = UIColor.whiteColor()
         inviteeLabel.tag = 2
         
-        finishButton.setTitle("Create Event", forState: .Normal)
+        finishButton.setTitle("Set Availability", forState: .Normal)
         finishButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         finishButton.titleLabel?.font = UIFont.graphikRegular(20)
         finishButton.backgroundColor = UIColor.blue()

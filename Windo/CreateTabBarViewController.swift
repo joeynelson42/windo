@@ -23,7 +23,7 @@ class CreateTabBarController: UITabBarController {
         let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.cancelTapped))
         self.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.doneTapped))
+        let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.doneTapped))
         self.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
     }
     

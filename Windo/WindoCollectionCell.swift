@@ -13,10 +13,12 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     //MARK: Properties
     var date = NSDate()
     
+    //date header
     var dayNumberLabel = UILabel()
     var weekdayLabel = UILabel()
     var amLabel = UILabel()
     var pmLabel = UILabel()
+    
     
     var scrollView = UIScrollView()
     
@@ -94,43 +96,44 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         pmLabel.font = UIFont.graphikRegular(10)
         pmLabel.textAlignment = .Center
         
-        scrollView.contentSize = CGSize(width: screenWidth/2, height: (CGFloat(times.count) * (timeHeight + timeSpacing)) + 150)
+        scrollView.contentSize = CGSize(width: screenWidth/2, height: (CGFloat(times.count) * (timeHeight + timeSpacing) + 70))
         scrollView.showsVerticalScrollIndicator = false
         
         addSubview(scrollView)
         
+        addSubview(dayNumberLabel)
+        addSubview(weekdayLabel)
+        
         scrollView.addSubviews(time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24)
         
-        scrollView.addSubview(dayNumberLabel)
-        scrollView.addSubview(weekdayLabel)
         scrollView.addSubview(amLabel)
         scrollView.addSubview(pmLabel)
     }
     
     func applyConstraints(){
-        scrollView.addConstraints(
-            Constraint.tt.of(self),
-            Constraint.cxcx.of(self),
-            Constraint.w.of(screenWidth/2),
-            Constraint.h.of(screenHeight - 64)
-        )
-        
         dayNumberLabel.addConstraints(
-            Constraint.tt.of(scrollView, offset: 20),
-            Constraint.cxcx.of(scrollView),
+            Constraint.tt.of(self, offset: 8),
+            Constraint.cxcx.of(self),
             Constraint.w.of(100),
             Constraint.h.of(12)
         )
         
         weekdayLabel.addConstraints(
             Constraint.tb.of(dayNumberLabel, offset: 3),
-            Constraint.cxcx.of(scrollView),
+            Constraint.cxcx.of(self),
             Constraint.w.of(100),
             Constraint.h.of(16)
         )
         
+        scrollView.addConstraints(
+            Constraint.tb.of(weekdayLabel, offset: 15),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth/2),
+            Constraint.h.of(screenHeight - 115)
+        )
+        
         amLabel.addConstraints(
-            Constraint.tb.of(weekdayLabel, offset: 24),
+            Constraint.tt.of(scrollView, offset: 7),
             Constraint.cxcx.of(scrollView),
             Constraint.w.of(100),
             Constraint.h.of(10)
@@ -351,6 +354,8 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         time22 = WindoTimeCell(cellTime: 10, cellDelegate: self)
         time23 = WindoTimeCell(cellTime: 11, cellDelegate: self)
         time24 = WindoTimeCell(cellTime: 12, cellDelegate: self)
+        
+        times = [time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24]
     }
     
     func updateDateData(){

@@ -44,7 +44,7 @@ class WindoTimeViewController: UIViewController {
 extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func configureCollectionView(){
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 20
         layout.scrollDirection = .Horizontal
         layout.itemSize = CGSize(width: screenWidth/3, height: screenHeight - 70)
@@ -53,7 +53,7 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         timeCollectionView.delegate = self
         timeCollectionView.dataSource = self
         timeCollectionView.registerClass(WindoCollectionCell.self, forCellWithReuseIdentifier: "windoCell")
-        timeCollectionView.backgroundColor = UIColor.blue()
+        timeCollectionView.backgroundColor = UIColor.clearColor()
         timeCollectionView.showsVerticalScrollIndicator = false
         
         windoTimeView.addSubview(timeCollectionView)
@@ -64,6 +64,8 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
             Constraint.w.of(screenWidth),
             Constraint.h.of(screenHeight - 64)
         )
+        
+        windoTimeView.bringSubviewToFront(timeCollectionView)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -78,8 +80,16 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("windoCell", forIndexPath: indexPath) as! WindoCollectionCell
         cell.date = dates[indexPath.row]
         cell.updateDateData()
+//        cell.updateTimes()
         cell.backgroundColor = UIColor.clearColor()
     
         return cell
     }
+    
+//    func updateCellTimes(){
+//        for time in times {
+//            time.selectedBackground.alpha = 0.0
+//            time.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+//        }
+//    }
 }

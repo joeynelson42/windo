@@ -11,7 +11,8 @@ import UIKit
 class WindoTimeView: UIView {
     
     //MARK: Properties
-    
+    var headerBackground = UIView()
+
     
     //MARK: View Configuration
     
@@ -22,10 +23,21 @@ class WindoTimeView: UIView {
     }
     
     func configureSubviews(){
+        backgroundColor = UIColor.blue()
         
+        headerBackground.backgroundColor = UIColor.lightBlue()
+
+        addSubview(headerBackground)
     }
     
     func applyConstraints(){
+        headerBackground.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(50)
+        )
         
+        sendSubviewToBack(headerBackground)
     }
 }
