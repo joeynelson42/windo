@@ -8,10 +8,17 @@
 
 import UIKit
 
+@objc
+protocol WindoTimeCellDelegate {
+    optional func updateSelectedTimes(time: Int)
+}
+
 class WindoTimeCell: UIView {
     
     //MARK: Properties
+    var delegate: WindoTimeCellDelegate!
     var timeButton = UIButton()
+    var selectedBackground = UIView()
     var time = 0
     
     //MARK: Inits
@@ -19,9 +26,10 @@ class WindoTimeCell: UIView {
         self.init(frame: CGRectZero)
     }
     
-    convenience init(cellTime: Int){
+    convenience init(cellTime: Int, cellDelegate: WindoTimeCellDelegate){
         self.init(frame: CGRectZero)
         time = cellTime
+        delegate = cellDelegate
     }
     
     override init(frame: CGRect) {
@@ -43,9 +51,17 @@ class WindoTimeCell: UIView {
     
     func configureSubviews(){
         timeButton.setTitle("\(time)", forState: .Normal)
-        timeButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         timeButton.titleLabel!.font = UIFont.graphikRegular(20)
+        timeButton.addTarget(self, action: #selector(WindoTimeCell.handleTap), forControlEvents: .TouchUpInside)
         
+        selectedBackground.alpha = 0.0
+        selectedBackground.backgroundColor = UIColor.darkBlue()
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(WindoTimeCell.handleTap))
+        selectedBackground.addGestureRecognizer(tap)
+        
+        addSubview(selectedBackground)
         addSubview(timeButton)
     }
     
@@ -53,8 +69,41 @@ class WindoTimeCell: UIView {
         timeButton.addConstraints(
             Constraint.cxcx.of(self),
             Constraint.cycy.of(self),
-            Constraint.wh.of(60)
+            Constraint.wh.of(70)
         )
         
+        selectedBackground.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(55)
+        )
+        
+    }
+    
+    func handleTap(){
+        delegate.updateSelectedTimes!(time)
+        
+        if selectedBackground.alpha == 0 {
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                self.selectedBackground.alpha = 1.0
+                self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                }, completion: nil)
+        }
+        else {
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+                self.selectedBackground.alpha = 0.0
+                self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                }, completion: nil)
+        }
+    }
+    
+    func forceHighlight(){
+        self.selectedBackground.alpha = 1.0
+        self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+    }
+    
+    func forceUnhighlight(){
+        self.selectedBackground.alpha = 0.0
+        self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
     }
 }

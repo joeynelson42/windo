@@ -15,7 +15,7 @@ class InviteView: UIView {
     var stackViewContainer = UIView()
     var inviteeLabel = UILabel()
     
-    var inviteePlaceholderText = "Name, @username, email"
+    var inviteePlaceholderText = "Invite friends!"
     
     //MARK: View Configuration
     

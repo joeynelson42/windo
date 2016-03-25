@@ -6,32 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Windo/WindoCalendarView.swift"
-            timestampString = "480553667.655173"
+            filePath = "Windo/CalendarDayView.swift"
+            timestampString = "480569109.382637"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "701"
-            endingLineNumber = "701"
-            landmarkName = "updateMonthData(_:startWeekday:dayCount:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Windo/WindoCalendarView.swift"
-            timestampString = "480553667.655173"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
-            landmarkName = "configureMonthData(_:startWeekday:dayCount:)"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "updateState(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

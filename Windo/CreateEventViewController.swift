@@ -46,6 +46,8 @@ class CreateEventViewController: UIViewController {
     func addTargets(){
         let inviteeTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.inviteeTapped))
         createEventView.inviteeCell.addGestureRecognizer(inviteeTap)
+        
+        createEventView.finishButton.addTarget(self, action: #selector(CreateEventViewController.handleFinish), forControlEvents: .TouchUpInside)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -92,5 +94,11 @@ class CreateEventViewController: UIViewController {
     
     func inviteeTapped(){
         tabBarController?.selectedIndex = 0
+    }
+    
+    func handleFinish(){
+        let dates = createEventView.calendarContainer.selectedDays
+        let timeVC = WindoTimeViewController(selectedDates: dates)
+        navigationController?.pushViewController(timeVC, animated: true)
     }
 }

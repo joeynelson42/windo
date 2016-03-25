@@ -12,6 +12,7 @@ class WindoTimeView: UIView {
     
     //MARK: Properties
     
+    
     //MARK: View Configuration
     
     override func updateConstraints() {

@@ -52,13 +52,13 @@ class CalendarWeekView: UIView {
     func configureSubviews(){
         backgroundColor = UIColor.darkBlue()
         
-        mondayView = CalendarDayView(dayNumber: startDay)
-        tuesdayView = CalendarDayView(dayNumber: startDay + 1)
-        wednesdayView = CalendarDayView(dayNumber: startDay + 2)
-        thursdayView = CalendarDayView(dayNumber: startDay + 3)
-        fridayView = CalendarDayView(dayNumber: startDay + 4)
-        saturdayView = CalendarDayView(dayNumber: startDay + 5)
-        sundayView = CalendarDayView(dayNumber: startDay + 6)
+//        mondayView = CalendarDayView(dayNumber: startDay)
+//        tuesdayView = CalendarDayView(dayNumber: startDay + 1)
+//        wednesdayView = CalendarDayView(dayNumber: startDay + 2)
+//        thursdayView = CalendarDayView(dayNumber: startDay + 3)
+//        fridayView = CalendarDayView(dayNumber: startDay + 4)
+//        saturdayView = CalendarDayView(dayNumber: startDay + 5)
+//        sundayView = CalendarDayView(dayNumber: startDay + 6)
         
         
         let dayColor = UIColor.blue()

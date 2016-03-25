@@ -145,21 +145,46 @@ extension NSDate{
     }
     
     func dayOfWeek() -> String{
-        switch self.month(){
+        let calendar = NSCalendar.currentCalendar()
+        let day = calendar.components([.Weekday], fromDate: self)
+        switch day.weekday{
         case 1:
-            return "Monday"
-        case 2:
-            return "Tuesday"
-        case 3:
-            return "Wednesday"
-        case 4:
-            return "Thursday"
-        case 5:
-            return "Friday"
-        case 6:
-            return "Saturday"
-        case 7:
             return "Sunday"
+        case 2:
+            return "Monday"
+        case 3:
+            return "Tuesday"
+        case 4:
+            return "Wednesday"
+        case 5:
+            return "Thursday"
+        case 6:
+            return "Friday"
+        case 7:
+            return "Saturday"
+        default:
+            return "Invalid weekday ya ding dong"
+        }
+    }
+    
+    func abbrevDayOfWeek() -> String{
+        let calendar = NSCalendar.currentCalendar()
+        let day = calendar.components([.Weekday], fromDate: self)
+        switch day.weekday{
+        case 1:
+            return "SUN"
+        case 2:
+            return "MON"
+        case 3:
+            return "TUE"
+        case 4:
+            return "WED"
+        case 5:
+            return "THU"
+        case 6:
+            return "FRI"
+        case 7:
+            return "SAT"
         default:
             return "Invalid weekday ya ding dong"
         }

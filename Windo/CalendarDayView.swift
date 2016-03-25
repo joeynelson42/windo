@@ -8,22 +8,30 @@
 
 import UIKit
 
+@objc
+protocol CalendarDayDelegate {
+    optional func updateSelectedDays(dayNumber: Int)
+}
+
 class CalendarDayView: UIView {
     
     //MARK: Properties
+    var delegate: CalendarDayDelegate!
     var selectedBackground = UIView()
     var dateButton = UIButton()
     
     var day = 0
+    var date = NSDate()
     
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
     }
     
-    convenience init(dayNumber: Int){
+    convenience init(dayNumber: Int, cellDate: NSDate){
         self.init(frame: CGRectZero)
         day = dayNumber
+        date = cellDate
     }
     
     override init(frame: CGRect) {
@@ -80,14 +88,24 @@ class CalendarDayView: UIView {
                 self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
                 }, completion: nil)
         }
+        
+        delegate.updateSelectedDays!(day)
     }
     
-    func reset(){
-        dateButton.setTitle("", forState: .Normal)
-        day = 0
-        selectedBackground.alpha = 0.0
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        dateButton.alpha = 0.75
+    func updateState(selected: Bool){
+        if !selected {
+            dateButton.setTitle("", forState: .Normal)
+            day = 0
+            selectedBackground.alpha = 0.0
+            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            dateButton.alpha = 0.75
+        }
+        else {
+            selectedBackground.alpha = 1.0
+            selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            dateButton.alpha = 1.0
+        }
+        
     }
     
     func applyConstraints(){

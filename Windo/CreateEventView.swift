@@ -12,10 +12,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //MARK: Properties
     
+    var finishButton = UIButton()
+    
     //invitees
     var inviteeCell = UIView()
     var inviteeLabel = UILabel()
-    let inviteePlaceholderText = "Name, @username, email"
+    let inviteePlaceholderText = "Invite friends!"
 //    var inviteeStackView = UIStackView()
     
     //location
@@ -79,6 +81,11 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeLabel.tintColor = UIColor.whiteColor()
         inviteeLabel.tag = 2
         
+        finishButton.setTitle("Create Event", forState: .Normal)
+        finishButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        finishButton.titleLabel?.font = UIFont.graphikRegular(20)
+        finishButton.backgroundColor = UIColor.blue()
+        
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
         
@@ -91,6 +98,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
+        addSubview(finishButton)
     }
     
     func applyConstraints(){
@@ -147,6 +155,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(nameCell, offset: 1),
             Constraint.w.of(screenWidth),
             Constraint.h.of(screenHeight)
+        )
+        
+        finishButton.addConstraints(
+            Constraint.bb.of(self),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(60)
         )
     }
     
