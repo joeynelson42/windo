@@ -45,8 +45,6 @@
 		6395B1561C741D3F008D0ED5 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B1551C741D3F008D0ED5 /* EventCell.swift */; };
 		6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15C1C742181008D0ED5 /* WindoConstants.swift */; };
 		63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */; };
-		63A28B101CA36301000826DC /* EventCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0F1CA36301000826DC /* EventCalendarView.swift */; };
-		63A28B121CA36813000826DC /* CalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B111CA36813000826DC /* CalendarWeekView.swift */; };
 		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
 		63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E21C978EF70086B919 /* GroupMemberCell.swift */; };
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
@@ -60,6 +58,10 @@
 		63E7E1841C939A8000AF6301 /* Graphik-Super.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1791C939A5A00AF6301 /* Graphik-Super.otf */; };
 		63E7E1851C939A8000AF6301 /* Graphik-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */; };
 		63E7E1871C93A49B00AF6301 /* UIFont+Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */; };
+		63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */; };
+		63F278FC1CA6018200F103CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F81CA6018200F103CA /* Event.swift */; };
+		63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */; };
+		63F278FE1CA6018200F103CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278FA1CA6018200F103CA /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,8 +106,6 @@
 		6395B1551C741D3F008D0ED5 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		6395B15C1C742181008D0ED5 /* WindoConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoConstants.swift; sourceTree = "<group>"; };
 		63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabBarViewController.swift; sourceTree = "<group>"; };
-		63A28B0F1CA36301000826DC /* EventCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCalendarView.swift; sourceTree = "<group>"; };
-		63A28B111CA36813000826DC /* CalendarWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarWeekView.swift; sourceTree = "<group>"; };
 		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		63AD31E21C978EF70086B919 /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
@@ -119,6 +119,10 @@
 		63E7E1791C939A5A00AF6301 /* Graphik-Super.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Super.otf"; sourceTree = "<group>"; };
 		63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Thin.otf"; sourceTree = "<group>"; };
 		63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Windo.swift"; sourceTree = "<group>"; };
+		63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "../Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		63F278F81CA6018200F103CA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = ../Event.swift; sourceTree = "<group>"; };
+		63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		63F278FA1CA6018200F103CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,15 +154,6 @@
 				634D206C1C93908F00A1D4B5 /* SideMenuView.swift */,
 			);
 			name = SideMenu;
-			sourceTree = "<group>";
-		};
-		6383D84B1CA44B7C008F23B8 /* deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				63A28B0F1CA36301000826DC /* EventCalendarView.swift */,
-				63A28B111CA36813000826DC /* CalendarWeekView.swift */,
-			);
-			name = deprecated;
 			sourceTree = "<group>";
 		};
 		6392EF761C976784003C29CE /* EventDetails */ = {
@@ -231,7 +226,6 @@
 				6395B14E1C741C46008D0ED5 /* Model */,
 				6395B14F1C741C55008D0ED5 /* App Files */,
 				6395B1491C741BB4008D0ED5 /* Utility Extensions */,
-				6383D84B1CA44B7C008F23B8 /* deprecated */,
 			);
 			path = Windo;
 			sourceTree = "<group>";
@@ -263,6 +257,9 @@
 		6395B14E1C741C46008D0ED5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				63F278FF1CA6019500F103CA /* DataProperties */,
+				63F278F81CA6018200F103CA /* Event.swift */,
+				63F278FA1CA6018200F103CA /* User.swift */,
 				6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */,
 			);
 			name = Model;
@@ -345,6 +342,15 @@
 				63E7E17B1C939A6100AF6301 /* Graphik Font */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		63F278FF1CA6019500F103CA /* DataProperties */ = {
+			isa = PBXGroup;
+			children = (
+				63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */,
+				63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */,
+			);
+			name = DataProperties;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,7 +436,6 @@
 				636A9F6C1CA2192D00293BE9 /* InviteViewController.swift in Sources */,
 				6392EF641C974CDA003C29CE /* EventHeaderCell.swift in Sources */,
 				634D20691C93906A00A1D4B5 /* CenterViewController.swift in Sources */,
-				63A28B101CA36301000826DC /* EventCalendarView.swift in Sources */,
 				6395B1531C741C97008D0ED5 /* HomeView.swift in Sources */,
 				6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */,
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
@@ -455,18 +460,21 @@
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
-				63A28B121CA36813000826DC /* CalendarWeekView.swift in Sources */,
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,
+				63F278FC1CA6018200F103CA /* Event.swift in Sources */,
 				6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */,
+				63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */,
 				6395B1561C741D3F008D0ED5 /* EventCell.swift in Sources */,
 				6395B1471C741AFE008D0ED5 /* APConstraints.swift in Sources */,
 				6392EF731C976774003C29CE /* EventHeatmapViewController.swift in Sources */,
 				6395B14D1C741BEB008D0ED5 /* GHButton.swift in Sources */,
 				63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */,
 				6383D84F1CA4AD46008F23B8 /* WindoTimeView.swift in Sources */,
+				63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */,
 				634D206B1C93907F00A1D4B5 /* SideMenuViewController.swift in Sources */,
 				6383D8531CA4AD6C008F23B8 /* WindoTimeCell.swift in Sources */,
 				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
+				63F278FE1CA6018200F103CA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

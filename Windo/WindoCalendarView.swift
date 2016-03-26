@@ -8,9 +8,16 @@
 
 import UIKit
 
+@objc
+protocol WindoCalendarDelegate {
+    optional func daysSelectedDidChange(dates: [NSDate])
+}
+
 class WindoCalendarView: UIView, CalendarDayDelegate {
     
     //MARK: Properties
+    var delegate: WindoCalendarDelegate!
+    
     var month = 4
     var year = 1991
     
@@ -518,6 +525,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                 
                 days[index] = CalendarDayView(dayNumber: dayNumber, cellDate: date)
                 day.day = dayNumber
+                day.date = date
                 dayNumber += 1
             }
         }
@@ -550,12 +558,32 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         for (index,day) in days.enumerate() {
             if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
+                let d1 = day.date.fullDate()
+                print("\(d1)")
                 day.updateState(false)
             }
             else{
                 
-                //TODO: figure out why this isn't finding the date even if the day is selected
-                day.updateState(selectedDays.contains(day.date))
+                let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+                let components = NSDateComponents()
+                components.year = year
+                components.month = self.month
+                components.day = dayNumber
+                components.hour = 16
+                components.minute = 20
+                components.second = 0
+                guard let date = calendar?.dateFromComponents(components) else { return }
+                day.date = date
+                
+                var selected = false
+                
+                for selectedDay in selectedDays {
+                    if day.date.fullDate() == selectedDay.fullDate(){
+                        selected = true
+                    }
+                }
+                
+                day.updateState(selected)
                 day.dateButton.setTitle("\(dayNumber)", forState: .Normal)
                 day.day = dayNumber
                 dayNumber += 1
@@ -576,7 +604,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         components.year = year
         components.month = month
         components.day = 1
-        components.hour = 14
+        components.hour = 16
         components.minute = 20
         components.second = 0
         let date = calendar?.dateFromComponents(components)
@@ -597,7 +625,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         components.year = year
         components.month = month
         components.day = 1
-        components.hour = 14
+        components.hour = 16
         components.minute = 20
         components.second = 0
         let date = calendar?.dateFromComponents(components)
@@ -640,6 +668,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         }
         
         selectedDays = selectedDays.sort({ $0.compare($1) == NSComparisonResult.OrderedAscending })
+        
+        delegate.daysSelectedDidChange!(selectedDays)
     }
 }
 

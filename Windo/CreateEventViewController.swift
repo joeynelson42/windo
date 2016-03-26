@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CreateEventViewController: UIViewController {
     
@@ -15,10 +16,18 @@ class CreateEventViewController: UIViewController {
     var createEventView: CreateEventView!
     var members = [String]()
     var initialStates = [CGFloat]()
+    var selectedDates = [NSDate]()
     
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
+        
+//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        let managedObjectContext = appDelegate.managedObjectContext
+//        
+//        let entityDescription = NSEntityDescription.entityForName("Event", inManagedObjectContext: managedObjectContext)
+//        let newEvent = Event(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
+        
         createEventView = CreateEventView()
         view = createEventView
         addTargets()
@@ -29,6 +38,7 @@ class CreateEventViewController: UIViewController {
         
         createEventView.calendarContainer.dragView.addGestureRecognizer(drag)
         createEventView.calendarContainer.dragView.addGestureRecognizer(tap)
+        createEventView.calendarContainer.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -100,5 +110,12 @@ class CreateEventViewController: UIViewController {
         let dates = createEventView.calendarContainer.selectedDays
         let timeVC = WindoTimeViewController(selectedDates: dates)
         navigationController?.pushViewController(timeVC, animated: true)
+    }
+}
+
+extension CreateEventViewController: WindoCalendarDelegate {
+    
+    func daysSelectedDidChange(dates: [NSDate]) {
+        selectedDates = dates
     }
 }

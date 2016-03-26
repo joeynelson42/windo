@@ -6,15 +6,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Windo/CalendarDayView.swift"
-            timestampString = "480569109.382637"
+            timestampString = "480707335.537358"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "updateState(_:)"
             landmarkType = "5">
          </BreakpointContent>
