@@ -21,7 +21,7 @@ class CalendarDayView: UIView {
     var dateButton = UIButton()
     
     var day = 0
-    var date = NSDate()
+    var date: NSDate!
     
     //MARK: Inits
     convenience init() {

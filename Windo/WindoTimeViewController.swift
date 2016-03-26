@@ -38,7 +38,10 @@ class WindoTimeViewController: UIViewController {
     override func viewDidLoad() {
         view = windoTimeView
         configureCollectionView()
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        timeCollectionView.reloadData()
     }
 }
 
@@ -81,18 +84,9 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("windoCell", forIndexPath: indexPath) as! WindoCollectionCell
         cell.delegate = self
         cell.date = dates[indexPath.row]
-        
-        var hoursSelected = [Int]()
-        for time in parentVC.selectedTimes {
-            print("\(time.fullDate()) \(cell.date.fullDate())")
-            
-            if time.fullDate() == cell.date.fullDate() {
-                hoursSelected.append(time.hour())
-            }
-        }
-        
         cell.backgroundColor = UIColor.clearColor()
-        cell.updateDateData(hoursSelected)
+        cell.updateDateData()
+        
         return cell
     }
     
@@ -106,6 +100,16 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         }
         else {
             parentVC.selectedTimes.append(date)
+        }
+    }
+    
+    func isTimeSelected(date: NSDate, time: Int) -> Bool {
+        let date = createDateWithComponents(date, time: time)
+        if parentVC.selectedTimes.contains(date) {
+            return true
+        }
+        else {
+            return false
         }
     }
     
