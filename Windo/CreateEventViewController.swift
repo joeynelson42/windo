@@ -17,6 +17,7 @@ class CreateEventViewController: UIViewController {
     var members = [String]()
     var initialStates = [CGFloat]()
     var selectedDates = [NSDate]()
+    var selectedTimes = [NSDate]()
     
     //MARK: Lifecycle Methods
     
@@ -108,7 +109,7 @@ class CreateEventViewController: UIViewController {
     
     func handleFinish(){
         let dates = createEventView.calendarContainer.selectedDays
-        let timeVC = WindoTimeViewController(selectedDates: dates)
+        let timeVC = WindoTimeViewController(selectedDates: dates, parent: self)
         navigationController?.pushViewController(timeVC, animated: true)
     }
 }

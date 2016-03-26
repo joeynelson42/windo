@@ -19,6 +19,9 @@ class WindoTimeCell: UIView {
     var delegate: WindoTimeCellDelegate!
     var timeButton = UIButton()
     var selectedBackground = UIView()
+    var timeSelected = false
+    
+    var date = NSDate()
     var time = 0
     
     //MARK: Inits
@@ -50,14 +53,21 @@ class WindoTimeCell: UIView {
     }
     
     func configureSubviews(){
-        timeButton.setTitle("\(time)", forState: .Normal)
+        if time > 12 {
+            timeButton.setTitle("\(time - 12)", forState: .Normal)
+        }
+        else {
+            timeButton.setTitle("\(time)", forState: .Normal)
+        }
+        
+        if timeSelected{ forceHighlight() }
+        else { forceUnhighlight() }
+        
         timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         timeButton.titleLabel!.font = UIFont.graphikRegular(20)
         timeButton.addTarget(self, action: #selector(WindoTimeCell.handleTap), forControlEvents: .TouchUpInside)
         
-        selectedBackground.alpha = 0.0
         selectedBackground.backgroundColor = UIColor.darkBlue()
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         let tap = UITapGestureRecognizer(target: self, action: #selector(WindoTimeCell.handleTap))
         selectedBackground.addGestureRecognizer(tap)
         
@@ -77,7 +87,6 @@ class WindoTimeCell: UIView {
             Constraint.cycy.of(self),
             Constraint.wh.of(55)
         )
-        
     }
     
     func handleTap(){

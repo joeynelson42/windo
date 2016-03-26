@@ -8,10 +8,16 @@
 
 import UIKit
 
+@objc
+protocol WindoCollectionCellDelegate {
+    optional func updateSelectedTimes(date: NSDate, time: Int)
+}
+
 class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     
     //MARK: Properties
     var date = NSDate()
+    var delegate: WindoCollectionCellDelegate!
     
     //date header
     var dayNumberLabel = UILabel()
@@ -315,17 +321,6 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         )
     }
     
-    override func prepareForReuse() {
-        for time in times {
-            if selectedTimes.contains(time.time) {
-                time.forceHighlight()
-            }
-            else {
-                time.forceUnhighlight()
-            }
-        }
-    }
-    
     func configureDateData(){
         dayNumberLabel.text = "\(date.day())"
         weekdayLabel.text = date.abbrevDayOfWeek()
@@ -342,33 +337,37 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         time10 = WindoTimeCell(cellTime: 9, cellDelegate: self)
         time11 = WindoTimeCell(cellTime: 10, cellDelegate: self)
         time12 = WindoTimeCell(cellTime: 11, cellDelegate: self)
-        time13 = WindoTimeCell(cellTime: 1, cellDelegate: self)
-        time14 = WindoTimeCell(cellTime: 2, cellDelegate: self)
-        time15 = WindoTimeCell(cellTime: 3, cellDelegate: self)
-        time16 = WindoTimeCell(cellTime: 4, cellDelegate: self)
-        time17 = WindoTimeCell(cellTime: 5, cellDelegate: self)
-        time18 = WindoTimeCell(cellTime: 6, cellDelegate: self)
-        time19 = WindoTimeCell(cellTime: 7, cellDelegate: self)
-        time20 = WindoTimeCell(cellTime: 8, cellDelegate: self)
-        time21 = WindoTimeCell(cellTime: 9, cellDelegate: self)
-        time22 = WindoTimeCell(cellTime: 10, cellDelegate: self)
-        time23 = WindoTimeCell(cellTime: 11, cellDelegate: self)
-        time24 = WindoTimeCell(cellTime: 12, cellDelegate: self)
+        time13 = WindoTimeCell(cellTime: 12, cellDelegate: self)
+        time14 = WindoTimeCell(cellTime: 13, cellDelegate: self)
+        time15 = WindoTimeCell(cellTime: 14, cellDelegate: self)
+        time16 = WindoTimeCell(cellTime: 15, cellDelegate: self)
+        time17 = WindoTimeCell(cellTime: 16, cellDelegate: self)
+        time18 = WindoTimeCell(cellTime: 17, cellDelegate: self)
+        time19 = WindoTimeCell(cellTime: 18, cellDelegate: self)
+        time20 = WindoTimeCell(cellTime: 19, cellDelegate: self)
+        time21 = WindoTimeCell(cellTime: 20, cellDelegate: self)
+        time22 = WindoTimeCell(cellTime: 21, cellDelegate: self)
+        time23 = WindoTimeCell(cellTime: 22, cellDelegate: self)
+        time24 = WindoTimeCell(cellTime: 23, cellDelegate: self)
         
         times = [time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24]
     }
     
-    func updateDateData(){
+    func updateDateData(timesSelected: [Int]){
         dayNumberLabel.text = "\(date.day())"
         weekdayLabel.text = date.abbrevDayOfWeek()
+
+        for time in times {
+            if timesSelected.contains(time.time) {
+                time.timeSelected = true
+            }
+            else {
+                time.timeSelected = false
+            }
+        }
     }
     
     func updateSelectedTimes(time: Int) {
-        if selectedTimes.contains(time){
-            selectedTimes.removeAtIndex(selectedTimes.indexOf(time)!)
-        }
-        else {
-            selectedTimes.append(time)
-        }
+        delegate.updateSelectedTimes!(date, time: time)
     }
 }

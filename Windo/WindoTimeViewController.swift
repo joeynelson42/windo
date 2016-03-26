@@ -11,7 +11,7 @@ import UIKit
 class WindoTimeViewController: UIViewController {
     
     //MARK: Properties
-    
+    var parentVC: CreateEventViewController!
     var windoTimeView = WindoTimeView()
     var timeCollectionView: UICollectionView!
     
@@ -22,10 +22,11 @@ class WindoTimeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(selectedDates: [NSDate]){
+    convenience init(selectedDates: [NSDate], parent: CreateEventViewController){
         self.init(nibName: nil, bundle:nil)
         
         dates = selectedDates
+        parentVC = parent
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +42,7 @@ class WindoTimeViewController: UIViewController {
     }
 }
 
-extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDataSource, WindoCollectionCellDelegate {
     func configureCollectionView(){
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -78,18 +79,46 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("windoCell", forIndexPath: indexPath) as! WindoCollectionCell
+        cell.delegate = self
         cell.date = dates[indexPath.row]
-        cell.updateDateData()
-//        cell.updateTimes()
+        
+        var hoursSelected = [Int]()
+        for time in parentVC.selectedTimes {
+            print("\(time.fullDate()) \(cell.date.fullDate())")
+            
+            if time.fullDate() == cell.date.fullDate() {
+                hoursSelected.append(time.hour())
+            }
+        }
+        
         cell.backgroundColor = UIColor.clearColor()
-    
+        cell.updateDateData(hoursSelected)
         return cell
     }
     
-//    func updateCellTimes(){
-//        for time in times {
-//            time.selectedBackground.alpha = 0.0
-//            time.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-//        }
-//    }
+    func updateSelectedTimes(date: NSDate, time: Int) {
+        let date = createDateWithComponents(date, time: time)
+        
+        if parentVC.selectedTimes.contains(date) {
+            if let index = parentVC.selectedTimes.indexOf(date) {
+                parentVC.selectedTimes.removeAtIndex(index)
+            }
+        }
+        else {
+            parentVC.selectedTimes.append(date)
+        }
+    }
+    
+    func createDateWithComponents(date: NSDate, time: Int) -> NSDate {
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = NSDateComponents()
+        components.year = date.year()
+        components.month = date.month()
+        components.day = date.day()
+        components.hour = time
+        components.minute = 0
+        components.second = 0
+        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        return date
+    }
 }
