@@ -137,6 +137,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630D7BEB1CA87AB600D85C86 /* Time Selection */ = {
+			isa = PBXGroup;
+			children = (
+				6383D8501CA4AD54008F23B8 /* WindoTimeViewController.swift */,
+				6383D84E1CA4AD46008F23B8 /* WindoTimeView.swift */,
+				6383D8561CA4AE8F008F23B8 /* WindoCollectionCell.swift */,
+				6383D8521CA4AD6C008F23B8 /* WindoTimeCell.swift */,
+			);
+			name = "Time Selection";
+			sourceTree = "<group>";
+		};
 		634D20631C93901C00A1D4B5 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,10 +301,7 @@
 				63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */,
 				63A28B0D1CA3354A000826DC /* CreateEventDetails */,
 				63A28B0E1CA33555000826DC /* Invite */,
-				6383D8501CA4AD54008F23B8 /* WindoTimeViewController.swift */,
-				6383D84E1CA4AD46008F23B8 /* WindoTimeView.swift */,
-				6383D8561CA4AE8F008F23B8 /* WindoCollectionCell.swift */,
-				6383D8521CA4AD6C008F23B8 /* WindoTimeCell.swift */,
+				630D7BEB1CA87AB600D85C86 /* Time Selection */,
 			);
 			name = EventCreation;
 			sourceTree = "<group>";

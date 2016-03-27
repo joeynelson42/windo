@@ -65,6 +65,8 @@ class CalendarDayView: UIView {
             dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), forControlEvents: .TouchUpInside)
         }
         
+        
+        
         addSubview(selectedBackground)
         addSubview(dateButton)
     }

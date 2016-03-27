@@ -12,6 +12,7 @@ class InviteViewController: UIViewController {
     
     //MARK: Properties
     
+    var createTabBar: CreateTabBarController!
     var inviteView = InviteView()
     var members = [String]()
     
@@ -19,6 +20,8 @@ class InviteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createTabBar = (tabBarController as! CreateTabBarController)
         view = inviteView
         
         inviteView.inviteeTableView.delegate = self
@@ -31,21 +34,28 @@ class InviteViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.cancelTapped))
+        createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        
         let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
-        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+        createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
     }
     
     func doneTapped(){
-        tabBarController?.selectedIndex = 1
+        createTabBar.selectedIndex = 1
+    }
+    
+    func cancelTapped(){
+        createTabBar.displayCancelAlert()
     }
     
     func updateInvitees(){
-        if(tabBarController as! CreateTabBarController).invitees.count < 1 {
+        if createTabBar.invitees.count < 1 {
             inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
             return
         }
         
-        for (index, name) in (tabBarController as! CreateTabBarController).invitees.enumerate() {
+        for (index, name) in createTabBar.invitees.enumerate() {
             if index == 0 {
                 inviteView.inviteeLabel.text = name
             }
@@ -75,7 +85,7 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
         cell.initialsLabel.text = getInitials(members[indexPath.row])
         
-        if(tabBarController as! CreateTabBarController).invitees.contains(members[indexPath.row]){
+        if createTabBar.invitees.contains(members[indexPath.row]){
             cell.checkmarkImageView.hidden = false
             cell.infoButton.hidden = true
         }
@@ -94,14 +104,14 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
         
-        if(tabBarController as! CreateTabBarController).invitees.contains(members[indexPath.row]){
-            let index = (tabBarController as! CreateTabBarController).invitees.indexOf(members[indexPath.row])
-            (tabBarController as! CreateTabBarController).invitees.removeAtIndex(index!)
+        if createTabBar.invitees.contains(members[indexPath.row]){
+            let index = createTabBar.invitees.indexOf(members[indexPath.row])
+            createTabBar.invitees.removeAtIndex(index!)
             cell.checkmarkImageView.hidden = true
             cell.infoButton.hidden = false
         }
         else{
-            (tabBarController as! CreateTabBarController).invitees.append(cell.nameLabel.text!)
+            createTabBar.invitees.append(cell.nameLabel.text!)
             cell.checkmarkImageView.hidden = false
             cell.infoButton.hidden = true
         }

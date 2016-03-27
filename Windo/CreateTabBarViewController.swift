@@ -13,6 +13,7 @@ class CreateTabBarController: UITabBarController {
     //MARK: Properties
 //    let newEvent = Event()
     var invitees = [String]()
+    var selectedDates = [NSDate]()
     
     //MARK: Lifecycle Methods
     
@@ -35,7 +36,7 @@ class CreateTabBarController: UITabBarController {
     }
     
     func cancelTapped(){
-        navigationController?.popViewControllerAnimated(true)
+        displayCancelAlert()
     }
     
     func doneTapped(){
@@ -44,8 +45,24 @@ class CreateTabBarController: UITabBarController {
             selectedIndex = 1
         case 1:
             navigationController?.popViewControllerAnimated(true)
+        case 2:
+            selectedIndex = 1
         default:
             return
         }
+    }
+    
+    func displayCancelAlert(){
+        let alertController = UIAlertController(title: "Hey!", message: "Are you sure you want to discard this event?", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        let destroyAction = UIAlertAction(title: "Discard", style: .Destructive) { (action) in
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+        alertController.addAction(destroyAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }

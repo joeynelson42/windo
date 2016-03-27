@@ -13,9 +13,4 @@ let screenWidth = screenSize.width
 let screenHeight = screenSize.height
 var keyboardHeight: CGFloat = 216
 
-//MARK: Colors
-
-
-//MARK: Fonts
-
 

@@ -49,7 +49,8 @@ class HomeViewController: CenterViewController{
         let createTabVC = CreateTabBarController()
         let vc1 = InviteViewController()
         let vc2 = CreateEventViewController()
-        let controllers = [vc1, vc2]
+        let vc3 = WindoTimeViewController()
+        let controllers = [vc1, vc2, vc3]
         
         vc1.tabBarItem = UITabBarItem(
             title: "Invite",
@@ -60,6 +61,11 @@ class HomeViewController: CenterViewController{
             title: "Create",
             image: UIImage(named: "HomeIcon"),
             tag: 1)
+        
+        vc3.tabBarItem = UITabBarItem(
+            title: "WindoSelect",
+            image: UIImage(named: "HomeIcon"),
+            tag: 2)
         
         createTabVC.viewControllers = controllers
         createTabVC.selectedIndex = 0

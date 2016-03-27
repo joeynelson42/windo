@@ -11,7 +11,7 @@ import UIKit
 class WindoTimeViewController: UIViewController {
     
     //MARK: Properties
-    var parentVC: CreateEventViewController!
+    var createTabBar: CreateTabBarController!
     var windoTimeView = WindoTimeView()
     var timeCollectionView: UICollectionView!
     
@@ -22,11 +22,9 @@ class WindoTimeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(selectedDates: [NSDate], parent: CreateEventViewController){
+    convenience init(selectedDates: [NSDate]){
         self.init(nibName: nil, bundle:nil)
-        
         dates = selectedDates
-        parentVC = parent
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,14 +32,32 @@ class WindoTimeViewController: UIViewController {
     }
     
     //MARK: Lifecycle Methods
-    
     override func viewDidLoad() {
+        createTabBar = (tabBarController as! CreateTabBarController)
         view = windoTimeView
         configureCollectionView()
     }
     
     override func viewWillAppear(animated: Bool) {
         timeCollectionView.reloadData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.cancelTapped))
+        createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        
+        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doneTapped))
+        createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+    }
+    
+    func doneTapped(){
+        createTabBar.selectedIndex = 1
+    }
+    
+    func cancelTapped(){
+        
     }
 }
 
@@ -86,26 +102,28 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.date = dates[indexPath.row]
         cell.backgroundColor = UIColor.clearColor()
         cell.updateDateData()
-        
         return cell
     }
     
     func updateSelectedTimes(date: NSDate, time: Int) {
         let date = createDateWithComponents(date, time: time)
+        let createVC = createTabBar.viewControllers![1] as! CreateEventViewController
         
-        if parentVC.selectedTimes.contains(date) {
-            if let index = parentVC.selectedTimes.indexOf(date) {
-                parentVC.selectedTimes.removeAtIndex(index)
+        if createVC.selectedTimes.contains(date) {
+            if let index = createVC.selectedTimes.indexOf(date) {
+                createVC.selectedTimes.removeAtIndex(index)
             }
         }
         else {
-            parentVC.selectedTimes.append(date)
+            createVC.selectedTimes.append(date)
         }
     }
     
     func isTimeSelected(date: NSDate, time: Int) -> Bool {
         let date = createDateWithComponents(date, time: time)
-        if parentVC.selectedTimes.contains(date) {
+        let createVC = createTabBar.viewControllers![1] as! CreateEventViewController
+        
+        if createVC.selectedTimes.contains(date) {
             return true
         }
         else {

@@ -478,7 +478,6 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.lr.of(day34, offset: 1),
             Constraint.wh.of(daySize)
         )
-        
     }
     
     func configureMonth(date: NSDate, currentMonth: Bool){
@@ -491,7 +490,6 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         let firstDay = date.startOfMonth()
         let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
         let firstWeekday = firstComponents.weekday
-        
         
         let components = calendar.components([.Year, .Month], fromDate: date)
         let startOfMonth = calendar.dateFromComponents(components)!
@@ -519,6 +517,16 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                 day.day = dayNumber
                 day.date = date
                 dayNumber += 1
+                
+                let today = NSDate()
+                if day.date.fullDate() == today.fullDate() {
+                    day.layer.borderColor = UIColor.whiteColor().CGColor
+                    day.layer.borderWidth = 1.0
+                }
+                else {
+                    day.layer.borderColor = UIColor.clearColor().CGColor
+                    day.layer.borderWidth = 0.0
+                }
             }
         }
     }
@@ -561,6 +569,15 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                     if day.date.fullDate() == selectedDay.fullDate(){
                         selected = true
                     }
+                }
+                
+                if day.date.fullDate() == NSDate().fullDate() {
+                    day.layer.borderColor = UIColor.whiteColor().CGColor
+                    day.layer.borderWidth = 1.0
+                }
+                else {
+                    day.layer.borderColor = UIColor.clearColor().CGColor
+                    day.layer.borderWidth = 0.0
                 }
                 
                 day.updateState(selected)

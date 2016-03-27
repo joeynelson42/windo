@@ -12,13 +12,13 @@ import QuartzCore
 enum SlideOutState {
     case BothCollapsed
     case LeftPanelExpanded
-    case RightPanelExpanded
 }
 
 class ContainerViewController: UIViewController {
     
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
+    var tapToClose: UITapGestureRecognizer!
     
     var currentState: SlideOutState = .BothCollapsed {
         didSet {
@@ -48,12 +48,10 @@ class ContainerViewController: UIViewController {
         centerNavigationController.didMoveToParentViewController(self)
         
         centerNavigationController.navigationBar.barTintColor = UIColor.lightTeal()
-//        centerNavigationController.navigationBar.tintColor = UIColor.mikeBlue()
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
         
-        
-        
+        tapToClose = UITapGestureRecognizer(target: self, action: #selector(ContainerViewController.collapseSidePanel))
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -71,6 +69,13 @@ extension ContainerViewController: CenterViewControllerDelegate {
         
         if notAlreadyExpanded {
             addLeftPanelViewController()
+        }
+        
+        if currentState == .BothCollapsed{
+            centerNavigationController.view.addGestureRecognizer(tapToClose)
+        }
+        else {
+            centerNavigationController.view.removeGestureRecognizer(tapToClose)
         }
         
         animateLeftPanel(shouldExpand: notAlreadyExpanded)
@@ -100,12 +105,12 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func animateLeftPanel(shouldExpand shouldExpand: Bool) {
         if (shouldExpand) {
             currentState = .LeftPanelExpanded
-            
+            centerNavigationController.view.addGestureRecognizer(tapToClose)
             animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .BothCollapsed
-                
+                self.centerNavigationController.view.removeGestureRecognizer(self.tapToClose)
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil;
             }

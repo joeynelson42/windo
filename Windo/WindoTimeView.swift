@@ -13,7 +13,6 @@ class WindoTimeView: UIView {
     //MARK: Properties
     var headerBackground = UIView()
 
-    
     //MARK: View Configuration
     
     override func updateConstraints() {
@@ -24,9 +23,7 @@ class WindoTimeView: UIView {
     
     func configureSubviews(){
         backgroundColor = UIColor.blue()
-        
         headerBackground.backgroundColor = UIColor.lightBlue()
-
         addSubview(headerBackground)
     }
     

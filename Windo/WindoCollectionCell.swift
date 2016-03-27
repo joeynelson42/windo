@@ -114,6 +114,7 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         pmLabel.font = UIFont.graphikRegular(10)
         pmLabel.textAlignment = .Center
         
+        scrollView.delegate = self
         scrollView.contentSize = CGSize(width: screenWidth/2, height: (CGFloat(times.count) * (timeHeight + timeSpacing) + 70))
         scrollView.showsVerticalScrollIndicator = false
         
@@ -366,39 +367,6 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         times = [time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24]
     }
     
-    func configureDateDataWithDate(newDate: NSDate){
-        
-        dayNumberLabel.text = "\(date.day())"
-        weekdayLabel.text = date.abbrevDayOfWeek()
-        
-        time1 = WindoTimeCell(cellTime: 12, cellDelegate: self, cellDate: newDate)
-        time2 = WindoTimeCell(cellTime: 1, cellDelegate: self, cellDate: newDate)
-        time3 = WindoTimeCell(cellTime: 2, cellDelegate: self, cellDate: newDate)
-        time4 = WindoTimeCell(cellTime: 3, cellDelegate: self, cellDate: newDate)
-        time5 = WindoTimeCell(cellTime: 4, cellDelegate: self, cellDate: newDate)
-        time6 = WindoTimeCell(cellTime: 5, cellDelegate: self, cellDate: newDate)
-        time7 = WindoTimeCell(cellTime: 6, cellDelegate: self, cellDate: newDate)
-        time8 = WindoTimeCell(cellTime: 7, cellDelegate: self, cellDate: newDate)
-        time9 = WindoTimeCell(cellTime: 8, cellDelegate: self, cellDate: newDate)
-        time10 = WindoTimeCell(cellTime: 9, cellDelegate: self, cellDate: newDate)
-        time11 = WindoTimeCell(cellTime: 10, cellDelegate: self, cellDate: newDate)
-        time12 = WindoTimeCell(cellTime: 11, cellDelegate: self, cellDate: newDate)
-        time13 = WindoTimeCell(cellTime: 12, cellDelegate: self, cellDate: newDate)
-        time14 = WindoTimeCell(cellTime: 13, cellDelegate: self, cellDate: newDate)
-        time15 = WindoTimeCell(cellTime: 14, cellDelegate: self, cellDate: newDate)
-        time16 = WindoTimeCell(cellTime: 15, cellDelegate: self, cellDate: newDate)
-        time17 = WindoTimeCell(cellTime: 16, cellDelegate: self, cellDate: newDate)
-        time18 = WindoTimeCell(cellTime: 17, cellDelegate: self, cellDate: newDate)
-        time19 = WindoTimeCell(cellTime: 18, cellDelegate: self, cellDate: newDate)
-        time20 = WindoTimeCell(cellTime: 19, cellDelegate: self, cellDate: newDate)
-        time21 = WindoTimeCell(cellTime: 20, cellDelegate: self, cellDate: newDate)
-        time22 = WindoTimeCell(cellTime: 21, cellDelegate: self, cellDate: newDate)
-        time23 = WindoTimeCell(cellTime: 22, cellDelegate: self, cellDate: newDate)
-        time24 = WindoTimeCell(cellTime: 23, cellDelegate: self, cellDate: newDate)
-        
-        times = [time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24]
-    }
-    
     func updateDateData(){
         dayNumberLabel.text = "\(date.day())"
         weekdayLabel.text = date.abbrevDayOfWeek()
@@ -424,3 +392,16 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         return delegate.isTimeSelected!(date, time: time)
     }
 }
+
+
+extension WindoCollectionCell: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        print(scrollView.contentOffset)
+        
+        amLabel.center = CGPointMake(amLabel.center.x + scrollView.contentOffset.y, (amLabel.center.y + scrollView.contentOffset.y))
+        print("am center: \(amLabel.center)")
+    }
+}
+
+

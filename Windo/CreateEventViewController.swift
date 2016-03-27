@@ -12,23 +12,21 @@ import CoreData
 class CreateEventViewController: UIViewController {
     
     //MARK: Properties
-    
+    var createTabBar: CreateTabBarController!
     var createEventView: CreateEventView!
     var members = [String]()
     var initialStates = [CGFloat]()
-    var selectedDates = [NSDate]()
     var selectedTimes = [NSDate]()
     
     //MARK: Lifecycle Methods
-    
     override func viewDidLoad() {
-        
 //        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 //        let managedObjectContext = appDelegate.managedObjectContext
 //        
 //        let entityDescription = NSEntityDescription.entityForName("Event", inManagedObjectContext: managedObjectContext)
 //        let newEvent = Event(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext)
         
+        createTabBar = (tabBarController as! CreateTabBarController)
         createEventView = CreateEventView()
         view = createEventView
         addTargets()
@@ -45,8 +43,11 @@ class CreateEventViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
+        createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        
         let doneBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.doneTapped))
-        tabBarController?.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)        
+        createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -82,13 +83,12 @@ class CreateEventViewController: UIViewController {
     }
     
     func updateInvitees(){
-        
-        if(tabBarController as! CreateTabBarController).invitees.count < 1 {
+        if createTabBar.invitees.count < 1 {
             createEventView.inviteeLabel.text = createEventView.inviteePlaceholderText
             return
         }
         
-        for (index, name) in (tabBarController as! CreateTabBarController).invitees.enumerate() {
+        for (index, name) in createTabBar.invitees.enumerate() {
             if index == 0 {
                 createEventView.inviteeLabel.text = name
             }
@@ -100,7 +100,11 @@ class CreateEventViewController: UIViewController {
     }
     
     func doneTapped(){
-        tabBarController?.navigationController?.popViewControllerAnimated(true)
+        createTabBar.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func cancelTapped(){
+        createTabBar.displayCancelAlert()
     }
     
     func inviteeTapped(){
@@ -109,14 +113,14 @@ class CreateEventViewController: UIViewController {
     
     func handleFinish(){
         let dates = createEventView.calendarContainer.selectedDays
-        let timeVC = WindoTimeViewController(selectedDates: dates, parent: self)
-        navigationController?.pushViewController(timeVC, animated: true)
+        (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
+        createTabBar.selectedIndex = 2
     }
 }
 
 extension CreateEventViewController: WindoCalendarDelegate {
     
     func daysSelectedDidChange(dates: [NSDate]) {
-        selectedDates = dates
+        createTabBar.selectedDates = dates
     }
 }
