@@ -27,7 +27,6 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     var amLabel = UILabel()
     var pmLabel = UILabel()
     
-    
     var scrollView = UIScrollView()
     
     //MARK: Inits

@@ -77,6 +77,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     
     var days = [CalendarDayView]()
     var daysConfigured = false
+    let daySize = (screenWidth - 8)/7
     
     var selectedDays = [NSDate]()
     
@@ -247,8 +248,6 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.cxcx.of(self, offset: 3 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
-        
-        let daySize = (screenWidth - 8)/7
         
         dayBackground.addConstraints(
             Constraint.tt.of(day1, offset: -1),

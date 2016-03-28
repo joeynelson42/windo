@@ -46,7 +46,7 @@ class CreateEventViewController: UIViewController {
         let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
-        let doneBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.doneTapped))
+        let doneBarButton = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.finishTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
     }
     
@@ -59,7 +59,7 @@ class CreateEventViewController: UIViewController {
         let inviteeTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.inviteeTapped))
         createEventView.inviteeCell.addGestureRecognizer(inviteeTap)
         
-        createEventView.finishButton.addTarget(self, action: #selector(CreateEventViewController.handleFinish), forControlEvents: .TouchUpInside)
+        createEventView.setAvailabilityButton.addTarget(self, action: #selector(CreateEventViewController.handleSetAvailability), forControlEvents: .TouchUpInside)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -99,7 +99,7 @@ class CreateEventViewController: UIViewController {
         }
     }
     
-    func doneTapped(){
+    func finishTapped(){
         createTabBar.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -111,7 +111,7 @@ class CreateEventViewController: UIViewController {
         tabBarController?.selectedIndex = 0
     }
     
-    func handleFinish(){
+    func handleSetAvailability(){
         let dates = createEventView.calendarContainer.selectedDays
         (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
         createTabBar.selectedIndex = 2

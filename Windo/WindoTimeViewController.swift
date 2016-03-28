@@ -65,7 +65,7 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
     func configureCollectionView(){
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = 20
+        layout.minimumLineSpacing = 5
         layout.scrollDirection = .Horizontal
         layout.itemSize = CGSize(width: screenWidth/3, height: screenHeight - 70)
         timeCollectionView = UICollectionView(frame: windoTimeView.frame, collectionViewLayout: layout)

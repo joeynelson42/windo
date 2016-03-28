@@ -11,14 +11,11 @@ import UIKit
 class CreateEventView: UIView, UITextFieldDelegate {
     
     //MARK: Properties
-    
-    var finishButton = UIButton()
-    
+
     //invitees
     var inviteeCell = UIView()
     var inviteeLabel = UILabel()
     let inviteePlaceholderText = "Invite friends!"
-//    var inviteeStackView = UIStackView()
     
     //location
     var locationCell = UIView()
@@ -30,8 +27,16 @@ class CreateEventView: UIView, UITextFieldDelegate {
     var nameTitleLabel = UILabel()
     var nameTextField = UITextField()
     
+    //cellSeparators
+    var inviteeSeparator = UIView()
+    var locationSeparator = UIView()
+    var nameSeparator = UIView()
+    
     //calendar!
     var calendarContainer = WindoCalendarView()
+    
+    //misc
+    var setAvailabilityButton = UIButton()
     
     //MARK: View Configuration
     
@@ -42,13 +47,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
     }
     
     func configureSubviews(){        
-        backgroundColor = UIColor.lightBlue()
+        backgroundColor = UIColor.blue()
         let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
         addGestureRecognizer(keyboardDismiss)
         
-        inviteeCell.backgroundColor = UIColor.clearColor()
+        inviteeCell.backgroundColor = UIColor.lightBlue()
         
-        locationCell.backgroundColor = UIColor.clearColor()
+        locationCell.backgroundColor = UIColor.lightBlue()
         let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
         locationCell.addGestureRecognizer(locationTap)
         
@@ -62,7 +67,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTextField.tag = 0
         locationTextField.delegate = self
         
-        nameCell.backgroundColor = UIColor.clearColor()
+        nameCell.backgroundColor = UIColor.lightBlue()
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.nameTapped))
         nameCell.addGestureRecognizer(nameTap)
         
@@ -81,105 +86,123 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeLabel.tintColor = UIColor.whiteColor()
         inviteeLabel.tag = 2
         
-        finishButton.setTitle("Set Availability", forState: .Normal)
-        finishButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        finishButton.titleLabel?.font = UIFont.graphikRegular(20)
-        finishButton.backgroundColor = UIColor.blue()
+        inviteeSeparator.backgroundColor = UIColor.darkBlue()
+        locationSeparator.backgroundColor = UIColor.darkBlue()
+        nameSeparator.backgroundColor = UIColor.darkBlue()
+        
+        setAvailabilityButton.setTitle("Set Availability", forState: .Normal)
+        setAvailabilityButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(20)
+        setAvailabilityButton.backgroundColor = UIColor.darkBlue()
         
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
-        
+                
         addSubview(inviteeCell)
         addSubview(locationCell)
         addSubview(nameCell)
+        addSubviews(inviteeSeparator, locationSeparator, nameSeparator)
         addSubview(inviteeLabel)
         addSubview(locationTextField)
         addSubview(locationTitleLabel)
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
-        addSubview(finishButton)
+        addSubview(setAvailabilityButton)
     }
     
     func applyConstraints(){
-        inviteeCell.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 0),
-            Constraint.ll : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 60)])
         
-        inviteeLabel.constrainUsing(constraints: [
-            Constraint.cycy : (of: inviteeCell, offset: 0),
-            Constraint.ll : (of: self, offset: 18),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 18)])
-        
-        locationTitleLabel.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 81),
-            Constraint.ll : (of: self, offset: 16),
-            Constraint.w : (of: nil, offset: 100),
-            Constraint.h : (of: nil, offset: 16)])
-        
-        locationTextField.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 85),
-            Constraint.ll : (of: self, offset: 16),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 16)])
-        
-        locationCell.constrainUsing(constraints: [
-            Constraint.tb : (of: inviteeCell, offset: 0),
-            Constraint.ll : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 60)])
-        
-        nameTitleLabel.constrainUsing(constraints: [
-            Constraint.tb : (of: locationTitleLabel, offset: 45),
-            Constraint.ll : (of: self, offset: 16),
-            Constraint.w : (of: nil, offset: 100),
-            Constraint.h : (of: nil, offset: 16)])
-        
-        nameTextField.constrainUsing(constraints: [
-            Constraint.tb : (of: locationTextField, offset: 45),
-            Constraint.ll : (of: self, offset: 16),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 16)])
-        
-        nameCell.constrainUsing(constraints: [
-            Constraint.tb : (of: locationCell, offset: 0),
-            Constraint.ll : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 60)])
-        
-        calendarContainer.addConstraints(
-            Constraint.cxcx.of(self),
-            Constraint.tb.of(nameCell, offset: 1),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(screenHeight)
-        )
-        
-        finishButton.addConstraints(
-            Constraint.bb.of(self),
+        inviteeCell.addConstraints(
+            Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(60)
         )
-    }
-    
-    override func drawRect(rect: CGRect) {
-        for i in 1...3 {
-            let y: CGFloat = CGFloat(i * 60)
-            let startPoint = CGPoint(x: 0, y: y)
-            let endPoint = CGPoint(x: screenWidth, y: y)
-            
-            let plusPath = UIBezierPath()
-            plusPath.lineWidth = 2.0
-            UIColor.darkBlue().setStroke()
-            
-            plusPath.moveToPoint(startPoint)
-            plusPath.addLineToPoint(endPoint)
-            
-            plusPath.stroke()
-        }
+        
+        inviteeSeparator.addConstraints(
+            Constraint.tb.of(inviteeCell, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(2)
+        )
+        
+        inviteeLabel.addConstraints(
+            Constraint.cycy.of(inviteeCell),
+            Constraint.ll.of(self, offset: 18),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(18)
+        )
+        
+        locationCell.addConstraints(
+            Constraint.tb.of(inviteeCell),
+            Constraint.ll.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(60)
+        )
+        
+        locationSeparator.addConstraints(
+            Constraint.tb.of(locationCell, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(2)
+        )
+        
+        locationTitleLabel.addConstraints(
+            Constraint.tt.of(self, offset: 81),
+            Constraint.ll.of(self, offset: 16),
+            Constraint.w.of(100),
+            Constraint.h.of(16)
+        )
+        
+        locationTextField.addConstraints(
+            Constraint.tt.of(self, offset: 85),
+            Constraint.ll.of(self, offset: 16),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(16)
+        )
+
+        nameCell.addConstraints(
+            Constraint.tb.of(locationCell),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(60)
+        )
+        
+        nameSeparator.addConstraints(
+            Constraint.tb.of(nameCell, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(2)
+        )
+
+        nameTitleLabel.addConstraints(
+            Constraint.tb.of(locationTitleLabel, offset: 45),
+            Constraint.ll.of(self, offset: 16),
+            Constraint.w.of(100),
+            Constraint.h.of(16)
+        )
+
+        nameTextField.addConstraints(
+            Constraint.tb.of(locationTextField, offset: 45),
+            Constraint.ll.of(self, offset: 16),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(16)
+        )
+        
+        calendarContainer.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.tb.of(nameCell, offset: 2),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(91 + calendarContainer.daySize * 5)
+        )
+        
+        setAvailabilityButton.addConstraints(
+            Constraint.tb.of(calendarContainer, offset: 10),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(60)
+        )
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
