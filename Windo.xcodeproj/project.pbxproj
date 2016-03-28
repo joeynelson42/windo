@@ -58,6 +58,7 @@
 		63E7E1841C939A8000AF6301 /* Graphik-Super.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1791C939A5A00AF6301 /* Graphik-Super.otf */; };
 		63E7E1851C939A8000AF6301 /* Graphik-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */; };
 		63E7E1871C93A49B00AF6301 /* UIFont+Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */; };
+		63EA86C51CA9A4640046963B /* WindoKeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */; };
 		63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */; };
 		63F278FC1CA6018200F103CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F81CA6018200F103CA /* Event.swift */; };
 		63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */; };
@@ -119,6 +120,7 @@
 		63E7E1791C939A5A00AF6301 /* Graphik-Super.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Super.otf"; sourceTree = "<group>"; };
 		63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Thin.otf"; sourceTree = "<group>"; };
 		63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Windo.swift"; sourceTree = "<group>"; };
+		63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoKeyboardAccessoryView.swift; sourceTree = "<group>"; };
 		63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "../Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63F278F81CA6018200F103CA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = ../Event.swift; sourceTree = "<group>"; };
 		63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				6392EF681C9766F6003C29CE /* CreateEventView.swift */,
 				6383D8481CA43A61008F23B8 /* WindoCalendarView.swift */,
 				63A28B131CA36EB0000826DC /* CalendarDayView.swift */,
+				63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */,
 			);
 			name = CreateEventDetails;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
 				6392EF751C97677D003C29CE /* EventHeatmapView.swift in Sources */,
 				63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */,
+				63EA86C51CA9A4640046963B /* WindoKeyboardAccessoryView.swift in Sources */,
 				6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */,
 				634D206D1C93908F00A1D4B5 /* SideMenuView.swift in Sources */,
 				6392EF711C97675A003C29CE /* EventMessagesView.swift in Sources */,

@@ -37,6 +37,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //misc
     var setAvailabilityButton = UIButton()
+    var doneKeyboardAccessory = WindoKeyboardAccessoryView()
     
     //MARK: View Configuration
     
@@ -90,10 +91,20 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationSeparator.backgroundColor = UIColor.darkBlue()
         nameSeparator.backgroundColor = UIColor.darkBlue()
         
-        setAvailabilityButton.setTitle("Set Availability", forState: .Normal)
+        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+        let timesTitle = NSMutableAttributedString(string: "Specify Times", attributes: underlineAttribute)
+        timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, timesTitle.length))
+        
+        setAvailabilityButton.setAttributedTitle(timesTitle, forState: .Normal)
         setAvailabilityButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(20)
+        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(16)
         setAvailabilityButton.backgroundColor = UIColor.darkBlue()
+        
+        doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50))
+        locationTextField.inputAccessoryView = doneKeyboardAccessory
+        nameTextField.inputAccessoryView = doneKeyboardAccessory
+        
+        doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(CreateEventView.keyboardDismiss), forControlEvents: .TouchUpInside)
         
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
@@ -113,11 +124,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func applyConstraints(){
         
+        let cellSize = screenHeight * 0.08995502
+        
         inviteeCell.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(60)
+            Constraint.h.of(cellSize)
         )
         
         inviteeSeparator.addConstraints(
@@ -138,7 +151,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(inviteeCell),
             Constraint.ll.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(60)
+            Constraint.h.of(cellSize)
         )
         
         locationSeparator.addConstraints(
@@ -149,14 +162,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
         )
         
         locationTitleLabel.addConstraints(
-            Constraint.tt.of(self, offset: 81),
+            Constraint.cycy.of(locationCell),
             Constraint.ll.of(self, offset: 16),
             Constraint.w.of(100),
             Constraint.h.of(16)
         )
         
         locationTextField.addConstraints(
-            Constraint.tt.of(self, offset: 85),
+            Constraint.cycy.of(locationCell, offset: 5),
             Constraint.ll.of(self, offset: 16),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
@@ -166,7 +179,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(locationCell),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(60)
+            Constraint.h.of(cellSize)
         )
         
         nameSeparator.addConstraints(
@@ -177,14 +190,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
         )
 
         nameTitleLabel.addConstraints(
-            Constraint.tb.of(locationTitleLabel, offset: 45),
+            Constraint.cycy.of(nameCell),
             Constraint.ll.of(self, offset: 16),
             Constraint.w.of(100),
             Constraint.h.of(16)
         )
 
         nameTextField.addConstraints(
-            Constraint.tb.of(locationTextField, offset: 45),
+            Constraint.cycy.of(nameCell, offset: 5),
             Constraint.ll.of(self, offset: 16),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
@@ -194,14 +207,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.cxcx.of(self),
             Constraint.tb.of(nameCell, offset: 2),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(91 + calendarContainer.daySize * 5)
+            Constraint.h.of(calendarContainer.calendarHeight())
         )
         
         setAvailabilityButton.addConstraints(
-            Constraint.tb.of(calendarContainer, offset: 10),
+            Constraint.bb.of(self, offset: 0),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(60)
+            Constraint.h.of(40)
         )
     }
     

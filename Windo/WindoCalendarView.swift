@@ -77,7 +77,10 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     
     var days = [CalendarDayView]()
     var daysConfigured = false
+    
+    // Dynamic Sizes
     let daySize = (screenWidth - 8)/7
+    let spacingAroundMonth = screenHeight * 0.03448276
     
     var selectedDays = [NSDate]()
     
@@ -174,8 +177,9 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func applyConstraints(){
+        
         monthLabel.addConstraints(
-            Constraint.tt.of(self, offset: 23),
+            Constraint.tt.of(self, offset: spacingAroundMonth),
             Constraint.cxcx.of(self),
             Constraint.w.of(200),
             Constraint.h.of(18)
@@ -208,7 +212,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         )
         
         sundayLabel.addConstraints(
-            Constraint.tb.of(monthLabel, offset: 22),
+            Constraint.tt.of(day1, offset: -3),
             Constraint.cxcx.of(self, offset: -3 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
@@ -265,7 +269,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         //week 1
         day1.addConstraints(
-            Constraint.tb.of(monthLabel, offset: 45),
+            Constraint.tb.of(monthLabel, offset: spacingAroundMonth),
             Constraint.ll.of(self),
             Constraint.wh.of(daySize)
         )
@@ -654,6 +658,10 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         
         return date
+    }
+    
+    func calendarHeight() -> CGFloat {
+        return (spacingAroundMonth * 2) + (daySize * 5) + 5
     }
 }
 

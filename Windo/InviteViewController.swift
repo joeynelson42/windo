@@ -8,10 +8,16 @@
 
 import UIKit
 
+enum InviteState{
+    case FirstInvite
+    case AddingInvites
+}
+
 class InviteViewController: UIViewController {
     
     //MARK: Properties
     
+    var state: InviteState = .FirstInvite
     var createTabBar: CreateTabBarController!
     var inviteView = InviteView()
     var members = [String]()
@@ -34,8 +40,15 @@ class InviteViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.cancelTapped))
-        createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        if state == .FirstInvite {
+            let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.cancelTapped))
+            createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        }
+        else {
+            let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doNothing))
+            createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        }
+        
         
         let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.doneTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
@@ -46,7 +59,11 @@ class InviteViewController: UIViewController {
     }
     
     func cancelTapped(){
-        createTabBar.displayCancelAlert()
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func doNothing(){
+        
     }
     
     func updateInvitees(){

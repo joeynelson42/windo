@@ -108,6 +108,7 @@ class CreateEventViewController: UIViewController {
     }
     
     func inviteeTapped(){
+        (createTabBar.viewControllers![0] as! InviteViewController).state = InviteState.AddingInvites
         tabBarController?.selectedIndex = 0
     }
     

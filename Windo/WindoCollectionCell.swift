@@ -22,10 +22,15 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     var delegate: WindoCollectionCellDelegate!
     
     //date header
+    var dateHeaderContainer = UIView()
     var dayNumberLabel = UILabel()
     var weekdayLabel = UILabel()
     var amLabel = UILabel()
     var pmLabel = UILabel()
+    
+    //label moving stuff
+    var prevContentOffset = CGPoint()
+    var pmLabelCenter: CGPoint!
     
     var scrollView = UIScrollView()
     
@@ -95,6 +100,8 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         
         configureDateData()
         
+        dateHeaderContainer.backgroundColor = UIColor.lightBlue()
+        
         dayNumberLabel.font = UIFont.graphikRegular(12)
         dayNumberLabel.textColor = UIColor.whiteColor()
         dayNumberLabel.textAlignment = .Center
@@ -107,28 +114,37 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         amLabel.textColor = UIColor.darkBlue()
         amLabel.font = UIFont.graphikRegular(10)
         amLabel.textAlignment = .Center
+        amLabel.backgroundColor = UIColor.blue()
         
         pmLabel.text = "PM"
         pmLabel.textColor = UIColor.darkBlue()
         pmLabel.font = UIFont.graphikRegular(10)
         pmLabel.textAlignment = .Center
+        pmLabel.backgroundColor = UIColor.blue()
         
         scrollView.delegate = self
         scrollView.contentSize = CGSize(width: screenWidth/2, height: (CGFloat(times.count) * (timeHeight + timeSpacing) + 70))
         scrollView.showsVerticalScrollIndicator = false
         
         addSubview(scrollView)
-        
+        addSubview(amLabel)
+        addSubview(pmLabel)
+        addSubview(dateHeaderContainer)
         addSubview(dayNumberLabel)
         addSubview(weekdayLabel)
         
-        scrollView.addSubviews(time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24)
         
-        scrollView.addSubview(amLabel)
-        scrollView.addSubview(pmLabel)
+        scrollView.addSubviews(time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23, time24)
     }
     
     func applyConstraints(){
+        dateHeaderContainer.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(100),
+            Constraint.h.of(47)
+        )
+        
         dayNumberLabel.addConstraints(
             Constraint.tt.of(self, offset: 8),
             Constraint.cxcx.of(self),
@@ -151,14 +167,21 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         )
         
         amLabel.addConstraints(
-            Constraint.tt.of(scrollView, offset: 7),
-            Constraint.cxcx.of(scrollView),
+            Constraint.tb.of(weekdayLabel, offset: 10),
+            Constraint.cxcx.of(self),
             Constraint.w.of(100),
-            Constraint.h.of(10)
+            Constraint.h.of(30)
+        )
+        
+        pmLabel.addConstraints(
+            Constraint.tt.of(self, offset: ((timeSpacing + timeHeight) * 12) + 75),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(100),
+            Constraint.h.of(30)
         )
         
         time1.addConstraints(
-            Constraint.tb.of(amLabel, offset: 21),
+            Constraint.tt.of(scrollView, offset: 38),
             Constraint.cxcx.of(scrollView),
             Constraint.w.of(timeWidth),
             Constraint.h.of(timeHeight)
@@ -241,15 +264,8 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
             Constraint.h.of(timeHeight)
         )
         
-        pmLabel.addConstraints(
-            Constraint.tb.of(time12, offset: 36),
-            Constraint.cxcx.of(scrollView),
-            Constraint.w.of(100),
-            Constraint.h.of(10)
-        )
-        
         time13.addConstraints(
-            Constraint.tb.of(pmLabel, offset: timeSpacing),
+            Constraint.tb.of(time12, offset: timeSpacing * 2),
             Constraint.cxcx.of(scrollView),
             Constraint.w.of(timeWidth),
             Constraint.h.of(timeHeight)
@@ -395,11 +411,36 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
 
 extension WindoCollectionCell: UIScrollViewDelegate {
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        guard let _ = pmLabelCenter else {
+            pmLabelCenter = pmLabel.center
+            return
+        }
+    }
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        print(scrollView.contentOffset)
         
-        amLabel.center = CGPointMake(amLabel.center.x + scrollView.contentOffset.y, (amLabel.center.y + scrollView.contentOffset.y))
-        print("am center: \(amLabel.center)")
+        if scrollView.contentOffset.y >= 655 {
+            UIView.animateWithDuration(0.1, animations: {
+                self.amLabel.transform = CGAffineTransformMakeTranslation(0, -50)
+            })
+        }
+        else {
+            UIView.animateWithDuration(0.1, animations: {
+                self.amLabel.transform = CGAffineTransformMakeTranslation(0, 0)
+            })
+        }
+
+        pmLabelCenter.y += prevContentOffset.y - scrollView.contentOffset.y
+        
+        if pmLabelCenter.y > 64 {
+            pmLabel.center.y = pmLabelCenter.y
+        }
+        else {
+            pmLabel.center.y = 64
+        }
+        
+        prevContentOffset = scrollView.contentOffset
     }
 }
 

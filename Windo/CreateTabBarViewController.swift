@@ -8,6 +8,10 @@
 
 import UIKit
 
+// ViewController 1: InviteViewController
+// ViewController 2: CreatEventViewController
+// ViewController 3: WindoTimeViewController
+
 class CreateTabBarController: UITabBarController {
     
     //MARK: Properties
@@ -36,7 +40,7 @@ class CreateTabBarController: UITabBarController {
     }
     
     func cancelTapped(){
-        displayCancelAlert()
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func doneTapped(){
