@@ -15,6 +15,8 @@ class WindoTimeViewController: UIViewController {
     var windoTimeView = WindoTimeView()
     var timeCollectionView: UICollectionView!
     
+    var setOffset = false
+    
     var dates = [NSDate]()
     
     //MARK: Inits
@@ -45,18 +47,22 @@ class WindoTimeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.cancelTapped))
+        let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doNothing))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
         let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doneTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+        
+        setOffset = true
+        timeCollectionView.reloadItemsAtIndexPaths(timeCollectionView.indexPathsForVisibleItems())
+        
     }
     
     func doneTapped(){
         createTabBar.selectedIndex = 1
     }
     
-    func cancelTapped(){
+    func doNothing(){
         
     }
 }
@@ -102,6 +108,11 @@ extension WindoTimeViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.date = dates[indexPath.row]
         cell.backgroundColor = UIColor.clearColor()
         cell.updateDateData()
+        
+//        if setOffset {
+//            cell.scrollView.setContentOffset(CGPointMake(0, 430), animated: false)
+//        }
+        
         return cell
     }
     

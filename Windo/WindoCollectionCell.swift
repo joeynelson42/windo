@@ -419,7 +419,6 @@ extension WindoCollectionCell: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
         if scrollView.contentOffset.y >= 655 {
             UIView.animateWithDuration(0.1, animations: {
                 self.amLabel.transform = CGAffineTransformMakeTranslation(0, -50)
