@@ -212,7 +212,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         )
         
         sundayLabel.addConstraints(
-            Constraint.tt.of(day1, offset: -3),
+            Constraint.tb.of(monthLabel, offset: spacingAroundMonth),
             Constraint.cxcx.of(self, offset: -3 * (screenWidth/7)),
             Constraint.wh.of(18)
         )
@@ -269,7 +269,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         //week 1
         day1.addConstraints(
-            Constraint.tb.of(monthLabel, offset: spacingAroundMonth),
+            Constraint.tb.of(sundayLabel),
             Constraint.ll.of(self),
             Constraint.wh.of(daySize)
         )
@@ -661,7 +661,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func calendarHeight() -> CGFloat {
-        return (spacingAroundMonth * 2) + (daySize * 5) + 5
+        return (spacingAroundMonth * 2) + (daySize * 5) + 41
     }
 }
 
