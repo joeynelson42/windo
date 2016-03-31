@@ -36,7 +36,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     var calendarContainer = WindoCalendarView()
     
     //misc
-    var setAvailabilityButton = UIButton()
+//    var setAvailabilityButton = UIButton()
     var doneKeyboardAccessory = WindoKeyboardAccessoryView()
     
     //MARK: View Configuration
@@ -95,10 +95,10 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let timesTitle = NSMutableAttributedString(string: "Specify Times", attributes: underlineAttribute)
         timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, timesTitle.length))
         
-        setAvailabilityButton.setAttributedTitle(timesTitle, forState: .Normal)
-        setAvailabilityButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(16)
-        setAvailabilityButton.backgroundColor = UIColor.darkBlue()
+//        setAvailabilityButton.setAttributedTitle(timesTitle, forState: .Normal)
+//        setAvailabilityButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(16)
+//        setAvailabilityButton.backgroundColor = UIColor.darkBlue()
         
         doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50))
         locationTextField.inputAccessoryView = doneKeyboardAccessory
@@ -119,7 +119,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
-        addSubview(setAvailabilityButton)
+//        addSubview(setAvailabilityButton)
     }
     
     func applyConstraints(){
@@ -210,12 +210,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.h.of(calendarContainer.calendarHeight())
         )
         
-        setAvailabilityButton.addConstraints(
-            Constraint.bb.of(self, offset: 0),
-            Constraint.cxcx.of(self),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(40)
-        )
+//        setAvailabilityButton.addConstraints(
+//            Constraint.bb.of(self, offset: 0),
+//            Constraint.cxcx.of(self),
+//            Constraint.w.of(screenWidth),
+//            Constraint.h.of(40)
+//        )
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -231,8 +231,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
             })
-//        case 2:
-//            if textField.text == inviteePlaceholderText{ textField.text = "" }
         default:
             break
         }

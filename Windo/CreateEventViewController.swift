@@ -46,7 +46,7 @@ class CreateEventViewController: UIViewController {
         let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
-        let doneBarButton = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.finishTapped))
+        let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.nextTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
     }
     
@@ -59,7 +59,7 @@ class CreateEventViewController: UIViewController {
         let inviteeTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.inviteeTapped))
         createEventView.inviteeCell.addGestureRecognizer(inviteeTap)
         
-        createEventView.setAvailabilityButton.addTarget(self, action: #selector(CreateEventViewController.handleSetAvailability), forControlEvents: .TouchUpInside)
+//        createEventView.setAvailabilityButton.addTarget(self, action: #selector(CreateEventViewController.handleSetAvailability), forControlEvents: .TouchUpInside)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -99,8 +99,16 @@ class CreateEventViewController: UIViewController {
         }
     }
     
-    func finishTapped(){
-        createTabBar.navigationController?.popViewControllerAnimated(true)
+    func nextTapped(){
+        let dates = createEventView.calendarContainer.selectedDays
+        
+        if dates.count > 0 {
+            (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
+            createTabBar.selectedIndex = 2
+        }
+        else {
+            noDaysAlert()
+        }
     }
     
     func cancelTapped(){
@@ -112,10 +120,19 @@ class CreateEventViewController: UIViewController {
         tabBarController?.selectedIndex = 0
     }
     
-    func handleSetAvailability(){
-        let dates = createEventView.calendarContainer.selectedDays
-        (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
-        createTabBar.selectedIndex = 2
+//    func handleSetAvailability(){
+//        let dates = createEventView.calendarContainer.selectedDays
+//        (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
+//        createTabBar.selectedIndex = 2
+//    }
+    
+    func noDaysAlert(){
+        let alertController = UIAlertController(title: "Hey!", message: "Select some days on the calendar first!", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }
 

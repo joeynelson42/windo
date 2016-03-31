@@ -47,10 +47,10 @@ class WindoTimeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doNothing))
+        let cancelBarButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.backTapped))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doneTapped))
+        let doneBarButton = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.doneTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
         
         setOffset = true
@@ -59,11 +59,21 @@ class WindoTimeViewController: UIViewController {
     }
     
     func doneTapped(){
-        createTabBar.selectedIndex = 1
+        let alertController = UIAlertController(title: "Hey!", message: "Ready to send out the invites?", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Not yet!", style: .Default) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        let sendAction = UIAlertAction(title: "Send!", style: .Default) { (action) in
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+        alertController.addAction(sendAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func doNothing(){
-        
+    func backTapped(){
+        createTabBar.selectedIndex = 1
     }
 }
 
