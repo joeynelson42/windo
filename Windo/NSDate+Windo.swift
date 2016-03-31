@@ -213,6 +213,24 @@ extension NSDate{
         comp.to12pm()
         return cal.dateByAddingComponents(comp, toDate: self.startOfMonth()!, options: [])!
     }
+    
+    func firstWeekday() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let firstDay = self.startOfMonth()
+        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
+        return firstComponents.weekday
+    }
+    
+    func daysInTheMonth() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month], fromDate: self)
+        let startOfMonth = calendar.dateFromComponents(components)!
+        let comps2 = NSDateComponents()
+        comps2.month = 1
+        comps2.day = -1
+        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
+        return lastDay.day()
+    }
 }
 
 internal extension NSDateComponents {

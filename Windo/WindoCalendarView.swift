@@ -75,6 +75,17 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     var day34 = CalendarDayView()
     var day35 = CalendarDayView()
     
+    // 6th week
+    var week6Visible = false
+    
+    var day36 = CalendarDayView()
+    var day37 = CalendarDayView()
+    var day38 = CalendarDayView()
+    var day39 = CalendarDayView()
+    var day40 = CalendarDayView()
+    var day41 = CalendarDayView()
+    var day42 = CalendarDayView()
+    
     var days = [CalendarDayView]()
     var daysConfigured = false
     
@@ -100,7 +111,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         month = components.month
         year = components.year
         
-        days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35]
+        days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35, day36, day37, day38, day39, day40, day41, day42]
         
         configureMonth(date)
         
@@ -171,7 +182,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
 
         addSubviews(mondayLabel,tuesdayLabel,wednesdayLabel,thursdayLabel,fridayLabel,saturdayLabel,sundayLabel)
         
-        addSubviews(day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35)
+        addSubviews(day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28 ,day36, day37, day38, day39, day40, day41, day42 ,day29,day30,day31,day32,day33,day34,day35)
         
         addSubview(dragView)
     }
@@ -439,7 +450,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.wh.of(daySize)
         )
         
-        //week 4
+        //week 5
         day29.addConstraints(
             Constraint.tb.of(day22, offset: 1),
             Constraint.ll.of(self),
@@ -481,28 +492,64 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.lr.of(day34, offset: 1),
             Constraint.wh.of(daySize)
         )
+        
+        //week 6
+        day36.addConstraints(
+            Constraint.tb.of(day22, offset: 1),
+            Constraint.ll.of(self),
+            Constraint.wh.of(daySize)
+        )
+        
+        day37.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day36, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day38.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day37, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day39.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day38, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day40.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day39, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day41.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day40, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day42.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day41, offset: 1),
+            Constraint.wh.of(daySize)
+        )
     }
     
     func configureMonth(date: NSDate){
         if daysConfigured { return }
         else { daysConfigured = true }
         
-        let calendar = NSCalendar.currentCalendar()
         let monthName = date.monthName()
         
-        let firstDay = date.startOfMonth()
-        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
-        let firstWeekday = firstComponents.weekday
+        let firstWeekday = date.firstWeekday()
         
-        let components = calendar.components([.Year, .Month], fromDate: date)
-        let startOfMonth = calendar.dateFromComponents(components)!
-        let comps2 = NSDateComponents()
-        comps2.month = 1
-        comps2.day = -1
-        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
-        let dayCount = lastDay.day()
+        let dayCount = date.daysInTheMonth()
         
         leftMonthButton.enabled = false
+        
+        update6thWeek(date)
         
         configureMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
     }
@@ -541,21 +588,11 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func updateMonth(date: NSDate, currentMonth: Bool){
-        
-        let calendar = NSCalendar.currentCalendar()
         let monthName = date.monthName()
         
-        let firstDay = date.startOfMonth()
-        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
-        let firstWeekday = firstComponents.weekday
+        let firstWeekday = date.firstWeekday()
         
-        let components = calendar.components([.Year, .Month], fromDate: date)
-        let startOfMonth = calendar.dateFromComponents(components)!
-        let comps2 = NSDateComponents()
-        comps2.month = 1
-        comps2.day = -1
-        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
-        let dayCount = lastDay.day()
+        let dayCount = date.daysInTheMonth()
         
         if currentMonth { leftMonthButton.enabled = false }
         else { leftMonthButton.enabled = true }
@@ -613,6 +650,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         let date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
         let current = isCurrentMonth(date)
         updateMonth(date, currentMonth: current)
+        
+        update6thWeek(date)
     }
     
     func goToPreviousMonth(){
@@ -633,6 +672,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             current = isCurrentMonth(date)
             updateMonth(date, currentMonth: current)
         }
+        
+        update6thWeek(date)
     }
     
     func isCurrentMonth(date: NSDate) -> Bool{
@@ -681,8 +722,162 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func calendarHeight() -> CGFloat {
-        return (spacingAroundMonth * 2) + (daySize * 5) + 41
+        return (spacingAroundMonth * 2) + (daySize * 6) + 41
+    }
+    
+    func monthRequires6Weeks(date: NSDate) -> Bool {
+        let firstWeekday = date.firstWeekday()
+        let dayCount = date.daysInTheMonth()
+        
+        if dayCount + firstWeekday >= 37 {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func update6thWeek(date: NSDate){
+        if week6Visible{
+            if !monthRequires6Weeks(date){
+                remove6thWeek()
+                week6Visible = false
+            }
+        }
+        else {
+            if monthRequires6Weeks(date){
+                add6thWeek()
+                week6Visible = true
+            }
+        }
+    }
+    
+    func add6thWeek(){
+        dayBackground.addConstraints(
+            Constraint.tt.of(day1, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of((daySize * 6) + 7)
+        )
+        
+        dragView.addConstraints(
+            Constraint.tt.of(day1, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of((daySize * 6) + 7)
+        )
+        
+        day36.addConstraints(
+            Constraint.tb.of(day29, offset: 1),
+            Constraint.ll.of(self),
+            Constraint.wh.of(daySize)
+        )
+        
+        day37.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day36, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day38.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day37, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day39.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day38, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day40.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day39, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day41.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day40, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day42.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day41, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        UIView.animateWithDuration(0.15) {
+            self.layoutIfNeeded()
+        }
+    }
+    
+    func remove6thWeek(){
+        dayBackground.addConstraints(
+            Constraint.tt.of(day1, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of((daySize * 5) + 6)
+        )
+        
+        dragView.addConstraints(
+            Constraint.tt.of(day1, offset: -1),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of((daySize * 5) + 6)
+        )
+        
+        day36.addConstraints(
+            Constraint.tb.of(day22, offset: 1),
+            Constraint.ll.of(self),
+            Constraint.wh.of(daySize)
+        )
+        
+        day37.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day36, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day38.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day37, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day39.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day38, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day40.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day39, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day41.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day40, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        day42.addConstraints(
+            Constraint.cycy.of(day36),
+            Constraint.lr.of(day41, offset: 1),
+            Constraint.wh.of(daySize)
+        )
+        
+        UIView.animateWithDuration(0.15) {
+            self.layoutIfNeeded()
+        }
     }
 }
+
+
+
 
 
