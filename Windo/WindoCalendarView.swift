@@ -102,7 +102,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35]
         
-        configureMonth(date, currentMonth: true)
+        configureMonth(date)
         
         monthLabel.font = UIFont.graphikRegular(18)
         monthLabel.textColor = UIColor.darkBlue()
@@ -483,7 +483,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         )
     }
     
-    func configureMonth(date: NSDate, currentMonth: Bool){
+    func configureMonth(date: NSDate){
         if daysConfigured { return }
         else { daysConfigured = true }
         
@@ -502,6 +502,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
         let dayCount = lastDay.day()
         
+        leftMonthButton.enabled = false
+        
         configureMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
     }
 
@@ -511,7 +513,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         for (index,day) in days.enumerate() {
             day.delegate = self
             if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
-                day.updateState(false)
+                day.state = .Empty
+                day.updateState()
             }
             else{
                 let date = createDateWithComponents(year, monthNumber: month, dayNumber: dayNumber)
@@ -522,14 +525,17 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                 dayNumber += 1
                 
                 let today = NSDate()
-                if day.date.fullDate() == today.fullDate() {
-                    day.layer.borderColor = UIColor.whiteColor().CGColor
-                    day.layer.borderWidth = 1.0
+                if date.compare(today) == NSComparisonResult.OrderedAscending {
+                    day.state = .Past
+                }
+                else if (selectedDays.contains(day.date)){
+                    day.state = .Selected
                 }
                 else {
-                    day.layer.borderColor = UIColor.clearColor().CGColor
-                    day.layer.borderWidth = 0.0
+                    day.state = .Unselected
                 }
+                
+                day.updateState()
             }
         }
     }
@@ -551,6 +557,9 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
         let dayCount = lastDay.day()
         
+        if currentMonth { leftMonthButton.enabled = false }
+        else { leftMonthButton.enabled = true }
+        
         updateMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
     }
     
@@ -561,7 +570,8 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         for (index,day) in days.enumerate() {
             if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
-                day.updateState(false)
+                day.state = .Empty
+                day.updateState()
             }
             else{
                 let date = createDateWithComponents(year, monthNumber: self.month, dayNumber: dayNumber)
@@ -574,16 +584,18 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                     }
                 }
                 
-                if day.date.fullDate() == NSDate().fullDate() {
-                    day.layer.borderColor = UIColor.whiteColor().CGColor
-                    day.layer.borderWidth = 1.0
+                let today = NSDate()
+                if date.compare(today) == NSComparisonResult.OrderedAscending {
+                    day.state = .Past
+                }
+                else if (selectedDays.contains(day.date)){
+                    day.state = .Selected
                 }
                 else {
-                    day.layer.borderColor = UIColor.clearColor().CGColor
-                    day.layer.borderWidth = 0.0
+                    day.state = .Unselected
                 }
                 
-                day.updateState(selected)
+                day.updateState()
                 day.dateButton.setTitle("\(dayNumber)", forState: .Normal)
                 day.day = dayNumber
                 dayNumber += 1
@@ -604,15 +616,23 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func goToPreviousMonth(){
-        month -= 1
-        if month < 1 {
-            month = 12
-            year -= 1
-        }
+        var date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
+        var current = isCurrentMonth(date)
         
-        let date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
-        let current = isCurrentMonth(date)
-        updateMonth(date, currentMonth: current)
+        if isCurrentMonth(date) {
+            return
+        }
+        else {
+            month -= 1
+            if month < 1 {
+                month = 12
+                year -= 1
+            }
+            
+            date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
+            current = isCurrentMonth(date)
+            updateMonth(date, currentMonth: current)
+        }
     }
     
     func isCurrentMonth(date: NSDate) -> Bool{

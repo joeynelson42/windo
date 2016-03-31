@@ -137,7 +137,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(inviteeCell, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(2)
+            Constraint.h.of(1)
         )
         
         inviteeLabel.addConstraints(
@@ -158,7 +158,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(locationCell, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(2)
+            Constraint.h.of(1)
         )
         
         locationTitleLabel.addConstraints(
@@ -186,7 +186,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tb.of(nameCell, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(2)
+            Constraint.h.of(1)
         )
 
         nameTitleLabel.addConstraints(
