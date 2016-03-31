@@ -43,6 +43,8 @@ class CreateEventViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        createTabBar.title = "Create Event"
+        
         let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         
@@ -103,6 +105,7 @@ class CreateEventViewController: UIViewController {
         let dates = createEventView.calendarContainer.selectedDays
         
         if dates.count > 0 {
+            createTabBar.title = "Specify Times"
             (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
             createTabBar.selectedIndex = 2
         }

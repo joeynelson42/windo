@@ -47,6 +47,8 @@ class WindoTimeViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        createTabBar.title = "Specify Times"
+        
         let cancelBarButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(WindoTimeViewController.backTapped))
         createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
         

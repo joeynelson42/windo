@@ -40,6 +40,8 @@ class InviteViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
+        createTabBar.title = "Add People"
+        
         if state == .FirstInvite {
             let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.cancelTapped))
             createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)

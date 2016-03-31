@@ -22,7 +22,7 @@ class CreateTabBarController: UITabBarController {
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
-        title = "Create Event"
+        title = "Add People"
         tabBar.hidden = true
         
         let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.cancelTapped))
