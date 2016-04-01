@@ -12,6 +12,8 @@ class WindoKeyboardAccessoryView: UIView {
     
     //MARK: Properties
     var doneButton = UIButton()
+    var leftArrowButton = UIButton()
+    var rightArrowButton = UIButton()
     
     //MARK: Inits
     convenience init() {
@@ -42,10 +44,29 @@ class WindoKeyboardAccessoryView: UIView {
         doneButton.titleLabel?.font = UIFont.graphikMedium(18)
         doneButton.setTitleColor(UIColor.blue(), forState: .Normal)
         
+        leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), forState: .Normal)
+        
+        rightArrowButton.setImage(UIImage(named: "blueRightArrow"), forState: .Normal)
+        
+        addSubview(leftArrowButton)
+        addSubview(rightArrowButton)
         addSubview(doneButton)
     }
     
     func applyConstraints(){
+        
+        leftArrowButton.addConstraints(
+            Constraint.cycy.of(self),
+            Constraint.ll.of(self, offset: 5),
+            Constraint.wh.of(40)
+        )
+        
+        rightArrowButton.addConstraints(
+            Constraint.cycy.of(self),
+            Constraint.lr.of(leftArrowButton, offset: 0),
+            Constraint.wh.of(40)
+        )
+        
         doneButton.addConstraints(
             Constraint.cycy.of(self),
             Constraint.rr.of(self, offset: -15),

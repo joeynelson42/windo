@@ -95,16 +95,15 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let timesTitle = NSMutableAttributedString(string: "Specify Times", attributes: underlineAttribute)
         timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, timesTitle.length))
         
-//        setAvailabilityButton.setAttributedTitle(timesTitle, forState: .Normal)
-//        setAvailabilityButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-//        setAvailabilityButton.titleLabel?.font = UIFont.graphikRegular(16)
-//        setAvailabilityButton.backgroundColor = UIColor.darkBlue()
-        
         doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50))
         locationTextField.inputAccessoryView = doneKeyboardAccessory
         nameTextField.inputAccessoryView = doneKeyboardAccessory
         
         doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(CreateEventView.keyboardDismiss), forControlEvents: .TouchUpInside)
+        
+        doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
+        
+        doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
         
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
@@ -119,7 +118,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
-//        addSubview(setAvailabilityButton)
     }
     
     func applyConstraints(){
@@ -209,13 +207,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.w.of(screenWidth),
             Constraint.h.of(calendarContainer.calendarHeight())
         )
-        
-//        setAvailabilityButton.addConstraints(
-//            Constraint.bb.of(self, offset: 0),
-//            Constraint.cxcx.of(self),
-//            Constraint.w.of(screenWidth),
-//            Constraint.h.of(40)
-//        )
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -254,6 +245,15 @@ class CreateEventView: UIView, UITextFieldDelegate {
             })
         default:
             break
+        }
+    }
+    
+    func toggleBetweenTextFields(){
+        if nameTextField.isFirstResponder() {
+            locationTextField.becomeFirstResponder()
+        }
+        else {
+            nameTextField.becomeFirstResponder()
         }
     }
     

@@ -538,16 +538,12 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func configureMonth(date: NSDate){
-        if daysConfigured { return }
-        else { daysConfigured = true }
-        
         let monthName = date.monthName()
-        
         let firstWeekday = date.firstWeekday()
-        
         let dayCount = date.daysInTheMonth()
         
-        leftMonthButton.enabled = false
+        if isCurrentMonth(date) { leftMonthButton.enabled = false }
+        else { leftMonthButton.enabled = true }
         
         update6thWeek(date)
         
@@ -566,60 +562,11 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             else{
                 let date = createDateWithComponents(year, monthNumber: month, dayNumber: dayNumber)
                 
-                days[index] = CalendarDayView(dayNumber: dayNumber, cellDate: date)
-                day.day = dayNumber
+                if !daysConfigured {
+                    days[index] = CalendarDayView(dayNumber: dayNumber, cellDate: date)
+                }
+                
                 day.date = date
-                dayNumber += 1
-                
-                let today = NSDate()
-                if date.compare(today) == NSComparisonResult.OrderedAscending {
-                    day.state = .Past
-                }
-                else if (selectedDays.contains(day.date)){
-                    day.state = .Selected
-                }
-                else {
-                    day.state = .Unselected
-                }
-                
-                day.updateState()
-            }
-        }
-    }
-    
-    func updateMonth(date: NSDate, currentMonth: Bool){
-        let monthName = date.monthName()
-        
-        let firstWeekday = date.firstWeekday()
-        
-        let dayCount = date.daysInTheMonth()
-        
-        if currentMonth { leftMonthButton.enabled = false }
-        else { leftMonthButton.enabled = true }
-        
-        updateMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
-    }
-    
-    func updateMonthData(month: String, startWeekday: Int, dayCount: Int){
-        monthLabel.text = month
-        
-        var dayNumber = 1
-        
-        for (index,day) in days.enumerate() {
-            if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
-                day.state = .Empty
-                day.updateState()
-            }
-            else{
-                let date = createDateWithComponents(year, monthNumber: self.month, dayNumber: dayNumber)
-                day.date = date
-                
-                var selected = false
-                for selectedDay in selectedDays {
-                    if day.date.fullDate() == selectedDay.fullDate(){
-                        selected = true
-                    }
-                }
                 
                 let today = NSDate()
                 if date.compare(today) == NSComparisonResult.OrderedAscending {
@@ -638,6 +585,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                 dayNumber += 1
             }
         }
+        daysConfigured = true
     }
     
     func goToNextMonth(){
@@ -648,15 +596,13 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         }
         
         let date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
-        let current = isCurrentMonth(date)
-        updateMonth(date, currentMonth: current)
+        configureMonth(date)
         
         update6thWeek(date)
     }
     
     func goToPreviousMonth(){
         var date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
-        var current = isCurrentMonth(date)
         
         if isCurrentMonth(date) {
             return
@@ -669,8 +615,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             }
             
             date = createDateWithComponents(year, monthNumber: month, dayNumber: 1)
-            current = isCurrentMonth(date)
-            updateMonth(date, currentMonth: current)
+            configureMonth(date)
         }
         
         update6thWeek(date)

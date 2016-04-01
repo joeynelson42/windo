@@ -14,8 +14,7 @@ class HomeView: UIView {
     var eventTableView = UITableView()
     var lowerBackgroundView = UIView()
     
-    //MARK: View Configuration
-    
+    //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
     }
@@ -29,6 +28,7 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: View Configuration
     override func updateConstraints() {
         super.updateConstraints()
         configureSubviews()
