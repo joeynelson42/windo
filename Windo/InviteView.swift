@@ -15,7 +15,7 @@ class InviteView: UIView {
     var stackViewContainer = UIView()
     var inviteeLabel = UILabel()
     
-    var inviteePlaceholderText = "Invite friends!"
+    var inviteePlaceholderText = "Select people to invite!"
     
     //MARK: View Configuration
     
@@ -33,6 +33,7 @@ class InviteView: UIView {
         inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
         inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
         
+//        inviteeLabel.text = inviteePlaceholderText
         inviteeLabel.textColor = UIColor.whiteColor()
         inviteeLabel.font = UIFont.graphikRegular(18)
         inviteeLabel.tintColor = UIColor.whiteColor()

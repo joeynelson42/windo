@@ -40,7 +40,7 @@ class InviteViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        createTabBar.title = "Add People"
+        createTabBar.title = "Create Event"
         
         if state == .FirstInvite {
             let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(InviteViewController.cancelTapped))
@@ -69,18 +69,30 @@ class InviteViewController: UIViewController {
     }
     
     func updateInvitees(){
+        
         if createTabBar.invitees.count < 1 {
             inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
             return
         }
         
         for (index, name) in createTabBar.invitees.enumerate() {
+            var fullNameArr = name.characters.split{$0 == " "}.map(String.init)
+            var firstName = fullNameArr[0]
+            
             if index == 0 {
-                inviteView.inviteeLabel.text = name
+                inviteView.inviteeLabel.text = firstName
+            }
+            else if createTabBar.invitees.count > 3{
+                fullNameArr = createTabBar.invitees[0].characters.split{$0 == " "}.map(String.init)
+                firstName = fullNameArr[0]
+                fullNameArr = createTabBar.invitees[1].characters.split{$0 == " "}.map(String.init)
+                let secondName = fullNameArr[0]
+                inviteView.inviteeLabel.text! = "\(firstName), \(secondName), and \(createTabBar.invitees.count - 2) others"
+                break
             }
             else{
                 let currentText = inviteView.inviteeLabel.text!
-                inviteView.inviteeLabel.text! = "\(currentText), \(name)"
+                inviteView.inviteeLabel.text! = "\(currentText), \(firstName)"
             }
         }
     }

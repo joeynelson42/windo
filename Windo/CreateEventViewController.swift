@@ -85,18 +85,30 @@ class CreateEventViewController: UIViewController {
     }
     
     func updateInvitees(){
+        
         if createTabBar.invitees.count < 1 {
             createEventView.inviteeLabel.text = createEventView.inviteePlaceholderText
             return
         }
         
         for (index, name) in createTabBar.invitees.enumerate() {
+            var fullNameArr = name.characters.split{$0 == " "}.map(String.init)
+            var firstName = fullNameArr[0]
+            
             if index == 0 {
-                createEventView.inviteeLabel.text = name
+                createEventView.inviteeLabel.text = firstName
+            }
+            else if createTabBar.invitees.count > 3{
+                fullNameArr = createTabBar.invitees[0].characters.split{$0 == " "}.map(String.init)
+                firstName = fullNameArr[0]
+                fullNameArr = createTabBar.invitees[1].characters.split{$0 == " "}.map(String.init)
+                let secondName = fullNameArr[0]
+                createEventView.inviteeLabel.text! = "\(firstName), \(secondName), and \(createTabBar.invitees.count - 2) others"
+                break
             }
             else{
                 let currentText = createEventView.inviteeLabel.text!
-                createEventView.inviteeLabel.text! = "\(currentText), \(name)"
+                createEventView.inviteeLabel.text! = "\(currentText), \(firstName)"
             }
         }
     }

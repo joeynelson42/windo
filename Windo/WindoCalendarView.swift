@@ -658,9 +658,9 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
-        components.hour = 16
-        components.minute = 20
-        components.second = 0
+        components.hour = 23
+        components.minute = 59
+        components.second = 59
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         
         return date

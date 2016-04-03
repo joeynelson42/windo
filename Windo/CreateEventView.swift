@@ -58,7 +58,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
         locationCell.addGestureRecognizer(locationTap)
         
-        locationTitleLabel.text = "Location"
+        locationTitleLabel.text = "Event Location"
         locationTitleLabel.font = UIFont.graphikRegular(14)
         locationTitleLabel.textColor = UIColor.darkBlue()
         
@@ -72,7 +72,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let nameTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.nameTapped))
         nameCell.addGestureRecognizer(nameTap)
         
-        nameTitleLabel.text = "Name"
+        nameTitleLabel.text = "Event Name"
         nameTitleLabel.font = UIFont.graphikRegular(14)
         nameTitleLabel.textColor = UIColor.darkBlue()
         
