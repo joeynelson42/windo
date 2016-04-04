@@ -22,6 +22,7 @@ class SidePanelViewController: UIViewController {
         view.backgroundColor = UIColor.darkTeal()
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
+        addTargets()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -30,6 +31,15 @@ class SidePanelViewController: UIViewController {
     
     func handleNavigate(sender: UIButton){
         delegate?.pageSelected(sender.tag)
+    }
+    
+    func addTargets(){
+        sideMenuView.tutorialButton.addTarget(self, action: #selector(SidePanelViewController.openTutorial), forControlEvents: .TouchUpInside)
+    }
+    
+    func openTutorial(){
+        let tutorialVC = TutorialViewController()
+        presentViewController(tutorialVC, animated: true, completion: nil)
     }
 }
 

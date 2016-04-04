@@ -10,7 +10,10 @@ import UIKit
 
 class SideMenuView: UIView {
     
+    //MARK: Properties
+    var tutorialButton = GHButton()
     
+    //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
     }
@@ -25,13 +28,26 @@ class SideMenuView: UIView {
     }
     
     override func updateConstraints() {
-        configureSubviews()
-        
-        
         super.updateConstraints()
+        configureSubviews()
+        applyConstraints()
     }
     
     func configureSubviews(){
-
+        tutorialButton.setTitle("tutorial", forState: .Normal)
+        tutorialButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        tutorialButton.backgroundColor = UIColor.lightTeal()
+        tutorialButton.layer.cornerRadius = 5.0
+        
+        addSubview(tutorialButton)
+    }
+    
+    func applyConstraints(){
+        tutorialButton.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.cycy.of(self),
+            Constraint.w.of(125),
+            Constraint.h.of(50)
+        )
     }
 }

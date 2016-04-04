@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */; };
+		632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */; };
+		632A4F601CB312C8001D6983 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5F1CB312C8001D6983 /* TutorialView.swift */; };
 		634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D20661C93905500A1D4B5 /* ContainerViewController.swift */; };
 		634D20691C93906A00A1D4B5 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D20681C93906A00A1D4B5 /* CenterViewController.swift */; };
 		634D206B1C93907F00A1D4B5 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D206A1C93907F00A1D4B5 /* SideMenuViewController.swift */; };
@@ -67,6 +69,8 @@
 
 /* Begin PBXFileReference section */
 		6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeHeaderCell.swift; sourceTree = "<group>"; };
+		632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		632A4F5F1CB312C8001D6983 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		634D20661C93905500A1D4B5 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		634D20681C93906A00A1D4B5 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		634D206A1C93907F00A1D4B5 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +154,15 @@
 			name = "Time Selection";
 			sourceTree = "<group>";
 		};
+		632A4F611CB312CE001D6983 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */,
+				632A4F5F1CB312C8001D6983 /* TutorialView.swift */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 		634D20631C93901C00A1D4B5 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				6395B15C1C742181008D0ED5 /* WindoConstants.swift */,
+				632A4F611CB312CE001D6983 /* Tutorial */,
 				634D20631C93901C00A1D4B5 /* Navigation */,
 				6395B1541C741CB6008D0ED5 /* Login */,
 				6395B1481C741B9E008D0ED5 /* Home */,
@@ -476,11 +490,13 @@
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,
 				63F278FC1CA6018200F103CA /* Event.swift in Sources */,
 				6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */,
+				632A4F601CB312C8001D6983 /* TutorialView.swift in Sources */,
 				63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */,
 				6395B1561C741D3F008D0ED5 /* EventCell.swift in Sources */,
 				6395B1471C741AFE008D0ED5 /* APConstraints.swift in Sources */,
 				6392EF731C976774003C29CE /* EventHeatmapViewController.swift in Sources */,
 				6395B14D1C741BEB008D0ED5 /* GHButton.swift in Sources */,
+				632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */,
 				63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */,
 				6383D84F1CA4AD46008F23B8 /* WindoTimeView.swift in Sources */,
 				63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */,
