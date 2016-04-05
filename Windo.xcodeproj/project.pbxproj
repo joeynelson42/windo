@@ -10,6 +10,7 @@
 		6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */; };
 		632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */; };
 		632A4F601CB312C8001D6983 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5F1CB312C8001D6983 /* TutorialView.swift */; };
+		632A4F651CB37E76001D6983 /* ConnectingCirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F641CB37E76001D6983 /* ConnectingCirclesView.swift */; };
 		634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D20661C93905500A1D4B5 /* ContainerViewController.swift */; };
 		634D20691C93906A00A1D4B5 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D20681C93906A00A1D4B5 /* CenterViewController.swift */; };
 		634D206B1C93907F00A1D4B5 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634D206A1C93907F00A1D4B5 /* SideMenuViewController.swift */; };
@@ -71,6 +72,7 @@
 		6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeHeaderCell.swift; sourceTree = "<group>"; };
 		632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		632A4F5F1CB312C8001D6983 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		632A4F641CB37E76001D6983 /* ConnectingCirclesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingCirclesView.swift; sourceTree = "<group>"; };
 		634D20661C93905500A1D4B5 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		634D20681C93906A00A1D4B5 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		634D206A1C93907F00A1D4B5 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */,
 				632A4F5F1CB312C8001D6983 /* TutorialView.swift */,
+				632A4F641CB37E76001D6983 /* ConnectingCirclesView.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				6392EF661C9766DE003C29CE /* CreateEventViewController.swift in Sources */,
 				6392EF6D1C976740003C29CE /* EventDetailsView.swift in Sources */,
 				6392EF6F1C97674F003C29CE /* EventMessagesViewController.swift in Sources */,
+				632A4F651CB37E76001D6983 /* ConnectingCirclesView.swift in Sources */,
 				63E7E1871C93A49B00AF6301 /* UIFont+Windo.swift in Sources */,
 				6392EF691C9766F6003C29CE /* CreateEventView.swift in Sources */,
 				6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */,

@@ -16,6 +16,8 @@ class TutorialView: UIView {
     var mainView = UIView()
     var xButton = UIButton()
     
+    var circles = ConnectingCirclesView()
+    
     var tealView = UIView()
     var blueView = UIView()
     var purpleView = UIView()
@@ -86,6 +88,7 @@ class TutorialView: UIView {
         
         addSubview(mainScrollView)
         addSubview(xButton)
+        addSubview(circles)
         
         mainScrollView.addSubview(mainView)
         mainView.addSubview(tealView)
@@ -112,6 +115,13 @@ class TutorialView: UIView {
             Constraint.wh.of(30)
         )
         
+        circles.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.bb.of(self, offset: -20),
+            Constraint.w.of(60),
+            Constraint.h.of(25)
+        )
+        
         mainView.addConstraints(
             Constraint.tt.of(mainScrollView),
             Constraint.ll.of(mainScrollView),
@@ -127,7 +137,7 @@ class TutorialView: UIView {
         )
         
         tealLabel.addConstraints(
-            Constraint.cycy.of(tealView),
+            Constraint.bb.of(tealView, offset: -55),
             Constraint.cxcx.of(tealView),
             Constraint.w.of(screenWidth),
             Constraint.h.of(20)
@@ -141,7 +151,7 @@ class TutorialView: UIView {
         )
         
         blueLabel.addConstraints(
-            Constraint.cycy.of(blueView),
+            Constraint.bb.of(blueView, offset: -55),
             Constraint.cxcx.of(blueView),
             Constraint.w.of(screenWidth),
             Constraint.h.of(20)
@@ -155,7 +165,7 @@ class TutorialView: UIView {
         )
         
         purpleLabel.addConstraints(
-            Constraint.cycy.of(purpleView),
+            Constraint.bb.of(purpleView, offset: -55),
             Constraint.cxcx.of(purpleView),
             Constraint.w.of(screenWidth),
             Constraint.h.of(20)

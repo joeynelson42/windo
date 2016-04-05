@@ -14,18 +14,6 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
     
     var tutorialView = TutorialView()
     
-    let tealRed:CGFloat = 13
-    let tealGreen:CGFloat = 178
-    let tealBlue:CGFloat = 177
-    
-    let blueRed:CGFloat = 71
-    let blueGreen:CGFloat = 96
-    let blueBlue:CGFloat = 235
-    
-    let purpleRed:CGFloat = 158
-    let purpleGreen:CGFloat = 101
-    let purpleBlue:CGFloat = 201
-    
     var red = CGFloat()
     var blue = CGFloat()
     var green = CGFloat()
@@ -73,5 +61,20 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
         
         let background = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
         tutorialView.mainView.backgroundColor = background
+        
+        
+        let circlesWidth = tutorialView.circles.frame.width - tutorialView.circles.indicatorCircle.frame.width
+        tutorialView.circles.indicatorCircle.transform = CGAffineTransformMakeTranslation(percent * circlesWidth, 0)
+        
+        if percent < 0.5 {
+            tutorialView.circles.showFirstConnector()
+        }
+        else if percent > 0.5 {
+            tutorialView.circles.showSecondConnector()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        tutorialView.circles.hideConnectors()
     }
 }
