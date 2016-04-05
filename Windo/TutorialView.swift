@@ -118,8 +118,8 @@ class TutorialView: UIView {
         circles.addConstraints(
             Constraint.cxcx.of(self),
             Constraint.bb.of(self, offset: -20),
-            Constraint.w.of(60),
-            Constraint.h.of(25)
+            Constraint.w.of(circles.circleViewWidth),
+            Constraint.h.of(circles.circleWidth)
         )
         
         mainView.addConstraints(
