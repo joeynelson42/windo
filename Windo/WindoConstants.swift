@@ -13,6 +13,8 @@ let screenWidth = screenSize.width
 let screenHeight = screenSize.height
 var keyboardHeight: CGFloat = 216
 
+let timeSelectSize: CGFloat = (screenWidth)/7
+
 let tealRed:CGFloat = 13
 let tealGreen:CGFloat = 178
 let tealBlue:CGFloat = 177

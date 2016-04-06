@@ -114,16 +114,17 @@ class CreateEventViewController: UIViewController {
     }
     
     func nextTapped(){
-        let dates = createEventView.calendarContainer.selectedDays
-        
-        if dates.count > 0 {
-            createTabBar.title = "Specify Times"
-            (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
-            createTabBar.selectedIndex = 2
-        }
-        else {
-            noDaysAlert()
-        }
+//        let dates = createEventView.calendarContainer.selectedDays
+//        
+//        if dates.count > 0 {
+//            createTabBar.title = "Specify Times"
+//            (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
+//            createTabBar.selectedIndex = 2
+//        }
+//        else {
+//            noDaysAlert()
+//        }
+        createTabBar.selectedIndex = 2
     }
     
     func cancelTapped(){

@@ -49,7 +49,7 @@ class HomeViewController: CenterViewController{
         let createTabVC = CreateTabBarController()
         let vc1 = InviteViewController()
         let vc2 = CreateEventViewController()
-        let vc3 = WindoTimeViewController()
+        let vc3 = TimeSelectViewController()
         let controllers = [vc1, vc2, vc3]
         
         vc1.tabBarItem = UITabBarItem(

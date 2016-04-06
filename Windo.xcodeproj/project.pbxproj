@@ -66,6 +66,9 @@
 		63F278FC1CA6018200F103CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F81CA6018200F103CA /* Event.swift */; };
 		63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */; };
 		63F278FE1CA6018200F103CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278FA1CA6018200F103CA /* User.swift */; };
+		63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */; };
+		63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08EF1CB4483500255A4A /* TimeSelectView.swift */; };
+		63FF08F31CB46EE100255A4A /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08F21CB46EE100255A4A /* TimeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +134,9 @@
 		63F278F81CA6018200F103CA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = ../Event.swift; sourceTree = "<group>"; };
 		63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63F278FA1CA6018200F103CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
+		63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectViewController.swift; sourceTree = "<group>"; };
+		63FF08EF1CB4483500255A4A /* TimeSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectView.swift; sourceTree = "<group>"; };
+		63FF08F21CB46EE100255A4A /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +327,7 @@
 				63A28B0D1CA3354A000826DC /* CreateEventDetails */,
 				63A28B0E1CA33555000826DC /* Invite */,
 				630D7BEB1CA87AB600D85C86 /* Time Selection */,
+				63FF08F11CB4483E00255A4A /* New Time Selection */,
 			);
 			name = EventCreation;
 			sourceTree = "<group>";
@@ -379,6 +386,16 @@
 				63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */,
 			);
 			name = DataProperties;
+			sourceTree = "<group>";
+		};
+		63FF08F11CB4483E00255A4A /* New Time Selection */ = {
+			isa = PBXGroup;
+			children = (
+				63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */,
+				63FF08EF1CB4483500255A4A /* TimeSelectView.swift */,
+				63FF08F21CB46EE100255A4A /* TimeView.swift */,
+			);
+			name = "New Time Selection";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,6 +485,7 @@
 				6395B1531C741C97008D0ED5 /* HomeView.swift in Sources */,
 				6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */,
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
+				63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */,
 				6392EF751C97677D003C29CE /* EventHeatmapView.swift in Sources */,
 				63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */,
 				63EA86C51CA9A4640046963B /* WindoKeyboardAccessoryView.swift in Sources */,
@@ -487,9 +505,11 @@
 				6392EF6B1C976732003C29CE /* EventDetailsViewController.swift in Sources */,
 				6383D8491CA43A61008F23B8 /* WindoCalendarView.swift in Sources */,
 				63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */,
+				63FF08F31CB46EE100255A4A /* TimeView.swift in Sources */,
 				6383D8571CA4AE8F008F23B8 /* WindoCollectionCell.swift in Sources */,
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
+				63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,
 				63F278FC1CA6018200F103CA /* Event.swift in Sources */,
