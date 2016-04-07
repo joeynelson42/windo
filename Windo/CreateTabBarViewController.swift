@@ -18,6 +18,7 @@ class CreateTabBarController: UITabBarController {
 //    let newEvent = Event()
     var invitees = [String]()
     var selectedDates = [NSDate]()
+    var selectedTimes = [NSDate]()
     
     //MARK: Lifecycle Methods
     

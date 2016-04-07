@@ -101,6 +101,24 @@ extension UIColor{
         return number
     }
     
+    func rgb() -> (red:CGFloat, green:CGFloat, blue:CGFloat, alpha:CGFloat)? {
+        var fRed : CGFloat = 0
+        var fGreen : CGFloat = 0
+        var fBlue : CGFloat = 0
+        var fAlpha: CGFloat = 0
+        if self.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha) {
+            let iRed = CGFloat(fRed * 255.0)
+            let iGreen = CGFloat(fGreen * 255.0)
+            let iBlue = CGFloat(fBlue * 255.0)
+            let iAlpha = CGFloat(fAlpha * 255.0)
+            
+            return (red:iRed, green:iGreen, blue:iBlue, alpha:iAlpha)
+        } else {
+            // Could not extract RGBA components:
+            return nil
+        }
+    }
+    
     class func ColorFromRedGreenBlue(red: NSString, green: NSString, blue: NSString)->UIColor{
         
         var first: NSString = red.substringToIndex(1)

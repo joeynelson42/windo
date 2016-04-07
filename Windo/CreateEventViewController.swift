@@ -60,20 +60,15 @@ class CreateEventViewController: UIViewController {
     func addTargets(){
         let inviteeTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.inviteeTapped))
         createEventView.inviteeCell.addGestureRecognizer(inviteeTap)
-        
-//        createEventView.setAvailabilityButton.addTarget(self, action: #selector(CreateEventViewController.handleSetAvailability), forControlEvents: .TouchUpInside)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        initialStates.removeAll()
-        let days = createEventView.calendarContainer.days
-        for day in days {
-            initialStates.append(day.selectedBackground.alpha)
-        }
     }
     
     func handleCalendarGesture(gesture: UIGestureRecognizer){
         let days = createEventView.calendarContainer.days
+        if initialStates.isEmpty {
+            for day in days {
+                initialStates.append(day.selectedBackground.alpha)
+            }
+        }
         
         for (index,day) in days.enumerate() {
             if day.frame.contains(gesture.locationInView(createEventView.calendarContainer)){
@@ -81,6 +76,10 @@ class CreateEventViewController: UIViewController {
                     day.tapped()
                 }
             }
+        }
+        
+        if gesture.state == .Ended {
+            initialStates.removeAll()
         }
     }
     

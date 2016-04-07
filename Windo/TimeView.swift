@@ -11,7 +11,6 @@ import UIKit
 @objc
 protocol TimeViewDelegate {
     optional func updateSelectedTimes(time: Int)
-    optional func isTimeSelected(time: Int) -> Bool
 }
 
 enum TimeState{

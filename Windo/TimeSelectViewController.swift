@@ -8,26 +8,19 @@
 
 import UIKit
 
-class TimeSelectViewController: UIViewController, TimeViewDelegate {
+class TimeSelectViewController: UIViewController {
     
     //MARK: Properties
     var createTabBar: CreateTabBarController!
-    var timeSelectView: TimeSelectView!
-    var initialStates = [CGFloat]()
-    var date = NSDate()
+    var timeSelectView = TimeSelectView()
+    var timeCollectionView: UICollectionView!
     
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
-        timeSelectView = TimeSelectView(timeDelegate: self, timeDate: NSDate())
         view = timeSelectView
         createTabBar = (tabBarController as! CreateTabBarController)
-        
-        let drag = UIPanGestureRecognizer(target: self, action: #selector(TimeSelectViewController.handleCalendarGesture(_:)))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(TimeSelectViewController.handleCalendarGesture(_:)))
-        
-        timeSelectView.dragView.addGestureRecognizer(drag)
-        timeSelectView.dragView.addGestureRecognizer(tap)
+        configureCollectionView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -40,12 +33,8 @@ class TimeSelectViewController: UIViewController, TimeViewDelegate {
         
         let doneBarButton = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(TimeSelectViewController.doneTapped))
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
-    }
-    
-    func updateSelectedTimes(time: Int) {
-        let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
         
-        print(newTime)
+        timeCollectionView.reloadData()
     }
     
     func backTapped(){
@@ -65,24 +54,78 @@ class TimeSelectViewController: UIViewController, TimeViewDelegate {
         
         presentViewController(alertController, animated: true, completion: nil)
     }
+}
+
+extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        initialStates.removeAll()
-        let times = timeSelectView.times
-        for time in times {
-            initialStates.append(time.selectedBackground.alpha)
-        }
+    func configureCollectionView(){
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .Horizontal
+        layout.itemSize = CGSize(width: screenWidth, height: screenHeight - 64)
+        timeCollectionView = UICollectionView(frame: timeSelectView.frame, collectionViewLayout: layout)
+                
+        timeCollectionView.delegate = self
+        timeCollectionView.dataSource = self
+        timeCollectionView.registerClass(TimeSelectCollectionViewCell.self, forCellWithReuseIdentifier: "timeSelectCell")
+        timeCollectionView.backgroundColor = UIColor.clearColor()
+        timeCollectionView.showsVerticalScrollIndicator = false
+        timeCollectionView.pagingEnabled = true
+        timeSelectView.addSubview(timeCollectionView)
+        
+        timeCollectionView.addConstraints(
+            Constraint.tt.of(timeSelectView),
+            Constraint.cxcx.of(timeSelectView),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(screenHeight - 64)
+        )
+        
+        timeSelectView.bringSubviewToFront(timeCollectionView)
     }
     
-    func handleCalendarGesture(gesture: UIGestureRecognizer){
-        let times = timeSelectView.times
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return createTabBar.selectedDates.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! TimeSelectCollectionViewCell
         
-        for (index,time) in times.enumerate() {
-            if time.frame.contains(gesture.locationInView(timeSelectView)){
-                if (time.selectedBackground.alpha == initialStates[index]){
-                    time.handleTap()
-                }
+        cell.date = createTabBar.selectedDates[indexPath.row]
+        cell.dateLabel.text = "\(cell.date.monthAbbrevCap()) \(cell.date.day())"
+        cell.dayOfTheWeekLabel.text = "\(cell.date.abbrevDayOfWeek())"
+        cell.delegate = self
+        
+        var selectedTimeIndices = [Int]()
+        for time in createTabBar.selectedTimes {
+            if time.fullDate() == cell.date.fullDate() {
+                var selectedTime = time.hour()
+                selectedTimeIndices.append(selectedTime)
             }
+        }
+        
+        cell.configureTimes()
+        cell.updateTimesStates(selectedTimeIndices)
+        
+        return cell
+    }
+}
+
+extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
+    func updateSelectedTimes(date: NSDate, time: Int) {
+        let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
+        print(newTime)
+        
+        if createTabBar.selectedTimes.contains(newTime){
+            guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
+            createTabBar.selectedTimes.removeAtIndex(index)
+        }
+        else {
+            createTabBar.selectedTimes.append(newTime)
         }
     }
     
@@ -92,7 +135,7 @@ class TimeSelectViewController: UIViewController, TimeViewDelegate {
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
-        components.hour = hourNumber - 6
+        components.hour = hourNumber
         components.minute = 0
         components.second = 0
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
@@ -100,3 +143,6 @@ class TimeSelectViewController: UIViewController, TimeViewDelegate {
         return date
     }
 }
+
+
+
