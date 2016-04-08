@@ -20,10 +20,6 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
     var delegate: TimeSelectCollectionViewCellDelegate!
     var initialStates = [CGFloat]()
     
-    var dateLabel = UILabel()
-    var dayOfTheWeekLabel = UILabel()
-    var helpLabel = UILabel()
-    
     var amContainer = UIView()
     var pmContainer = UIView()
     var dragView = UIView()
@@ -89,20 +85,10 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.blue()
+        backgroundColor = UIColor.clearColor()
         
         times = [time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23]
         configureTimes()
-        
-        dateLabel.text = "\(date.monthAbbrevCap()) \(date.day())"
-        dateLabel.textColor = UIColor.whiteColor()
-        dateLabel.font = UIFont.graphikRegular(12)
-        dateLabel.textAlignment = .Center
-        
-        dayOfTheWeekLabel.text = "\(date.abbrevDayOfWeek())"
-        dayOfTheWeekLabel.textColor = UIColor.whiteColor()
-        dayOfTheWeekLabel.font = UIFont.graphikMedium(16)
-        dayOfTheWeekLabel.textAlignment = .Center
         
         amLabel.text = "AM"
         amLabel.textColor = UIColor.whiteColor()
@@ -113,12 +99,6 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         pmLabel.textColor = UIColor.whiteColor()
         pmLabel.font = UIFont.graphikRegular(10)
         pmLabel.textAlignment = .Center
-        
-        helpLabel.text = "Specify your event’s times.\nThese are the times you and your invitees will choose from."
-        helpLabel.numberOfLines = 2
-        helpLabel.textColor = UIColor.whiteColor()
-        helpLabel.font = UIFont.graphikRegular(12)
-        helpLabel.textAlignment = .Center
         
         amContainer.backgroundColor = UIColor.darkBlue()
         pmContainer.backgroundColor = UIColor.darkBlue()
@@ -137,10 +117,6 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         addSubviews(time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23)
         addSubview(amLabel)
         addSubview(pmLabel)
-        
-        addSubview(dateLabel)
-        addSubview(dayOfTheWeekLabel)
-        addSubview(helpLabel)
         
         addSubview(dragView)
     }
@@ -170,16 +146,6 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
     func applyConstraints(){
         let timeBuffer = (screenWidth - (timeSelectSize * 6) - 5)/2
         
-        dateLabel.addConstraints(
-            Constraint.tt.of(self, offset: 10),
-            Constraint.cxcx.of(self)
-        )
-        
-        dayOfTheWeekLabel.addConstraints(
-            Constraint.tb.of(dateLabel, offset: 3),
-            Constraint.cxcx.of(self)
-        )
-        
         dragView.addConstraints(
             Constraint.tt.of(amContainer),
             Constraint.ll.of(amContainer),
@@ -199,13 +165,6 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
             Constraint.ll.of(self, offset: timeBuffer),
             Constraint.w.of(timeSelectSize * 6 + 7),
             Constraint.h.of(timeSelectSize * 2 + 3)
-        )
-        
-        helpLabel.addConstraints(
-            Constraint.tb.of(pmContainer, offset: 15),
-            Constraint.cxcx.of(self),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(30)
         )
         
         amLabel.addConstraints(

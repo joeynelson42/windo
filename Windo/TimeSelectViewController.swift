@@ -14,13 +14,37 @@ class TimeSelectViewController: UIViewController {
     var createTabBar: CreateTabBarController!
     var timeSelectView = TimeSelectView()
     var timeCollectionView: UICollectionView!
+    var scrubber: UICollectionView!
+    
+    var timesScrolling = false
+    var scrubberScrolling = false
+    var hasLaidOutViews = false
+    var scrubberSelectedIndex = 1
+    
+    var red:CGFloat = 0
+    var green:CGFloat = 0
+    var blue:CGFloat = 0
     
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         view = timeSelectView
         createTabBar = (tabBarController as! CreateTabBarController)
+        configureScrubber()
         configureCollectionView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if !hasLaidOutViews {
+            hasLaidOutViews = true
+            timeCollectionView.collectionViewLayout.collectionViewContentSize()
+            scrubber.collectionViewLayout.collectionViewContentSize()
+            
+            let timePoint = CGPoint(x: screenWidth, y: timeCollectionView.contentOffset.y)
+            let scrubPoint = CGPoint(x: screenWidth/5, y: scrubber.contentOffset.y)
+            timeCollectionView.setContentOffset(timePoint, animated: false)
+            scrubber.setContentOffset(scrubPoint, animated: false)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -35,6 +59,7 @@ class TimeSelectViewController: UIViewController {
         createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
         
         timeCollectionView.reloadData()
+        scrubber.reloadData()
     }
     
     func backTapped(){
@@ -65,23 +90,52 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
         layout.scrollDirection = .Horizontal
         layout.itemSize = CGSize(width: screenWidth, height: screenHeight - 64)
         timeCollectionView = UICollectionView(frame: timeSelectView.frame, collectionViewLayout: layout)
-                
+        timeCollectionView.tag = 0
         timeCollectionView.delegate = self
         timeCollectionView.dataSource = self
         timeCollectionView.registerClass(TimeSelectCollectionViewCell.self, forCellWithReuseIdentifier: "timeSelectCell")
-        timeCollectionView.backgroundColor = UIColor.clearColor()
+        timeCollectionView.backgroundColor = UIColor.blue()
         timeCollectionView.showsVerticalScrollIndicator = false
+        timeCollectionView.showsHorizontalScrollIndicator = false
         timeCollectionView.pagingEnabled = true
+        timeCollectionView.backgroundColor = UIColor.blue()
         timeSelectView.addSubview(timeCollectionView)
         
         timeCollectionView.addConstraints(
-            Constraint.tt.of(timeSelectView),
+            Constraint.tb.of(scrubber),
             Constraint.cxcx.of(timeSelectView),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(screenHeight - 64)
+            Constraint.h.of(screenHeight - 124)
         )
         
         timeSelectView.bringSubviewToFront(timeCollectionView)
+    }
+    
+    func configureScrubber(){
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: screenWidth/2 - screenWidth/10, bottom: 0, right: screenWidth/2 - screenWidth/10)
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .Horizontal
+        layout.itemSize = CGSize(width: screenWidth / 5, height: 50)
+        scrubber = UICollectionView(frame: timeSelectView.frame, collectionViewLayout: layout)
+        scrubber.tag = 1
+        scrubber.pagingEnabled = false
+        scrubber.delegate = self
+        scrubber.dataSource = self
+        scrubber.registerClass(ScrubberCell.self, forCellWithReuseIdentifier: "scrubberCell")
+        scrubber.backgroundColor = UIColor.clearColor()
+        scrubber.showsVerticalScrollIndicator = false
+        scrubber.showsHorizontalScrollIndicator = false
+        scrubber.backgroundColor = UIColor.darkBlue()
+        timeSelectView.addSubview(scrubber)
+        
+        scrubber.addConstraints(
+            Constraint.tt.of(timeSelectView),
+            Constraint.cxcx.of(timeSelectView),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(60)
+        )
+        timeSelectView.bringSubviewToFront(timeSelectView.scrubberCenter)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -89,36 +143,193 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return createTabBar.selectedDates.count
+        return createTabBar.selectedDates.count + 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! TimeSelectCollectionViewCell
-        
-        cell.date = createTabBar.selectedDates[indexPath.row]
-        cell.dateLabel.text = "\(cell.date.monthAbbrevCap()) \(cell.date.day())"
-        cell.dayOfTheWeekLabel.text = "\(cell.date.abbrevDayOfWeek())"
-        cell.delegate = self
-        
-        var selectedTimeIndices = [Int]()
-        for time in createTabBar.selectedTimes {
-            if time.fullDate() == cell.date.fullDate() {
-                var selectedTime = time.hour()
-                selectedTimeIndices.append(selectedTime)
+        if collectionView.tag == 0 {
+            let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! TimeSelectCollectionViewCell
+            cell.backgroundColor = UIColor.clearColor()
+            
+            var selectedTimeIndices = [Int]()
+            if indexPath.row == 0 {
+                let date = createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0)
+                cell.date = date
+            }
+            else {
+                cell.date = createTabBar.selectedDates[indexPath.row - 1]
+            }
+            
+            for time in createTabBar.selectedTimes {
+                if time.fullDate() == cell.date.fullDate() {
+                    let selectedTime = time.hour()
+                    selectedTimeIndices.append(selectedTime)
+                }
+            }
+            
+            cell.delegate = self
+            cell.configureTimes()
+            cell.updateTimesStates(selectedTimeIndices)
+            
+            return cell
+        }
+        else {
+            let cell = scrubber.dequeueReusableCellWithReuseIdentifier("scrubberCell", forIndexPath: indexPath) as! ScrubberCell
+            
+            if indexPath.row == 0 {
+                cell.allDaysLabel.alpha = 0.5
+                cell.dateLabel.text = ""
+                cell.dayOfTheWeekLabel.text = ""
+                cell.tag = indexPath.row
+                
+                return cell
+            }
+            
+            if indexPath.row == scrubberSelectedIndex {
+                cell.dateLabel.alpha = 1.0
+                cell.dayOfTheWeekLabel.alpha = 1.0
+            }
+            else {
+                cell.dayOfTheWeekLabel.alpha = 0.5
+                cell.dateLabel.alpha = 0.5
+            }
+            
+            cell.allDaysLabel.alpha = 0.0
+            let date = createTabBar.selectedDates[indexPath.row - 1]
+            cell.tag = indexPath.row
+            cell.dateLabel.text = "\(date.monthAbbrevCap()) \(date.day())"
+            cell.dayOfTheWeekLabel.text = "\(date.abbrevDayOfWeek())"
+            
+            return cell
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if collectionView.tag == 1 {
+            unhighlightScrubberCenter()
+            
+            let timePoint = CGPointMake(screenWidth * CGFloat(indexPath.row), timeCollectionView.contentOffset.y)
+            let scrubPoint = CGPointMake((screenWidth / 5) * CGFloat(indexPath.row), scrubber.contentOffset.y)
+            
+            timeCollectionView.setContentOffset(timePoint, animated: true)
+            scrubber.setContentOffset(scrubPoint, animated: true)
+            
+            let cell = scrubber.cellForItemAtIndexPath(indexPath) as! ScrubberCell
+            scrubberSelectedIndex = cell.tag
+            cell.fadeIn()
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if timesScrolling == false && scrubberScrolling == false {
+            if scrollView.tag == 0{
+                timesScrolling = true
+            }
+            else {
+                scrubberScrolling = true
             }
         }
         
-        cell.configureTimes()
-        cell.updateTimesStates(selectedTimeIndices)
+        if scrollView.tag == 0  && timesScrolling == true{
+            let cellCount = CGFloat(createTabBar.selectedDates.count)
+            let percent = scrollView.contentOffset.x/(screenWidth * cellCount)
+            
+            let scrubberCellWidth = cellCount * (screenWidth/5)
+            scrubber.contentOffset.x = scrubberCellWidth * percent
+        }
+        else if scrollView.tag == 1 && scrubberScrolling == true {
+            let cellCount = CGFloat(createTabBar.selectedDates.count)
+            let percent = scrollView.contentOffset.x/(screenWidth/5 * cellCount)
+            
+            let scrubberCellWidth = cellCount * (screenWidth)
+            timeCollectionView.contentOffset.x = scrubberCellWidth * percent
+        }
         
-        return cell
+        if scrollView.tag == 0 {
+            let percent = scrollView.contentOffset.x/(screenWidth * CGFloat(createTabBar.selectedDates.count))
+            let allDaysThreshold = screenWidth / (screenWidth * CGFloat(createTabBar.selectedDates.count))
+            
+            if percent <= allDaysThreshold{
+                let tempPercent = percent / allDaysThreshold
+                let rgb = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
+                
+                red = rgb.red
+                green = rgb.green
+                blue = rgb.blue
+                
+                timeCollectionView.backgroundColor = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
+                timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
+                timeSelectView.helpLabel.alpha = tempPercent
+            }
+            
+            
+            
+        }
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        unhighlightScrubberCenter()
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        timesScrolling = false
+        scrubberScrolling = false
+        highlightScrubberCenter()
+    }
+    
+    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        timesScrolling = false
+        scrubberScrolling = false
+    }
+    
+    func highlightScrubberCenter(){
+        if let indexPath = scrubber.indexPathForItemAtPoint(timeSelectView.convertPoint(timeSelectView.scrubberCenter.center, toView: scrubber)) {
+            let cell = scrubber.cellForItemAtIndexPath(indexPath) as! ScrubberCell
+            cell.fadeIn()
+            scrubberSelectedIndex = cell.tag
+        }
+    }
+    
+    func unhighlightScrubberCenter(){
+        if let indexPath = scrubber.indexPathForItemAtPoint(timeSelectView.convertPoint(timeSelectView.scrubberCenter.center, toView: scrubber)) {
+            let cell = scrubber.cellForItemAtIndexPath(indexPath) as! ScrubberCell
+            cell.fadeOut()
+        }
     }
 }
 
 extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
     func updateSelectedTimes(date: NSDate, time: Int) {
-        let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
+        var newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
         print(newTime)
+        
+        if newTime.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate(){
+            if createTabBar.selectedTimes.contains(newTime){
+                
+                guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
+                createTabBar.selectedTimes.removeAtIndex(index)
+                
+                for day in createTabBar.selectedDates {
+                    newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: time)
+                    
+                    if createTabBar.selectedTimes.contains(newTime){
+                        guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
+                        createTabBar.selectedTimes.removeAtIndex(index)
+                    }
+                }
+            }
+            else {
+                createTabBar.selectedTimes.append(newTime)
+                for day in createTabBar.selectedDates {
+                    newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: time)
+                    if !createTabBar.selectedTimes.contains(newTime){
+                        createTabBar.selectedTimes.append(newTime)
+                    }
+
+                }
+            }
+            return
+        }
         
         if createTabBar.selectedTimes.contains(newTime){
             guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
@@ -141,6 +352,17 @@ extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         
         return date
+    }
+    
+    func transitionColorToColor(fromColor: UIColor, toColor: UIColor, percent: CGFloat) -> (red: CGFloat, green: CGFloat, blue: CGFloat){
+        let fromRGB = fromColor.rgb()!
+        let toRGB = toColor.rgb()!
+        
+        red = fromRGB.red + (percent * (toRGB.red - fromRGB.red))
+        green = fromRGB.green + (percent * (toRGB.green - fromRGB.green))
+        blue = fromRGB.blue + (percent * (toRGB.blue - fromRGB.blue))
+        
+        return (red: red, green: green, blue: blue)
     }
 }
 

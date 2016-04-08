@@ -113,17 +113,15 @@ class CreateEventViewController: UIViewController {
     }
     
     func nextTapped(){
-//        let dates = createEventView.calendarContainer.selectedDays
-//        
-//        if dates.count > 0 {
-//            createTabBar.title = "Specify Times"
-//            (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
-//            createTabBar.selectedIndex = 2
-//        }
-//        else {
-//            noDaysAlert()
-//        }
-        createTabBar.selectedIndex = 2
+        let dates = createEventView.calendarContainer.selectedDays
+        
+        if dates.count > 0 {
+            createTabBar.title = "Specify Times"
+            createTabBar.selectedIndex = 2
+        }
+        else {
+            noDaysAlert()
+        }
     }
     
     func cancelTapped(){
@@ -134,12 +132,6 @@ class CreateEventViewController: UIViewController {
         (createTabBar.viewControllers![0] as! InviteViewController).state = InviteState.AddingInvites
         tabBarController?.selectedIndex = 0
     }
-    
-//    func handleSetAvailability(){
-//        let dates = createEventView.calendarContainer.selectedDays
-//        (createTabBar.viewControllers![2] as! WindoTimeViewController).dates = dates
-//        createTabBar.selectedIndex = 2
-//    }
     
     func noDaysAlert(){
         let alertController = UIAlertController(title: "Hey!", message: "Select some days on the calendar first!", preferredStyle: .Alert)
