@@ -123,7 +123,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let detailsVC = DetailsTabBarController()
         let vc1 = EventMessagesViewController()
         let vc2 = EventDetailsViewController()
-        let vc3 = EventHeatmapViewController()
+        let vc3 = EventResultsViewController()
         let controllers = [vc1, vc2, vc3]
         
         vc1.tabBarItem = UITabBarItem(

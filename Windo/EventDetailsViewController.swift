@@ -26,7 +26,7 @@ class EventDetailsViewController: UIViewController {
         detailsView.memberTableView.dataSource = self
         
         members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk"]
-        detailsView.addMemberButton.addTarget(self, action: "addMemberTapped", forControlEvents: .TouchUpInside)
+        detailsView.addMemberButton.addTarget(self, action: #selector(EventDetailsViewController.addMemberTapped), forControlEvents: .TouchUpInside)
         
     }
     
@@ -38,7 +38,7 @@ class EventDetailsViewController: UIViewController {
         
         detailsView.respondedStackView.addArrangedSubview(response5)
         detailsView.respondedStackView.constrainUsing(constraints: [
-            Constraint.tt : (of: self.detailsView, offset: 82),
+            Constraint.tt : (of: self.detailsView, offset: 18),
             Constraint.cxcx : (of: self.detailsView, offset: 0),
             Constraint.w : (of: nil, offset: 44*5),
             Constraint.h : (of: nil, offset: 40)])

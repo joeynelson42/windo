@@ -35,6 +35,17 @@ extension NSDate{
         return day.hour
     }
     
+    func pmHour() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let day = calendar.components([.Hour], fromDate: self)
+        if day.hour > 12 {
+            return day.hour - 12
+        }
+        else {
+            return day.hour
+        }
+    }
+    
     func day() -> Int{
         let calendar = NSCalendar.currentCalendar()
         let day = calendar.components([.Day], fromDate: self)

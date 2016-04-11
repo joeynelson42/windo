@@ -37,7 +37,6 @@ class GroupMemberCell: UITableViewCell {
     func configureSubviews(){
         backgroundColor = UIColor.purple()
         
-//        nameLabel.text = "Yuki Dorff"
         nameLabel.textColor = UIColor.whiteColor()
         nameLabel.font = UIFont.graphikRegular(16)
         
@@ -47,7 +46,6 @@ class GroupMemberCell: UITableViewCell {
         initialsIcon.layer.borderColor = UIColor.whiteColor().CGColor
         initialsIcon.layer.cornerRadius = 22
         
-//        initialsLabel.text = "YD"
         initialsLabel.textColor = UIColor.whiteColor()
         initialsLabel.textAlignment = .Center
         initialsLabel.font = UIFont.graphikRegular(19)

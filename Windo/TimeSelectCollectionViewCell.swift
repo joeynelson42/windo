@@ -104,6 +104,13 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         pmContainer.backgroundColor = UIColor.darkBlue()
         dragView.backgroundColor = UIColor.clearColor()
         
+        time0.backgroundColor = UIColor.fromHex(0x6587FF)
+        time1.backgroundColor = UIColor.fromHex(0x6587FF)
+        time2.backgroundColor = UIColor.fromHex(0x6587FF)
+        time3.backgroundColor = UIColor.fromHex(0x6587FF)
+        time4.backgroundColor = UIColor.fromHex(0x6587FF)
+        time5.backgroundColor = UIColor.fromHex(0x6587FF)
+        
         
         let drag = UIPanGestureRecognizer(target: self, action: #selector(TimeSelectCollectionViewCell.handleCalendarGesture(_:)))
         let tap = UITapGestureRecognizer(target: self, action: #selector(TimeSelectCollectionViewCell.handleCalendarGesture(_:)))
@@ -157,14 +164,14 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
             Constraint.tt.of(self, offset: 55),
             Constraint.ll.of(self, offset: timeBuffer),
             Constraint.w.of(timeSelectSize * 6 + 7),
-            Constraint.h.of(timeSelectSize * 2 + 3)
+            Constraint.h.of(timeSelectSize * 1 + 2)
         )
         
         pmContainer.addConstraints(
             Constraint.tb.of(amContainer, offset: 10),
             Constraint.ll.of(self, offset: timeBuffer),
             Constraint.w.of(timeSelectSize * 6 + 7),
-            Constraint.h.of(timeSelectSize * 2 + 3)
+            Constraint.h.of(timeSelectSize * 3 + 4)
         )
         
         amLabel.addConstraints(
@@ -218,8 +225,8 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         
         //am row 2
         time6.addConstraints(
-            Constraint.tb.of(time0, offset: 1),
-            Constraint.ll.of(time0),
+            Constraint.tt.of(pmContainer, offset: 1),
+            Constraint.ll.of(pmContainer, offset: 1),
             Constraint.wh.of(timeSelectSize)
         )
         
@@ -255,8 +262,8 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         
         //pm row 1
         time12.addConstraints(
-            Constraint.tt.of(pmContainer, offset: 1),
-            Constraint.ll.of(pmContainer, offset: 1),
+            Constraint.tb.of(time6, offset: 1),
+            Constraint.ll.of(time0),
             Constraint.wh.of(timeSelectSize)
         )
         

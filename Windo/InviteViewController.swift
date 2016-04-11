@@ -114,7 +114,7 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.nameLabel.text = members[indexPath.row]
         cell.userHandleLabel.text = "@\(members[indexPath.row].lowercaseString)"
         cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
-        cell.initialsLabel.text = getInitials(members[indexPath.row])
+        cell.initialsLabel.text = members[indexPath.row].getInitials()
         
         if createTabBar.invitees.contains(members[indexPath.row]){
             cell.checkmarkImageView.hidden = false
