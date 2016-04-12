@@ -45,7 +45,7 @@ class EventResultsCell: UITableViewCell {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.lightPurple()
         
         dayOfTheWeekLabel.text = date.abbrevDayOfWeek()
         dayOfTheWeekLabel.textColor = UIColor.whiteColor()
@@ -139,6 +139,14 @@ extension EventResultsCell: UICollectionViewDelegate, UICollectionViewDataSource
         let cell = responseCollectionView.dequeueReusableCellWithReuseIdentifier("responseCell", forIndexPath: indexPath) as! ResponseCell
         cell.layer.cornerRadius = 17
         cell.initials.text = members[indexPath.row].getInitials()
+        
+        if indexPath.row > 3 {
+            cell.alpha = 0.5
+        }
+        else {
+            cell.alpha = 1.0
+        }
+        
         return cell
     }
 }

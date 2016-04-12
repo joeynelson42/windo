@@ -55,17 +55,20 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
         if scrollView.contentOffset.y < -45 {
-            let y = 100 + scrollView.contentOffset.y
-
-            print(y)
+            let filterY = 100 + scrollView.contentOffset.y
             
-            resultsView.helpLabel.alpha = 1 - 2.5 * (y / 55)
+            resultsView.helpLabel.alpha = 1 - 2.5 * (filterY / 55)
             
             resultsView.filter.addConstraints(
-                Constraint.tt.of(resultsView, offset: 55 - y),
+                Constraint.tt.of(resultsView, offset: 55 - filterY),
                 Constraint.cxcx.of(resultsView),
                 Constraint.w.of(screenWidth),
                 Constraint.h.of(55)
+            )
+            
+            resultsView.helpLabel.addConstraints(
+                Constraint.tt.of(resultsView, offset: 15 - filterY),
+                Constraint.cxcx.of(resultsView)
             )
         }
         else {
@@ -74,6 +77,11 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
                 Constraint.cxcx.of(resultsView),
                 Constraint.w.of(screenWidth),
                 Constraint.h.of(55)
+            )
+            
+            resultsView.helpLabel.addConstraints(
+                Constraint.tt.of(resultsView, offset: 15),
+                Constraint.cxcx.of(resultsView)
             )
             
             UIView.animateWithDuration(0.1, animations: {

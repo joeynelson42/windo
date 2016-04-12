@@ -11,7 +11,7 @@ import UIKit
 class DetailsTabBarController: UITabBarController {
     
     //MARK: Properties
-    var members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk", "Tucker Turner", "Tyler Alden", "Kara Leigh Alden"]
+    var members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin"]
     
     
     //MARK: Lifecycle Methods

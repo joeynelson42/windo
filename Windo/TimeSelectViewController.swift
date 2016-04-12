@@ -301,7 +301,6 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
 extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
     func updateSelectedTimes(date: NSDate, time: Int) {
         var newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
-        print(newTime)
         
         if newTime.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate(){
             if createTabBar.selectedTimes.contains(newTime){

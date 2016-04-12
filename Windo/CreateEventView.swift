@@ -276,7 +276,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let rawFrame = value.CGRectValue
         let keyboardFrame = convertRect(rawFrame, fromView: nil)
         keyboardHeight = keyboardFrame.height
-        print("keyboardFrame: \(keyboardFrame)")
     }
 }
 
