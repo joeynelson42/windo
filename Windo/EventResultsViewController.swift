@@ -59,6 +59,8 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
             
             resultsView.helpLabel.alpha = 1 - 2.5 * (filterY / 55)
             
+            print(filterY)
+            
             resultsView.filter.addConstraints(
                 Constraint.tt.of(resultsView, offset: 55 - filterY),
                 Constraint.cxcx.of(resultsView),
