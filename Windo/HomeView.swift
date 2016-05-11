@@ -13,6 +13,7 @@ class HomeView: UIView {
     //MARK: Properties
     var eventTableView = UITableView()
     var lowerBackgroundView = UIView()
+    var sideMenuSeparator = UIView()
     
     //MARK: Inits
     convenience init() {
@@ -46,8 +47,13 @@ class HomeView: UIView {
         
         lowerBackgroundView.backgroundColor = UIColor.darkTeal()
         
+        sideMenuSeparator.backgroundColor = UIColor.mikeBlue()
+        
+        clipsToBounds = false
+        
         addSubview(lowerBackgroundView)
         addSubview(eventTableView)
+        addSubview(sideMenuSeparator)
     }
     
     func applyConstraints(){
@@ -63,6 +69,13 @@ class HomeView: UIView {
             Constraint.tt.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(screenHeight - 64)
+        )
+        
+        sideMenuSeparator.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.rr.of(self),
+            Constraint.w.of(5),
+            Constraint.h.of(screenHeight)
         )
     }
 }

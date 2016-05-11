@@ -32,23 +32,28 @@ extension UIColor{
         return color
     }
     
+    class func superLightTeal() -> UIColor{
+        let color = UIColor.fromHex(0xC3F0F0, alpha: 1.0)
+        return color
+    }
+    
     class func purple() -> UIColor{
-        let color = UIColor.fromHex(0x9E65D1, alpha: 1.0)
+        let color = UIColor.fromHex(0x9159F7, alpha: 1.0)
         return color
     }
     
     class func lightPurple() -> UIColor{
-        let color = UIColor.fromHex(0xCD96FF, alpha: 1.0)
+        let color = UIColor.fromHex(0xA676FF, alpha: 1.0)
         return color
     }
     
     class func darkPurple() -> UIColor{
-        let color = UIColor.fromHex(0x6F3B9E, alpha: 1.0)
+        let color = UIColor.fromHex(0x590196, alpha: 1.0)
         return color
     }
     
     class func darkPurple(alpha: Double) -> UIColor{
-        let color = UIColor.fromHex(0x6F3B9E, alpha: alpha)
+        let color = UIColor.fromHex(0x590196, alpha: alpha)
         return color
     }
     

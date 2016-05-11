@@ -198,7 +198,7 @@ class ResponseCircleView: UIView {
     }
     
     func configureSubviews(){
-        backgroundView.backgroundColor = UIColor.purple()
+        backgroundView.backgroundColor = UIColor.darkPurple(0.46)
         backgroundView.layer.cornerRadius = 17
         
         initials.font = UIFont.graphikRegular(14)

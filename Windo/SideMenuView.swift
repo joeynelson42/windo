@@ -13,6 +13,8 @@ class SideMenuView: UIView {
     //MARK: Properties
     var tutorialButton = GHButton()
     
+    var nameLabel = UILabel()
+    
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)

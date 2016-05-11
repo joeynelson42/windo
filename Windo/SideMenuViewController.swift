@@ -19,7 +19,7 @@ class SidePanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.darkTeal()
+        view.backgroundColor = UIColor.superLightTeal()
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
         addTargets()
