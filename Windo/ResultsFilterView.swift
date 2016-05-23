@@ -25,7 +25,7 @@ class ResultsFilterView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.darkPurple()
+        backgroundColor = UIColor.lightPurple()
         
         configureCollectionView()
     }

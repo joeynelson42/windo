@@ -45,7 +45,7 @@ class EventResultsCell: UITableViewCell {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.lightPurple()
+        backgroundColor = UIColor.purple()
         
         dayOfTheWeekLabel.text = date.abbrevDayOfWeek()
         dayOfTheWeekLabel.textColor = UIColor.whiteColor()
@@ -66,7 +66,7 @@ class EventResultsCell: UITableViewCell {
         timeLabel.font = UIFont.graphikRegular(12)
         
         responseLabel.text = "4/6 can make it"
-        responseLabel.textColor = UIColor.purple()
+        responseLabel.textColor = UIColor.darkPurple()
         responseLabel.font = UIFont.graphikRegular(12)
         
         configureCollectionView()

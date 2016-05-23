@@ -261,9 +261,6 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
                 timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
                 timeSelectView.helpLabel.alpha = tempPercent
             }
-            
-            
-            
         }
     }
     

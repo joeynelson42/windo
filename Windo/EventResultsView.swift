@@ -26,7 +26,7 @@ class EventResultsView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.darkPurple()
+        backgroundColor = UIColor.lightPurple()
         
         helpLabel.text = "Here are the times that might work.\nTap users to filter results."
         helpLabel.numberOfLines = 2
@@ -39,7 +39,7 @@ class EventResultsView: UIView {
         resultsTableView.allowsSelection = false
         resultsTableView.separatorColor = UIColor.darkPurple()
         resultsTableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
-        resultsTableView.backgroundColor = UIColor.darkPurple()
+        resultsTableView.backgroundColor = UIColor.lightPurple()
         
         filter.members = members
         
@@ -65,7 +65,7 @@ class EventResultsView: UIView {
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(screenHeight - 115)
+            Constraint.h.of(screenHeight - 114)
         )
     }
 }

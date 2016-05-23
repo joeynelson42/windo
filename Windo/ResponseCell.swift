@@ -32,7 +32,7 @@ class ResponseCell: UICollectionViewCell {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.purple()
+        backgroundColor = UIColor.darkPurple(0.46)
         
         initials.textColor = UIColor.whiteColor()
         initials.font = UIFont.graphikRegular(15)
