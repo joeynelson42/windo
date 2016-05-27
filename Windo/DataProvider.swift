@@ -8,13 +8,14 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 class DataProvider {
     
     static let sharedProvider = DataProvider()
+    let dbRef = FIRDatabase.database().reference()
     
     func uploadNewEvent(newEvent: Event) {
-        var ref = FIRDatabase.database().reference()
         
         
     }
