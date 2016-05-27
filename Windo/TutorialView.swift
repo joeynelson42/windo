@@ -60,7 +60,6 @@ class TutorialView: UIView {
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.backgroundColor = mainView.backgroundColor
         
-        
         mainView.backgroundColor = UIColor.teal()
         
         xButton.setTitle("X", forState: .Normal)
