@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-                
+        
+        // Initialize Firebase
+        FIRApp.configure()
+        
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
@@ -28,16 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let font = UIFont(name: "Graphik-Medium", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
         }
-            
-        //call this to see all the correct titles of the project's fonts
-//                for family: String in UIFont.familyNames()
-//                {
-//                    print("\(family)")
-//                    for names: String in UIFont.fontNamesForFamilyName(family)
-//                    {
-//                        print("== \(names)")
-//                    }
-//                }
         
         return true
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C70B6D11DACDE0E7083A165 /* libPods-Windo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD68DE259A43D49C3A11CDAA /* libPods-Windo.a */; };
 		630AC0C11CB6EAAF0016E3C7 /* ScrubberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */; };
 		6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */; };
 		632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */; };
@@ -23,6 +24,7 @@
 		6353E10F1CBC1F53008117B3 /* ResponseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353E10E1CBC1F53008117B3 /* ResponseCell.swift */; };
 		6353E1111CBC5068008117B3 /* ResultsFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353E1101CBC5068008117B3 /* ResultsFilterView.swift */; };
 		6353E1131CBC6318008117B3 /* UIString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353E1121CBC6318008117B3 /* UIString+.swift */; };
+		635873901CF8924900B9B6FD /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6358738F1CF8924900B9B6FD /* SplashScreenView.swift */; };
 		6358C0651C98CF8400C1DD0B /* InviteeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6358C0641C98CF8400C1DD0B /* InviteeCell.swift */; };
 		636A9F6C1CA2192D00293BE9 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A9F6B1CA2192D00293BE9 /* InviteViewController.swift */; };
 		636A9F6E1CA2193600293BE9 /* InviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A9F6D1CA2193600293BE9 /* InviteView.swift */; };
@@ -62,6 +64,7 @@
 		63B35D441CF88773008761F5 /* WindoDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D431CF88773008761F5 /* WindoDay.swift */; };
 		63B35D461CF88783008761F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D451CF88783008761F5 /* User.swift */; };
 		63B35D481CF889A7008761F5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D471CF889A7008761F5 /* Message.swift */; };
+		63B35D4A1CF88D03008761F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63B35D491CF88D03008761F5 /* GoogleService-Info.plist */; };
 		63E7E17D1C939A8000AF6301 /* Graphik-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */; };
 		63E7E17E1C939A8000AF6301 /* Graphik-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1731C939A5A00AF6301 /* Graphik-Bold.otf */; };
 		63E7E17F1C939A8000AF6301 /* Graphik-Extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1741C939A5A00AF6301 /* Graphik-Extralight.otf */; };
@@ -96,6 +99,7 @@
 		6353E10E1CBC1F53008117B3 /* ResponseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseCell.swift; sourceTree = "<group>"; };
 		6353E1101CBC5068008117B3 /* ResultsFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsFilterView.swift; sourceTree = "<group>"; };
 		6353E1121CBC6318008117B3 /* UIString+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIString+.swift"; sourceTree = "<group>"; };
+		6358738F1CF8924900B9B6FD /* SplashScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		6358C0641C98CF8400C1DD0B /* InviteeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeCell.swift; sourceTree = "<group>"; };
 		636A9F6B1CA2192D00293BE9 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		636A9F6D1CA2193600293BE9 /* InviteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteView.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 		63B35D431CF88773008761F5 /* WindoDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoDay.swift; sourceTree = "<group>"; };
 		63B35D451CF88783008761F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		63B35D471CF889A7008761F5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		63B35D491CF88D03008761F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Black.otf"; sourceTree = "<group>"; };
 		63E7E1731C939A5A00AF6301 /* Graphik-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Bold.otf"; sourceTree = "<group>"; };
 		63E7E1741C939A5A00AF6301 /* Graphik-Extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Extralight.otf"; sourceTree = "<group>"; };
@@ -151,6 +156,9 @@
 		63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectViewController.swift; sourceTree = "<group>"; };
 		63FF08EF1CB4483500255A4A /* TimeSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectView.swift; sourceTree = "<group>"; };
 		63FF08F21CB46EE100255A4A /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		BC57D5017F04E178835FEE42 /* Pods-Windo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Windo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Windo/Pods-Windo.release.xcconfig"; sourceTree = "<group>"; };
+		BD68DE259A43D49C3A11CDAA /* libPods-Windo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Windo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBDFF7B6952295E245CCA8A8 /* Pods-Windo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Windo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Windo/Pods-Windo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,12 +167,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				634EEFAB1C8CA2B7008591D3 /* QuartzCore.framework in Frameworks */,
+				5C70B6D11DACDE0E7083A165 /* libPods-Windo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05B6C5CCC94A9C36AD97AFD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD68DE259A43D49C3A11CDAA /* libPods-Windo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		630D7BEB1CA87AB600D85C86 /* Old Time Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +210,7 @@
 				634D20661C93905500A1D4B5 /* ContainerViewController.swift */,
 				634D20681C93906A00A1D4B5 /* CenterViewController.swift */,
 				634D206E1C93909400A1D4B5 /* SideMenu */,
+				6358738F1CF8924900B9B6FD /* SplashScreenView.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -264,6 +282,8 @@
 				6395B12E1C741969008D0ED5 /* Windo */,
 				6353E1071CBC14E1008117B3 /* Deprecated (but still loved) */,
 				6395B12D1C741969008D0ED5 /* Products */,
+				B63E32AC29DC3D2246CFA789 /* Pods */,
+				05B6C5CCC94A9C36AD97AFD0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -337,6 +357,7 @@
 				63E7E17C1C939A6F00AF6301 /* Fonts */,
 				6395B13B1C741969008D0ED5 /* LaunchScreen.storyboard */,
 				6395B13E1C741969008D0ED5 /* Info.plist */,
+				63B35D491CF88D03008761F5 /* GoogleService-Info.plist */,
 			);
 			name = "App Files";
 			sourceTree = "<group>";
@@ -420,6 +441,15 @@
 			name = "New Time Selection";
 			sourceTree = "<group>";
 		};
+		B63E32AC29DC3D2246CFA789 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CBDFF7B6952295E245CCA8A8 /* Pods-Windo.debug.xcconfig */,
+				BC57D5017F04E178835FEE42 /* Pods-Windo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -427,9 +457,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6395B1411C741969008D0ED5 /* Build configuration list for PBXNativeTarget "Windo" */;
 			buildPhases = (
+				AF530CFCA3DF275BC32256C4 /* Check Pods Manifest.lock */,
 				6395B1281C741969008D0ED5 /* Sources */,
 				6395B1291C741969008D0ED5 /* Frameworks */,
 				6395B12A1C741969008D0ED5 /* Resources */,
+				3457BD3F05452BC3D1EA728F /* Embed Pods Frameworks */,
+				26607F058749C288DE0847C4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -484,6 +517,7 @@
 				63E7E17F1C939A8000AF6301 /* Graphik-Extralight.otf in Resources */,
 				63E7E1801C939A8000AF6301 /* Graphik-Light.otf in Resources */,
 				63E7E1811C939A8000AF6301 /* Graphik-Medium.otf in Resources */,
+				63B35D4A1CF88D03008761F5 /* GoogleService-Info.plist in Resources */,
 				63E7E1821C939A8000AF6301 /* Graphik-Regular.otf in Resources */,
 				63E7E1831C939A8000AF6301 /* Graphik-Semibold.otf in Resources */,
 				63E7E1841C939A8000AF6301 /* Graphik-Super.otf in Resources */,
@@ -494,6 +528,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		26607F058749C288DE0847C4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Windo/Pods-Windo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3457BD3F05452BC3D1EA728F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Windo/Pods-Windo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF530CFCA3DF275BC32256C4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6395B1281C741969008D0ED5 /* Sources */ = {
@@ -531,6 +613,7 @@
 				6383D84D1CA463BB008F23B8 /* NSDate+Windo.swift in Sources */,
 				6392EF6B1C976732003C29CE /* EventDetailsViewController.swift in Sources */,
 				6383D8491CA43A61008F23B8 /* WindoCalendarView.swift in Sources */,
+				635873901CF8924900B9B6FD /* SplashScreenView.swift in Sources */,
 				63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */,
 				63FF08F31CB46EE100255A4A /* TimeView.swift in Sources */,
 				6383D8571CA4AE8F008F23B8 /* WindoCollectionCell.swift in Sources */,
@@ -659,6 +742,7 @@
 		};
 		6395B1421C741969008D0ED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CBDFF7B6952295E245CCA8A8 /* Pods-Windo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -677,6 +761,7 @@
 		};
 		6395B1431C741969008D0ED5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC57D5017F04E178835FEE42 /* Pods-Windo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
