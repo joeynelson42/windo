@@ -8,9 +8,8 @@
 
 import UIKit
 
-@objc
 protocol WindoCalendarDelegate {
-    optional func daysSelectedDidChange(dates: [NSDate])
+    func daysSelectedDidChange(dates: [NSDate])
 }
 
 class WindoCalendarView: UIView, CalendarDayDelegate {
@@ -649,7 +648,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         selectedDays = selectedDays.sort({ $0.compare($1) == NSComparisonResult.OrderedAscending })
         
-        delegate.daysSelectedDidChange!(selectedDays)
+        delegate.daysSelectedDidChange(selectedDays)
     }
     
     func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int) -> NSDate {

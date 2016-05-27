@@ -57,6 +57,11 @@
 		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
 		63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E21C978EF70086B919 /* GroupMemberCell.swift */; };
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
+		63B35D401CF88700008761F5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D3F1CF88700008761F5 /* Event.swift */; };
+		63B35D421CF8871E008761F5 /* Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D411CF8871E008761F5 /* Windo.swift */; };
+		63B35D441CF88773008761F5 /* WindoDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D431CF88773008761F5 /* WindoDay.swift */; };
+		63B35D461CF88783008761F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D451CF88783008761F5 /* User.swift */; };
+		63B35D481CF889A7008761F5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D471CF889A7008761F5 /* Message.swift */; };
 		63E7E17D1C939A8000AF6301 /* Graphik-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */; };
 		63E7E17E1C939A8000AF6301 /* Graphik-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1731C939A5A00AF6301 /* Graphik-Bold.otf */; };
 		63E7E17F1C939A8000AF6301 /* Graphik-Extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E1741C939A5A00AF6301 /* Graphik-Extralight.otf */; };
@@ -68,10 +73,6 @@
 		63E7E1851C939A8000AF6301 /* Graphik-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */; };
 		63E7E1871C93A49B00AF6301 /* UIFont+Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */; };
 		63EA86C51CA9A4640046963B /* WindoKeyboardAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */; };
-		63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */; };
-		63F278FC1CA6018200F103CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F81CA6018200F103CA /* Event.swift */; };
-		63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */; };
-		63F278FE1CA6018200F103CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F278FA1CA6018200F103CA /* User.swift */; };
 		63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */; };
 		63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08EF1CB4483500255A4A /* TimeSelectView.swift */; };
 		63FF08F31CB46EE100255A4A /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF08F21CB46EE100255A4A /* TimeView.swift */; };
@@ -131,6 +132,11 @@
 		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		63AD31E21C978EF70086B919 /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
+		63B35D3F1CF88700008761F5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		63B35D411CF8871E008761F5 /* Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Windo.swift; sourceTree = "<group>"; };
+		63B35D431CF88773008761F5 /* WindoDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoDay.swift; sourceTree = "<group>"; };
+		63B35D451CF88783008761F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		63B35D471CF889A7008761F5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		63E7E1721C939A5A00AF6301 /* Graphik-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Black.otf"; sourceTree = "<group>"; };
 		63E7E1731C939A5A00AF6301 /* Graphik-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Bold.otf"; sourceTree = "<group>"; };
 		63E7E1741C939A5A00AF6301 /* Graphik-Extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Extralight.otf"; sourceTree = "<group>"; };
@@ -142,10 +148,6 @@
 		63E7E17A1C939A5A00AF6301 /* Graphik-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Graphik-Thin.otf"; sourceTree = "<group>"; };
 		63E7E1861C93A49B00AF6301 /* UIFont+Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Windo.swift"; sourceTree = "<group>"; };
 		63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoKeyboardAccessoryView.swift; sourceTree = "<group>"; };
-		63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event+CoreDataProperties.swift"; path = "../Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		63F278F81CA6018200F103CA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = ../Event.swift; sourceTree = "<group>"; };
-		63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		63F278FA1CA6018200F103CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
 		63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectViewController.swift; sourceTree = "<group>"; };
 		63FF08EF1CB4483500255A4A /* TimeSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectView.swift; sourceTree = "<group>"; };
 		63FF08F21CB46EE100255A4A /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
@@ -319,10 +321,12 @@
 		6395B14E1C741C46008D0ED5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				63F278FF1CA6019500F103CA /* DataProperties */,
-				63F278F81CA6018200F103CA /* Event.swift */,
-				63F278FA1CA6018200F103CA /* User.swift */,
 				6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */,
+				63B35D3F1CF88700008761F5 /* Event.swift */,
+				63B35D451CF88783008761F5 /* User.swift */,
+				63B35D411CF8871E008761F5 /* Windo.swift */,
+				63B35D431CF88773008761F5 /* WindoDay.swift */,
+				63B35D471CF889A7008761F5 /* Message.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -402,15 +406,6 @@
 				63E7E17B1C939A6100AF6301 /* Graphik Font */,
 			);
 			name = Fonts;
-			sourceTree = "<group>";
-		};
-		63F278FF1CA6019500F103CA /* DataProperties */ = {
-			isa = PBXGroup;
-			children = (
-				63F278F71CA6018200F103CA /* Event+CoreDataProperties.swift */,
-				63F278F91CA6018200F103CA /* User+CoreDataProperties.swift */,
-			);
-			name = DataProperties;
 			sourceTree = "<group>";
 		};
 		63FF08F11CB4483E00255A4A /* New Time Selection */ = {
@@ -515,6 +510,7 @@
 				63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */,
 				6353E1111CBC5068008117B3 /* ResultsFilterView.swift in Sources */,
 				63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */,
+				63B35D401CF88700008761F5 /* Event.swift in Sources */,
 				63EA86C51CA9A4640046963B /* WindoKeyboardAccessoryView.swift in Sources */,
 				6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */,
 				634D206D1C93908F00A1D4B5 /* SideMenuView.swift in Sources */,
@@ -524,10 +520,12 @@
 				6392EF6D1C976740003C29CE /* EventDetailsView.swift in Sources */,
 				6392EF6F1C97674F003C29CE /* EventMessagesViewController.swift in Sources */,
 				632A4F651CB37E76001D6983 /* ConnectingCirclesView.swift in Sources */,
+				63B35D461CF88783008761F5 /* User.swift in Sources */,
 				63E7E1871C93A49B00AF6301 /* UIFont+Windo.swift in Sources */,
 				6353E10D1CBC1983008117B3 /* EventResultsCell.swift in Sources */,
 				6392EF691C9766F6003C29CE /* CreateEventView.swift in Sources */,
 				6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */,
+				63B35D441CF88773008761F5 /* WindoDay.swift in Sources */,
 				6395B1381C741969008D0ED5 /* Windo.xcdatamodeld in Sources */,
 				636A9F6E1CA2193600293BE9 /* InviteView.swift in Sources */,
 				6383D84D1CA463BB008F23B8 /* NSDate+Windo.swift in Sources */,
@@ -541,26 +539,24 @@
 				63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,
-				63F278FC1CA6018200F103CA /* Event.swift in Sources */,
 				6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */,
 				632A4F601CB312C8001D6983 /* TutorialView.swift in Sources */,
-				63F278FB1CA6018200F103CA /* Event+CoreDataProperties.swift in Sources */,
 				6395B1561C741D3F008D0ED5 /* EventCell.swift in Sources */,
 				6395B1471C741AFE008D0ED5 /* APConstraints.swift in Sources */,
 				6353E1131CBC6318008117B3 /* UIString+.swift in Sources */,
 				6353E10B1CBC1911008117B3 /* EventResultsView.swift in Sources */,
+				63B35D481CF889A7008761F5 /* Message.swift in Sources */,
 				6394638B1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift in Sources */,
 				6395B14D1C741BEB008D0ED5 /* GHButton.swift in Sources */,
 				6353E10F1CBC1F53008117B3 /* ResponseCell.swift in Sources */,
 				632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */,
 				63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */,
 				6383D84F1CA4AD46008F23B8 /* WindoTimeView.swift in Sources */,
-				63F278FD1CA6018200F103CA /* User+CoreDataProperties.swift in Sources */,
+				63B35D421CF8871E008761F5 /* Windo.swift in Sources */,
 				634D206B1C93907F00A1D4B5 /* SideMenuViewController.swift in Sources */,
 				6383D8531CA4AD6C008F23B8 /* WindoTimeCell.swift in Sources */,
 				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
 				6353E1091CBC1909008117B3 /* EventResultsViewController.swift in Sources */,
-				63F278FE1CA6018200F103CA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
