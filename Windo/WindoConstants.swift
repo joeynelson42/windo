@@ -14,3 +14,5 @@ let screenHeight = screenSize.height
 var keyboardHeight: CGFloat = 216
 
 let timeSelectSize: CGFloat = (screenWidth)/7
+
+let idLength = 12

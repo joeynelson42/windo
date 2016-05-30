@@ -62,7 +62,6 @@
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
 		63B35D401CF88700008761F5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D3F1CF88700008761F5 /* Event.swift */; };
 		63B35D421CF8871E008761F5 /* Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D411CF8871E008761F5 /* Windo.swift */; };
-		63B35D441CF88773008761F5 /* WindoDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D431CF88773008761F5 /* WindoDay.swift */; };
 		63B35D461CF88783008761F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D451CF88783008761F5 /* User.swift */; };
 		63B35D481CF889A7008761F5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D471CF889A7008761F5 /* Message.swift */; };
 		63B35D4A1CF88D03008761F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63B35D491CF88D03008761F5 /* GoogleService-Info.plist */; };
@@ -140,7 +139,6 @@
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
 		63B35D3F1CF88700008761F5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		63B35D411CF8871E008761F5 /* Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Windo.swift; sourceTree = "<group>"; };
-		63B35D431CF88773008761F5 /* WindoDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoDay.swift; sourceTree = "<group>"; };
 		63B35D451CF88783008761F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		63B35D471CF889A7008761F5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		63B35D491CF88D03008761F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -344,10 +342,9 @@
 			isa = PBXGroup;
 			children = (
 				6395B1361C741969008D0ED5 /* Windo.xcdatamodeld */,
-				63B35D3F1CF88700008761F5 /* Event.swift */,
 				63B35D451CF88783008761F5 /* User.swift */,
+				63B35D3F1CF88700008761F5 /* Event.swift */,
 				63B35D411CF8871E008761F5 /* Windo.swift */,
-				63B35D431CF88773008761F5 /* WindoDay.swift */,
 				63B35D471CF889A7008761F5 /* Message.swift */,
 				635873911CF8971800B9B6FD /* DataProvider.swift */,
 			);
@@ -610,7 +607,6 @@
 				6353E10D1CBC1983008117B3 /* EventResultsCell.swift in Sources */,
 				6392EF691C9766F6003C29CE /* CreateEventView.swift in Sources */,
 				6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */,
-				63B35D441CF88773008761F5 /* WindoDay.swift in Sources */,
 				6395B1381C741969008D0ED5 /* Windo.xcdatamodeld in Sources */,
 				636A9F6E1CA2193600293BE9 /* InviteView.swift in Sources */,
 				6383D84D1CA463BB008F23B8 /* NSDate+Windo.swift in Sources */,

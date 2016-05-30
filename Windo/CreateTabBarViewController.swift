@@ -15,10 +15,12 @@ import UIKit
 class CreateTabBarController: UITabBarController {
     
     //MARK: Properties
-//    let newEvent = Event()
+    let newEvent = Event()
     var invitees = [String]()
     var selectedDates = [NSDate]()
     var selectedTimes = [NSDate]()
+    
+    
     
     //MARK: Lifecycle Methods
     

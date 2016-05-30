@@ -23,3 +23,12 @@ class User {
     
     
 }
+
+/*
+ "eventIDs": {
+    "upcoming": {
+        "eventID1": { "hasResponded" },
+        "eventID2": { "responseNeeded" },
+    "past": {
+ 
+ */

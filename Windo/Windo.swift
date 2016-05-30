@@ -13,12 +13,12 @@ class Windo {
     var ID: String!
     var ownerID: String!
     var eventID: String!
-    var days: [WindoDay]!
+    var days: [NSDate]!
     var dateCreated: NSDate!
     
     // MARK: Public
     
-    //MARK: Private
+    // MARK: Private
     
     
 }
