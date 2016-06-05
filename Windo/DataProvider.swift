@@ -25,16 +25,11 @@ class DataProvider {
     
     // MARK: Events
     func createEvent(newEvent: Event) {
-        // TODO: for each member of event, add the event's ID to their list of events
-        // TODO: create enum structure for user's status within event: e.g. needs to respond, has responded, etc.
-        
+        self.dbRef.child(eventPath).child(newEvent.ID).setValue(newEvent)
         for member in newEvent.members {
             let userID = member.ID
-            dbRef.child(userPath).child(userID).child("eventIDs").child(newEvent.ID).child("upcoming").setValue("user status")
+            dbRef.child(userPath).child(userID).child("eventIDs").child(newEvent.ID).setValue(ResponseStatus.NeedsResponse.rawValue)
         }
-        
-        self.dbRef.child(eventPath).child(newEvent.ID).setValue(newEvent)
-        
     }
     
     func getEventByID(ID: String) -> Event {

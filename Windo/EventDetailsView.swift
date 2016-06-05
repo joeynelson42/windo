@@ -20,6 +20,12 @@ class EventDetailsView: UIView {
     var response4 = ResponseCircleView()
     var responseStatus = UILabel()
     
+    //response needed
+    var responseLabel = UILabel()
+    var anytimeWorks = GHButton()
+    var submitTimes = GHButton()
+    var blurView = UIView()
+    
     //location/date+time
     var separatingLine = UIView()
     var locationTitleLabel = UILabel()
@@ -42,7 +48,7 @@ class EventDetailsView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.lightPurple()
+//        backgroundColor = UIColor.lightPurple()
         
         respondedStackView = UIStackView(arrangedSubviews: [response1, response2, response3, response4])
         respondedStackView.axis = .Horizontal
@@ -51,7 +57,7 @@ class EventDetailsView: UIView {
         
         response1.initials.text = "JN"
         response2.initials.text = "SK"
-        response3.initials.text = "YK"
+        response3.initials.text = "YD"
         response4.initials.text = "RE"
         response3.alpha = 0.18
         
@@ -101,6 +107,28 @@ class EventDetailsView: UIView {
         memberTableView.allowsSelection = false
         memberTableView.registerClass(GroupMemberCell.self, forCellReuseIdentifier: "memberCell")
         
+        responseLabel.text = "Submit your available times!"
+        responseLabel.textColor = UIColor.darkPurple()
+        responseLabel.textAlignment = .Center
+        responseLabel.font = UIFont.graphikRegular(14)
+        
+        anytimeWorks.setTitle("Anytime Works", forState: .Normal)
+        anytimeWorks.setTitleColor(UIColor.darkPurple(), forState: .Normal)
+        anytimeWorks.titleLabel?.font = UIFont.graphikRegular(18)
+        anytimeWorks.layer.borderColor = UIColor.darkPurple().CGColor
+        anytimeWorks.layer.borderWidth = 1.25
+        anytimeWorks.layer.cornerRadius = 5.0
+        
+        submitTimes.setTitle("Submit Times", forState: .Normal)
+        submitTimes.setTitleColor(UIColor.darkPurple(), forState: .Normal)
+        submitTimes.titleLabel?.font = UIFont.graphikRegular(18)
+        submitTimes.layer.borderColor = UIColor.darkPurple().CGColor
+        submitTimes.layer.borderWidth = 1.25
+        submitTimes.layer.cornerRadius = 5.0
+        
+        blurView.backgroundColor = UIColor.blackColor()
+        blurView.alpha = 0.8
+                
         addSubview(respondedStackView)
         addSubview(responseStatus)
         addSubview(separatingLine)
@@ -112,74 +140,104 @@ class EventDetailsView: UIView {
         addSubview(addMemberLabel)
         addSubview(addMemberButton)
         addSubview(memberTableView)
+        addSubviews(responseLabel, anytimeWorks, submitTimes, blurView)
     }
     
     func applyConstraints(){
-        respondedStackView.constrainUsing(constraints: [
-            Constraint.tt : (of: self, offset: 18),
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: 44*4),
-            Constraint.h : (of: nil, offset: 40)])
+        respondedStackView.addConstraints(
+            Constraint.tt.of(self, offset: 18),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(44*4),
+            Constraint.h.of(40)
+        )
         
-        responseStatus.constrainUsing(constraints: [
-            Constraint.tb : (of: respondedStackView, offset: 16),
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: 12)])
+        responseStatus.addConstraints(
+            Constraint.tb.of(respondedStackView, offset: 16),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(12)
+        )
         
-        separatingLine.constrainUsing(constraints: [
-            Constraint.tb : (of: responseStatus, offset: 27),
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: 1.2),
-            Constraint.h : (of: nil, offset: 62)])
+        separatingLine.addConstraints(
+            Constraint.tb.of(responseStatus, offset: 27),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(1.2),
+            Constraint.h.of(62))
         
-        dateTimeTitleLabel.constrainUsing(constraints: [
-            Constraint.tt : (of: separatingLine, offset: 0),
-            Constraint.cxcx : (of: self, offset: screenWidth * 0.25),
-            Constraint.w : (of: nil, offset: screenWidth/2),
-            Constraint.h : (of: nil, offset: 13)])
+        dateTimeTitleLabel.addConstraints(
+            Constraint.tt.of(separatingLine),
+            Constraint.cxcx.of(self, offset: screenWidth * 0.25),
+            Constraint.w.of(screenWidth/2),
+            Constraint.h.of(13))
         
-        dateTimeLabel.constrainUsing(constraints: [
-            Constraint.tb : (of: dateTimeTitleLabel, offset: 6),
-            Constraint.cxcx : (of: self, offset: screenWidth * 0.25),
-            Constraint.w : (of: nil, offset: screenWidth/2),
-            Constraint.h : (of: nil, offset: 32)])
+        dateTimeLabel.addConstraints(
+            Constraint.tb.of(dateTimeTitleLabel, offset: 6),
+            Constraint.cxcx.of(self, offset: screenWidth * 0.25),
+            Constraint.w.of(screenWidth/2),
+            Constraint.h.of(32))
         
-        locationTitleLabel.constrainUsing(constraints: [
-            Constraint.tt : (of: separatingLine, offset: 0),
-            Constraint.cxcx : (of: self, offset: -(screenWidth * 0.25)),
-            Constraint.w : (of: nil, offset: screenWidth/2),
-            Constraint.h : (of: nil, offset: 13)])
+        locationTitleLabel.addConstraints(
+            Constraint.tt.of(separatingLine),
+            Constraint.cxcx.of(self, offset: -(screenWidth * 0.25)),
+            Constraint.w.of(screenWidth/2),
+            Constraint.h.of(13))
         
-        locationLabel.constrainUsing(constraints: [
-            Constraint.tb : (of: locationTitleLabel, offset: 6),
-            Constraint.cxcx : (of: self, offset: -(screenWidth * 0.25)),
-            Constraint.w : (of: nil, offset: screenWidth/2),
-            Constraint.h : (of: nil, offset: 32)])
+        locationLabel.addConstraints(
+            Constraint.tb.of(locationTitleLabel, offset: 6),
+            Constraint.cxcx.of(self, offset: -(screenWidth * 0.25)),
+            Constraint.w.of(screenWidth/2),
+            Constraint.h.of(32))
         
-        addMemberCell.constrainUsing(constraints: [
-            Constraint.tb : (of: separatingLine, offset: 22),
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth + 2),
-            Constraint.h : (of: nil, offset: 53)])
+        addMemberCell.addConstraints(
+            Constraint.tb.of(separatingLine, offset: 22),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth + 2),
+            Constraint.h.of(53))
         
-        addMemberLabel.constrainUsing(constraints: [
-            Constraint.cycy : (of: addMemberCell, offset: 0),
-            Constraint.ll : (of: addMemberCell, offset: 19),
-            Constraint.w : (of: nil, offset: 200),
-            Constraint.h : (of: nil, offset: 20)])
+        addMemberLabel.addConstraints(
+            Constraint.cycy.of(addMemberCell),
+            Constraint.ll.of(addMemberCell, offset: 19),
+            Constraint.w.of(200),
+            Constraint.h.of(20))
         
-        addMemberButton.constrainUsing(constraints: [
-            Constraint.cycy : (of: addMemberCell, offset: 0),
-            Constraint.rr : (of: addMemberCell, offset: -25),
-            Constraint.w : (of: nil, offset: 30),
-            Constraint.h : (of: nil, offset: 30)])
+        addMemberButton.addConstraints(
+            Constraint.cycy.of(addMemberCell),
+            Constraint.rr.of(addMemberCell, offset: -25),
+            Constraint.w.of(30),
+            Constraint.h.of(30))
         
-        memberTableView.constrainUsing(constraints: [
-            Constraint.tb : (of: addMemberCell, offset: 0),
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: screenWidth),
-            Constraint.h : (of: nil, offset: screenHeight - 363)])
+        memberTableView.addConstraints(
+            Constraint.tb.of(addMemberCell),
+            Constraint.llrr.of(self),
+            Constraint.bb.of(self)
+        )
+        //TODO: This is constrainted behind the tab bar, find a dynamic way to constrain this when the tab bar is/isn't hidden
+        
+        
+        responseLabel.addConstraints(
+            Constraint.tb.of(responseStatus, offset: 25),
+            Constraint.cxcx.of(self)
+        )
+        
+        anytimeWorks.addConstraints(
+            Constraint.tb.of(responseLabel, offset: 15),
+            Constraint.rcx.of(self, offset: -15),
+            Constraint.w.of(screenWidth/2 - 50),
+            Constraint.h.of(40)
+        )
+        
+        submitTimes.addConstraints(
+            Constraint.tb.of(responseLabel, offset: 15),
+            Constraint.lcx.of(self, offset: 15),
+            Constraint.w.of(screenWidth/2 - 50),
+            Constraint.h.of(40)
+        )
+        
+        blurView.addConstraints(
+            Constraint.tt.of(addMemberCell),
+            Constraint.bb.of(self),
+            Constraint.llrr.of(self)
+        )
     }
 }
 
@@ -211,16 +269,20 @@ class ResponseCircleView: UIView {
     
     func applyConstraints(){
         
-        initials.constrainUsing(constraints: [
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.cycy : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: 34),
-            Constraint.h : (of: nil, offset: 34)])
+        initials.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.cycy.of(self),
+            Constraint.w.of(34),
+            Constraint.h.of(34))
         
-        backgroundView.constrainUsing(constraints: [
-            Constraint.cxcx : (of: self, offset: 0),
-            Constraint.cycy : (of: self, offset: 0),
-            Constraint.w : (of: nil, offset: 34),
-            Constraint.h : (of: nil, offset: 34)])
+        backgroundView.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.cycy.of(self),
+            Constraint.w.of(34),
+            Constraint.h.of(34))
     }
 }
+
+
+
+

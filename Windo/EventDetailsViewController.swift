@@ -15,6 +15,7 @@ class EventDetailsViewController: UIViewController {
     
     var detailsView: EventDetailsView!
     var members = [String]()
+    var responseNeeded = false
     
     //MARK: Lifecycle Methods
     
@@ -27,7 +28,14 @@ class EventDetailsViewController: UIViewController {
         
         members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk"]
         detailsView.addMemberButton.addTarget(self, action: #selector(EventDetailsViewController.addMemberTapped), forControlEvents: .TouchUpInside)
+        detailsView.anytimeWorks.addTarget(self, action: #selector(EventDetailsViewController.dismissResponseNeeded), forControlEvents: .TouchUpInside)
         
+        if responseNeeded{
+            showResponseOptions()
+        } else {
+            hideResponseOptions()
+        }
+
     }
     
     func addMemberTapped(){
@@ -37,12 +45,55 @@ class EventDetailsViewController: UIViewController {
         detailsView.memberTableView.reloadData()
         
         detailsView.respondedStackView.addArrangedSubview(response5)
-        detailsView.respondedStackView.constrainUsing(constraints: [
-            Constraint.tt : (of: self.detailsView, offset: 18),
-            Constraint.cxcx : (of: self.detailsView, offset: 0),
-            Constraint.w : (of: nil, offset: 44*5),
-            Constraint.h : (of: nil, offset: 40)])
+        detailsView.respondedStackView.addConstraints(
+            Constraint.tt.of(detailsView, offset: 18),
+            Constraint.cxcx.of(detailsView),
+            Constraint.w.of(CGFloat(44 * 5)),
+            Constraint.h.of(40)
+        )
         detailsView.respondedStackView.spacing = 5
+    }
+    
+    func dismissResponseNeeded() {
+        hideResponseOptions()
+    }
+    
+    func showResponseOptions(){
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        detailsView.backgroundColor = UIColor.whiteColor()
+        
+        detailsView.separatingLine.hidden = true
+        detailsView.locationTitleLabel.hidden = true
+        detailsView.locationLabel.hidden = true
+        detailsView.dateTimeTitleLabel.hidden = true
+        detailsView.dateTimeLabel.hidden = true
+        
+        detailsView.anytimeWorks.hidden = false
+        detailsView.submitTimes.hidden = false
+        detailsView.responseLabel.hidden = false
+        
+        detailsView.blurView.hidden = false
+        
+        tabBarController?.tabBar.hidden = true
+    }
+    
+    func hideResponseOptions(){
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor.purple()
+        detailsView.backgroundColor = UIColor.lightPurple()
+        
+        detailsView.separatingLine.hidden = false
+        detailsView.locationTitleLabel.hidden = false
+        detailsView.locationLabel.hidden = false
+        detailsView.dateTimeTitleLabel.hidden = false
+        detailsView.dateTimeLabel.hidden = false
+        
+        detailsView.anytimeWorks.hidden = true
+        detailsView.submitTimes.hidden = true
+        detailsView.responseLabel.hidden = true
+        
+        detailsView.blurView.hidden = true
+        
+        tabBarController?.tabBar.hidden = false
     }
 }
 
@@ -61,6 +112,7 @@ extension EventDetailsViewController: UITableViewDelegate, UITableViewDataSource
         
         cell.nameLabel.text = members[indexPath.row]
         cell.initialsLabel.text = getInitials(members[indexPath.row])
+        cell.infoGestureRecognizer.addTarget(self, action: #selector(EventDetailsViewController.openUserProfile(_:)))
         
         return cell
     }
@@ -81,5 +133,11 @@ extension EventDetailsViewController: UITableViewDelegate, UITableViewDataSource
         let initials = "\(firstInitial)\(secondInitial)"
         
         return initials.uppercaseString
+    }
+    
+    func openUserProfile(sender: UITapGestureRecognizer) {
+        let profileVC = UserProfileViewController()
+        profileVC.color = ThemeColor.Purple
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 }

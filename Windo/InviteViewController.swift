@@ -117,13 +117,21 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.initialsLabel.text = members[indexPath.row].getInitials()
         
         if createTabBar.invitees.contains(members[indexPath.row]){
-            cell.checkmarkImageView.hidden = false
-            cell.infoButton.hidden = true
+            cell.checkmarkImageView.alpha = 1.0
+            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            cell.infoButton.alpha = 0.0
+            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         }
         else{
-            cell.checkmarkImageView.hidden = true
-            cell.infoButton.hidden = false
+            cell.infoButton.alpha = 1.0
+            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            cell.checkmarkImageView.alpha = 0.0
+            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         }
+        
+        cell.infoGestureRecognizer.addTarget(self, action: #selector(InviteViewController.openUserProfile(_:)))
         
         return cell
     }
@@ -138,15 +146,12 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         if createTabBar.invitees.contains(members[indexPath.row]){
             let index = createTabBar.invitees.indexOf(members[indexPath.row])
             createTabBar.invitees.removeAtIndex(index!)
-            cell.checkmarkImageView.hidden = true
-            cell.infoButton.hidden = false
-        }
-        else{
+        } else{
             createTabBar.invitees.append(cell.nameLabel.text!)
-            cell.checkmarkImageView.hidden = false
-            cell.infoButton.hidden = true
         }
 
+        cell.animateChange()
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         updateInvitees()
     }
@@ -163,13 +168,8 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         switch(section){
         case 0:
             label = "Recently invited"
-            //            bgColor = UIColor.lightTeal()
         case 1:
             label = "All Contacts"
-            //            bgColor = UIColor.teal()
-            //        case 2:
-            //            label = "Past"
-            //            bgColor = UIColor.darkTeal()
         default:
             label = "Error!"
         }
@@ -193,5 +193,11 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         view.endEditing(true)
+    }
+    
+    func openUserProfile(sender: UITapGestureRecognizer) {
+        let profileVC = UserProfileViewController()
+        profileVC.color = ThemeColor.Blue
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 }

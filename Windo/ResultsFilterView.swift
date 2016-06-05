@@ -76,6 +76,11 @@ extension ResultsFilterView: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.alpha = 0.5
         cell.layer.cornerRadius = 20
         cell.initials.text = members[indexPath.row].getInitials()
+        
+        if members[indexPath.row] == "John Jackson" {
+            cell.imageView.image = UIImage(named: "John Profile")
+        }
+        
         return cell
     }
     

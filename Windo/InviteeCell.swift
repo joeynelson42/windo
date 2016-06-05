@@ -17,6 +17,8 @@ class InviteeCell: UITableViewCell {
     var initialsLabel = UILabel()
     var checkmarkImageView = UIImageView()
     var infoButton = UIButton()
+    var infoGestureContainer = UIView()
+    var infoGestureRecognizer = UITapGestureRecognizer()
     
     //MARK: Inits
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -50,7 +52,6 @@ class InviteeCell: UITableViewCell {
         checkmarkImageView.contentMode = .ScaleAspectFit
         
         infoButton.setImage(UIImage(named: "BlueInfoIcon"), forState: .Normal)
-        //TODO: add target to button -> user profile
         
         initialsIcon.layer.borderWidth = 1.2
         initialsIcon.layer.borderColor = UIColor.blue().CGColor
@@ -66,6 +67,8 @@ class InviteeCell: UITableViewCell {
         addSubview(initialsLabel)
         addSubview(checkmarkImageView)
         addSubview(infoButton)
+        addSubview(infoGestureContainer)
+        infoGestureContainer.addGestureRecognizer(infoGestureRecognizer)
     }
     
     func applyConstraints(){
@@ -105,5 +108,44 @@ class InviteeCell: UITableViewCell {
             Constraint.cxcx.of(checkmarkImageView),
             Constraint.cycy.of(checkmarkImageView)
         )
+        
+        infoGestureContainer.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.rr.of(self),
+            Constraint.w.of(48),
+            Constraint.h.of(65)
+        )
+    }
+    
+    func animateChange() {
+        let spring:CGFloat = 0.5
+        let velocity:CGFloat = 0.1
+        
+        if checkmarkImageView.alpha == 0.0 {
+            UIView.animateWithDuration(0.25, delay: 0.0, usingSpringWithDamping: spring, initialSpringVelocity: velocity, options: .CurveEaseIn, animations: { Void in
+                self.infoButton.alpha = 0.0
+                self.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                }, completion: nil)
+            
+            UIView.animateWithDuration(0.25, delay: 0.1, usingSpringWithDamping: spring, initialSpringVelocity: velocity, options: .CurveEaseOut, animations: {
+                self.checkmarkImageView.alpha = 1.0
+                self.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                }, completion: {void in
+                    self.infoGestureRecognizer.enabled = false
+            })
+            
+        } else {
+            UIView.animateWithDuration(0.25, delay: 0.0, usingSpringWithDamping: spring, initialSpringVelocity: velocity, options: .CurveEaseIn, animations: { Void in
+                self.checkmarkImageView.alpha = 0.0
+                self.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                }, completion:nil)
+            
+            UIView.animateWithDuration(0.25, delay: 0.1, usingSpringWithDamping: spring, initialSpringVelocity: velocity, options: .CurveEaseOut, animations: {
+                self.infoButton.alpha = 1.0
+                self.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                }, completion: {void in
+                    self.infoGestureRecognizer.enabled = true
+            })
+        }
     }
 }

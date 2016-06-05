@@ -24,9 +24,15 @@ class User {
     
 }
 
+enum ResponseStatus : String {
+    case NeedsResponse = "needsResponse", HasResponded = "hasResponded"
+    static let allValues = [NeedsResponse, HasResponded]
+}
+
 /*
  "eventIDs": {
     "upcoming": {
+        "eventID": { ResponseStatus }
         "eventID1": { "hasResponded" },
         "eventID2": { "responseNeeded" },
     "past": {

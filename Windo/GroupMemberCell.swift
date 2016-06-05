@@ -15,6 +15,8 @@ class GroupMemberCell: UITableViewCell {
     var initialsIcon = UIView()
     var initialsLabel = UILabel()
     var infoButton = UIButton()
+    var infoGestureContainer = UIView()
+    var infoGestureRecognizer = UITapGestureRecognizer()
     
     //MARK: Inits
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -54,31 +56,39 @@ class GroupMemberCell: UITableViewCell {
         addSubview(initialsIcon)
         addSubview(initialsLabel)
         addSubview(infoButton)
+        addSubview(infoGestureContainer)
+        infoGestureContainer.addGestureRecognizer(infoGestureRecognizer)
     }
     
     func applyConstraints(){
-        initialsIcon.constrainUsing(constraints: [
-            .ll : (of: self, offset: 24),
-            .cycy : (of: self, offset: 0),
-            .w : (of: nil, offset: 44),
-            .h : (of: nil, offset: 44)])
+        initialsIcon.addConstraints(
+            Constraint.ll.of(self, offset: 24),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(44)
+        )
         
-        initialsLabel.constrainUsing(constraints: [
-            .cxcx : (of: initialsIcon, offset: 0),
-            .cycy : (of: initialsIcon, offset: 0),
-            .w : (of: nil, offset: 44),
-            .h : (of: nil, offset: 44)])
+        initialsLabel.addConstraints(
+            Constraint.cxcx.of(initialsIcon),
+            Constraint.cycy.of(initialsIcon),
+            Constraint.wh.of(44)
+        )
         
-        nameLabel.constrainUsing(constraints: [
-            .lr : (of: initialsIcon, offset: 17),
-            .cycy : (of: self, offset: 0),
-            .w : (of: nil, offset: 200),
-            .h : (of: nil, offset: 16)])
+        nameLabel.addConstraints(
+            Constraint.lr.of(initialsIcon, offset: 17),
+            Constraint.cycy.of(self)
+        )
         
-        infoButton.constrainUsing(constraints: [
-            .rr : (of: self, offset: -27),
-            .cycy : (of: self, offset: 0),
-            .w : (of: nil, offset: 23),
-            .h : (of: nil, offset: 23)])
+        infoButton.addConstraints(
+            Constraint.rr.of(self, offset: -27),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(23)
+        )
+        
+        infoGestureContainer.addConstraints(
+            Constraint.rr.of(self),
+            Constraint.cycy.of(self),
+            Constraint.h.of(65),
+            Constraint.w.of(50)
+        )
     }
 }

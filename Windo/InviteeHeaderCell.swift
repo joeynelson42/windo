@@ -30,10 +30,11 @@ class InviteeHeaderCell: UITableViewHeaderFooterView {
     }
     
     func applyConstraints(){
-        titleLabel.constrainUsing(constraints: [
-            .ll : (of: self, offset: 20),
-            .cycy : (of: self, offset: 0),
-            .w : (of: nil, offset: screenWidth),
-            .h : (of: nil, offset: 12)])
+        titleLabel.addConstraints(
+            Constraint.ll.of(self, offset: 20),
+            Constraint.cycy.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(12)
+        )
     }
 }

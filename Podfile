@@ -8,6 +8,9 @@ target 'Windo' do
 pod 'Firebase'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
+pod 'Firebase/Auth'
+
+pod 'GoogleSignIn'
 
 end
 

@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     //MARK: Properties
     
@@ -18,5 +20,30 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         view = loginView
+        
+        GIDSignIn.sharedInstance().signInSilently()
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+        let nc = NSNotificationCenter.defaultCenter()
+        
+        nc.addObserver(self, selector: #selector(LoginViewController.loadHomeScreen), name: kUserLoggedIn, object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        loadHomeScreen()
+    }
+    
+    @objc private func loadHomeScreen(){
+        if let user = FIRAuth.auth()?.currentUser {
+            
+            //fetch user's events and open home screen on completion
+            let rootVC = ContainerViewController()
+            
+            print("load home screen hit")
+            
+            let window = UIApplication.sharedApplication().delegate!.window!
+            window!.rootViewController = rootVC
+            window!.makeKeyAndVisible()
+        }
     }
 }

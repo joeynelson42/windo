@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		5C70B6D11DACDE0E7083A165 /* libPods-Windo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD68DE259A43D49C3A11CDAA /* libPods-Windo.a */; };
 		630AC0C11CB6EAAF0016E3C7 /* ScrubberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */; };
+		631B59CD1D00D2B400BC32E8 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B59CC1D00D2B400BC32E8 /* ChatCell.swift */; };
+		631B59D11D047E2500BC32E8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B59CE1D047E2500BC32E8 /* FBSDKCoreKit.framework */; };
+		631B59D21D047E2600BC32E8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B59CF1D047E2500BC32E8 /* FBSDKLoginKit.framework */; };
+		631B59D31D047E2600BC32E8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B59D01D047E2500BC32E8 /* FBSDKShareKit.framework */; };
 		6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */; };
 		632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */; };
 		632A4F601CB312C8001D6983 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A4F5F1CB312C8001D6983 /* TutorialView.swift */; };
@@ -58,6 +62,11 @@
 		6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15C1C742181008D0ED5 /* WindoConstants.swift */; };
 		63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */; };
 		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
+		63A8683D1D006987002978F7 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8683C1D006986002978F7 /* UserProfileViewController.swift */; };
+		63A8683F1D006990002978F7 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8683E1D006990002978F7 /* UserProfileView.swift */; };
+		63A868421D0069AD002978F7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A868411D0069AD002978F7 /* SettingsViewController.swift */; };
+		63A868441D0069B6002978F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A868431D0069B6002978F7 /* SettingsView.swift */; };
+		63A868461D009374002978F7 /* WindoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A868451D009374002978F7 /* WindoAlertView.swift */; };
 		63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E21C978EF70086B919 /* GroupMemberCell.swift */; };
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
 		63B35D401CF88700008761F5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D3F1CF88700008761F5 /* Event.swift */; };
@@ -83,6 +92,10 @@
 
 /* Begin PBXFileReference section */
 		630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrubberCell.swift; sourceTree = "<group>"; };
+		631B59CC1D00D2B400BC32E8 /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		631B59CE1D047E2500BC32E8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		631B59CF1D047E2500BC32E8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		631B59D01D047E2500BC32E8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteeHeaderCell.swift; sourceTree = "<group>"; };
 		632A4F5D1CB312BF001D6983 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		632A4F5F1CB312C8001D6983 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
@@ -135,6 +148,11 @@
 		6395B15C1C742181008D0ED5 /* WindoConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoConstants.swift; sourceTree = "<group>"; };
 		63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabBarViewController.swift; sourceTree = "<group>"; };
 		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
+		63A8683C1D006986002978F7 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		63A8683E1D006990002978F7 /* UserProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		63A868411D0069AD002978F7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		63A868431D0069B6002978F7 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		63A868451D009374002978F7 /* WindoAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoAlertView.swift; sourceTree = "<group>"; };
 		63AD31E21C978EF70086B919 /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
 		63B35D3F1CF88700008761F5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -167,6 +185,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				634EEFAB1C8CA2B7008591D3 /* QuartzCore.framework in Frameworks */,
+				631B59D11D047E2500BC32E8 /* FBSDKCoreKit.framework in Frameworks */,
+				631B59D31D047E2600BC32E8 /* FBSDKShareKit.framework in Frameworks */,
+				631B59D21D047E2600BC32E8 /* FBSDKLoginKit.framework in Frameworks */,
 				5C70B6D11DACDE0E7083A165 /* libPods-Windo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +198,10 @@
 		05B6C5CCC94A9C36AD97AFD0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				631B59CE1D047E2500BC32E8 /* FBSDKCoreKit.framework */,
+				631B59CF1D047E2500BC32E8 /* FBSDKLoginKit.framework */,
+				631B59D01D047E2500BC32E8 /* FBSDKShareKit.framework */,
+				634EEFAA1C8CA2B7008591D3 /* QuartzCore.framework */,
 				BD68DE259A43D49C3A11CDAA /* libPods-Windo.a */,
 			);
 			name = Frameworks;
@@ -258,6 +283,7 @@
 			children = (
 				6392EF6E1C97674F003C29CE /* EventMessagesViewController.swift */,
 				6392EF701C97675A003C29CE /* EventMessagesView.swift */,
+				631B59CC1D00D2B400BC32E8 /* ChatCell.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -278,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				6395B12F1C741969008D0ED5 /* AppDelegate.swift */,
-				634EEFAA1C8CA2B7008591D3 /* QuartzCore.framework */,
 				6395B12E1C741969008D0ED5 /* Windo */,
 				6353E1071CBC14E1008117B3 /* Deprecated (but still loved) */,
 				6395B12D1C741969008D0ED5 /* Products */,
@@ -305,6 +330,8 @@
 				6395B1481C741B9E008D0ED5 /* Home */,
 				6392EF761C976784003C29CE /* EventDetails */,
 				6395B1591C741F26008D0ED5 /* EventCreation */,
+				63A868401D006997002978F7 /* Settings */,
+				63A868471D00937C002978F7 /* Misc. Views */,
 				6395B1391C741969008D0ED5 /* Assets.xcassets */,
 				6395B14E1C741C46008D0ED5 /* Model */,
 				6395B14F1C741C55008D0ED5 /* App Files */,
@@ -377,7 +404,7 @@
 				63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */,
 				63A28B0D1CA3354A000826DC /* CreateEventDetails */,
 				63A28B0E1CA33555000826DC /* Invite */,
-				63FF08F11CB4483E00255A4A /* New Time Selection */,
+				63FF08F11CB4483E00255A4A /* Time Selection */,
 			);
 			name = EventCreation;
 			sourceTree = "<group>";
@@ -405,6 +432,26 @@
 			name = Invite;
 			sourceTree = "<group>";
 		};
+		63A868401D006997002978F7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				63A8683C1D006986002978F7 /* UserProfileViewController.swift */,
+				63A8683E1D006990002978F7 /* UserProfileView.swift */,
+				63A868411D0069AD002978F7 /* SettingsViewController.swift */,
+				63A868431D0069B6002978F7 /* SettingsView.swift */,
+			);
+			name = Settings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		63A868471D00937C002978F7 /* Misc. Views */ = {
+			isa = PBXGroup;
+			children = (
+				63A868451D009374002978F7 /* WindoAlertView.swift */,
+			);
+			name = "Misc. Views";
+			sourceTree = "<group>";
+		};
 		63E7E17B1C939A6100AF6301 /* Graphik Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +476,7 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		63FF08F11CB4483E00255A4A /* New Time Selection */ = {
+		63FF08F11CB4483E00255A4A /* Time Selection */ = {
 			isa = PBXGroup;
 			children = (
 				63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */,
@@ -438,7 +485,7 @@
 				6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */,
 				630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */,
 			);
-			name = "New Time Selection";
+			name = "Time Selection";
 			sourceTree = "<group>";
 		};
 		B63E32AC29DC3D2246CFA789 /* Pods */ = {
@@ -585,9 +632,11 @@
 				6358C0651C98CF8400C1DD0B /* InviteeCell.swift in Sources */,
 				636A9F6C1CA2192D00293BE9 /* InviteViewController.swift in Sources */,
 				6392EF641C974CDA003C29CE /* EventHeaderCell.swift in Sources */,
+				63A868461D009374002978F7 /* WindoAlertView.swift in Sources */,
 				634D20691C93906A00A1D4B5 /* CenterViewController.swift in Sources */,
 				6395B1531C741C97008D0ED5 /* HomeView.swift in Sources */,
 				6321D4A41CA1E48300CDB203 /* InviteeHeaderCell.swift in Sources */,
+				63A8683D1D006987002978F7 /* UserProfileViewController.swift in Sources */,
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
 				63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */,
 				6353E1111CBC5068008117B3 /* ResultsFilterView.swift in Sources */,
@@ -609,6 +658,8 @@
 				6395B1321C741969008D0ED5 /* LoginViewController.swift in Sources */,
 				6395B1381C741969008D0ED5 /* Windo.xcdatamodeld in Sources */,
 				636A9F6E1CA2193600293BE9 /* InviteView.swift in Sources */,
+				63A868421D0069AD002978F7 /* SettingsViewController.swift in Sources */,
+				63A868441D0069B6002978F7 /* SettingsView.swift in Sources */,
 				6383D84D1CA463BB008F23B8 /* NSDate+Windo.swift in Sources */,
 				6392EF6B1C976732003C29CE /* EventDetailsViewController.swift in Sources */,
 				6383D8491CA43A61008F23B8 /* WindoCalendarView.swift in Sources */,
@@ -619,6 +670,7 @@
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
 				63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */,
+				631B59CD1D00D2B400BC32E8 /* ChatCell.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
 				634D20671C93905500A1D4B5 /* ContainerViewController.swift in Sources */,
 				6395B1451C741ADB008D0ED5 /* LoginView.swift in Sources */,
@@ -636,6 +688,7 @@
 				63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */,
 				6383D84F1CA4AD46008F23B8 /* WindoTimeView.swift in Sources */,
 				63B35D421CF8871E008761F5 /* Windo.swift in Sources */,
+				63A8683F1D006990002978F7 /* UserProfileView.swift in Sources */,
 				634D206B1C93907F00A1D4B5 /* SideMenuViewController.swift in Sources */,
 				6383D8531CA4AD6C008F23B8 /* WindoTimeCell.swift in Sources */,
 				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
@@ -748,6 +801,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Windo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NelsonJE.Windo;
@@ -767,6 +824,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Windo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = NelsonJE.Windo;

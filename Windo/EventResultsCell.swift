@@ -139,12 +139,17 @@ extension EventResultsCell: UICollectionViewDelegate, UICollectionViewDataSource
         let cell = responseCollectionView.dequeueReusableCellWithReuseIdentifier("responseCell", forIndexPath: indexPath) as! ResponseCell
         cell.layer.cornerRadius = 17
         cell.initials.text = members[indexPath.row].getInitials()
+        cell.whSize = 34
         
         if indexPath.row > 3 {
             cell.alpha = 0.5
         }
         else {
             cell.alpha = 1.0
+        }
+        
+        if members[indexPath.row] == "John Jackson" {
+            cell.imageView.image = UIImage(named: "John Profile")
         }
         
         return cell

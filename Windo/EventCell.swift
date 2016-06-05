@@ -43,7 +43,6 @@ class EventCell: UITableViewCell {
         locationLabel.textColor = UIColor.mikeBlue()
         locationLabel.font = UIFont.graphikRegular(18)
         
-        eventStatus.textColor = UIColor.whiteColor()
         eventStatus.font = UIFont.graphikRegular(16)
         
         arrowImageView.image = UIImage(named: "CellArrow")
@@ -59,35 +58,31 @@ class EventCell: UITableViewCell {
     }
     
     func applyConstraints(){
-        titleLabel.constrainUsing(constraints: [
-            .ll : (of: self, offset: 39),
-            .tt : (of: self, offset: 27),
-            .w : (of: nil, offset: screenWidth),
-            .h : (of: nil, offset: 22)])
+        titleLabel.addConstraints(
+            Constraint.ll.of(self, offset: 39),
+            Constraint.tt.of(self, offset: 27)
+        )
         
-        locationLabel.constrainUsing(constraints: [
-            .ll : (of: titleLabel, offset: 0),
-            .tb : (of: titleLabel, offset: 3),
-            .w : (of: nil, offset: screenWidth),
-            .h : (of: nil, offset: 18)])
+        locationLabel.addConstraints(
+            Constraint.ll.of(titleLabel),
+            Constraint.tb.of(titleLabel, offset: 3)
+        )
         
-        eventStatus.constrainUsing(constraints: [
-            .ll : (of: titleLabel, offset: 0),
-            .tb : (of: locationLabel, offset: 22),
-            .w : (of: nil, offset: screenWidth),
-            .h : (of: nil, offset: 16)])
+        eventStatus.addConstraints(
+            Constraint.ll.of(titleLabel),
+            Constraint.tb.of(locationLabel, offset: 22)
+        )
         
-        arrowImageView.constrainUsing(constraints: [
-            .cycy : (of: self, offset: 0),
-            .rr : (of: self, offset: -22),
-            .w : (of: nil, offset: 9),
-            .h : (of: nil, offset: 16)])
+        arrowImageView.addConstraints(
+            Constraint.cycy.of(self),
+            Constraint.rr.of(self, offset: -22)
+        )
         
-        notificationDot.constrainUsing(constraints: [
-            .rl : (of: titleLabel, offset: -12),
-            .cycy : (of: titleLabel, offset: 0),
-            .w : (of: nil, offset: 10),
-            .h : (of: nil, offset: 10)])
+        notificationDot.addConstraints(
+            Constraint.rl.of(titleLabel, offset: -12),
+            Constraint.cycy.of(titleLabel),
+            Constraint.wh.of(10)
+        )
     }
 }
 

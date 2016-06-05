@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 protocol SidePanelViewControllerDelegate {
     func pageSelected(pageIndex: Int)
@@ -34,12 +36,30 @@ class SidePanelViewController: UIViewController {
     }
     
     func addTargets(){
-        sideMenuView.tutorialButton.addTarget(self, action: #selector(SidePanelViewController.openTutorial), forControlEvents: .TouchUpInside)
+        sideMenuView.help.addTarget(self, action: #selector(SidePanelViewController.openTutorial), forControlEvents: .TouchUpInside)
+        
+        sideMenuView.signOut.addTarget(self, action: #selector(SidePanelViewController.signOut), forControlEvents: .TouchUpInside)
     }
     
     func openTutorial(){
         let tutorialVC = TutorialViewController()
         presentViewController(tutorialVC, animated: true, completion: nil)
+    }
+    
+    func signOut() {
+        try! FIRAuth.auth()!.signOut()
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            return
+        } else {
+            let rootVC = LoginViewController()
+            
+            print("sign out hit")
+            
+            let window = UIApplication.sharedApplication().delegate!.window!
+            window!.rootViewController = rootVC
+            window!.makeKeyAndVisible()
+        }
     }
 }
 

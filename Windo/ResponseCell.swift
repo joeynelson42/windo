@@ -12,6 +12,8 @@ class ResponseCell: UICollectionViewCell {
     
     //MARK: Properties
     var initials = UILabel()
+    var imageView = UIImageView()
+    var whSize:CGFloat = 40
     
     //MARK: Inits
     override init(frame: CGRect) {
@@ -38,13 +40,24 @@ class ResponseCell: UICollectionViewCell {
         initials.font = UIFont.graphikRegular(15)
         initials.textAlignment = .Center
         
-        addSubviews(initials)
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = whSize/2
+        
+        addSubview(initials)
+        addSubview(imageView)
     }
     
     func applyConstraints(){
         initials.addConstraints(
             Constraint.cxcx.of(self),
             Constraint.cycy.of(self)
+        )
+        
+        imageView.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(whSize)
         )
     }
 }

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le7-hN-nQp">
-                                <rect key="frame" x="180" y="141" width="240" height="128"/>
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiO-L6-Cwt">
                                         <rect key="frame" x="83" y="27" width="35" height="35"/>
@@ -53,7 +53,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.34509803919999998" green="0.74901960779999999" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.1803921568627451" green="0.80784313725490198" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="7MK-1c-S6l" firstAttribute="top" secondItem="bFQ-lY-TMV" secondAttribute="bottom" constant="4" id="2J8-in-V2w"/>
                                     <constraint firstAttribute="trailing" secondItem="7MK-1c-S6l" secondAttribute="trailing" constant="83" id="3Qw-Bi-nbJ"/>
@@ -70,10 +70,10 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.34509803919999998" green="0.74901960779999999" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.1803921568627451" green="0.80784313725490198" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="le7-hN-nQp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-95" id="3VQ-bz-2mj"/>
                             <constraint firstItem="le7-hN-nQp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="K9f-Lw-EOU"/>
+                            <constraint firstItem="le7-hN-nQp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="nvd-2o-D3D"/>
                         </constraints>
                     </view>
                 </viewController>

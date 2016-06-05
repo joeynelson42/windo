@@ -14,5 +14,9 @@ let screenHeight = screenSize.height
 var keyboardHeight: CGFloat = 216
 
 let timeSelectSize: CGFloat = (screenWidth)/7
+let centerPanelExpandedOffset: CGFloat = 75
 
 let idLength = 12
+
+
+let kUserLoggedIn = "userLoggedIn"
