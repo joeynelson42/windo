@@ -48,9 +48,10 @@ class EventMessagesView: UIView {
         messagesTableView.registerClass(IncomingChatCell.self, forCellReuseIdentifier: "incomingChatCell")
         messagesTableView.registerClass(OutgoingChatCell.self, forCellReuseIdentifier: "outgoingChatCell")
         
-        addSubviews(recipientsContainer, newMessageContainer, messagesTableView)
-        addSubview(messageTextField)
-        addSubview(sendButton)
+        addSubviews(recipientsContainer, messagesTableView)
+        addSubview(newMessageContainer)
+        newMessageContainer.addSubview(messageTextField)
+        newMessageContainer.addSubview(sendButton)
     }
     
     func applyConstraints(){

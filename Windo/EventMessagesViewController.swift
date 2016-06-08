@@ -25,6 +25,10 @@ class EventMessagesViewController: UIViewController {
         cells = ["1", "2", "3"]
         
         messagesView.sendButton.addTarget(self, action: #selector(EventMessagesViewController.sendMessage), forControlEvents: .TouchUpInside)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardDidShow(_:)), name:UIKeyboardDidShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
     }
     
     func sendMessage() {
@@ -32,6 +36,50 @@ class EventMessagesViewController: UIViewController {
         let indexP = NSIndexPath(forRow: cells.count - 1, inSection: 0)
         messagesView.messagesTableView.insertRowsAtIndexPaths([indexP], withRowAnimation: UITableViewRowAnimation.Bottom)
         messagesView.messagesTableView.scrollToRowAtIndexPath(indexP, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+    }
+    
+    
+    func keyboardDidShow(sender: NSNotification) {
+        let info  = sender.userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+        
+        let rawFrame = value.CGRectValue
+        let keyboardFrame = messagesView.convertRect(rawFrame, fromView: nil)
+        keyboardHeight = keyboardFrame.height
+        
+        messagesView.newMessageContainer.addConstraints(
+            Constraint.bb.of(messagesView, offset: -keyboardHeight),
+            Constraint.llrr.of(messagesView),
+            Constraint.h.of(40)
+        )
+        
+        UIView.animateWithDuration(0.15) {
+            self.messagesView.layoutIfNeeded()
+        }
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {        
+        messagesView.newMessageContainer.addConstraints(
+            Constraint.bb.of(messagesView, offset: -keyboardHeight),
+            Constraint.llrr.of(messagesView),
+            Constraint.h.of(40)
+        )
+        
+        UIView.animateWithDuration(0.15) {
+            self.messagesView.layoutIfNeeded()
+        }
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        messagesView.newMessageContainer.addConstraints(
+            Constraint.bb.of(messagesView, offset: -50),
+            Constraint.llrr.of(messagesView),
+            Constraint.h.of(40)
+        )
+        
+        UIView.animateWithDuration(0.15) {
+            self.messagesView.layoutIfNeeded()
+        }
     }
 }
 
