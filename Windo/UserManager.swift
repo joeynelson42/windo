@@ -40,59 +40,67 @@ class UserManager {
 
     }
     
-    // MARK: Facebook login methods for custom button
+    // MARK: Facebook
     
-    func fbLoginInitiate() {
-        let loginManager = FBSDKLoginManager()
-        loginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], handler: {(result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
-            if (error != nil) {
-                self.removeFbData()
-            } else if result.isCancelled {
-                self.removeFbData()
-            } else {
-                //Success
-                let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-                FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-                    return
-                }
+//    func removeFbData() {
+//        //Remove FB Data
+//        let fbManager = FBSDKLoginManager()
+//        fbManager.logOut()
+//        FBSDKAccessToken.setCurrentAccessToken(nil)
+//    }
+    
+//    func fetchFacebookProfile()
+//    {
+//        if FBSDKAccessToken.currentAccessToken() != nil {
+//            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+//            graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+//                
+//                if ((error) != nil) {
+//                    //Handle error
+//                } else {
+//                    //Handle Profile Photo URL String
+//                    let userId =  result["id"] as! String
+//                    let profilePictureUrl = "https://graph.facebook.com/\(userId)/picture?type=large"
+//                    
+//                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+//                    let fbUser = ["accessToken": accessToken, "user": result]
+//                }
+//            })
+//        }
+//    }
+    
+    func fbLogin(didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        print("User Logged In")
+        
+        if ((error) != nil) {
+            // Process error
+        } else if result.isCancelled {
+            // Handle cancellations
+        } else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if result.grantedPermissions.contains("email") {
                 
-                let nc = NSNotificationCenter.defaultCenter()
-                nc.postNotificationName(kUserLoggedIn, object: nil)
-                
-                if result.grantedPermissions.contains("email") && result.grantedPermissions.contains("public_profile") {
-                    //Do work
-                    self.fetchFacebookProfile()
-                } else {
-                    // Handle error
-                }
             }
-        })
-    }
-    
-    func removeFbData() {
-        //Remove FB Data
-        let fbManager = FBSDKLoginManager()
-        fbManager.logOut()
-        FBSDKAccessToken.setCurrentAccessToken(nil)
-    }
-    
-    func fetchFacebookProfile()
-    {
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-            graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-                
-                if ((error) != nil) {
-                    //Handle error
-                } else {
-                    //Handle Profile Photo URL String
-                    let userId =  result["id"] as! String
-                    let profilePictureUrl = "https://graph.facebook.com/\(userId)/picture?type=large"
-                    
-                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
-                    let fbUser = ["accessToken": accessToken, "user": result]
-                }
-            })
+            
+            // Firebase Login
+            let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+            FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+                //fetch user's events and open home screen on completion
+                let rootVC = ContainerViewController()
+                let window = UIApplication.sharedApplication().delegate!.window!
+                window!.rootViewController = rootVC
+                window!.makeKeyAndVisible()
+            }
         }
+    }
+    
+    func fbLogout() {
+        try! FIRAuth.auth()!.signOut()
+        
+        let rootVC = LoginViewController()
+        let window = UIApplication.sharedApplication().delegate!.window!
+        window!.rootViewController = rootVC
+        window!.makeKeyAndVisible()
     }
 }

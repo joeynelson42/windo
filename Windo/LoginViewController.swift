@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //MARK: Properties
     
@@ -20,33 +20,19 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         view = loginView
-        
+        loginView.loginButton.delegate = self
         loginView.facebookButton.addTarget(self, action: #selector(LoginViewController.facebookLogin), forControlEvents: .TouchUpInside)
-        
-        let nc = NSNotificationCenter.defaultCenter()
-        
-        nc.addObserver(self, selector: #selector(LoginViewController.loadHomeScreen), name: kUserLoggedIn, object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        loadHomeScreen()
+    func facebookLogin() {        
+        loginView.loginButton.sendActionsForControlEvents(.TouchUpInside)
     }
     
-    @objc private func loadHomeScreen(){
-        if let user = FIRAuth.auth()?.currentUser {
-            
-            //fetch user's events and open home screen on completion
-            let rootVC = ContainerViewController()
-            
-            print("load home screen hit")
-            
-            let window = UIApplication.sharedApplication().delegate!.window!
-            window!.rootViewController = rootVC
-            window!.makeKeyAndVisible()
-        }
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        UserManager.sharedManager.fbLogin(didCompleteWithResult: result, error: error)
     }
     
-    func facebookLogin() {
-        UserManager.sharedManager.fbLoginInitiate()
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        UserManager.sharedManager.fbLogout()
     }
 }

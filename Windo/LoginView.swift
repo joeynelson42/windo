@@ -14,6 +14,8 @@ class LoginView: UIView {
     var windoLabel = UILabel()
     var facebookButton = GHButton()
     
+    let loginButton = FBSDKLoginButton()
+    
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
@@ -49,9 +51,12 @@ class LoginView: UIView {
         facebookButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         facebookButton.titleLabel?.font = UIFont.graphikMedium(13)
         facebookButton.titleLabel?.textAlignment = .Left
-                
+        
+//        loginButton.alpha = 0.0
+        
         addSubview(windoLabel)
         addSubview(facebookButton)
+        addSubview(loginButton)
     }
     
     func applyConstraints(){
@@ -63,6 +68,13 @@ class LoginView: UIView {
         facebookButton.addConstraints(
             Constraint.cxcx.of(self),
             Constraint.cycy.of(self, offset: -25),
+            Constraint.w.of(200),
+            Constraint.h.of(35)
+        )
+        
+        loginButton.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.tb.of(self, offset: 25),
             Constraint.w.of(200),
             Constraint.h.of(35)
         )
