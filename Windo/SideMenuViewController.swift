@@ -47,19 +47,7 @@ class SidePanelViewController: UIViewController {
     }
     
     func signOut() {
-        try! FIRAuth.auth()!.signOut()
-        
-        if let user = FIRAuth.auth()?.currentUser {
-            return
-        } else {
-            let rootVC = LoginViewController()
-            
-            print("sign out hit")
-            
-            let window = UIApplication.sharedApplication().delegate!.window!
-            window!.rootViewController = rootVC
-            window!.makeKeyAndVisible()
-        }
+        UserManager.sharedManager.signOut()
     }
 }
 

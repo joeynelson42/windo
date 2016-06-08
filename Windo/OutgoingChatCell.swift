@@ -1,14 +1,14 @@
 //
-//  ChatCell.swift
+//  OutgoingChatCell.swift
 //  Windo
 //
-//  Created by Joey on 6/2/16.
+//  Created by Joey on 6/5/16.
 //  Copyright © 2016 NelsonJE. All rights reserved.
 //
 
 import UIKit
 
-class ChatCell: UITableViewCell {
+class OutgoingChatCell: UITableViewCell {
     
     //MARK: Properties
     let container = UIView()
@@ -46,13 +46,14 @@ class ChatCell: UITableViewCell {
     
     func applyConstraints(){
         container.addConstraints(
-            Constraint.llrr.of(self, offset: 20),
+            Constraint.rr.of(self, offset: -10),
+            Constraint.ll.of(self, offset: 60),
             Constraint.ttbb.of(self, offset: 20)
         )
         
         message.addConstraints(
             Constraint.ttbb.of(self),
-            Constraint.ll.of(container, offset: 11)
+            Constraint.rr.of(container, offset: -11)
         )
     }
 }

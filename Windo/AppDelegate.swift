@@ -12,7 +12,7 @@ import Firebase
 import FirebaseAuth
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
@@ -21,9 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Initialize Firebase
         FIRApp.configure()
-        
-        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
         
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -130,36 +127,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     // MARK: Firebase Authentication
     
     // Google
-    func application(application: UIApplication, openURL url: NSURL, options: [String: AnyObject]) -> Bool {
-        return GIDSignIn.sharedInstance().handleURL(url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as? String, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+//    func application(application: UIApplication, openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+//        
+//        return GIDSignIn.sharedInstance().handleURL(url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as? String, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+//    }
+//    
+//    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
+//        if let error = error {
+//            print(error.localizedDescription)
+//            return
+//        }
+//        
+//        let authentication = user.authentication
+//        let credential = FIRGoogleAuthProvider.credentialWithIDToken(authentication.idToken, accessToken: authentication.accessToken)
+//        
+//        FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                return
+//            }
+//        }
+//        
+//    }
+//    
+//    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+//                withError error: NSError!) {
+//        // Perform any operations when the user disconnects from app here.
+//        // ...
+//    }
+    
+    //Facebook
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(
+            application,
+            openURL: url,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
     }
     
-    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        print("User Logged In")
+        
+        if ((error) != nil) {
+            // Process error
         }
-        
-        let authentication = user.authentication
-        let credential = FIRGoogleAuthProvider.credentialWithIDToken(authentication.idToken, accessToken: authentication.accessToken)
-        
-        FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
+        else if result.isCancelled {
+            // Handle cancellations
+        }
+        else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if result.grantedPermissions.contains("email")
+            {
+                // Do work
             }
+            
         }
-        
-        let nc = NSNotificationCenter.defaultCenter()
-        nc.postNotificationName(kUserLoggedIn, object: nil)
     }
     
-    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
-                withError error: NSError!) {
-        // Perform any operations when the user disconnects from app here.
-        // ...
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("User Logged Out")
     }
-    
-    // to sign out: try! FIRAuth.auth()!.signOut()
 }
 

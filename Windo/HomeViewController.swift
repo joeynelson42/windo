@@ -183,4 +183,41 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 24
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            let name = user.displayName
+            let email = user.email
+            let photoUrl = user.photoURL
+            let uid = user.uid;  // The user's ID, unique to the Firebase project.
+            // Do NOT use this value to authenticate with
+            // your backend server, if you have one. Use
+            // getTokenWithCompletion:completion: instead.
+            
+            fetchFacebookProfile()
+        } else {
+            // No user is signed in.
+        }
+    }
+    
+    func fetchFacebookProfile()
+    {
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+            graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+                
+                if ((error) != nil) {
+                    //Handle error
+                } else {
+                    //Handle Profile Photo URL String
+                    let userId =  result["id"] as! String
+                    let profilePictureUrl = "https://graph.facebook.com/\(userId)/picture?type=large"
+                    
+                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+                    let fbUser = ["accessToken": accessToken, "user": result]
+                }
+            })
+        }
+    }
 }

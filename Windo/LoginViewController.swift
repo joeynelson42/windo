@@ -21,8 +21,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         view = loginView
         
-        GIDSignIn.sharedInstance().signInSilently()
-        GIDSignIn.sharedInstance().uiDelegate = self
+        loginView.facebookButton.addTarget(self, action: #selector(LoginViewController.facebookLogin), forControlEvents: .TouchUpInside)
         
         let nc = NSNotificationCenter.defaultCenter()
         
@@ -45,5 +44,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
             window!.rootViewController = rootVC
             window!.makeKeyAndVisible()
         }
+    }
+    
+    func facebookLogin() {
+        UserManager.sharedManager.fbLoginInitiate()
     }
 }

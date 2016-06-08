@@ -8,12 +8,12 @@
 
 import Foundation
 import Firebase
-import FirebaseDatabase
+//import FirebaseDatabase
 
 class DataProvider {
     
     static let sharedProvider = DataProvider()
-    let dbRef = FIRDatabase.database().reference()
+//    let dbRef = FIRDatabase.database().reference()
 
     // PATHS
     let userPath = "users"
@@ -25,10 +25,10 @@ class DataProvider {
     
     // MARK: Events
     func createEvent(newEvent: Event) {
-        self.dbRef.child(eventPath).child(newEvent.ID).setValue(newEvent)
+//        self.dbRef.child(eventPath).child(newEvent.ID).setValue(newEvent)
         for member in newEvent.members {
             let userID = member.ID
-            dbRef.child(userPath).child(userID).child("eventIDs").child(newEvent.ID).setValue(ResponseStatus.NeedsResponse.rawValue)
+//            dbRef.child(userPath).child(userID).child("eventIDs").child(newEvent.ID).setValue(ResponseStatus.NeedsResponse.rawValue)
         }
     }
     

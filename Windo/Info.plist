@@ -21,6 +21,12 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1716555475267078</string>
+			</array>
+		</dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
@@ -39,6 +45,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>5</string>
+	<key>FacebookAppID</key>
+	<string>1716555475267078</string>
+	<key>FacebookDisplayName</key>
+	<string>Windo</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -73,18 +83,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
     
-    <key>CFBundleURLTypes</key>
+    <key>LSApplicationQueriesSchemes</key>
     <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>fb1716555475267078</string>
-            </array>
-        </dict>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
     </array>
-    <key>FacebookAppID</key>
-    <string>1716555475267078</string>
-    <key>FacebookDisplayName</key>
-    <string>Windo</string>
 </dict>
 </plist>

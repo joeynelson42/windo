@@ -12,6 +12,8 @@ class EventMessagesView: UIView {
     
     //MARK: Properties
     let newMessageContainer = UIView()
+    let messageTextField = UITextField()
+    let sendButton = UIButton()
     
     let recipientsContainer = UIView()
     
@@ -30,12 +32,25 @@ class EventMessagesView: UIView {
         
         recipientsContainer.backgroundColor = UIColor.lightPurple()
         
-        newMessageContainer.backgroundColor = UIColor.purple()
+        newMessageContainer.backgroundColor = UIColor.darkPurple()
+        
+        messageTextField.backgroundColor = UIColor.whiteColor()
+        
+        sendButton.backgroundColor = newMessageContainer.backgroundColor
+        sendButton.setTitle("SEND", forState: .Normal)
+        sendButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        sendButton.setTitleColor(UIColor.darkPurple(), forState: .Highlighted)
+        sendButton.titleLabel?.font = UIFont.graphikMedium(13)
         
         messagesTableView.backgroundColor = UIColor.purple()
-        messagesTableView.registerClass(ChatCell.self, forCellReuseIdentifier: "chatCell")
+        messagesTableView.separatorStyle = .None
+        messagesTableView.allowsSelection = false
+        messagesTableView.registerClass(IncomingChatCell.self, forCellReuseIdentifier: "incomingChatCell")
+        messagesTableView.registerClass(OutgoingChatCell.self, forCellReuseIdentifier: "outgoingChatCell")
         
         addSubviews(recipientsContainer, newMessageContainer, messagesTableView)
+        addSubview(messageTextField)
+        addSubview(sendButton)
     }
     
     func applyConstraints(){
@@ -49,6 +64,18 @@ class EventMessagesView: UIView {
             Constraint.bb.of(self, offset: -50),
             Constraint.llrr.of(self),
             Constraint.h.of(40)
+        )
+        
+        messageTextField.addConstraints(
+            Constraint.ll.of(newMessageContainer, offset: 5),
+            Constraint.ttbb.of(newMessageContainer, offset: 5),
+            Constraint.rr.of(newMessageContainer, offset: -60)
+        )
+        
+        sendButton.addConstraints(
+            Constraint.ttbb.of(newMessageContainer),
+            Constraint.lr.of(messageTextField, offset: 5),
+            Constraint.rr.of(newMessageContainer, offset: -5)
         )
         
         messagesTableView.addConstraints(

@@ -12,8 +12,6 @@ class LoginView: UIView {
     
     //MARK: Properties
     var windoLabel = UILabel()
-    
-    var googleButton = GIDSignInButton()
     var facebookButton = GHButton()
     
     //MARK: Inits
@@ -44,23 +42,29 @@ class LoginView: UIView {
         windoLabel.text = "windo"
         windoLabel.textColor = UIColor.whiteColor()
         windoLabel.font = UIFont.graphikRegular(35)
-        
-        googleButton.colorScheme = GIDSignInButtonColorScheme.Light
-        googleButton.style = GIDSignInButtonStyle.Wide
-        
+                
+        facebookButton.layer.borderColor = UIColor.whiteColor().CGColor
+        facebookButton.layer.borderWidth = 1
+        facebookButton.setTitle("SIGN IN WITH FACEBOOK", forState: .Normal)
+        facebookButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        facebookButton.titleLabel?.font = UIFont.graphikMedium(13)
+        facebookButton.titleLabel?.textAlignment = .Left
+                
         addSubview(windoLabel)
-        addSubview(googleButton)
+        addSubview(facebookButton)
     }
     
     func applyConstraints(){
         windoLabel.addConstraints(
             Constraint.cxcx.of(self),
-            Constraint.tt.of(self, offset: screenHeight * 0.125)
+            Constraint.cycy.of(self, offset: -screenHeight/4)
         )
         
-        googleButton.addConstraints(
+        facebookButton.addConstraints(
             Constraint.cxcx.of(self),
-            Constraint.cycy.of(self, offset:  25)
+            Constraint.cycy.of(self, offset: -25),
+            Constraint.w.of(200),
+            Constraint.h.of(35)
         )
     }
 }
