@@ -22,7 +22,7 @@ class EventMessagesViewController: UIViewController {
         messagesView.messagesTableView.delegate = self
         messagesView.messagesTableView.dataSource = self
         
-        cells = ["1", "2", "3"]
+        cells = ["1", "2", "hey this is a bunch of text hey this is a bunch of text hey this is a bunch of text"]
         
         messagesView.sendButton.addTarget(self, action: #selector(EventMessagesViewController.sendMessage), forControlEvents: .TouchUpInside)
         
@@ -58,7 +58,7 @@ class EventMessagesViewController: UIViewController {
         }
     }
     
-    func keyboardWillShow(sender: NSNotification) {        
+    func keyboardWillShow(sender: NSNotification) {
         messagesView.newMessageContainer.addConstraints(
             Constraint.bb.of(messagesView, offset: -keyboardHeight),
             Constraint.llrr.of(messagesView),
@@ -110,6 +110,19 @@ extension EventMessagesViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+        let height = heightForView(cells[indexPath.row], font: UIFont.graphikMedium(16), width: screenWidth - 40)
+        
+        return height + 36
+    }
+    
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.font = font
+        label.text = text
+        
+        label.sizeToFit()
+        return label.frame.height
     }
 }

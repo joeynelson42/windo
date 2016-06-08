@@ -41,6 +41,8 @@ class IncomingChatCell: UITableViewCell {
         message.textColor = UIColor.whiteColor()
         message.font = UIFont.graphikRegular(16)
         message.backgroundColor = UIColor.clearColor()
+        message.numberOfLines = 0
+        message.lineBreakMode = .ByWordWrapping
         
         senderIcon.layer.cornerRadius = 15
         senderIcon.layer.borderColor = UIColor.whiteColor().CGColor
@@ -56,12 +58,13 @@ class IncomingChatCell: UITableViewCell {
         container.addConstraints(
             Constraint.lr.of(senderIcon, offset: 5),
             Constraint.rr.of(self, offset: -60),
-            Constraint.ttbb.of(self, offset: 20)
+            Constraint.ttbb.of(self, offset: 10)
         )
         
         message.addConstraints(
             Constraint.ttbb.of(self),
-            Constraint.ll.of(container, offset: 11)
+            Constraint.ll.of(container, offset: 11),
+            Constraint.rr.of(container, offset: -11)
         )
         
         senderIcon.addConstraints(

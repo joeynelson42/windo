@@ -39,6 +39,8 @@ class OutgoingChatCell: UITableViewCell {
         message.textColor = UIColor.whiteColor()
         message.font = UIFont.graphikRegular(16)
         message.backgroundColor = UIColor.clearColor()
+        message.numberOfLines = 0
+        message.lineBreakMode = .ByWordWrapping
         
         addSubview(container)
         addSubview(message)
@@ -48,11 +50,12 @@ class OutgoingChatCell: UITableViewCell {
         container.addConstraints(
             Constraint.rr.of(self, offset: -10),
             Constraint.ll.of(self, offset: 60),
-            Constraint.ttbb.of(self, offset: 20)
+            Constraint.ttbb.of(self, offset: 10)
         )
         
         message.addConstraints(
             Constraint.ttbb.of(self),
+            Constraint.ll.of(container, offset: 11),
             Constraint.rr.of(container, offset: -11)
         )
     }
