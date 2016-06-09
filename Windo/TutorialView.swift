@@ -58,6 +58,7 @@ class TutorialView: UIView {
         mainScrollView.pagingEnabled = true
         mainScrollView.showsHorizontalScrollIndicator = false
         mainScrollView.showsVerticalScrollIndicator = false
+        mainScrollView.backgroundColor = mainView.backgroundColor
         
         mainView.backgroundColor = UIColor.teal()
         

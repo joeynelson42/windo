@@ -11,6 +11,7 @@ import CoreLocation
 
 class Event {
 
+    var ID: String!
     var name: String!
     var location: CLLocation!
     var members: [User]!
@@ -27,7 +28,6 @@ class Event {
     
     
     // MARK: Public
-    
     
     // MARK: Private
     

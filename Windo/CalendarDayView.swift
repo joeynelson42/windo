@@ -141,6 +141,8 @@ class CalendarDayView: UIView {
             selectedBackground.alpha = 0.0
             selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
             dateButton.alpha = 0.0
+            layer.borderWidth = 0
+            return
         }
         
         guard let _ = date else { return }

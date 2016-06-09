@@ -29,12 +29,11 @@ class ContainerViewController: UIViewController {
     
     var leftViewController: SidePanelViewController?
     
-    let centerPanelExpandedOffset: CGFloat = 60
     var centerPanelCenter: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         centerViewController = HomeViewController()
         centerViewController.delegate = self
         centerPanelCenter = view.center.x
@@ -48,7 +47,7 @@ class ContainerViewController: UIViewController {
         centerNavigationController.didMoveToParentViewController(self)
         
         centerNavigationController.navigationBar.barTintColor = UIColor.lightTeal()
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
         
         tapToClose = UITapGestureRecognizer(target: self, action: #selector(ContainerViewController.collapseSidePanel))
@@ -57,7 +56,6 @@ class ContainerViewController: UIViewController {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    
 }
 
 // MARK: CenterViewController delegate
@@ -72,9 +70,17 @@ extension ContainerViewController: CenterViewControllerDelegate {
         }
         
         if currentState == .BothCollapsed{
+            if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {
+                homeVC.homeView.eventTableView.scrollEnabled = false
+            }
+            
             centerNavigationController.view.addGestureRecognizer(tapToClose)
         }
         else {
+            if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {
+                homeVC.homeView.eventTableView.scrollEnabled = true
+            }
+            
             centerNavigationController.view.removeGestureRecognizer(tapToClose)
         }
         
@@ -107,12 +113,20 @@ extension ContainerViewController: CenterViewControllerDelegate {
             currentState = .LeftPanelExpanded
             centerNavigationController.view.addGestureRecognizer(tapToClose)
             animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
+            
+            if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {
+                homeVC.homeView.eventTableView.scrollEnabled = false
+            }
         } else {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .BothCollapsed
                 self.centerNavigationController.view.removeGestureRecognizer(self.tapToClose)
                 self.leftViewController!.view.removeFromSuperview()
                 self.leftViewController = nil;
+            }
+            
+            if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {
+                homeVC.homeView.eventTableView.scrollEnabled = true
             }
         }
     }

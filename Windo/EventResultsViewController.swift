@@ -45,6 +45,7 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
         let cell = resultsView.resultsTableView.dequeueReusableCellWithIdentifier("resultsCell", forIndexPath: indexPath) as! EventResultsCell
         cell.members = detailsTabBar.members
         cell.date = NSDate()
+        
         return cell
     }
     
@@ -58,8 +59,6 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
             let filterY = 100 + scrollView.contentOffset.y
             
             resultsView.helpLabel.alpha = 1 - 2.5 * (filterY / 55)
-            
-            print(filterY)
             
             resultsView.filter.addConstraints(
                 Constraint.tt.of(resultsView, offset: 55 - filterY),

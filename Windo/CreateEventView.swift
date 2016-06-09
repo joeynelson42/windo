@@ -81,7 +81,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTextField.tintColor = UIColor.whiteColor()
         nameTextField.tag = 1
         nameTextField.delegate = self
-        
+            
         inviteeLabel.textColor = UIColor.whiteColor()
         inviteeLabel.font = UIFont.graphikRegular(18)
         inviteeLabel.tintColor = UIColor.whiteColor()
@@ -107,7 +107,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
-                
+        
         addSubview(inviteeCell)
         addSubview(locationCell)
         addSubview(nameCell)

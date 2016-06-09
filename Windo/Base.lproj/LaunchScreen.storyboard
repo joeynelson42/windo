@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le7-hN-nQp">
-                                <rect key="frame" x="180" y="141" width="240" height="128"/>
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiO-L6-Cwt">
                                         <rect key="frame" x="83" y="27" width="35" height="35"/>
-                                        <color key="backgroundColor" red="0.10588235294117647" green="0.30980392156862746" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="fRA-7E-rOT"/>
                                             <constraint firstAttribute="width" constant="35" id="nlg-xO-hjC"/>
@@ -30,7 +30,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bFQ-lY-TMV">
                                         <rect key="frame" x="122" y="27" width="35" height="35"/>
-                                        <color key="backgroundColor" red="0.1058823529" green="0.30980392159999998" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="7CP-7Q-5FN"/>
                                             <constraint firstAttribute="width" constant="35" id="uzV-pB-dSn"/>
@@ -38,7 +38,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7MK-1c-S6l">
                                         <rect key="frame" x="122" y="66" width="35" height="35"/>
-                                        <color key="backgroundColor" red="0.1058823529" green="0.30980392159999998" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="HcG-8c-hn0"/>
                                             <constraint firstAttribute="width" constant="35" id="yYc-RT-6cL"/>
@@ -46,14 +46,14 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYS-w7-Y4z">
                                         <rect key="frame" x="83" y="66" width="35" height="35"/>
-                                        <color key="backgroundColor" red="0.1058823529" green="0.30980392159999998" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="ZwI-EM-Dsg"/>
                                             <constraint firstAttribute="height" constant="35" id="yAG-jT-Oxd"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.34509803919999998" green="0.74901960779999999" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.1803921568627451" green="0.80784313725490198" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="7MK-1c-S6l" firstAttribute="top" secondItem="bFQ-lY-TMV" secondAttribute="bottom" constant="4" id="2J8-in-V2w"/>
                                     <constraint firstAttribute="trailing" secondItem="7MK-1c-S6l" secondAttribute="trailing" constant="83" id="3Qw-Bi-nbJ"/>
@@ -70,10 +70,10 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.34509803919999998" green="0.74901960779999999" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.1803921568627451" green="0.80784313725490198" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="le7-hN-nQp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-95" id="3VQ-bz-2mj"/>
                             <constraint firstItem="le7-hN-nQp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="K9f-Lw-EOU"/>
+                            <constraint firstItem="le7-hN-nQp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="nvd-2o-D3D"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -12,7 +12,7 @@ class DetailsTabBarController: UITabBarController {
     
     //MARK: Properties
     var members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin"]
-    
+    var navColor = UIColor()
     
     //MARK: Lifecycle Methods
     

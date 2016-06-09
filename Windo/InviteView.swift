@@ -33,7 +33,9 @@ class InviteView: UIView {
         inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
         inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
         
-//        inviteeLabel.text = inviteePlaceholderText
+        if inviteeLabel.text == "" {
+            inviteeLabel.text = inviteePlaceholderText
+        }
         inviteeLabel.textColor = UIColor.whiteColor()
         inviteeLabel.font = UIFont.graphikRegular(18)
         inviteeLabel.tintColor = UIColor.whiteColor()
@@ -47,10 +49,11 @@ class InviteView: UIView {
     
     func applyConstraints(){
         stackViewContainer.addConstraints(
-            Constraint.tt.of(self),
+            Constraint.bb.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(60))
+            Constraint.h.of(45)
+        )
         
         inviteeLabel.addConstraints(
             Constraint.cycy.of(stackViewContainer),
@@ -60,9 +63,10 @@ class InviteView: UIView {
         )
         
         inviteeTableView.addConstraints(
-            Constraint.tb.of(stackViewContainer, offset: 0),
+            Constraint.tt.of(self),
+            Constraint.bt.of(stackViewContainer),
             Constraint.llrr.of(self),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(screenHeight - 124))
+            Constraint.w.of(screenWidth)
+        )
     }
 }

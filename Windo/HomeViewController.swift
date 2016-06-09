@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class HomeViewController: CenterViewController{
     
@@ -21,7 +23,7 @@ class HomeViewController: CenterViewController{
         configureTableView()
         view = homeView
         title = "Events"
-        
+                
         let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         sideMenuButton.setImage(UIImage(named: "HamburgerIcon"), forState: .Normal)
         sideMenuButton.addTarget(self, action: #selector(HomeViewController.toggleOpen), forControlEvents: .TouchUpInside)
@@ -87,7 +89,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section + 1
+        return section + 3
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -96,6 +98,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = "Michael's Party"
         cell.locationLabel.text = "The Yellow Door House"
         cell.eventStatus.text = "You need to respond!"
+        cell.eventStatus.textColor = UIColor.whiteColor()
         cell.selectionStyle = .None
         cell.notificationDot.hidden = true
 
@@ -104,7 +107,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor.lightTeal()
             cell.titleLabel.text = "BFA Dinner"
             cell.eventStatus.text = "April 17, 2016 4:00pm"
-            cell.eventStatus.textColor = UIColor.mikeBlue()
         case 1:
             cell.backgroundColor = UIColor.teal()
             cell.titleLabel.text = "St. George Trip"
@@ -112,6 +114,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             cell.backgroundColor = UIColor.darkTeal()
             cell.eventStatus.text = "February 4, 2016 8:00pm"
+            cell.eventStatus.textColor = UIColor.mikeBlue()
         default:
             break
         }
@@ -144,7 +147,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         detailsVC.viewControllers = controllers
         detailsVC.selectedIndex = 1
         navigationController?.pushViewController(detailsVC, animated: true)
-        
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -180,5 +182,42 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 24
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            let name = user.displayName
+            let email = user.email
+            let photoUrl = user.photoURL
+            let uid = user.uid;  // The user's ID, unique to the Firebase project.
+            // Do NOT use this value to authenticate with
+            // your backend server, if you have one. Use
+            // getTokenWithCompletion:completion: instead.
+            
+            fetchFacebookProfile()
+        } else {
+            // No user is signed in.
+        }
+    }
+    
+    func fetchFacebookProfile()
+    {
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+            graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+                
+                if ((error) != nil) {
+                    //Handle error
+                } else {
+                    //Handle Profile Photo URL String
+                    let userId =  result["id"] as! String
+                    let profilePictureUrl = "https://graph.facebook.com/\(userId)/picture?type=large"
+                    
+                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+                    let fbUser = ["accessToken": accessToken, "user": result]
+                }
+            })
+        }
     }
 }
