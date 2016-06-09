@@ -39,6 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let font = UIFont(name: "Graphik-Medium", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
         }
+//        self.appViewController = [[GDAppViewController alloc] init];
+//        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//        self.window.rootViewController = self.appViewController;
+//        [self.window makeKeyAndVisible];
+        
         
         return true
     }
