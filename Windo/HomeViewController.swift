@@ -43,6 +43,11 @@ class HomeViewController: CenterViewController{
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
     }
     
+    override func viewDidLayoutSubviews() {
+        showSplashScreen(homeView)
+        homeView.sendSubviewToBack(homeView.eventTableView)
+    }
+    
     func toggleOpen(){
         delegate?.toggleLeftPanel?()
     }

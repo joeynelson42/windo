@@ -41,11 +41,31 @@ class UserManager {
     }
     
     func fetchUserProfile() {
+        if fetchUserProfileFromDefaults() {
+            return
+        } else {
+            fetchUserProfileFromFacebook()
+        }
+    }
+    
+    func fetchUserProfileFromFacebook() {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large)"])
         request.startWithCompletionHandler({ (connection, result, error) in
             let info = result as! NSDictionary
+            
+            if let firstName = info.valueForKey("first_name") as? String {
+                UserManager.userProfile.firstName = firstName
+            }
+            
+            if let lastName = info.valueForKey("last_name") as? String {
+                UserManager.userProfile.lastName = lastName
+            }
+            
+            if let email = info.valueForKey("email") as? String {
+                UserManager.userProfile.email = email
+            }
+            
             if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                
                 NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
                     guard
                         let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
@@ -56,13 +76,7 @@ class UserManager {
                     data.writeToURL(NSURL(string: imageURL)!, atomically: true)
                     
                     dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        guard
-                            let firstName = info.valueForKey("first_name") as? String,
-                            let lastName = info.valueForKey("last_name") as? String,
-                            let email = info.valueForKey("email") as? String
-                            else { return }
-                        
-                        UserManager.userProfile = UserProfile(first: firstName, last: lastName, url: imageURL, email: email)
+                        UserManager.userProfile.profilePictureURL = imageURL
                         let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
                         NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
                     }

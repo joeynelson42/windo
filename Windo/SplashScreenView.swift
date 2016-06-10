@@ -40,6 +40,7 @@ class SplashScreenView: UIView {
         windoLabel.text = "windo"
         windoLabel.textColor = UIColor.whiteColor()
         windoLabel.font = UIFont.graphikRegular(35)
+        windoLabel.textAlignment = .Center
         
         addSubview(windoLabel)
     }

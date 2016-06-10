@@ -21,19 +21,36 @@ let idLength = 12
 
 let kUserLoggedIn = "userLoggedIn"
 let kUserInfoReceived = "userInfoReceived"
+let kUserProfile = "userProfile"
 
 
-//// Custom Operator from https://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/
-//// executes first closure on background thread then the main closure on the, you guessed it, main thread
-//infix operator ~> {}
-//private let queue = dispatch_queue_create("serial-worker", DISPATCH_QUEUE_SERIAL)
-//
-//func ~> (
-//    backgroundClosure: () -> (),
-//    mainClosure:       () -> ())
-//{
-//    dispatch_async(queue) {
-//        backgroundClosure()
-//        dispatch_async(dispatch_get_main_queue(), mainClosure)
+
+
+
+
+
+
+
+
+
+
+
+// Custom Operator from https://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/
+// executes first closure on background thread then the main closure on the, you guessed it, main thread
+
+//    func example() {
+//        {self.voidFunc1()} ~> {self.voidFunc2()}
 //    }
-//}
+
+infix operator ~> {}
+private let queue = dispatch_queue_create("serial-worker", DISPATCH_QUEUE_SERIAL)
+
+func ~> (
+    backgroundClosure: () -> (),
+    mainClosure:       () -> ())
+{
+    dispatch_async(queue) {
+        backgroundClosure()
+        dispatch_async(dispatch_get_main_queue(), mainClosure)
+    }
+}
