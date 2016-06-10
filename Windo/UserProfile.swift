@@ -8,17 +8,30 @@
 
 import Foundation
 
-class UserInfo: NSObject {
+class UserProfile: NSObject {
     var firstName: String
     var lastName: String
     var profilePictureURL: String
-    var profilePictureLocalPath: String
+    var email: String
     
-    init(first: String, last: String, url: String, localPath: String) {
+    override init() {
+        firstName = ""
+        lastName = ""
+        profilePictureURL = ""
+        email = ""
+    }
+    
+    init(first: String, last: String, url: String, email: String) {
         firstName = first
         lastName = last
         profilePictureURL = url
-        profilePictureLocalPath = localPath
+        self.email = email
+    }
+    
+    func profilePicture() -> UIImage? {
+        guard let data = NSData(contentsOfURL: NSURL(string: profilePictureURL)!) else { return nil }
+        guard let image = UIImage(data: data) else { return nil }
+        return image
     }
     
     //MARK: Coding
@@ -27,14 +40,14 @@ class UserInfo: NSObject {
         guard let first = decoder.decodeObjectForKey("firstName") as? String,
                 let last = decoder.decodeObjectForKey("lastName") as? String,
                 let url = decoder.decodeObjectForKey("url") as? String,
-                let localPath = decoder.decodeObjectForKey("localPath") as? String
+                let email = decoder.decodeObjectForKey("email") as? String
             else { return nil }
      
         self.init(
             first: first,
             last: last,
             url: url,
-            localPath: localPath
+            email: email
         )
     }
     
@@ -42,6 +55,6 @@ class UserInfo: NSObject {
         coder.encodeObject(self.firstName, forKey: "firstName")
         coder.encodeObject(self.lastName, forKey: "lastName")
         coder.encodeObject(self.profilePictureURL, forKey: "url")
-        coder.encodeObject(self.profilePictureLocalPath, forKey: "localPath")
+        coder.encodeObject(self.email, forKey: "email")
     }
 }

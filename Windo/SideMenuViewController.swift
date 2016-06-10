@@ -18,6 +18,7 @@ class SidePanelViewController: UIViewController {
     
     var delegate: SidePanelViewControllerDelegate?
     var sideMenuView = SideMenuView()
+    let userProfile = UserManager.userProfile
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,8 @@ class SidePanelViewController: UIViewController {
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
         addTargets()
+        
+        sideMenuView.profileImage = UIImageView(image: userProfile.profilePicture())
     }
     
     override func viewDidAppear(animated: Bool) {

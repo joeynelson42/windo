@@ -19,4 +19,5 @@ let centerPanelExpandedOffset: CGFloat = 75
 let idLength = 12
 
 
+let kUserProfile = "userProfile"
 let kUserLoggedIn = "userLoggedIn"

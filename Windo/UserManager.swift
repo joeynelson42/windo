@@ -13,9 +13,10 @@ import UIKit
 class UserManager {
     
     static let sharedManager = UserManager()
+    static var userProfile = UserProfile()
     
     func userIsLoggedIn() -> Bool {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let _ = FIRAuth.auth()?.currentUser {
             return true
         } else {
             return false
@@ -26,7 +27,7 @@ class UserManager {
         
         try! FIRAuth.auth()!.signOut()
         
-        if let user = FIRAuth.auth()?.currentUser {
+        if let _ = FIRAuth.auth()?.currentUser {
             return
         } else {
             let rootVC = LoginViewController()
@@ -37,7 +38,44 @@ class UserManager {
             window!.rootViewController = rootVC
             window!.makeKeyAndVisible()
         }
-
+    }
+    
+    func fetchUserProfile() {
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large)"])
+        request.startWithCompletionHandler({ (connection, result, error) in
+            let info = result as! NSDictionary
+            if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
+                
+                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
+                    guard
+                        let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
+                        let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
+                        let data = data where error == nil
+                        else { return }
+                    
+                    data.writeToURL(NSURL(string: imageURL)!, atomically: true)
+                    
+                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                        guard
+                            let firstName = info.valueForKey("first_name") as? String,
+                            let lastName = info.valueForKey("last_name") as? String,
+                            let email = info.valueForKey("email") as? String
+                            else { return }
+                        
+                        UserManager.userProfile = UserProfile(first: firstName, last: lastName, url: imageURL, email: email)
+                        let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
+                        NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
+                    }
+                }).resume()
+            }
+        })
+    }
+    
+    func fetchUserProfileFromDefaults() -> Bool {
+        guard let data = NSUserDefaults.standardUserDefaults().objectForKey(kUserProfile) as? NSData else { return false }
+        guard let userProfile = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? UserProfile else { return false }
+        UserManager.userProfile = userProfile
+        return true
     }
     
     // MARK: Facebook
@@ -49,26 +87,6 @@ class UserManager {
 //        FBSDKAccessToken.setCurrentAccessToken(nil)
 //    }
     
-//    func fetchFacebookProfile()
-//    {
-//        if FBSDKAccessToken.currentAccessToken() != nil {
-//            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-//            graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//                
-//                if ((error) != nil) {
-//                    //Handle error
-//                } else {
-//                    //Handle Profile Photo URL String
-//                    let userId =  result["id"] as! String
-//                    let profilePictureUrl = "https://graph.facebook.com/\(userId)/picture?type=large"
-//                    
-//                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
-//                    let fbUser = ["accessToken": accessToken, "user": result]
-//                }
-//            })
-//        }
-//    }
-    
     func fbLogin(didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         print("User Logged In")
         
@@ -77,11 +95,9 @@ class UserManager {
         } else if result.isCancelled {
             // Handle cancellations
         } else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email") {
-                
-            }
+            // Successful login
+            
+            fetchUserProfile()
             
             // Firebase Login
             let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
@@ -103,4 +119,6 @@ class UserManager {
         window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
     }
+    
+    
 }

@@ -47,15 +47,12 @@ class SideMenuView: UIView {
     
     func configureSubviews(){
         
-        profileImage = UIImageView(image: UIImage(named: "John Profile"))
         profileImage.contentMode = .ScaleAspectFill
         profileImage.layer.cornerRadius = 45
         profileImage.layer.borderColor = UIColor.mikeBlue().CGColor
         profileImage.layer.borderWidth = 2.0
         profileImage.clipsToBounds = true
         
-        
-        nameLabel.text = "John Jackson"
         nameLabel.textColor = UIColor.mikeBlue()
         nameLabel.font = UIFont.graphikMedium(22)
         
