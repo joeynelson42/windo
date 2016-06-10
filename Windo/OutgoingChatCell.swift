@@ -43,7 +43,7 @@ class OutgoingChatCell: UITableViewCell {
         message.lineBreakMode = .ByWordWrapping
         
         addSubview(container)
-        addSubview(message)
+        container.addSubview(message)
     }
     
     func applyConstraints(){
@@ -54,7 +54,7 @@ class OutgoingChatCell: UITableViewCell {
         )
         
         message.addConstraints(
-            Constraint.ttbb.of(self),
+            Constraint.ttbb.of(container, offset: 11),
             Constraint.ll.of(container, offset: 11),
             Constraint.rr.of(container, offset: -11)
         )

@@ -112,7 +112,7 @@ extension EventMessagesViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let height = heightForView(cells[indexPath.row], font: UIFont.graphikMedium(16), width: screenWidth - 40)
         
-        return height + 36
+        return height + 42
     }
     
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{

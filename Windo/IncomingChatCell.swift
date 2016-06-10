@@ -36,7 +36,7 @@ class IncomingChatCell: UITableViewCell {
     func configureSubviews(){
         container.layer.cornerRadius = 18
         container.backgroundColor = UIColor.darkPurple()
-        container.alpha = 0.5
+        container.alpha = 1.0
         
         message.textColor = UIColor.whiteColor()
         message.font = UIFont.graphikRegular(16)
@@ -50,7 +50,7 @@ class IncomingChatCell: UITableViewCell {
         senderIcon.backgroundColor = UIColor.purple()
         
         addSubview(container)
-        addSubview(message)
+        container.addSubview(message)
         addSubview(senderIcon)
     }
     
@@ -62,7 +62,7 @@ class IncomingChatCell: UITableViewCell {
         )
         
         message.addConstraints(
-            Constraint.ttbb.of(self),
+            Constraint.ttbb.of(container, offset: 11),
             Constraint.ll.of(container, offset: 11),
             Constraint.rr.of(container, offset: -11)
         )
