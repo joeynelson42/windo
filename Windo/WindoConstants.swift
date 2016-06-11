@@ -18,6 +18,9 @@ let centerPanelExpandedOffset: CGFloat = 75
 
 let idLength = 12
 
+let fbPermissions = ["public_profile", "email", "user_friends"]
+
+let kFriendFBFields = "id, name, first_name, last_name, email, picture.type(large)"
 
 let kUserLoggedIn = "userLoggedIn"
 let kUserInfoReceived = "userInfoReceived"

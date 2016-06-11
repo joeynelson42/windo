@@ -22,7 +22,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         view = loginView
         loginView.loginButton.delegate = self
         
-        loginView.loginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        loginView.loginButton.readPermissions = fbPermissions
         
         loginView.facebookButton.addTarget(self, action: #selector(LoginViewController.facebookLogin), forControlEvents: .TouchUpInside)
     }

@@ -13,19 +13,22 @@ class UserProfile: NSObject {
     var lastName: String
     var profilePictureURL: String
     var email: String
+    var friendList: [UserProfile]
     
     override init() {
         firstName = ""
         lastName = ""
         profilePictureURL = ""
         email = ""
+        friendList = []
     }
     
-    init(first: String, last: String, url: String, email: String) {
+    init(first: String, last: String, url: String, email: String, friends: [UserProfile]) {
         firstName = first
         lastName = last
         profilePictureURL = url
         self.email = email
+        friendList = friends
     }
     
     func profilePicture() -> UIImage? {
@@ -40,8 +43,14 @@ class UserProfile: NSObject {
         guard let first = decoder.decodeObjectForKey("firstName") as? String,
                 let last = decoder.decodeObjectForKey("lastName") as? String,
                 let url = decoder.decodeObjectForKey("url") as? String,
-                let email = decoder.decodeObjectForKey("email") as? String
+                let email = decoder.decodeObjectForKey("email") as? String,
+                let friends = decoder.decodeObjectForKey("friendsList") as? NSArray
             else { return nil }
+        
+//        let friendArray = [UserProfile]()
+//        for friend in friends {
+//            if let
+//        }
      
         self.init(
             first: first,
