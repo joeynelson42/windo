@@ -58,10 +58,10 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "VENTokenField/VENTokenField/VENToken.xib"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "VENTokenField/VENTokenField/VENToken.xib"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

@@ -10,7 +10,7 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Auth'
 
-pod 'GoogleSignIn'
+pod 'VENTokenField', '~> 2.0'
 
 end
 

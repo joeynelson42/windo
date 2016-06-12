@@ -56,55 +56,8 @@ class UserManager {
         if fetchUserProfileFromDefaults() {
             return
         } else {
-            fetchUserProfileFromFacebook()
+            DataProvider.sharedProvider.fetchUserProfileFromFacebook()
         }
-    }
-    
-    func fetchUserProfileFromFacebook() {
-        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large), friends"])
-        request.startWithCompletionHandler({ (connection, result, error) in
-            
-            if let e = error {
-                print(e)
-                return
-            }
-            
-            let info = result as! NSDictionary
-            
-            if let firstName = info.valueForKey("first_name") as? String {
-                UserManager.userProfile.firstName = firstName
-            }
-            
-            if let lastName = info.valueForKey("last_name") as? String {
-                UserManager.userProfile.lastName = lastName
-            }
-            
-            if let email = info.valueForKey("email") as? String {
-                UserManager.userProfile.email = email
-            }
-            
-            if let friendsData = info.valueForKey("friends") as? NSDictionary {
-                self.fetchUserFriends(friendsData)
-            }
-            
-            if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
-                    guard
-                        let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                        let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                        let data = data where error == nil
-                        else { return }
-                    
-                    data.writeToURL(NSURL(string: imageURL)!, atomically: true)
-                    
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        UserManager.userProfile.profilePictureURL = imageURL
-                        let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
-                        NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
-                    }
-                }).resume()
-            }
-        })
     }
     
     func fetchUserProfileFromDefaults() -> Bool {
@@ -148,56 +101,9 @@ class UserManager {
         window!.makeKeyAndVisible()
     }
     
-    func fetchUserFriends(data: NSDictionary) {
-        if let friendsList = data.objectForKey("data") as? NSArray {
-            var friends = [UserProfile]()
-            for friend in friendsList {
-                if let id = friend.valueForKey("id") as? String {
-                    friends.append(self.fetchFriendProfile(id))
-                }
-            }
-            
-            UserManager.userProfile.friends = friends
-        }
-    }
+   
     
-    func fetchFriendProfile(id: String) -> UserProfile {
-        let friend = UserProfile()
-        let request = FBSDKGraphRequest(graphPath: id, parameters: ["fields": kFriendFBFields])
-        request.startWithCompletionHandler({ (connection, result, error) in
-            let info = result as! NSDictionary
-            
-            if let firstName = info.valueForKey("first_name") as? String {
-                friend.firstName = firstName
-            }
-            
-            if let lastName = info.valueForKey("last_name") as? String {
-                friend.lastName = lastName
-            }
-            
-            if let email = info.valueForKey("email") as? String {
-                friend.email = email
-            }
-            
-            if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
-                    guard
-                        let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                        let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                        let data = data where error == nil
-                        else { return }
-                    
-                    data.writeToURL(NSURL(string: imageURL)!, atomically: true)
-                    
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        friend.profilePictureURL = imageURL
-                    }
-                }).resume()
-            }
-        })
-        
-        return friend
-    }
+    
     
     
 }

@@ -9,6 +9,8 @@
 import Foundation
 
 class UserProfile: NSObject {
+    var id: String //Firebase
+    var fbID: String //Facebook
     var firstName: String
     var lastName: String
     var profilePictureURL: String
@@ -16,6 +18,8 @@ class UserProfile: NSObject {
     var friends: [UserProfile]
     
     override init() {
+        id = ""
+        fbID = ""
         firstName = ""
         lastName = ""
         profilePictureURL = ""
@@ -23,7 +27,9 @@ class UserProfile: NSObject {
         friends = []
     }
     
-    init(first: String, last: String, url: String, email: String, friendList: [UserProfile]) {
+    init(firebaseID: String, facebookID: String, first: String, last: String, url: String, email: String, friendList: [UserProfile]) {
+        id = firebaseID
+        fbID = facebookID
         firstName = first
         lastName = last
         profilePictureURL = url
@@ -44,7 +50,9 @@ class UserProfile: NSObject {
     //MARK: Coding
     
     required convenience init?(coder decoder: NSCoder) {
-        guard let first = decoder.decodeObjectForKey("firstName") as? String,
+        guard   let id = decoder.decodeObjectForKey("id") as? String,
+                let fbID = decoder.decodeObjectForKey("fbID") as? String,
+                let first = decoder.decodeObjectForKey("firstName") as? String,
                 let last = decoder.decodeObjectForKey("lastName") as? String,
                 let url = decoder.decodeObjectForKey("url") as? String,
                 let email = decoder.decodeObjectForKey("email") as? String,
@@ -52,6 +60,8 @@ class UserProfile: NSObject {
             else { return nil }
         
         self.init(
+            firebaseID: id,
+            facebookID: fbID,
             first: first,
             last: last,
             url: url,
@@ -61,6 +71,8 @@ class UserProfile: NSObject {
     }
     
     func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(self.id, forKey: "id")
+        coder.encodeObject(self.fbID, forKey: "fbID")
         coder.encodeObject(self.firstName, forKey: "firstName")
         coder.encodeObject(self.lastName, forKey: "lastName")
         coder.encodeObject(self.profilePictureURL, forKey: "url")

@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FrameAccessor.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Windo.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>VENTokenField.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -12,7 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>DFDA0BFA5F4B91AEF0666AC02484581E</key>
+		<key>0F7B1940DE10624DFABB6A65D0BE9B4A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>85618EF1C124F9E5CBA6D8A71177D2CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD8916CAE2DB8A44D5993923FEF14E86</key>
 		<dict>
 			<key>primary</key>
 			<true/>
