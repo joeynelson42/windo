@@ -13,14 +13,16 @@ enum InviteState{
     case AddingInvites
 }
 
-class InviteViewController: UIViewController {
+class InviteViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: Properties
     
     var state: InviteState = .FirstInvite
     var createTabBar: CreateTabBarController!
     var inviteView = InviteView()
-    var members = [String]()
+    var filteredInvitees = [UserProfile]()
+    let userProfile = UserManager.userProfile
+    let allFriends = UserManager.userProfile.friends
     
     //MARK: Lifecycle Methods
     
@@ -33,8 +35,10 @@ class InviteViewController: UIViewController {
         inviteView.inviteeTableView.delegate = self
         inviteView.inviteeTableView.dataSource = self
         
-        //Dummy data
-        members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk", "Tucker Turner", "Tyler Alden", "Kara Leigh Alden"]
+        inviteView.searchBar.delegate = self
+    
+        
+        filteredInvitees = userProfile.friends
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -101,22 +105,23 @@ class InviteViewController: UIViewController {
 extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        return filteredInvitees.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
+        let friend = filteredInvitees[indexPath.row]
         
-        cell.nameLabel.text = members[indexPath.row]
-        cell.userHandleLabel.text = "@\(members[indexPath.row].lowercaseString)"
+        cell.nameLabel.text = friend.fullName()
+        cell.userHandleLabel.text = "@\(friend.fullName().lowercaseString)"
         cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
-        cell.initialsLabel.text = members[indexPath.row].getInitials()
+        cell.initialsLabel.text = friend.fullName().getInitials()
         
-        if createTabBar.invitees.contains(members[indexPath.row]){
+        if createTabBar.invitees.contains(friend.fullName()){
             cell.checkmarkImageView.alpha = 1.0
             cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
             
@@ -142,9 +147,10 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
+        let friend = filteredInvitees[indexPath.row]
         
-        if createTabBar.invitees.contains(members[indexPath.row]){
-            let index = createTabBar.invitees.indexOf(members[indexPath.row])
+        if createTabBar.invitees.contains(friend.fullName()){
+            let index = createTabBar.invitees.indexOf(friend.fullName())
             createTabBar.invitees.removeAtIndex(index!)
         } else{
             createTabBar.invitees.append(cell.nameLabel.text!)
@@ -176,6 +182,31 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         header.titleLabel.text = label
         header.contentView.backgroundColor = bgColor
         return header
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        inviteView.inviteeTableView.reloadData()
+    }
+    
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        inviteView.inviteeTableView.reloadData()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        updateSearchResultsForSearchController(searchText)
+    }
+    
+    func updateSearchResultsForSearchController(searchString: String) {
+        defer {inviteView.inviteeTableView.reloadData()}
+        
+        if (searchString == "") {
+            filteredInvitees = allFriends
+            return
+        }
+        
+        filteredInvitees.removeAll(keepCapacity: false)
+        filteredInvitees = allFriends.filter() { $0.fullName().containsString(searchString) }
     }
     
     func getInitials(name: String) -> String{

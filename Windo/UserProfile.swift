@@ -13,22 +13,26 @@ class UserProfile: NSObject {
     var lastName: String
     var profilePictureURL: String
     var email: String
-    var friendList: [UserProfile]
+    var friends: [UserProfile]
     
     override init() {
         firstName = ""
         lastName = ""
         profilePictureURL = ""
         email = ""
-        friendList = []
+        friends = []
     }
     
-    init(first: String, last: String, url: String, email: String, friends: [UserProfile]) {
+    init(first: String, last: String, url: String, email: String, friendList: [UserProfile]) {
         firstName = first
         lastName = last
         profilePictureURL = url
         self.email = email
-        friendList = friends
+        friends = friendList
+    }
+    
+    func fullName() -> String {
+        return "\(firstName) \(lastName)"
     }
     
     func profilePicture() -> UIImage? {
@@ -44,19 +48,15 @@ class UserProfile: NSObject {
                 let last = decoder.decodeObjectForKey("lastName") as? String,
                 let url = decoder.decodeObjectForKey("url") as? String,
                 let email = decoder.decodeObjectForKey("email") as? String,
-                let friends = decoder.decodeObjectForKey("friendsList") as? NSArray
+                let friends = decoder.decodeObjectForKey("friends") as? [UserProfile]
             else { return nil }
         
-//        let friendArray = [UserProfile]()
-//        for friend in friends {
-//            if let
-//        }
-     
         self.init(
             first: first,
             last: last,
             url: url,
-            email: email
+            email: email,
+            friendList: friends
         )
     }
     
@@ -65,5 +65,6 @@ class UserProfile: NSObject {
         coder.encodeObject(self.lastName, forKey: "lastName")
         coder.encodeObject(self.profilePictureURL, forKey: "url")
         coder.encodeObject(self.email, forKey: "email")
+        coder.encodeObject(self.friends, forKey: "friends")
     }
 }

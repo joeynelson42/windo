@@ -14,6 +14,7 @@ class InviteView: UIView {
     var inviteeTableView = UITableView()
     var stackViewContainer = UIView()
     var inviteeLabel = UILabel()
+    var searchBar = UISearchBar()
     
     var inviteePlaceholderText = "Select people to invite!"
     
@@ -26,7 +27,7 @@ class InviteView: UIView {
         applyConstraints()
     }
     
-    func configureSubviews(){        
+    func configureSubviews(){
         inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
         inviteeTableView.separatorColor = UIColor.blue()
@@ -42,9 +43,23 @@ class InviteView: UIView {
         
         stackViewContainer.backgroundColor = UIColor.blue()
         
+        searchBar.barTintColor = UIColor.lightBlue()
+        searchBar.tintColor = UIColor.whiteColor()
+        
+        
+        searchBar.setImage(UIImage(named:"whiteSearchIcon"), forSearchBarIcon: UISearchBarIcon.Search, state: .Normal)
+        searchBar.setImage(UIImage(named:"whiteClearButton"), forSearchBarIcon: UISearchBarIcon.Clear, state: .Normal)
+        searchBar.setImage(UIImage(named:"whiteClearButton"), forSearchBarIcon: UISearchBarIcon.Clear, state: .Highlighted)
+                
+        if let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField {
+            textFieldInsideSearchBar.backgroundColor = UIColor.clearColor()
+            textFieldInsideSearchBar.textColor = UIColor.whiteColor()
+        }
+        
         addSubview(stackViewContainer)
         addSubview(inviteeTableView)
         addSubview(inviteeLabel)
+        addSubview(searchBar)
     }
     
     func applyConstraints(){
@@ -55,6 +70,11 @@ class InviteView: UIView {
             Constraint.h.of(45)
         )
         
+        searchBar.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.llrr.of(self)
+        )
+        
         inviteeLabel.addConstraints(
             Constraint.cycy.of(stackViewContainer),
             Constraint.ll.of(stackViewContainer, offset: 16),
@@ -63,7 +83,7 @@ class InviteView: UIView {
         )
         
         inviteeTableView.addConstraints(
-            Constraint.tt.of(self),
+            Constraint.tb.of(searchBar),
             Constraint.bt.of(stackViewContainer),
             Constraint.llrr.of(self),
             Constraint.w.of(screenWidth)

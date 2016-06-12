@@ -23,6 +23,18 @@ class UserManager {
         }
     }
     
+    func login() {
+        // Firebase Login
+        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+        FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+            //fetch user's events and open home screen on completion
+            let rootVC = ContainerViewController()
+            let window = UIApplication.sharedApplication().delegate!.window!
+            window!.rootViewController = rootVC
+            window!.makeKeyAndVisible()
+        }
+    }
+    
     func signOut() {
         
         try! FIRAuth.auth()!.signOut()
@@ -41,16 +53,22 @@ class UserManager {
     }
     
     func fetchUserProfile() {
-//        if fetchUserProfileFromDefaults() {
-//            return
-//        } else {
+        if fetchUserProfileFromDefaults() {
+            return
+        } else {
             fetchUserProfileFromFacebook()
-//        }
+        }
     }
     
     func fetchUserProfileFromFacebook() {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large), friends"])
         request.startWithCompletionHandler({ (connection, result, error) in
+            
+            if let e = error {
+                print(e)
+                return
+            }
+            
             let info = result as! NSDictionary
             
             if let firstName = info.valueForKey("first_name") as? String {
@@ -66,16 +84,7 @@ class UserManager {
             }
             
             if let friendsData = info.valueForKey("friends") as? NSDictionary {
-                if let friendsList = friendsData.objectForKey("data") as? NSArray {
-                    for friend in friendsList {
-                        if let id = friend.valueForKey("id") as? String {
-                            self.fetchFriendProfile(id)
-                        }
-                    }
-                }
-
-                
-                
+                self.fetchUserFriends(friendsData)
             }
             
             if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
@@ -126,15 +135,7 @@ class UserManager {
             
             fetchUserProfile()
             
-            // Firebase Login
-            let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-            FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-                //fetch user's events and open home screen on completion
-                let rootVC = ContainerViewController()
-                let window = UIApplication.sharedApplication().delegate!.window!
-                window!.rootViewController = rootVC
-                window!.makeKeyAndVisible()
-            }
+            self.login()
         }
     }
     
@@ -147,28 +148,35 @@ class UserManager {
         window!.makeKeyAndVisible()
     }
     
-    func fetchUserFriends(friendIDs: NSArray, options: String) {
-        
-        
-        
+    func fetchUserFriends(data: NSDictionary) {
+        if let friendsList = data.objectForKey("data") as? NSArray {
+            var friends = [UserProfile]()
+            for friend in friendsList {
+                if let id = friend.valueForKey("id") as? String {
+                    friends.append(self.fetchFriendProfile(id))
+                }
+            }
+            
+            UserManager.userProfile.friends = friends
+        }
     }
     
-    // TODO: Figure out how to store friend profiles
-    func fetchFriendProfile(id: String) {
+    func fetchFriendProfile(id: String) -> UserProfile {
+        let friend = UserProfile()
         let request = FBSDKGraphRequest(graphPath: id, parameters: ["fields": kFriendFBFields])
         request.startWithCompletionHandler({ (connection, result, error) in
             let info = result as! NSDictionary
             
             if let firstName = info.valueForKey("first_name") as? String {
-                UserManager.userProfile.firstName = firstName
+                friend.firstName = firstName
             }
             
             if let lastName = info.valueForKey("last_name") as? String {
-                UserManager.userProfile.lastName = lastName
+                friend.lastName = lastName
             }
             
             if let email = info.valueForKey("email") as? String {
-                UserManager.userProfile.email = email
+                friend.email = email
             }
             
             if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
@@ -182,13 +190,13 @@ class UserManager {
                     data.writeToURL(NSURL(string: imageURL)!, atomically: true)
                     
                     dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        UserManager.userProfile.profilePictureURL = imageURL
-                        let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
-                        NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
+                        friend.profilePictureURL = imageURL
                     }
                 }).resume()
             }
         })
+        
+        return friend
     }
     
     

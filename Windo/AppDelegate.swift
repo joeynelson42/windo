@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var rootViewController = UIViewController()
         
         if let _ = FIRAuth.auth()?.currentUser {
-//            UserManager.sharedManager.fetchUserProfile()
+//            UserManager.sharedManager.login()
+            UserManager.sharedManager.fetchUserProfile()
             rootViewController = ContainerViewController()
         } else {
             rootViewController = LoginViewController()
