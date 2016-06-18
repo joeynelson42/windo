@@ -17,7 +17,7 @@ enum ThemeColor {
 class UserProfileView: UIView {
     
     //MARK: Properties
-    var profileImage = UIView()
+    var profileImage = WindoProfileImageView()
     var nameLabel = UILabel()
     var responseRating = UILabel()
     var addFriend = GHButton()
@@ -49,13 +49,8 @@ class UserProfileView: UIView {
     
     func configureSubviews(){
         
-//        profileImage = UIImageView(image: UIImage(named: "John Profile"))
-        profileImage.contentMode = .ScaleAspectFill
-        profileImage.layer.cornerRadius = 45
         profileImage.layer.borderWidth = 2.0
-        profileImage.clipsToBounds = true
         
-//        nameLabel.text = "John Jackson"
         nameLabel.font = UIFont.graphikMedium(22)
         
         responseRating.text = "RESPONSE RATING: 87.5%"
@@ -75,7 +70,7 @@ class UserProfileView: UIView {
         profileImage.addConstraints(
             Constraint.tt.of(self, offset: screenHeight * 0.075),
             Constraint.cxcx.of(self),
-            Constraint.wh.of(90)
+            Constraint.wh.of(150)
         )
         
         nameLabel.addConstraints(

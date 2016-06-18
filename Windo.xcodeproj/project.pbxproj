@@ -264,6 +264,7 @@
 		6353E1071CBC14E1008117B3 /* Deprecated (but still loved) */ = {
 			isa = PBXGroup;
 			children = (
+				63A28B0E1CA33555000826DC /* Invite (Deprecated) */,
 				630D7BEB1CA87AB600D85C86 /* Old Time Selection */,
 			);
 			name = "Deprecated (but still loved)";
@@ -420,7 +421,6 @@
 			children = (
 				63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */,
 				63A28B0D1CA3354A000826DC /* CreateEventDetails */,
-				63A28B0E1CA33555000826DC /* Invite */,
 				63FF08F11CB4483E00255A4A /* Time Selection */,
 			);
 			name = EventCreation;
@@ -434,19 +434,20 @@
 				6383D8481CA43A61008F23B8 /* WindoCalendarView.swift */,
 				63A28B131CA36EB0000826DC /* CalendarDayView.swift */,
 				63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */,
+				6358C0641C98CF8400C1DD0B /* InviteeCell.swift */,
+				6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */,
 			);
 			name = CreateEventDetails;
 			sourceTree = "<group>";
 		};
-		63A28B0E1CA33555000826DC /* Invite */ = {
+		63A28B0E1CA33555000826DC /* Invite (Deprecated) */ = {
 			isa = PBXGroup;
 			children = (
 				636A9F6B1CA2192D00293BE9 /* InviteViewController.swift */,
 				636A9F6D1CA2193600293BE9 /* InviteView.swift */,
-				6358C0641C98CF8400C1DD0B /* InviteeCell.swift */,
-				6321D4A31CA1E48300CDB203 /* InviteeHeaderCell.swift */,
 			);
-			name = Invite;
+			name = "Invite (Deprecated)";
+			path = Windo;
 			sourceTree = "<group>";
 		};
 		63A868401D006997002978F7 /* Settings */ = {

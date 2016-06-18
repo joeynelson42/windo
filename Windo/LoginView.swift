@@ -51,9 +51,7 @@ class LoginView: UIView {
         facebookButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         facebookButton.titleLabel?.font = UIFont.graphikMedium(13)
         facebookButton.titleLabel?.textAlignment = .Left
-        
-//        loginButton.alpha = 0.0
-        
+                
         addSubview(windoLabel)
         addSubview(facebookButton)
         addSubview(loginButton)

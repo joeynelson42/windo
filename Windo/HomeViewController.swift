@@ -54,22 +54,16 @@ class HomeViewController: CenterViewController{
     
     func createNewEvent() {
         let createTabVC = CreateTabBarController()
-        let vc1 = InviteViewController()
-        let vc2 = CreateEventViewController()
-        let vc3 = TimeSelectViewController()
-        let controllers = [vc1, vc2, vc3]
+        let vc1 = CreateEventViewController()
+        let vc2 = TimeSelectViewController()
+        let controllers = [vc1, vc2]
         
         vc1.tabBarItem = UITabBarItem(
-            title: "Invite",
-            image: UIImage(named: "MessageIcon"),
-            tag: 0)
-        
-        vc2.tabBarItem = UITabBarItem(
             title: "Create",
             image: UIImage(named: "HomeIcon"),
             tag: 1)
         
-        vc3.tabBarItem = UITabBarItem(
+        vc2.tabBarItem = UITabBarItem(
             title: "WindoSelect",
             image: UIImage(named: "HomeIcon"),
             tag: 2)

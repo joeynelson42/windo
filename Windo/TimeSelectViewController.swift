@@ -63,7 +63,7 @@ class TimeSelectViewController: UIViewController {
     }
     
     func backTapped(){
-        createTabBar.selectedIndex = 1
+        createTabBar.selectedIndex = 0
     }
     
     func doneTapped(){

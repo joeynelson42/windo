@@ -16,7 +16,7 @@ class CreateTabBarController: UITabBarController {
     
     //MARK: Properties
     let newEvent = Event()
-    var invitees = [String]()
+    var invitees = [UserProfile]()
     var selectedDates = [NSDate]()
     var selectedTimes = [NSDate]()
     
@@ -49,10 +49,8 @@ class CreateTabBarController: UITabBarController {
     func doneTapped(){
         switch selectedIndex {
         case 0:
-            selectedIndex = 1
-        case 1:
             navigationController?.popViewControllerAnimated(true)
-        case 2:
+        case 1:
             selectedIndex = 1
         default:
             return

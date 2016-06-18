@@ -13,9 +13,8 @@ class CreateEventView: UIView, UITextFieldDelegate {
     //MARK: Properties
 
     //invitees
-    var inviteeCell = UIView()
-    var inviteeLabel = UILabel()
-    let inviteePlaceholderText = "Invite friends!"
+    var inviteeTableView = UITableView()
+    var searchBar = VENTokenField()
     
     //location
     var locationCell = UIView()
@@ -49,10 +48,23 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func configureSubviews(){        
         backgroundColor = UIColor.blue()
-        let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
-        addGestureRecognizer(keyboardDismiss)
+//        let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
+//        addGestureRecognizer(keyboardDismiss)
         
-        inviteeCell.backgroundColor = UIColor.lightBlue()
+        inviteeTableView.backgroundColor = UIColor.darkBlue()
+        inviteeTableView.showsVerticalScrollIndicator = false
+        inviteeTableView.separatorColor = UIColor.blue()
+        inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
+        inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
+        inviteeTableView.hidden = true
+        
+        searchBar.delimiters = [",", ";", "--"]
+        searchBar.placeholderText = "Invite some friends!"
+        searchBar.toLabelText = "Invite:"
+        searchBar.backgroundColor = UIColor.lightBlue()
+        searchBar.setColorScheme(UIColor.whiteColor())
+        searchBar.toLabelTextColor = UIColor.darkBlue()
+        searchBar.inputTextFieldTextColor = UIColor.whiteColor()
         
         locationCell.backgroundColor = UIColor.lightBlue()
         let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
@@ -60,7 +72,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         locationTitleLabel.text = "Event Location"
         locationTitleLabel.font = UIFont.graphikRegular(14)
-        locationTitleLabel.textColor = UIColor.darkBlue()
+        locationTitleLabel.textColor = UIColor.whiteColor()
         
         locationTextField.textColor = UIColor.whiteColor()
         locationTextField.font = UIFont.graphikRegular(16)
@@ -74,18 +86,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         nameTitleLabel.text = "Event Name"
         nameTitleLabel.font = UIFont.graphikRegular(14)
-        nameTitleLabel.textColor = UIColor.darkBlue()
+        nameTitleLabel.textColor = UIColor.whiteColor()
         
         nameTextField.textColor = UIColor.whiteColor()
         nameTextField.font = UIFont.graphikRegular(16)
         nameTextField.tintColor = UIColor.whiteColor()
         nameTextField.tag = 1
         nameTextField.delegate = self
-            
-        inviteeLabel.textColor = UIColor.whiteColor()
-        inviteeLabel.font = UIFont.graphikRegular(18)
-        inviteeLabel.tintColor = UIColor.whiteColor()
-        inviteeLabel.tag = 2
         
         inviteeSeparator.backgroundColor = UIColor.darkBlue()
         locationSeparator.backgroundColor = UIColor.darkBlue()
@@ -108,11 +115,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
         
-        addSubview(inviteeCell)
+        addSubview(searchBar)
+        addSubview(inviteeTableView)
+        
         addSubview(locationCell)
         addSubview(nameCell)
         addSubviews(inviteeSeparator, locationSeparator, nameSeparator)
-        addSubview(inviteeLabel)
         addSubview(locationTextField)
         addSubview(locationTitleLabel)
         addSubview(nameTextField)
@@ -124,29 +132,29 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         let cellSize = screenHeight * 0.08995502
         
-        inviteeCell.addConstraints(
+        searchBar.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(cellSize)
+            Constraint.h.of(50)
+        )
+        
+        inviteeTableView.addConstraints(
+            Constraint.tb.of(searchBar),
+            Constraint.bb.of(self),
+            Constraint.llrr.of(self),
+            Constraint.w.of(screenWidth)
         )
         
         inviteeSeparator.addConstraints(
-            Constraint.tb.of(inviteeCell, offset: -1),
+            Constraint.tb.of(searchBar, offset: -1),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(1)
         )
         
-        inviteeLabel.addConstraints(
-            Constraint.cycy.of(inviteeCell),
-            Constraint.ll.of(self, offset: 18),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(18)
-        )
-        
         locationCell.addConstraints(
-            Constraint.tb.of(inviteeCell),
+            Constraint.tb.of(searchBar),
             Constraint.ll.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(cellSize)
@@ -217,10 +225,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         case 0:
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.locationTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
+                self.locationTitleLabel.alpha = 0.75
             })
         case 1:
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
+                self.nameTitleLabel.alpha = 0.75
             })
         default:
             break
@@ -237,11 +247,13 @@ class CreateEventView: UIView, UITextFieldDelegate {
             if textField.text != ""{ return }
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.locationTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
+                self.locationTitleLabel.alpha = 1.0
             })
         case 1:
             if textField.text != ""{ return }
             UIView.animateWithDuration(0.15, animations: { Void in
                 self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
+                self.nameTitleLabel.alpha = 1.0
             })
         default:
             break

@@ -85,7 +85,6 @@ class DataProvider {
 //    }
     
     func fetchUserFriends(data: NSDictionary){
-        var friends = [UserProfile]()
         if let friendsList = data.objectForKey("data") as? NSArray {
             for friend in friendsList {
                 if let id = friend.valueForKey("id") as? String {
@@ -102,27 +101,20 @@ class DataProvider {
                 let info = result as! NSDictionary
                 
                 let friend = UserProfile()
+                guard
+                    let firstName = info.valueForKey("first_name") as? String,
+                    let lastName = info.valueForKey("last_name") as? String,
+                    let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String
+                    else { return }
                 
-                friend.fbID = id
+                friend.firstName = firstName
+                friend.lastName = lastName
+                friend.profilePictureURL = imageURL
                 
-                if let firstName = info.valueForKey("first_name") as? String {
-                    friend.firstName = firstName
-                }
+                UserManager.friends.append(friend)
                 
-                if let lastName = info.valueForKey("last_name") as? String {
-                    friend.lastName = lastName
-                }
-                
-                if let email = info.valueForKey("email") as? String {
-                    friend.email = email
-                }
-                
-                if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                    friend.profilePictureURL = imageURL
-                }
-                
-                // TODO: Figure out a way to save friends!
-                
+                let friendData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.friends)
+                NSUserDefaults.standardUserDefaults().setObject(friendData, forKey: "friends")
             })
         }
     }

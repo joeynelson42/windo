@@ -34,7 +34,7 @@ class UserProfile: NSObject {
         self.email = email
     }
     
-    func fullName() -> String {
+    var fullName: String {
         if firstName == "" || lastName == "" {
             return ""
         } else {
@@ -43,8 +43,8 @@ class UserProfile: NSObject {
     }
     
     func getInitials() -> String{
-        let name = fullName()
-        if fullName().isEmpty {
+        let name = fullName
+        if fullName.isEmpty {
             return ""
         }
         

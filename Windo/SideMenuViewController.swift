@@ -26,7 +26,7 @@ class SidePanelViewController: UIViewController {
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
         sideMenuView.profileImage.setupView(userProfile, width: 90)
-        sideMenuView.nameLabel.text = userProfile.fullName()
+        sideMenuView.nameLabel.text = userProfile.fullName
         addTargets()
     }
     

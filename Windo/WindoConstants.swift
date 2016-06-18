@@ -33,7 +33,21 @@ let ProfileImageReadyNotification = "ProfileImageReady"
 
 
 
-
+/*
+ here is the simple fix to VENToken.m that made our color scheme work
+ TODO: Fork the repo and make this change, point the pod to said repo
+ 
+ - (void)setHighlighted:(BOOL)highlighted
+ {
+ _highlighted = highlighted;
+ UIColor *darkBlue = [[UIColor alloc] initWithRed:51.0/255.0 green:64.0/255.0 blue:186.0/255.0 alpha:1];
+ UIColor *textColor = [UIColor whiteColor];
+ UIColor *backgroundColor = highlighted ? darkBlue : [UIColor clearColor];
+ self.titleLabel.textColor = textColor;
+ self.backgroundView.backgroundColor = backgroundColor;
+ }
+ 
+ */
 
 
 

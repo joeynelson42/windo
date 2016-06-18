@@ -21,8 +21,7 @@ class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         profileView = UserProfileView(color: color)
         view = profileView
-        
-        profileView.nameLabel.text = user.fullName()
-        profileView.profileImage = UIImageView(image: user.profilePicture())
+        profileView.profileImage.setupView(user, width: 150)
+        profileView.nameLabel.text = user.fullName
     }
 }
