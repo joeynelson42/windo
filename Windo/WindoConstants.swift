@@ -26,6 +26,8 @@ let kUserLoggedIn = "userLoggedIn"
 let kUserInfoReceived = "userInfoReceived"
 let kUserProfile = "userProfile"
 
+// MARK: Notifications
+let ProfileImageReadyNotification = "ProfileImageReady"
 
 
 

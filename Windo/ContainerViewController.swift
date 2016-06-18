@@ -51,6 +51,8 @@ class ContainerViewController: UIViewController {
         centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
         
         tapToClose = UITapGestureRecognizer(target: self, action: #selector(ContainerViewController.collapseSidePanel))
+        
+        addLeftPanelViewController()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

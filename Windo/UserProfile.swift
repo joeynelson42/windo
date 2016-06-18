@@ -38,7 +38,29 @@ class UserProfile: NSObject {
     }
     
     func fullName() -> String {
-        return "\(firstName) \(lastName)"
+        if firstName == "" || lastName == "" {
+            return ""
+        } else {
+            return "\(firstName) \(lastName)"
+        }
+    }
+    
+    func getInitials() -> String{
+        let name = fullName()
+        if fullName().isEmpty {
+            return ""
+        }
+        
+        let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
+        
+        guard let index = name.characters.indexOf(" ") else {
+            return firstInitial.uppercaseString
+        }
+        
+        let secondInitial = "\(name[name.startIndex.advancedBy(name.startIndex.distanceTo(index) + 1)])"
+        let initials = "\(firstInitial)\(secondInitial)"
+        
+        return initials.uppercaseString
     }
     
     func profilePicture() -> UIImage? {

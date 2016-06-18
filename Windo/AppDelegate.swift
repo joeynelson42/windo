@@ -21,13 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize Firebase
         FIRApp.configure()
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         var rootViewController = UIViewController()
         
-        if let _ = FIRAuth.auth()?.currentUser {
+        if FBSDKAccessToken.currentAccessToken() != nil {
 //            UserManager.sharedManager.login()
             UserManager.sharedManager.fetchUserProfile()
             rootViewController = ContainerViewController()
@@ -45,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //        self.window.rootViewController = self.appViewController;
 //        [self.window makeKeyAndVisible];
-        
         
         return true
     }
@@ -139,13 +139,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Firebase Authentication
     
-    //Facebook
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(
-            application,
-            openURL: url,
-            sourceApplication: sourceApplication,
-            annotation: annotation)
+    func application(application: UIApplication,
+            openURL url: NSURL,
+            sourceApplication: String?,
+            annotation: AnyObject?) -> Bool {
+                return FBSDKApplicationDelegate.sharedInstance().application(
+                        application,
+                        openURL: url,
+                        sourceApplication: sourceApplication,
+                        annotation: annotation)
     }
 }
 

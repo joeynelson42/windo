@@ -14,11 +14,15 @@ class UserProfileViewController: UIViewController {
     
     var profileView: UserProfileView!
     var color = ThemeColor.Teal
+    var user = UserProfile()
     
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         profileView = UserProfileView(color: color)
         view = profileView
+        
+        profileView.nameLabel.text = user.fullName()
+        profileView.profileImage = UIImageView(image: user.profilePicture())
     }
 }

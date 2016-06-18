@@ -73,6 +73,7 @@
 		63A868461D009374002978F7 /* WindoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A868451D009374002978F7 /* WindoAlertView.swift */; };
 		63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E21C978EF70086B919 /* GroupMemberCell.swift */; };
 		63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */; };
+		63B2CF9A1D14B765003F4676 /* WindoProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B2CF991D14B765003F4676 /* WindoProfileImageView.swift */; };
 		63B35D401CF88700008761F5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D3F1CF88700008761F5 /* Event.swift */; };
 		63B35D421CF8871E008761F5 /* Windo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D411CF8871E008761F5 /* Windo.swift */; };
 		63B35D461CF88783008761F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35D451CF88783008761F5 /* User.swift */; };
@@ -164,6 +165,7 @@
 		63A868451D009374002978F7 /* WindoAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoAlertView.swift; sourceTree = "<group>"; };
 		63AD31E21C978EF70086B919 /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		63AD31E41C979EFE0086B919 /* DetailsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTabBarController.swift; sourceTree = "<group>"; };
+		63B2CF991D14B765003F4676 /* WindoProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoProfileImageView.swift; sourceTree = "<group>"; };
 		63B35D3F1CF88700008761F5 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		63B35D411CF8871E008761F5 /* Windo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Windo.swift; sourceTree = "<group>"; };
 		63B35D451CF88783008761F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				63A868451D009374002978F7 /* WindoAlertView.swift */,
+				63B2CF991D14B765003F4676 /* WindoProfileImageView.swift */,
 			);
 			name = "Misc. Views";
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				6353E10F1CBC1F53008117B3 /* ResponseCell.swift in Sources */,
 				632A4F5E1CB312BF001D6983 /* TutorialViewController.swift in Sources */,
 				63AD31E31C978EF70086B919 /* GroupMemberCell.swift in Sources */,
+				63B2CF9A1D14B765003F4676 /* WindoProfileImageView.swift in Sources */,
 				6383D84F1CA4AD46008F23B8 /* WindoTimeView.swift in Sources */,
 				63B35D421CF8871E008761F5 /* Windo.swift in Sources */,
 				63A8683F1D006990002978F7 /* UserProfileView.swift in Sources */,

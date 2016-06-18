@@ -8,13 +8,13 @@
 
 import Foundation
 import Firebase
-import FirebaseDatabase
+//import FirebaseDatabase
 import FirebaseAuth
 
 class DataProvider {
     
     static let sharedProvider = DataProvider()
-    let dbRef = FIRDatabase.database().reference()
+//    let dbRef = FIRDatabase.database().reference()
 
     // PATHS
     let userPath = "users"
@@ -26,58 +26,63 @@ class DataProvider {
     
     func fetchUserProfileFromFacebook() {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large), friends"])
-        request.startWithCompletionHandler({ (connection, result, error) in
-            
-            if let e = error {
-                print(e)
-                return
-            }
-            
-            let info = result as! NSDictionary
-            
-            if let id = FIRAuth.auth()?.currentUser?.uid {
-                UserManager.userProfile.id = id
-            }
-            
-            if let fbID = info.valueForKey("id") as? String {
-                UserManager.userProfile.fbID = fbID
-            }
-            
-            if let firstName = info.valueForKey("first_name") as? String {
-                UserManager.userProfile.firstName = firstName
-            }
-            
-            if let lastName = info.valueForKey("last_name") as? String {
-                UserManager.userProfile.lastName = lastName
-            }
-            
-            if let email = info.valueForKey("email") as? String {
-                UserManager.userProfile.email = email
-            }
-            
-            if let friendsData = info.valueForKey("friends") as? NSDictionary {
-                UserManager.userProfile.friends = DataProvider.sharedProvider.fetchUserFriends(friendsData)
-            }
-            
-            if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
-                    guard
-                        let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                        let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                        let data = data where error == nil
-                        else { return }
-                    
-                    data.writeToURL(NSURL(string: imageURL)!, atomically: true)
-                    
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        UserManager.userProfile.profilePictureURL = imageURL
-                        let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
-                        NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
-                    }
-                }).resume()
-            }
-        })
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            request.startWithCompletionHandler({ (connection, result, error) in
+                
+                if let e = error {
+                    print(e)
+                    return
+                }
+                
+                let info = result as! NSDictionary
+                
+                if let id = FIRAuth.auth()?.currentUser?.uid {
+                    UserManager.userProfile.id = id
+                }
+                
+                if let fbID = info.valueForKey("id") as? String {
+                    UserManager.userProfile.fbID = fbID
+                }
+                
+                if let firstName = info.valueForKey("first_name") as? String {
+                    UserManager.userProfile.firstName = firstName
+                }
+                
+                if let lastName = info.valueForKey("last_name") as? String {
+                    UserManager.userProfile.lastName = lastName
+                }
+                
+                if let email = info.valueForKey("email") as? String {
+                    UserManager.userProfile.email = email
+                }
+                
+                if let friendsData = info.valueForKey("friends") as? NSDictionary {
+                    UserManager.userProfile.friends = DataProvider.sharedProvider.fetchUserFriends(friendsData)
+                }
+                
+                if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
+                    UserManager.userProfile.profilePictureURL = imageURL
+                }
+                
+                let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
+                NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
+            })
+        }
     }
+ 
+//    func fetchCurrentUserProfilePicture() {
+//        let imageURL = UserManager.userProfile.profilePictureURL
+//        NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
+//            guard
+//                let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
+//                let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
+//                let data = data where error == nil
+//                else { return }
+//        
+//            
+//        }).resume()
+//    }
     
     func fetchUserFriends(data: NSDictionary) -> [UserProfile] {
         var friends = [UserProfile]()

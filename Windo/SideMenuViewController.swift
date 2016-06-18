@@ -27,8 +27,8 @@ class SidePanelViewController: UIViewController {
         view.addSubview(sideMenuView)
         addTargets()
         
-        sideMenuView.profileImage = UIImageView(image: userProfile.profilePicture())
-        sideMenuView.nameLabel.text = "\(userProfile.firstName) \(userProfile.lastName)"
+        
+        sideMenuView.nameLabel.text = userProfile.fullName()
     }
     
     override func viewWillAppear(animated: Bool) {

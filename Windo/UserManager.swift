@@ -36,7 +36,6 @@ class UserManager {
     }
     
     func signOut() {
-        
         try! FIRAuth.auth()!.signOut()
         
         if let _ = FIRAuth.auth()?.currentUser {
@@ -53,11 +52,11 @@ class UserManager {
     }
     
     func fetchUserProfile() {
-        if fetchUserProfileFromDefaults() {
-            return
-        } else {
+//        if fetchUserProfileFromDefaults() {
+//            return
+//        } else {
             DataProvider.sharedProvider.fetchUserProfileFromFacebook()
-        }
+//        }
     }
     
     func fetchUserProfileFromDefaults() -> Bool {

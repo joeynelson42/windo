@@ -49,13 +49,13 @@ class UserProfileView: UIView {
     
     func configureSubviews(){
         
-        profileImage = UIImageView(image: UIImage(named: "John Profile"))
+//        profileImage = UIImageView(image: UIImage(named: "John Profile"))
         profileImage.contentMode = .ScaleAspectFill
         profileImage.layer.cornerRadius = 45
         profileImage.layer.borderWidth = 2.0
         profileImage.clipsToBounds = true
         
-        nameLabel.text = "John Jackson"
+//        nameLabel.text = "John Jackson"
         nameLabel.font = UIFont.graphikMedium(22)
         
         responseRating.text = "RESPONSE RATING: 87.5%"

@@ -36,8 +36,8 @@ class InviteViewController: UIViewController, UISearchBarDelegate {
         inviteView.inviteeTableView.dataSource = self
         
         inviteView.searchBar.delegate = self
+        inviteView.searchBar.dataSource = self
     
-        
         filteredInvitees = userProfile.friends
     }
     
@@ -74,31 +74,31 @@ class InviteViewController: UIViewController, UISearchBarDelegate {
     
     func updateInvitees(){
         
-        if createTabBar.invitees.count < 1 {
-            inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
-            return
-        }
-        
-        for (index, name) in createTabBar.invitees.enumerate() {
-            var fullNameArr = name.characters.split{$0 == " "}.map(String.init)
-            var firstName = fullNameArr[0]
-            
-            if index == 0 {
-                inviteView.inviteeLabel.text = firstName
-            }
-            else if createTabBar.invitees.count > 3{
-                fullNameArr = createTabBar.invitees[0].characters.split{$0 == " "}.map(String.init)
-                firstName = fullNameArr[0]
-                fullNameArr = createTabBar.invitees[1].characters.split{$0 == " "}.map(String.init)
-                let secondName = fullNameArr[0]
-                inviteView.inviteeLabel.text! = "\(firstName), \(secondName), and \(createTabBar.invitees.count - 2) others"
-                break
-            }
-            else{
-                let currentText = inviteView.inviteeLabel.text!
-                inviteView.inviteeLabel.text! = "\(currentText), \(firstName)"
-            }
-        }
+//        if createTabBar.invitees.count < 1 {
+//            inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
+//            return
+//        }
+//        
+//        for (index, name) in createTabBar.invitees.enumerate() {
+//            var fullNameArr = name.characters.split{$0 == " "}.map(String.init)
+//            var firstName = fullNameArr[0]
+//            
+//            if index == 0 {
+//                inviteView.inviteeLabel.text = firstName
+//            }
+//            else if createTabBar.invitees.count > 3{
+//                fullNameArr = createTabBar.invitees[0].characters.split{$0 == " "}.map(String.init)
+//                firstName = fullNameArr[0]
+//                fullNameArr = createTabBar.invitees[1].characters.split{$0 == " "}.map(String.init)
+//                let secondName = fullNameArr[0]
+//                inviteView.inviteeLabel.text! = "\(firstName), \(secondName), and \(createTabBar.invitees.count - 2) others"
+//                break
+//            }
+//            else{
+//                let currentText = inviteView.inviteeLabel.text!
+//                inviteView.inviteeLabel.text! = "\(currentText), \(firstName)"
+//            }
+//        }
     }
 }
 
@@ -116,10 +116,11 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
         let friend = filteredInvitees[indexPath.row]
         
+        cell.setProfileImage(friend)
+        
         cell.nameLabel.text = friend.fullName()
         cell.userHandleLabel.text = "@\(friend.fullName().lowercaseString)"
         cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
-        cell.initialsLabel.text = friend.fullName().getInitials()
         
         if createTabBar.invitees.contains(friend.fullName()){
             cell.checkmarkImageView.alpha = 1.0
@@ -160,6 +161,8 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         updateInvitees()
+        
+        inviteView.searchBar.reloadData()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -184,17 +187,59 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         return header
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        inviteView.inviteeTableView.reloadData()
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        view.endEditing(true)
     }
     
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        inviteView.inviteeTableView.reloadData()
+    func openUserProfile(sender: UITapGestureRecognizer) {
+        let profileVC = UserProfileViewController()
+        profileVC.user = userProfile.friends[0]
+        profileVC.color = ThemeColor.Blue
+        navigationController?.pushViewController(profileVC, animated: true)
+    }
+}
+
+extension InviteViewController: VENTokenFieldDelegate, VENTokenFieldDataSource {
+    func numberOfTokensInTokenField(tokenField: VENTokenField) -> UInt {
+        return  UInt(createTabBar.invitees.count)
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        updateSearchResultsForSearchController(searchText)
+    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
+        return  createTabBar.invitees[Int(index)]
+    }
+    
+    func tokenField(tokenField: VENTokenField, didEnterText text: String) {
+        createTabBar.invitees.append(text)
+        inviteView.searchBar.reloadData()
+    }
+    
+    func tokenField(tokenField: VENTokenField, didDeleteTokenAtIndex index: UInt) {
+        createTabBar.invitees.removeAtIndex(Int(index))
+        inviteView.searchBar.reloadData()
+    }
+    
+    func tokenField(tokenField: VENTokenField, didChangeText text: String?) {
+        if let searchText = text {
+            updateSearchResultsForSearchController(searchText)
+        }
+    }
+    
+    func tokenField(tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
+        inviteView.searchBar.addConstraints(
+            Constraint.tt.of(inviteView),
+            Constraint.llrr.of(inviteView),
+            Constraint.h.of(height)
+        )
+        
+        self.inviteView.layoutIfNeeded()
+    }
+    
+    func tokenFieldCollapsedText(tokenField: VENTokenField) -> String {
+        if createTabBar.invitees.count > 1 {
+            return "\(createTabBar.invitees.count) people"
+        } else {
+            return "1 person"
+        }
     }
     
     func updateSearchResultsForSearchController(searchString: String) {
@@ -207,28 +252,5 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         
         filteredInvitees.removeAll(keepCapacity: false)
         filteredInvitees = allFriends.filter() { $0.fullName().containsString(searchString) }
-    }
-    
-    func getInitials(name: String) -> String{
-        let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
-        
-        guard let index = name.characters.indexOf(" ") else {
-            return firstInitial.uppercaseString
-        }
-        
-        let secondInitial = "\(name[name.startIndex.advancedBy(name.startIndex.distanceTo(index) + 1)])"
-        let initials = "\(firstInitial)\(secondInitial)"
-        
-        return initials.uppercaseString
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        view.endEditing(true)
-    }
-    
-    func openUserProfile(sender: UITapGestureRecognizer) {
-        let profileVC = UserProfileViewController()
-        profileVC.color = ThemeColor.Blue
-        navigationController?.pushViewController(profileVC, animated: true)
     }
 }
