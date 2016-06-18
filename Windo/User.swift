@@ -18,6 +18,19 @@ class User {
     var eventIDs: [String]!
     
     // MARK: Public
+    init() {
+        
+    }
+    
+    init(id: String, email: String, facebookID: String, name: String, friendIDs: [String], eventIDs: [String]) {
+        self.ID = id
+        self.email = email
+        self.facebookID = facebookID
+        self.name = name
+        self.friendIDs = friendIDs
+        self.eventIDs = eventIDs
+    }
+    
     
     // MARK: Private
     

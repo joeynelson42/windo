@@ -8,13 +8,13 @@
 
 import Foundation
 import Firebase
-//import FirebaseDatabase
+import FirebaseDatabase
 import FirebaseAuth
 
 class DataProvider {
     
     static let sharedProvider = DataProvider()
-//    let dbRef = FIRDatabase.database().reference()
+    let dbRef = FIRDatabase.database().reference()
 
     // PATHS
     let userPath = "users"
@@ -121,9 +121,9 @@ class DataProvider {
     
     func uploadUser(user: UserProfile) {
         // TODO: create a User object from Profile
-//        let userObject = User()
-//        
-//        dbRef.child(userPath).child(user.id).setValue(userObject)
+        let userObject = User(id: user.id, email: user.email, facebookID: user.fbID, name: user.fullName, friendIDs: [], eventIDs: [])
+        
+        dbRef.child(userPath).child(user.id).setValue(userObject)
     }
     
     // MARK: Events

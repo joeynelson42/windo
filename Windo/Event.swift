@@ -26,8 +26,23 @@ class Event {
     var isPast: Bool!
     var timesFound: Bool!
     
-    
     // MARK: Public
+    init() {
+        
+    }
+    
+    init(id: String, name: String, location: CLLocation, members: [User], eventCreator: User, dateCreated: NSDate, eventWindo: Windo, memberSubmissions: [Windo], messages: [Message], possibleTimes: [NSDate]) {
+        self.ID = id
+        self.name = name
+        self.location = location
+        self.members = members
+        self.eventCreator = eventCreator
+        self.dateCreated = dateCreated
+        self.eventWindo = eventWindo
+        self.memberWindos = memberSubmissions
+        self.messages = messages
+        self.possibleTimes = possibleTimes
+    }
     
     // MARK: Private
     
