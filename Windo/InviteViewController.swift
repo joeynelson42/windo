@@ -22,7 +22,7 @@ class InviteViewController: UIViewController, UISearchBarDelegate {
     var inviteView = InviteView()
     var filteredInvitees = [UserProfile]()
     let userProfile = UserManager.userProfile
-    let allFriends = UserManager.userProfile.friends
+    let allFriends = UserManager.friends
     
     //MARK: Lifecycle Methods
     
@@ -38,7 +38,7 @@ class InviteViewController: UIViewController, UISearchBarDelegate {
         inviteView.searchBar.delegate = self
         inviteView.searchBar.dataSource = self
     
-        filteredInvitees = userProfile.friends
+        filteredInvitees = allFriends
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -73,32 +73,7 @@ class InviteViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateInvitees(){
-        
-//        if createTabBar.invitees.count < 1 {
-//            inviteView.inviteeLabel.text = inviteView.inviteePlaceholderText
-//            return
-//        }
-//        
-//        for (index, name) in createTabBar.invitees.enumerate() {
-//            var fullNameArr = name.characters.split{$0 == " "}.map(String.init)
-//            var firstName = fullNameArr[0]
-//            
-//            if index == 0 {
-//                inviteView.inviteeLabel.text = firstName
-//            }
-//            else if createTabBar.invitees.count > 3{
-//                fullNameArr = createTabBar.invitees[0].characters.split{$0 == " "}.map(String.init)
-//                firstName = fullNameArr[0]
-//                fullNameArr = createTabBar.invitees[1].characters.split{$0 == " "}.map(String.init)
-//                let secondName = fullNameArr[0]
-//                inviteView.inviteeLabel.text! = "\(firstName), \(secondName), and \(createTabBar.invitees.count - 2) others"
-//                break
-//            }
-//            else{
-//                let currentText = inviteView.inviteeLabel.text!
-//                inviteView.inviteeLabel.text! = "\(currentText), \(firstName)"
-//            }
-//        }
+
     }
 }
 
@@ -116,7 +91,7 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
         let friend = filteredInvitees[indexPath.row]
         
-        cell.setProfileImage(friend)
+        cell.profileImageView.setupView(friend, width: 44)
         
         cell.nameLabel.text = friend.fullName()
         cell.userHandleLabel.text = "@\(friend.fullName().lowercaseString)"
@@ -193,7 +168,7 @@ extension InviteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func openUserProfile(sender: UITapGestureRecognizer) {
         let profileVC = UserProfileViewController()
-        profileVC.user = userProfile.friends[0]
+        profileVC.user = allFriends[0]
         profileVC.color = ThemeColor.Blue
         navigationController?.pushViewController(profileVC, animated: true)
     }

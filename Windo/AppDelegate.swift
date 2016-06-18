@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var rootViewController = UIViewController()
         
         if FBSDKAccessToken.currentAccessToken() != nil {
-//            UserManager.sharedManager.login()
+            UserManager.sharedManager.login()
             UserManager.sharedManager.fetchUserProfile()
             rootViewController = ContainerViewController()
         } else {

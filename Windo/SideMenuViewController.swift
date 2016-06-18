@@ -25,18 +25,9 @@ class SidePanelViewController: UIViewController {
         view.backgroundColor = UIColor.superLightTeal()
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
-        addTargets()
-        
-        
+        sideMenuView.profileImage.setupView(userProfile, width: 90)
         sideMenuView.nameLabel.text = userProfile.fullName()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
+        addTargets()
     }
     
     func handleNavigate(sender: UIButton){
@@ -45,7 +36,6 @@ class SidePanelViewController: UIViewController {
     
     func addTargets(){
         sideMenuView.help.addTarget(self, action: #selector(SidePanelViewController.openTutorial), forControlEvents: .TouchUpInside)
-        
         sideMenuView.signOut.addTarget(self, action: #selector(SidePanelViewController.signOut), forControlEvents: .TouchUpInside)
     }
     

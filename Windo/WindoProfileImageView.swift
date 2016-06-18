@@ -11,23 +11,25 @@ import UIKit
 class WindoProfileImageView: UIView {
     
     //MARK: Properties
-    var user: UserProfile!
-    var width: CGFloat!
-    var image: UIImage!
+    private var cachePolicy = NSURLRequestCachePolicy.ReturnCacheDataElseLoad
+    private var blurRadius: CGFloat?
+    private var urlString: String?
+    private var request: NSMutableURLRequest?
+    private var task: NSURLSessionDataTask?
     
     var imageView = UIImageView()
     var initals = UILabel()
     
     //MARK: Inits
-    convenience init(width: CGFloat, userProfile: UserProfile, fetchImage: Bool = true) {
-        self.init(frame: CGRectZero)
-        self.user = userProfile
-        self.width = width
-        
-        if fetchImage {
-            self.fetchProfileImage()
-        }
-    }
+//    convenience init(width: CGFloat, userProfile: UserProfile, fetchImage: Bool = true) {
+//        self.init(frame: CGRectZero)
+//        self.user = userProfile
+//        self.width = width
+//        
+//        if fetchImage {
+//            self.fetchProfileImage()
+//        }
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,13 +49,10 @@ class WindoProfileImageView: UIView {
     }
     
     func configureSubviews(){
-        layer.cornerRadius = width/2
         clipsToBounds = true
         
         imageView.contentMode = .ScaleAspectFill
         
-        initals.text = user.getInitials()
-        initals.font = UIFont.graphikRegular(width/2)
         initals.textAlignment = .Center
         
         addSubview(initals)
@@ -72,18 +71,69 @@ class WindoProfileImageView: UIView {
         )
     }
     
-    func fetchProfileImage() {
-        if user.profilePictureURL == "" {
+    func setupView(user: UserProfile, width: CGFloat, withCachePolicy cachePolicy: NSURLRequestCachePolicy = .ReturnCacheDataElseLoad, blurRadius: CGFloat? = nil) {
+        // Don't bother reloading if the url isn't changing, unless the cache policy reqeusts it
+        if user.profilePictureURL == self.urlString &&
+            cachePolicy != .ReloadIgnoringCacheData &&
+            cachePolicy != .ReloadIgnoringLocalCacheData &&
+            cachePolicy != .ReloadIgnoringLocalAndRemoteCacheData {
             return
         }
+        // Note: Image access must occur on main queue
+        initals.text = user.getInitials()
+        layer.cornerRadius = width/2
+        initals.font = UIFont.graphikRegular(width/2)
+//        self.placeholderView.alpha = 1
         
-        NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: user.profilePictureURL)!, completionHandler: { (data, response, error) -> Void in
-            guard let imageData = data else { return }
-            
-            dispatch_async(dispatch_get_main_queue(), { Void in
-                self.imageView.image = UIImage(data: imageData)
-            });
-            
-        }).resume()
+        
+        self.urlString = user.profilePictureURL
+        self.cachePolicy = cachePolicy
+        self.blurRadius = blurRadius
+        // Cancel any in-progress image downloads
+        self.task?.cancel()
+        // Execute current download
+        self.executeQuery()
+    }
+    
+    
+    /// Attempts to download an image from the given URL, and displays it once the download has completed.
+    /// This must be called from the background queue.
+    private func executeQuery() {
+        guard let urlString = self.urlString else {
+            return
+        }
+        guard let url = NSURL(string: urlString) else {
+            return
+        }
+        // Only need to initialize request once; afterwards we just reset the URL and task object
+        if self.request == nil {
+            self.request = NSMutableURLRequest(URL: url)
+            self.request!.cachePolicy = self.cachePolicy
+        } else {
+            self.request!.URL = url
+        }
+        self.task = NSURLSession.sharedSession().dataTaskWithRequest(self.request!, completionHandler: { (data, response, error) in
+            guard error == nil else {
+                return
+            }
+            guard let imageData = data else {
+                return
+            }
+            guard let image = UIImage(data: imageData) else {
+                return
+            }
+            // Blur image if requested
+//            let outputImage = image.blurredImageWithRadius(self.blurRadius)
+            // Display image on main queue
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                // Animate the placeholder view away
+                UIView.animateWithDuration(0.2) {
+                    self.imageView.image = image
+//                    self.placeholderView.alpha = 0
+                }
+            }
+        })
+        self.task?.resume()
     }
 }

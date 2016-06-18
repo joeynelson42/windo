@@ -14,6 +14,7 @@ class UserManager {
     
     static let sharedManager = UserManager()
     static var userProfile = UserProfile()
+    static var friends = [UserProfile]()
     
     func userIsLoggedIn() -> Bool {
         if let _ = FIRAuth.auth()?.currentUser {
@@ -24,6 +25,12 @@ class UserManager {
     }
     
     func login() {
+        // Firebase Login
+        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+        FIRAuth.auth()?.signInWithCredential(credential, completion: nil)
+    }
+    
+    func loginAndLoadHomeScreen() {
         // Firebase Login
         let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
         FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
@@ -37,13 +44,17 @@ class UserManager {
     
     func signOut() {
         try! FIRAuth.auth()!.signOut()
-        
+
         if let _ = FIRAuth.auth()?.currentUser {
             return
         } else {
             let rootVC = LoginViewController()
-            
             print("sign out hit")
+            
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+            
+            NSUserDefaults.standardUserDefaults().setPersistentDomain(["":""], forName: NSBundle.mainBundle().bundleIdentifier!)
             
             let window = UIApplication.sharedApplication().delegate!.window!
             window!.rootViewController = rootVC
@@ -52,17 +63,22 @@ class UserManager {
     }
     
     func fetchUserProfile() {
-//        if fetchUserProfileFromDefaults() {
-//            return
-//        } else {
+        if fetchUserProfileFromDefaults() {
+            return
+        } else {
             DataProvider.sharedProvider.fetchUserProfileFromFacebook()
-//        }
+        }
     }
     
     func fetchUserProfileFromDefaults() -> Bool {
         guard let data = NSUserDefaults.standardUserDefaults().objectForKey(kUserProfile) as? NSData else { return false }
         guard let userProfile = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? UserProfile else { return false }
+        
+        guard let friendData = NSUserDefaults.standardUserDefaults().objectForKey("friends") as? NSData else { return false }
+        guard let friendsArray = NSKeyedUnarchiver.unarchiveObjectWithData(friendData) as? [UserProfile] else { return false }
+        
         UserManager.userProfile = userProfile
+        UserManager.friends = friendsArray
         return true
     }
     
@@ -86,8 +102,7 @@ class UserManager {
             // Successful login
             
             fetchUserProfile()
-            
-            self.login()
+            self.loginAndLoadHomeScreen()
         }
     }
     

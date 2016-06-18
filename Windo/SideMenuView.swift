@@ -13,7 +13,7 @@ class SideMenuView: UIView {
     //MARK: Properties
     var tutorialButton = GHButton()
     
-    var profileImage: WindoProfileImageView!
+    var profileImage = WindoProfileImageView()
     var nameLabel = UILabel()
     var responseRating = UILabel()
     var inviteFriends = GHButton()
@@ -46,9 +46,6 @@ class SideMenuView: UIView {
     }
     
     func configureSubviews(){
-        if profileImage == nil {
-            profileImage = WindoProfileImageView(width: 90, userProfile: UserManager.userProfile)
-        }
         profileImage.layer.borderColor = UIColor.mikeBlue().CGColor
         profileImage.layer.borderWidth = 2.0
         

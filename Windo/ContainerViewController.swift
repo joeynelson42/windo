@@ -67,9 +67,9 @@ extension ContainerViewController: CenterViewControllerDelegate {
     func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .LeftPanelExpanded)
         
-        if notAlreadyExpanded {
-            addLeftPanelViewController()
-        }
+//        if notAlreadyExpanded {
+//            addLeftPanelViewController()
+//        }
         
         if currentState == .BothCollapsed{
             if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {
@@ -123,8 +123,8 @@ extension ContainerViewController: CenterViewControllerDelegate {
             animateCenterPanelXPosition(targetPosition: 0) { finished in
                 self.currentState = .BothCollapsed
                 self.centerNavigationController.view.removeGestureRecognizer(self.tapToClose)
-                self.leftViewController!.view.removeFromSuperview()
-                self.leftViewController = nil;
+//                self.leftViewController!.view.removeFromSuperview()
+//                self.leftViewController = nil;
             }
             
             if let homeVC = centerNavigationController.viewControllers[0] as? HomeViewController {

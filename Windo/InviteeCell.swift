@@ -13,7 +13,7 @@ class InviteeCell: UITableViewCell {
     //MARK: Properties
     var nameLabel = UILabel()
     var userHandleLabel = UILabel()
-    var profileImageView: WindoProfileImageView!
+    var profileImageView = WindoProfileImageView()
     var checkmarkImageView = UIImageView()
     var infoButton = UIButton()
     var infoGestureContainer = UIView()
@@ -52,8 +52,12 @@ class InviteeCell: UITableViewCell {
         
         infoButton.setImage(UIImage(named: "BlueInfoIcon"), forState: .Normal)
         
+        profileImageView.layer.borderWidth = 1.2
+        profileImageView.layer.borderColor = UIColor.blue().CGColor
+        
         addSubview(nameLabel)
         addSubview(userHandleLabel)
+        addSubview(profileImageView)
         addSubview(checkmarkImageView)
         addSubview(infoButton)
         addSubview(infoGestureContainer)
@@ -61,8 +65,14 @@ class InviteeCell: UITableViewCell {
     }
     
     func applyConstraints(){
+        profileImageView.addConstraints(
+            Constraint.ll.of(self, offset: 24),
+            Constraint.cycy.of(self),
+            Constraint.wh.of(44)
+        )
+        
         nameLabel.addConstraints(
-            Constraint.ll.of(self, offset: 85),
+            Constraint.lr.of(profileImageView, offset: 17),
             Constraint.cycy.of(self, offset: -9),
             Constraint.w.of(200),
             Constraint.h.of(16)
@@ -91,20 +101,6 @@ class InviteeCell: UITableViewCell {
             Constraint.rr.of(self),
             Constraint.w.of(48),
             Constraint.h.of(65)
-        )
-    }
-    
-    func setProfileImage(user: UserProfile) {
-        profileImageView = WindoProfileImageView(width: 44, userProfile: user)
-        profileImageView.layer.borderWidth = 1.2
-        profileImageView.layer.borderColor = UIColor.blue().CGColor
-        
-        addSubview(profileImageView)
-        
-        profileImageView.addConstraints(
-            Constraint.ll.of(self, offset: 24),
-            Constraint.cycy.of(self),
-            Constraint.wh.of(44)
         )
     }
     

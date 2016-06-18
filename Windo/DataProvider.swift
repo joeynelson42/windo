@@ -58,7 +58,7 @@ class DataProvider {
                 }
                 
                 if let friendsData = info.valueForKey("friends") as? NSDictionary {
-                    UserManager.userProfile.friends = DataProvider.sharedProvider.fetchUserFriends(friendsData)
+                    DataProvider.sharedProvider.fetchUserFriends(friendsData)
                 }
                 
                 if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
@@ -84,54 +84,47 @@ class DataProvider {
 //        }).resume()
 //    }
     
-    func fetchUserFriends(data: NSDictionary) -> [UserProfile] {
+    func fetchUserFriends(data: NSDictionary){
         var friends = [UserProfile]()
         if let friendsList = data.objectForKey("data") as? NSArray {
             for friend in friendsList {
                 if let id = friend.valueForKey("id") as? String {
-                    friends.append(self.fetchFriendProfile(id))
+                    self.fetchFriendProfile(id)
                 }
             }
         }
-        return friends
     }
     
-    func fetchFriendProfile(id: String) -> UserProfile {
-        let friend = UserProfile()
+    func fetchFriendProfile(id: String){
         let request = FBSDKGraphRequest(graphPath: id, parameters: ["fields": kFriendFBFields])
-        request.startWithCompletionHandler({ (connection, result, error) in
-            let info = result as! NSDictionary
-            
-            if let firstName = info.valueForKey("first_name") as? String {
-                friend.firstName = firstName
-            }
-            
-            if let lastName = info.valueForKey("last_name") as? String {
-                friend.lastName = lastName
-            }
-            
-            if let email = info.valueForKey("email") as? String {
-                friend.email = email
-            }
-            
-            if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
-                NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
-                    guard
-                        let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-                        let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-                        let data = data where error == nil
-                        else { return }
-                    
-                    data.writeToURL(NSURL(string: imageURL)!, atomically: true)
-                    
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        friend.profilePictureURL = imageURL
-                    }
-                }).resume()
-            }
-        })
-        
-        return friend
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            request.startWithCompletionHandler({ (connection, result, error) in
+                let info = result as! NSDictionary
+                
+                let friend = UserProfile()
+                
+                friend.fbID = id
+                
+                if let firstName = info.valueForKey("first_name") as? String {
+                    friend.firstName = firstName
+                }
+                
+                if let lastName = info.valueForKey("last_name") as? String {
+                    friend.lastName = lastName
+                }
+                
+                if let email = info.valueForKey("email") as? String {
+                    friend.email = email
+                }
+                
+                if let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String {
+                    friend.profilePictureURL = imageURL
+                }
+                
+                // TODO: Figure out a way to save friends!
+                
+            })
+        }
     }
     
     func uploadUser(user: UserProfile) {
