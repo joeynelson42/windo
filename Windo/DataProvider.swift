@@ -22,8 +22,8 @@ class DataProvider {
     let windoPath = "windos"
     
     // MARK: User
-    // TODO: 
     
+    /// Retrieves current user's profile from facebook and stores it in NSUserDefaults
     func fetchUserProfileFromFacebook() {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large), friends"])
         
@@ -67,6 +67,7 @@ class DataProvider {
                 
                 let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
                 NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
+                DataProvider.sharedProvider.uploadUser(UserManager.userProfile)
             })
         }
     }
@@ -119,11 +120,21 @@ class DataProvider {
         }
     }
     
+    /// Uploads User to Firebase
     func uploadUser(user: UserProfile) {
-        // TODO: create a User object from Profile
-        let userObject = User(id: user.id, email: user.email, facebookID: user.fbID, name: user.fullName, friendIDs: [], eventIDs: [])
+        // TODO: match friend fbIDs to Firebase IDs and then upload
+        let path = "\(userPath)/\(user.id)/"
         
-        dbRef.child(userPath).child(user.id).setValue(userObject)
+        dbRef.child("\(path)name").setValue(user.fullName)
+        dbRef.child("\(path)email").setValue(user.email)
+        dbRef.child("\(path)fbID").setValue(user.fbID)
+        dbRef.child("\(path)imageURL").setValue(user.profilePictureURL)
+    }
+    
+    func matchFriendIDs() {
+        for friend in UserManager.friends {
+            
+        }
     }
     
     // MARK: Events
