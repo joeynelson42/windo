@@ -18,6 +18,7 @@ class DataProvider {
 
     // PATHS
     let userPath = "users"
+    let IDtoIDPath = "IDtoID" // matching provisioner (Google, Facebook) ID to Firebase ID
     let eventPath = "events"
     let windoPath = "windos"
     
@@ -36,10 +37,6 @@ class DataProvider {
                 }
                 
                 let info = result as! NSDictionary
-                
-                if let id = FIRAuth.auth()?.currentUser?.uid {
-                    UserManager.userProfile.id = id
-                }
                 
                 if let fbID = info.valueForKey("id") as? String {
                     UserManager.userProfile.fbID = fbID
@@ -67,25 +64,28 @@ class DataProvider {
                 
                 let userData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.userProfile)
                 NSUserDefaults.standardUserDefaults().setObject(userData, forKey: kUserProfile)
-                DataProvider.sharedProvider.uploadUser(UserManager.userProfile)
             })
         }
     }
- 
-//    func fetchCurrentUserProfilePicture() {
-//        let imageURL = UserManager.userProfile.profilePictureURL
-//        NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: imageURL)!, completionHandler: { (data, response, error) -> Void in
-//            guard
-//                let httpURLResponse = response as? NSHTTPURLResponse where httpURLResponse.statusCode == 200,
-//                let mimeType = response?.MIMEType where mimeType.hasPrefix("image"),
-//                let data = data where error == nil
-//                else { return }
-//        
-//            
-//        }).resume()
-//    }
+    
+    func fetchUserFriends() {
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "friends"])
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            request.startWithCompletionHandler({ (connection, result, error) in
+                if let e = error {
+                    print(e)
+                    return
+                }
+                let info = result as! NSDictionary
+                if let friendsData = info.valueForKey("friends") as? NSDictionary {
+                    DataProvider.sharedProvider.fetchUserFriends(friendsData)
+                }
+            })
+        }
+    }
     
     func fetchUserFriends(data: NSDictionary){
+        UserManager.friends.removeAll()
         if let friendsList = data.objectForKey("data") as? NSArray {
             for friend in friendsList {
                 if let id = friend.valueForKey("id") as? String {
@@ -107,57 +107,49 @@ class DataProvider {
                     let lastName = info.valueForKey("last_name") as? String,
                     let imageURL = info.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as? String
                     else { return }
-                
                 friend.firstName = firstName
                 friend.lastName = lastName
                 friend.profilePictureURL = imageURL
-                
+                friend.fbID = id
                 UserManager.friends.append(friend)
-                
-                let friendData = NSKeyedArchiver.archivedDataWithRootObject(UserManager.friends)
-                NSUserDefaults.standardUserDefaults().setObject(friendData, forKey: "friends")
             })
         }
     }
     
     /// Uploads User to Firebase
-    func uploadUser(user: UserProfile) {
-        // TODO: match friend fbIDs to Firebase IDs and then upload
-        let path = "\(userPath)/\(user.id)/"
+    func uploadUser() {        
+        let user = UserManager.userProfile
+        
+        let path = "\(userPath)/\(user.fbID)/"
         
         dbRef.child("\(path)name").setValue(user.fullName)
         dbRef.child("\(path)email").setValue(user.email)
-        dbRef.child("\(path)fbID").setValue(user.fbID)
         dbRef.child("\(path)imageURL").setValue(user.profilePictureURL)
+        
+        DataProvider.sharedProvider.uploadUserFriends()
     }
-    
-    func matchFriendIDs() {
-        for friend in UserManager.friends {
-            
+
+    func ifNewUser(doThis: ()->()) {
+        let user = UserManager.userProfile
+        
+        dbRef.child(userPath).child(user.fbID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if !snapshot.exists() {
+                doThis()
+            }
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
     
-    // MARK: Events
-//    func createEvent(newEvent: Event) {
-////        self.dbRef.child(eventPath).child(newEvent.ID).setValue(newEvent)
-//        for member in newEvent.members {
-////            let userID = member.ID
-////            dbRef.child(userPath).child(userID).child("eventIDs").child(newEvent.ID).setValue(ResponseStatus.NeedsResponse.rawValue)
-//        }
-//    }
-//    
-//    func getEventByID(ID: String) -> Event {
-//        let event = Event()
-//        
-//        
-////        let recentPostsQuery = (dbRef.child(eventPath).queryEqualToValue(AnyObject?))
-//        
-//        return event
-//    }
-
-    
-    
-    
-    
-    
+    func uploadUserFriends() {
+        if UserManager.friends.isEmpty { return }
+        
+        let user = UserManager.userProfile
+        var friendsArray = [String]()
+        for friend in UserManager.friends {
+            friendsArray.append(friend.fbID)
+        }
+        
+        dbRef.child("\(userPath)/\(user.fbID)/friends").setValue(friendsArray)
+    }
 }

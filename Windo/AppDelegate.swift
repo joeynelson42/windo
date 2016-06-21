@@ -29,10 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var rootViewController = UIViewController()
         
         if FBSDKAccessToken.currentAccessToken() != nil {
-            UserManager.sharedManager.login()
+            UserManager.sharedManager.login(false)
             UserManager.sharedManager.fetchUserProfile()
             rootViewController = ContainerViewController()
         } else {
+            UserManager.sharedManager.fetchUserProfile()
             rootViewController = LoginViewController()
         }
         
@@ -142,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication,
             openURL url: NSURL,
             sourceApplication: String?,
-            annotation: AnyObject?) -> Bool {
+            annotation: AnyObject) -> Bool {
                 return FBSDKApplicationDelegate.sharedInstance().application(
                         application,
                         openURL: url,

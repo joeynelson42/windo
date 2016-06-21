@@ -24,21 +24,19 @@ class UserManager {
         }
     }
     
-    func login() {
-        // Firebase Login
-        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-        FIRAuth.auth()?.signInWithCredential(credential, completion: nil)
-    }
-    
-    func loginAndLoadHomeScreen() {
+    func login(loadHomeScreen: Bool) {
         // Firebase Login
         let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
         FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-            //fetch user's events and open home screen on completion
-            let rootVC = ContainerViewController()
-            let window = UIApplication.sharedApplication().delegate!.window!
-            window!.rootViewController = rootVC
-            window!.makeKeyAndVisible()
+            if loadHomeScreen {
+                //fetch user's events and open home screen on completion
+                let rootVC = ContainerViewController()
+                let window = UIApplication.sharedApplication().delegate!.window!
+                window!.rootViewController = rootVC
+                window!.makeKeyAndVisible()
+                
+                DataProvider.sharedProvider.ifNewUser({DataProvider.sharedProvider.uploadUser()})
+            }
         }
     }
     
@@ -54,7 +52,8 @@ class UserManager {
             let loginManager = FBSDKLoginManager()
             loginManager.logOut()
             
-            NSUserDefaults.standardUserDefaults().setPersistentDomain(["":""], forName: NSBundle.mainBundle().bundleIdentifier!)
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(kUserProfile)
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("friends")
             
             let window = UIApplication.sharedApplication().delegate!.window!
             window!.rootViewController = rootVC
@@ -64,6 +63,7 @@ class UserManager {
     
     func fetchUserProfile() {
         if fetchUserProfileFromDefaults() {
+            DataProvider.sharedProvider.fetchUserFriends()
             return
         } else {
             DataProvider.sharedProvider.fetchUserProfileFromFacebook()
@@ -73,36 +73,19 @@ class UserManager {
     func fetchUserProfileFromDefaults() -> Bool {
         guard let data = NSUserDefaults.standardUserDefaults().objectForKey(kUserProfile) as? NSData else { return false }
         guard let userProfile = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? UserProfile else { return false }
-        
-        guard let friendData = NSUserDefaults.standardUserDefaults().objectForKey("friends") as? NSData else { return false }
-        guard let friendsArray = NSKeyedUnarchiver.unarchiveObjectWithData(friendData) as? [UserProfile] else { return false }
-        
         UserManager.userProfile = userProfile
-        UserManager.friends = friendsArray
         return true
     }
     
     // MARK: Facebook
-    
-//    func removeFbData() {
-//        //Remove FB Data
-//        let fbManager = FBSDKLoginManager()
-//        fbManager.logOut()
-//        FBSDKAccessToken.setCurrentAccessToken(nil)
-//    }
-    
-    func fbLogin(didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        print("User Logged In")
-        
+    func fbLogin(didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {        
         if ((error) != nil) {
-            // Process error
+            return
         } else if result.isCancelled {
-            // Handle cancellations
+            return
         } else {
-            // Successful login
-            
-            fetchUserProfile()
-            self.loginAndLoadHomeScreen()
+            DataProvider.sharedProvider.fetchUserProfileFromFacebook()
+            self.login(true)
         }
     }
     
