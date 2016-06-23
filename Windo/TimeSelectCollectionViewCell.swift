@@ -132,9 +132,7 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         var timeCount = 0
         
         for time in times {
-            
-            time.date = date
-            
+                    
             if timeCount > 12 {
                 time.timeButton.setTitle("\(timeCount - 12)", forState: .Normal)
             }

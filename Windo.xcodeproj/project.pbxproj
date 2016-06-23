@@ -500,8 +500,8 @@
 			children = (
 				63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */,
 				63FF08EF1CB4483500255A4A /* TimeSelectView.swift */,
-				63FF08F21CB46EE100255A4A /* TimeView.swift */,
 				6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */,
+				63FF08F21CB46EE100255A4A /* TimeView.swift */,
 				630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */,
 			);
 			name = "Time Selection";

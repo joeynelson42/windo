@@ -28,18 +28,16 @@ class TimeView: UIView {
     var delegate: TimeViewDelegate!
     var state = TimeState.Unselected
     var time = 0
-    var date = NSDate()
     
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
     }
     
-    convenience init(cellTime: Int, timeDelegate: TimeViewDelegate, cellDate: NSDate){
+    convenience init(cellTime: Int, timeDelegate: TimeViewDelegate){
         self.init(frame: CGRectZero)
         time = cellTime
         delegate = timeDelegate
-        date = cellDate
     }
     
     override init(frame: CGRect) {
@@ -117,7 +115,7 @@ class TimeView: UIView {
                 }, completion: nil)
         }
         
-        delegate.updateSelectedTimes!(time)
+        delegate.updateSelectedTimes?(time)
     }
     
     func updateState(){
