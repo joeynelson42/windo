@@ -20,8 +20,6 @@ class CreateTabBarController: UITabBarController {
     var selectedDates = [NSDate]()
     var selectedTimes = [NSDate]()
     
-    
-    
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
@@ -69,5 +67,10 @@ class CreateTabBarController: UITabBarController {
         alertController.addAction(destroyAction)
         
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func finalizeEvent() {
+        invitees.append(UserManager.userProfile)
+        DataProvider.sharedProvider.createEvent(invitees, selectedTimes: selectedTimes)
     }
 }

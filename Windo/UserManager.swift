@@ -97,10 +97,4 @@ class UserManager {
         window!.rootViewController = rootVC
         window!.makeKeyAndVisible()
     }
-    
-   
-    
-    
-    
-    
 }

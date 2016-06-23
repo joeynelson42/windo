@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserManager.sharedManager.fetchUserProfile()
             rootViewController = ContainerViewController()
         } else {
-            UserManager.sharedManager.fetchUserProfile()
             rootViewController = LoginViewController()
         }
         

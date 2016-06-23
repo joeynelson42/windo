@@ -73,6 +73,7 @@ class TimeSelectViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         let sendAction = UIAlertAction(title: "Send!", style: .Default) { (action) in
+            self.createTabBar.finalizeEvent()
             self.navigationController?.popViewControllerAnimated(true)
         }
         alertController.addAction(sendAction)
@@ -345,6 +346,8 @@ extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
         components.hour = hourNumber
         components.minute = 0
         components.second = 0
+        
+        components.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         
         return date

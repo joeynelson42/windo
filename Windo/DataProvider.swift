@@ -22,8 +22,42 @@ class DataProvider {
     let eventPath = "events"
     let windoPath = "windos"
     
-    // MARK: User
     
+    // MARK: Events
+    
+    func createEvent(invitees: [UserProfile], selectedTimes: [NSDate]) {
+        let id = String.randomAlphaNumericString(20)
+        let creator = UserManager.userProfile.fbID
+        let originTimeZone = NSTimeZone.localTimeZone().abbreviation
+        
+        var members = [String]()
+        for user in invitees {
+            members.append(user.fbID)
+        }
+        
+        var times = [String]()
+        for time in selectedTimes {
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd-hh"
+            let timeString = formatter.stringFromDate(time)
+            times.append(timeString)
+        }
+        
+        let newEventPath = "\(eventPath)/\(id)/"
+        
+        dbRef.child("\(newEventPath)/id").setValue(id)
+        dbRef.child("\(newEventPath)/creator").setValue(creator)
+        dbRef.child("\(newEventPath)/originTimeZone").setValue(originTimeZone)
+        dbRef.child("\(newEventPath)/members").setValue(members)
+        dbRef.child("\(newEventPath)/times").setValue(times)
+        
+//        for member in members {
+            //TODO: Add eventID to all invited users' events
+//        }
+    }
+    
+    
+    // MARK: User
     /// Retrieves current user's profile from facebook and stores it in NSUserDefaults
     func fetchUserProfileFromFacebook() {
         let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, picture.type(large), friends"])
@@ -131,7 +165,6 @@ class DataProvider {
 
     func ifNewUser(doThis: ()->()) {
         let user = UserManager.userProfile
-        
         dbRef.child(userPath).child(user.fbID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             if !snapshot.exists() {
                 doThis()
