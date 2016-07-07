@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-import FirebaseDatabase
+//import FirebaseDatabase
 import FirebaseAuth
 
 class DataProvider {

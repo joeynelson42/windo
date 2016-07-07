@@ -21,20 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize Firebase
         FIRApp.configure()
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+//        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        var rootViewController = UIViewController()
+        let rootViewController = PhoneNumberInputViewController()
         
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            UserManager.sharedManager.login(false)
-            UserManager.sharedManager.fetchUserProfile()
-            rootViewController = ContainerViewController()
-        } else {
-            rootViewController = LoginViewController()
-        }
+//        if FBSDKAccessToken.currentAccessToken() != nil {
+//            UserManager.sharedManager.login(false)
+//            UserManager.sharedManager.fetchUserProfile()
+//            rootViewController = ContainerViewController()
+//        } else {
+//            rootViewController = LoginViewController()
+//        }
         
         window!.rootViewController = rootViewController
         window!.makeKeyAndVisible()

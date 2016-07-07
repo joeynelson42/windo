@@ -36,4 +36,13 @@ extension String {
         
         return randomString
     }
+    
+    func isAlpha() -> Bool {
+        for uni in self.unicodeScalars {
+            if NSCharacterSet.decimalDigitCharacterSet().longCharacterIsMember(uni.value) {
+                return true
+            }
+        }
+        return false
+    }
 }
