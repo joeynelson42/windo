@@ -24,7 +24,7 @@ class WindoNumberPad: UIView {
     let bottomRow = UIStackView()
     let zeroRow = UIStackView()
     
-    let buttonSize:CGFloat = 60
+    let buttonSize:CGFloat = 70
     
     //MARK: Inits
     convenience init() {
