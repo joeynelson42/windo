@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhoneNumberInputLabel: UIView {
+class PhoneNumberInputLabel: UIView, Shakes {
     
     // MARK: Properties
     var lastInputIndex = 0

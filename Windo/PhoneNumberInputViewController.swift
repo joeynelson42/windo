@@ -11,6 +11,7 @@ import UIKit
 enum InputState {
     case phoneNumber
     case code
+    case loading
 }
 
 class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
@@ -63,7 +64,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
     }
     
     func addTargets() {
-        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.toggleState), forControlEvents: .TouchUpInside)
+        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.toggleAnimate), forControlEvents: .TouchUpInside)
     }
     
     func numberTapped(number: Int) {
@@ -81,15 +82,17 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
                 phoneNumber = "\(phoneNumber)\(String(number))"
                 inputNumberView.numberInputLabel.setNumberForIndex(String(number), index: numberLength)
             } else {
-                print("shake shake!")
+                inputNumberView.numberInputLabel.shake()
             }
         case .code:
             if codeLength < 6 {
                 code = "\(code)\(String(number))"
                 inputNumberView.codeInputLabel.setNumberForIndex(String(number), index: codeLength)
             } else {
-                print("shake shake!")
+                inputNumberView.codeInputLabel.shake()
             }
+        default:
+            return
         }
     }
 
@@ -97,36 +100,44 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
         switch state {
         case .phoneNumber:
             if numberLength == 0 {
-                print("shake shake!")
+                inputNumberView.numberInputLabel.shake()
                 return
             }
             phoneNumber.removeAtIndex(phoneNumber.endIndex.predecessor())
             inputNumberView.numberInputLabel.removeLastInput()
         case .code:
             if codeLength == 0 {
-                print("shake shake!")
+                inputNumberView.codeInputLabel.shake()
                 return
             }
             code.removeAtIndex(code.endIndex.predecessor())
             inputNumberView.codeInputLabel.removeLastInput()
+        default:
+            return
+        }
+    }
+
+    func toggleAnimate() {
+        switch state {
+        case .phoneNumber:
+            inputNumberView.hidePhoneInput()
+            inputNumberView.showLoading()
+            state = .loading
+        case .loading:
+            inputNumberView.hideLoading()
+            inputNumberView.showCodeInput()
+            inputNumberView.showGoBack()
+            state = .code
+        case .code:
+            inputNumberView.hideCodeInput()
+            inputNumberView.showPhoneInput()
+            inputNumberView.hideGoBack()
+            state = .phoneNumber
         }
     }
     
-    func toggleState() {
-        if state == .code {
-            transitionToPhoneNumber()
-        } else {
-            transitionToCode()
-        }
-    }
-    
-    func transitionToCode() {
-        sendAuthCode()
-        state = .code
-    }
-    
-    func transitionToPhoneNumber() {
-        state = .phoneNumber
+    func executeNext() {
+        
     }
     
     // MARK: AuthManager methods

@@ -9,7 +9,7 @@
 
 import UIKit
 
-class CodeInputLabel: UIView {
+class CodeInputLabel: UIView, Shakes {
     
     // MARK: Properties
     var lastInputIndex = 0

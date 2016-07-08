@@ -72,6 +72,8 @@
 		6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6395B15C1C742181008D0ED5 /* WindoConstants.swift */; };
 		639973E71D303964002C1845 /* CodeInputLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973E61D303964002C1845 /* CodeInputLabel.swift */; };
 		639973E91D3049E5002C1845 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973E81D3049E5002C1845 /* AuthManager.swift */; };
+		639973EC1D30567D002C1845 /* WindoLoadingIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973EB1D30567D002C1845 /* WindoLoadingIcon.swift */; };
+		639973EE1D306C49002C1845 /* Shakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973ED1D306C49002C1845 /* Shakes.swift */; };
 		63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */; };
 		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
 		63A8683D1D006987002978F7 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8683C1D006986002978F7 /* UserProfileViewController.swift */; };
@@ -172,6 +174,8 @@
 		6395B15C1C742181008D0ED5 /* WindoConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoConstants.swift; sourceTree = "<group>"; };
 		639973E61D303964002C1845 /* CodeInputLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeInputLabel.swift; sourceTree = "<group>"; };
 		639973E81D3049E5002C1845 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		639973EB1D30567D002C1845 /* WindoLoadingIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoLoadingIcon.swift; sourceTree = "<group>"; };
+		639973ED1D306C49002C1845 /* Shakes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shakes.swift; sourceTree = "<group>"; };
 		63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabBarViewController.swift; sourceTree = "<group>"; };
 		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		63A8683C1D006986002978F7 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -380,6 +384,7 @@
 				63A868471D00937C002978F7 /* Misc. Views */,
 				6395B1391C741969008D0ED5 /* Assets.xcassets */,
 				6395B14E1C741C46008D0ED5 /* Model */,
+				639973EF1D306EF3002C1845 /* Protocols */,
 				639973EA1D3049EB002C1845 /* Managers */,
 				6395B14F1C741C55008D0ED5 /* App Files */,
 				6395B1491C741BB4008D0ED5 /* Utility Extensions */,
@@ -466,6 +471,14 @@
 			name = Managers;
 			sourceTree = "<group>";
 		};
+		639973EF1D306EF3002C1845 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				639973ED1D306C49002C1845 /* Shakes.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		63A28B0D1CA3354A000826DC /* CreateEventDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +520,7 @@
 			children = (
 				63A868451D009374002978F7 /* WindoAlertView.swift */,
 				63B2CF991D14B765003F4676 /* WindoProfileImageView.swift */,
+				639973EB1D30567D002C1845 /* WindoLoadingIcon.swift */,
 			);
 			name = "Misc. Views";
 			sourceTree = "<group>";
@@ -710,6 +724,7 @@
 				63290F541D2DEDAB0099741A /* PhoneNumberInputViewController.swift in Sources */,
 				6395B15D1C742181008D0ED5 /* WindoConstants.swift in Sources */,
 				634D206D1C93908F00A1D4B5 /* SideMenuView.swift in Sources */,
+				639973EE1D306C49002C1845 /* Shakes.swift in Sources */,
 				63290F571D2DEE310099741A /* WindoNumberPad.swift in Sources */,
 				630AC0C11CB6EAAF0016E3C7 /* ScrubberCell.swift in Sources */,
 				6392EF711C97675A003C29CE /* EventMessagesView.swift in Sources */,
@@ -737,6 +752,7 @@
 				6383D8571CA4AE8F008F23B8 /* WindoCollectionCell.swift in Sources */,
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
+				639973EC1D30567D002C1845 /* WindoLoadingIcon.swift in Sources */,
 				63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */,
 				635014611D050F8700864A73 /* OutgoingChatCell.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
