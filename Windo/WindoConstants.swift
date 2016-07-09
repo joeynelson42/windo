@@ -33,6 +33,11 @@ let ProfileImageReadyNotification = "ProfileImageReady"
 
 
 
+struct Constants {
+    struct userDefaultKeys {
+        static let kUserPhoneNumber = "userPhoneNumber"
+    }
+}
 
 
 /*

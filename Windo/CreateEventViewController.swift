@@ -19,8 +19,8 @@ class CreateEventViewController: UIViewController {
     var selectedTimes = [NSDate]()
     
     var filteredInvitees = [UserProfile]()
-    let userProfile = UserManager.userProfile
-    let allFriends = UserManager.friends
+//    let userProfile = UserManager.userProfile
+//    let allFriends = UserManager.friends
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class CreateEventViewController: UIViewController {
         createEventView.searchBar.delegate = self
         createEventView.searchBar.dataSource = self
         
-        filteredInvitees = allFriends
+//        filteredInvitees = allFriends
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -217,7 +217,7 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     
     func openUserProfile(sender: UITapGestureRecognizer) {
         let profileVC = UserProfileViewController()
-        profileVC.user = allFriends[0]
+//        profileVC.user = allFriends[0]
         profileVC.color = ThemeColor.Blue
         navigationController?.pushViewController(profileVC, animated: true)
     }
@@ -276,12 +276,12 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         defer {createEventView.inviteeTableView.reloadData()}
         
         if (searchString == "") {
-            filteredInvitees = allFriends
+//            filteredInvitees = allFriends
             return
         }
         
         filteredInvitees.removeAll(keepCapacity: false)
-        filteredInvitees = allFriends.filter() { $0.fullName.containsString(searchString) }
+//        filteredInvitees = allFriends.filter() { $0.fullName.containsString(searchString) }
     }
 }
 

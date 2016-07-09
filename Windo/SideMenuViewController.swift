@@ -18,15 +18,15 @@ class SidePanelViewController: UIViewController {
     
     var delegate: SidePanelViewControllerDelegate?
     var sideMenuView = SideMenuView()
-    let userProfile = UserManager.userProfile
+//    let userProfile = UserManager.userProfile
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.superLightTeal()
         sideMenuView = SideMenuView(frame: self.view.frame)
         view.addSubview(sideMenuView)
-        sideMenuView.profileImage.setupView(userProfile, width: 90)
-        sideMenuView.nameLabel.text = userProfile.fullName
+//        sideMenuView.profileImage.setupView(userProfile, width: 90)
+//        sideMenuView.nameLabel.text = userProfile.fullName
         addTargets()
     }
     

@@ -70,7 +70,7 @@ class CreateTabBarController: UITabBarController {
     }
     
     func finalizeEvent() {
-        invitees.append(UserManager.userProfile)
-        DataProvider.sharedProvider.createEvent(invitees, selectedTimes: selectedTimes)
+//        invitees.append(UserManager.userProfile)
+//        DataProvider.sharedProvider.createEvent(invitees, selectedTimes: selectedTimes)
     }
 }
