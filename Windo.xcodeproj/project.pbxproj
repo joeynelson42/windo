@@ -75,6 +75,7 @@
 		639973EC1D30567D002C1845 /* WindoLoadingIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973EB1D30567D002C1845 /* WindoLoadingIcon.swift */; };
 		639973EE1D306C49002C1845 /* Shakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973ED1D306C49002C1845 /* Shakes.swift */; };
 		639973F11D3081EB002C1845 /* UIControl+Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973F01D3081EB002C1845 /* UIControl+Target.swift */; };
+		639973F31D3083D6002C1845 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639973F21D3083D6002C1845 /* Alerts.swift */; };
 		63A28B0C1CA334F5000826DC /* CreateTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */; };
 		63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A28B131CA36EB0000826DC /* CalendarDayView.swift */; };
 		63A8683D1D006987002978F7 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8683C1D006986002978F7 /* UserProfileViewController.swift */; };
@@ -178,6 +179,7 @@
 		639973EB1D30567D002C1845 /* WindoLoadingIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoLoadingIcon.swift; sourceTree = "<group>"; };
 		639973ED1D306C49002C1845 /* Shakes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shakes.swift; sourceTree = "<group>"; };
 		639973F01D3081EB002C1845 /* UIControl+Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Target.swift"; sourceTree = "<group>"; };
+		639973F21D3083D6002C1845 /* Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		63A28B0B1CA334F5000826DC /* CreateTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTabBarViewController.swift; sourceTree = "<group>"; };
 		63A28B131CA36EB0000826DC /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
 		63A8683C1D006986002978F7 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				639973ED1D306C49002C1845 /* Shakes.swift */,
+				639973F21D3083D6002C1845 /* Alerts.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				63A8683D1D006987002978F7 /* UserProfileViewController.swift in Sources */,
 				6350145F1D050F7C00864A73 /* IncomingChatCell.swift in Sources */,
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
+				639973F31D3083D6002C1845 /* Alerts.swift in Sources */,
 				63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */,
 				63290F591D2DEE680099741A /* WindoNumber.swift in Sources */,
 				6353E1111CBC5068008117B3 /* ResultsFilterView.swift in Sources */,

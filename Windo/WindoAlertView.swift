@@ -23,6 +23,7 @@ class WindoAlertView: UIView {
     var messageLabel = UILabel()
     var actionStackView = UIStackView()
     
+    var message = ""
     var alertColor = UIColor.whiteColor()
     
     //MARK: Inits
@@ -30,9 +31,10 @@ class WindoAlertView: UIView {
         self.init(frame: CGRectZero)
     }
     
-    convenience init(color: UIColor) {
+    convenience init(color: UIColor, message: String) {
         self.init()
         alertColor = color
+        self.message = message
     }
     
     override init(frame: CGRect) {
@@ -57,6 +59,7 @@ class WindoAlertView: UIView {
         messageContainer.backgroundColor = UIColor.whiteColor()
         messageContainer.layer.cornerRadius = 5.0
         
+        messageLabel.text = message
         messageLabel.textColor = alertColor
         messageLabel.font = UIFont.graphikRegular(16)
         messageLabel.numberOfLines = 0

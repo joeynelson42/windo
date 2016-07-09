@@ -20,14 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Initialize Firebase
-        FIRApp.configure()
+//        FIRApp.configure()
 //        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-        //MARK: Initial View Controller
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        let rootViewController = PhoneNumberInputViewController()
-        
 //        if FBSDKAccessToken.currentAccessToken() != nil {
 //            UserManager.sharedManager.login(false)
 //            UserManager.sharedManager.fetchUserProfile()
@@ -35,17 +29,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        } else {
 //            rootViewController = LoginViewController()
 //        }
+        //        self.appViewController = [[GDAppViewController alloc] init];
+        //        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        //        self.window.rootViewController = self.appViewController;
+        //        [self.window makeKeyAndVisible];
         
+        
+        
+        //MARK: Initial View Controller
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let rootViewController = PhoneNumberInputViewController()
         window!.rootViewController = rootViewController
         window!.makeKeyAndVisible()
         
         if let font = UIFont(name: "Graphik-Medium", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
         }
-//        self.appViewController = [[GDAppViewController alloc] init];
-//        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//        self.window.rootViewController = self.appViewController;
-//        [self.window makeKeyAndVisible];
+
         
         return true
     }

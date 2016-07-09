@@ -183,7 +183,7 @@ class PhoneNumberInputView: UIView {
         welcomeLabel.textAlignment = .Center
         welcomeLabel.numberOfLines = 0
         
-        attrString = NSMutableAttributedString(string: "Great!\nWe sent a code to you,\ncopy it here to enter Windo.")
+        attrString = NSMutableAttributedString(string: "Great!\nWe sent you a code,\ncopy it here to enter Windo.")
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         codeExplanationLabel.attributedText = attrString

@@ -14,10 +14,11 @@ enum InputState {
     case loading
 }
 
-class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
+class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, Alerts {
     
     //MARK: Properties
     let authy = AuthManager()
+    var alert = WindoAlertView()
     
     var state: InputState = .phoneNumber
     
@@ -165,7 +166,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
                 print("successful!")
             } else {
                 // incorrect code, give option to resend/go back
-                print("failed")
+                inputNumberView.codeInputLabel.shake()
             }
         }
     }
@@ -224,12 +225,29 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
             completion(success: success)
         }
     }
+//    
+//    // MARK: Alert/Error handling
+//    func showIncorrectCodeAlert() {
+//        alert = WindoAlertView(color: UIColor.teal(), message: "Sorry!\nThat isn't correct, would you like to resend the message? Or maybe check your phone number?")
+//        
+//        alert.addAction(WindoButtonType.destructive, title: "Resend Code") {
+//            self.hideAlert(self.alert)
+//            self.sendAuthCode({ (success) in
+//                print(success)
+//            })
+//        }
+//        
+//        alert.addAction(WindoButtonType.simple, title: "Check phone number") {
+//            self.hideAlert(self.alert)
+//            self.goBack()
+//        }
+//        
+//        alert.addAction(WindoButtonType.secondary, title: "Cancel") { 
+//            self.hideAlert(self.alert)
+//        }
+//        
+//        inputNumberView.addSubview(alert)
+//        
+//        showAlert(alert)
+//    }
 }
-
-
-
-
-
-
-
-
