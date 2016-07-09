@@ -164,6 +164,8 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
             if verifyCode() {
                 // enter app!
                 print("successful!")
+                let rootViewController = ContainerViewController()
+                presentViewController(rootViewController, animated: true, completion: nil)
             } else {
                 // incorrect code, give option to resend/go back
                 inputNumberView.codeInputLabel.shake()
@@ -181,21 +183,25 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     func enterLoadingState() {
         inputNumberView.hidePhoneInput()
         inputNumberView.showLoading()
+        self.state = .loading
         sendAuthCode { (success) in
             if success {
-                self.state = .loading
                 self.executeNext()
             } else {
                 print("error sending message")
+                self.enterPhoneInputState()
             }
         }
     }
     
     func enterCodeInputState() {
-        inputNumberView.hideLoading()
-        inputNumberView.showCodeInput()
-        inputNumberView.showGoBack()
-        inputNumberView.toggleNextButton(false)
+        // had to call this on main queue because the twilio messaging throws something off with the threading
+        dispatch_async(dispatch_get_main_queue()) {
+            self.inputNumberView.hideLoading()
+            self.inputNumberView.showCodeInput()
+            self.inputNumberView.showGoBack()
+            self.inputNumberView.toggleNextButton(false)
+        }
         state = .code
     }
     

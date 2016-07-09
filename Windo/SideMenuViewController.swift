@@ -45,7 +45,7 @@ class SidePanelViewController: UIViewController {
     }
     
     func signOut() {
-        UserManager.sharedManager.signOut()
+//        UserManager.sharedManager.signOut()
     }
 }
 
