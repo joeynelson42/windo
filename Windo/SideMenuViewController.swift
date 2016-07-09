@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 
 protocol SidePanelViewControllerDelegate {
     func pageSelected(pageIndex: Int)
