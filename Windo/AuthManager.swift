@@ -10,10 +10,14 @@ import UIKit
 
 class AuthManager {
     
-    var code = ""
+    private var code = ""
     
     func createAuthCode() {
         code = String.randomNumericString(6)
+    }
+    
+    func resetAuthCode() {
+        code = ""
     }
     
     func verifyCode(userInput: String) -> Bool {
@@ -25,8 +29,11 @@ class AuthManager {
     }
     
     func sendSMS(phoneNumber: String, completion: (success: Bool) -> ()){
+        // development
         print(code)
+        completion(success: true)
         
+        // production
 //        let twilioSID = "ACd5031f1ce835074bdb6aeff04e7fba89"
 //        let twilioSecret = "7ce7a349722b5867f426ffd916fd269f"
 //        let fromNumber = "15622802894"

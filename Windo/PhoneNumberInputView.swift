@@ -153,6 +153,9 @@ class PhoneNumberInputView: UIView {
         if on {
             targetAlpha = 1.0
         }
+        
+        nextButton.enabled = on
+        
         UIView.animateWithDuration(0.5) {
             self.nextButton.alpha = targetAlpha
         }
@@ -180,7 +183,7 @@ class PhoneNumberInputView: UIView {
         welcomeLabel.textAlignment = .Center
         welcomeLabel.numberOfLines = 0
         
-        attrString = NSMutableAttributedString(string: "Perfect!\nWe sent a code to you,\ncopy it here to enter Windo.")
+        attrString = NSMutableAttributedString(string: "Great!\nWe sent a code to you,\ncopy it here to enter Windo.")
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         codeExplanationLabel.attributedText = attrString
@@ -199,6 +202,7 @@ class PhoneNumberInputView: UIView {
         nextButton.setTitleColor(UIColor.darkTeal(), forState: .Highlighted)
         nextButton.titleLabel!.font = UIFont.graphikRegular(20)
         nextButton.backgroundColor = UIColor.whiteColor()
+        nextButton.enabled = false
         nextButton.alpha = 0.5
         
         goBackButton.setTitle("GO BACK", forState: .Normal)
@@ -229,11 +233,13 @@ class PhoneNumberInputView: UIView {
             
         numberPad.addConstraints(
             Constraint.llrr.of(self, offset: 10),
-            Constraint.bt.of(nextButton, offset: -50)
+            Constraint.tb.of(numberInputLabel),
+            Constraint.bt.of(nextButton, offset: -25)
         )
         
         numberInputLabel.addConstraints(
-            Constraint.tb.of(welcomeLabel, offset: 50),
+            Constraint.tb.of(welcomeLabel),
+            Constraint.bt.of(numberPad, offset: -10),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth * 0.9)
         )
@@ -259,7 +265,7 @@ class PhoneNumberInputView: UIView {
         )
         
         codeInputLabel.addConstraints(
-            Constraint.tb.of(welcomeLabel, offset: 50),
+            Constraint.cycy.of(numberInputLabel),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth * 0.43333)
         )

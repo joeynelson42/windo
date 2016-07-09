@@ -24,7 +24,7 @@ class WindoNumberPad: UIView {
     let bottomRow = UIStackView()
     let zeroRow = UIStackView()
     
-    let buttonSize:CGFloat = 70
+    let buttonSize:CGFloat = screenWidth * 0.1867
     
     //MARK: Inits
     convenience init() {
@@ -49,7 +49,7 @@ class WindoNumberPad: UIView {
     }
     
     func configureSubviews(){
-        let spacing:CGFloat = 15
+        let spacing:CGFloat = screenWidth * 0.039
         
         container.alignment = .Center
         container.axis = .Vertical

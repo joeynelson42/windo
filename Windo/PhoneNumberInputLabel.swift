@@ -63,6 +63,19 @@ class PhoneNumberInputLabel: UIView, Shakes {
         lastInputIndex -= 1
     }
     
+    func clearAll() {
+        first.character = ""
+        second.character = ""
+        third.character = ""
+        fourth.character = ""
+        fifth.character = ""
+        sixth.character = ""
+        seventh.character = ""
+        eighth.character = ""
+        ninth.character = ""
+        tenth.character = ""
+    }
+    
     func getInputByIndex(index: Int) -> InputCharacter?{
         switch index {
         case 1:
@@ -125,7 +138,6 @@ class PhoneNumberInputLabel: UIView, Shakes {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.greenColor()
         let separatorColor = UIColor.whiteColor()
         
         leftParentheses.text = "("

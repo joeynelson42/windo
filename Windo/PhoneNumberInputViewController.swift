@@ -64,9 +64,11 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
     }
     
     func addTargets() {
-        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.toggleAnimate), forControlEvents: .TouchUpInside)
+        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), forControlEvents: .TouchUpInside)
+        inputNumberView.goBackButton.addTarget(self, action: #selector(PhoneNumberInputViewController.goBack), forControlEvents: .TouchUpInside)
     }
     
+    // MARK: WindoNumberPadDelegate Methods
     func numberTapped(number: Int) {
         if number == -1 {
             backspace(number)
@@ -75,6 +77,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
         }
     }
     
+    // MARK: Label Manipulation Methods
     func addNumber(number: Int) {
         switch state {
         case .phoneNumber:
@@ -116,6 +119,18 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
             return
         }
     }
+    
+    func clearPhoneNumber() {
+        phoneNumber = ""
+        inputNumberView.numberInputLabel.clearAll()
+    }
+    
+    func clearCode() {
+        code = ""
+        inputNumberView.codeInputLabel.clearAll()
+    }
+    
+    // MARK: Flow
 
     func toggleAnimate() {
         switch state {
@@ -137,22 +152,76 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate {
     }
     
     func executeNext() {
-        
+        switch state {
+        case .phoneNumber:
+            if numberLength == 10 {
+                enterLoadingState()
+            }
+        case .loading:
+            enterCodeInputState()
+        case .code:
+            if verifyCode() {
+                // enter app!
+                print("successful!")
+            } else {
+                // incorrect code, give option to resend/go back
+                print("failed")
+            }
+        }
+    }
+    
+    func goBack() {
+        clearCode()
+        authy.resetAuthCode()
+        inputNumberView.toggleNextButton(true)
+        enterPhoneInputState()
+    }
+    
+    func enterLoadingState() {
+        inputNumberView.hidePhoneInput()
+        inputNumberView.showLoading()
+        sendAuthCode { (success) in
+            if success {
+                self.state = .loading
+                self.executeNext()
+            } else {
+                print("error sending message")
+            }
+        }
+    }
+    
+    func enterCodeInputState() {
+        inputNumberView.hideLoading()
+        inputNumberView.showCodeInput()
+        inputNumberView.showGoBack()
+        inputNumberView.toggleNextButton(false)
+        state = .code
+    }
+    
+    func enterPhoneInputState() {
+        inputNumberView.hideCodeInput()
+        inputNumberView.showPhoneInput()
+        inputNumberView.hideGoBack()
+        state = .phoneNumber
+    }
+    
+    func verifyCode() -> Bool {
+        if codeLength != 6 {
+            return false
+        } else {
+            return authy.verifyCode(code)
+        }
     }
     
     // MARK: AuthManager methods
-    func sendAuthCode() {
+    func sendAuthCode(completion: (success: Bool) -> Void) {
         if numberLength != 10 {
             return
         }
         
         authy.createAuthCode()
         authy.sendSMS(phoneNumber) { (success) in
-            if success {
-                print("success!")
-            } else {
-                print("failure!")
-            }
+            completion(success: success)
         }
     }
 }

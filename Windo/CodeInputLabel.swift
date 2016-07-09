@@ -58,6 +58,15 @@ class CodeInputLabel: UIView, Shakes {
         lastInputIndex -= 1
     }
     
+    func clearAll() {
+        first.character = ""
+        second.character = ""
+        third.character = ""
+        fourth.character = ""
+        fifth.character = ""
+        sixth.character = ""
+    }
+    
     func getInputByIndex(index: Int) -> InputCharacter?{
         switch index {
         case 1:
@@ -103,7 +112,6 @@ class CodeInputLabel: UIView, Shakes {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.greenColor()
         let separatorColor = UIColor.whiteColor()
         
         hyphen.text = "-"
