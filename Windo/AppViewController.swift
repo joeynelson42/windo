@@ -15,8 +15,15 @@ class AppController {
     let splashScreen = SplashScreenView()
     
     init() {
-        let phoneInputVC = PhoneNumberInputViewController()
-        displayContentController(phoneInputVC)
+        CloudManager.sharedManager.getUser { (success, user) in
+            if success {
+                let homeVC = HomeViewController()
+                self.displayContentController(homeVC)
+            } else {
+                let phoneInputVC = PhoneNumberInputViewController()
+                self.displayContentController(phoneInputVC)
+            }
+        }
     }
     
     func displayContentController(content: UIViewController) {

@@ -32,13 +32,13 @@ class CloudManager: NSObject {
         })
     }
     
-    
-    
-//    func getUser(completionHandler: (success: Bool, user: User?) -> ()) {
-//        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
-//            if error != nil {
+    func getUser(completionHandler: (success: Bool, user: User?) -> ()) {
+        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
+            if error != nil {
+                completionHandler(success: true, user: nil)
 //                completionHandler(success: false, user: nil)
-//            } else {
+            } else {
+                completionHandler(success: true, user: nil)
 //                let privateDatabase = self.defaultContainer.privateCloudDatabase
 //                privateDatabase.fetchRecordWithID(userRecordID!, completionHandler: { (user: CKRecord?, anError) -> Void in
 //                    if (error != nil) {
@@ -48,23 +48,35 @@ class CloudManager: NSObject {
 //                        completionHandler(success: true, user: user)
 //                    }
 //                })
-//            }
-//        }
-//    }
-//    
-//    func getUserInfo(user: User, completionHandler: (success: Bool, user: User?) -> ()) {
-//        defaultContainer.discoverUserInfoWithUserRecordID(user.userRecordID) { (info, fetchError) in
-//            if fetchError != nil {
-//                completionHandler(success: false, user: nil)
-//            } else {
-//                user.firstName = info!.displayContact!.givenName
-//                user.lastName = info!.displayContact!.familyName
-//                completionHandler(success: true, user: user)
-//            }
-//        }
-//    }
-//    
-//    // MARK: Passwords
+            }
+        }
+    }
+    
+    func saveNewUser(phone: String, firstName: String, lastName: String, completionHandler: (success: Bool) -> ()) {
+        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
+            if error != nil {
+                // handle error
+            } else {
+                let recordID = CKRecordID(recordName: phone)
+                let userRecord = CKRecord(recordType: self.userRecordType, recordID: recordID)
+                
+                userRecord.setObject(phone, forKey: "phoneNumber")
+                userRecord.setObject(firstName, forKey: "firstName")
+                userRecord.setObject(lastName, forKey: "lastName")
+                userRecord.setObject("", forKey: "email")
+                userRecord.setObject("", forKey: "facebookID")
+                userRecord.setObject("", forKey: "googleID")
+                userRecord.setObject("", forKey: "imageRecordID")
+                
+                self.saveRecord(userRecord, completionHandler: { (success) in
+                    completionHandler(success: success)
+                })
+            }
+        }
+    }
+
+    
+    // MARK: Passwords
 //    func savePassword(password: Password, completionHandler: (success: Bool) -> ()) {
 //        let timestampAsString = String(format: "%f", NSDate.timeIntervalSinceReferenceDate())
 //        let timestampParts = timestampAsString.componentsSeparatedByString(".")
@@ -114,7 +126,7 @@ class CloudManager: NSObject {
     private func saveRecord(record: CKRecord, completionHandler: (success: Bool) -> ()) {
         publicDB.saveRecord(record, completionHandler: { savedRecord, error in
             if error != nil {
-                print("failed to save password \n \(error)")
+                print("failed to save record \n \(error)")
             } else {
                 completionHandler(success: true)
             }

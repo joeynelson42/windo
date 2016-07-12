@@ -23,6 +23,7 @@ class UserManager {
             return nil
         }
     }
+
     
 //    func userIsLoggedIn() -> Bool {
 //        if let _ = FIRAuth.auth()?.currentUser {

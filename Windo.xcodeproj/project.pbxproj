@@ -427,7 +427,6 @@
 				63B35D411CF8871E008761F5 /* Windo.swift */,
 				63B35D471CF889A7008761F5 /* Message.swift */,
 				635873911CF8971800B9B6FD /* DataProvider.swift */,
-				631B59D41D04802B00BC32E8 /* UserManager.swift */,
 				81C5C0CB1D0A394200BD057A /* UserProfile.swift */,
 			);
 			name = Model;
@@ -468,6 +467,7 @@
 		639973EA1D3049EB002C1845 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				631B59D41D04802B00BC32E8 /* UserManager.swift */,
 				639973E81D3049E5002C1845 /* AuthManager.swift */,
 				634869E01D31870E0058D097 /* CloudManager.swift */,
 			);
