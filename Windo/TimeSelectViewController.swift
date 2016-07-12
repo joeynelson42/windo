@@ -250,18 +250,25 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             let percent = scrollView.contentOffset.x/(screenWidth * CGFloat(createTabBar.selectedDates.count))
             let allDaysThreshold = screenWidth / (screenWidth * CGFloat(createTabBar.selectedDates.count))
             
+            var tempPercent:CGFloat = 0
+            
+            
+            // TODO: Test if this fixes the incomplete animation due to fast scrolling
             if percent <= allDaysThreshold{
-                let tempPercent = percent / allDaysThreshold
-                let rgb = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
-                
-                red = rgb.red
-                green = rgb.green
-                blue = rgb.blue
-                
-                timeCollectionView.backgroundColor = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
-                timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
-                timeSelectView.helpLabel.alpha = tempPercent
+                tempPercent = percent / allDaysThreshold
+            } else {
+                tempPercent = 1.0 //this is probably the wrong number
             }
+            let rgb = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
+            
+            red = rgb.red
+            green = rgb.green
+            blue = rgb.blue
+            
+            timeCollectionView.backgroundColor = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
+            timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
+            timeSelectView.helpLabel.alpha = tempPercent
+            
         }
     }
     
