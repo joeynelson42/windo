@@ -12,6 +12,7 @@ enum InputState {
     case phoneNumber
     case code
     case loading
+    case name
 }
 
 class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, Alerts {
@@ -67,6 +68,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     func addTargets() {
         inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), forControlEvents: .TouchUpInside)
         inputNumberView.goBackButton.addTarget(self, action: #selector(PhoneNumberInputViewController.goBack), forControlEvents: .TouchUpInside)
+        inputNumberView.nameInputView.enterButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), forControlEvents: .TouchUpInside)
     }
     
     // MARK: WindoNumberPadDelegate Methods
@@ -133,24 +135,24 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     
     // MARK: Flow
 
-    func toggleAnimate() {
-        switch state {
-        case .phoneNumber:
-            inputNumberView.hidePhoneInput()
-            inputNumberView.showLoading()
-            state = .loading
-        case .loading:
-            inputNumberView.hideLoading()
-            inputNumberView.showCodeInput()
-            inputNumberView.showGoBack()
-            state = .code
-        case .code:
-            inputNumberView.hideCodeInput()
-            inputNumberView.showPhoneInput()
-            inputNumberView.hideGoBack()
-            state = .phoneNumber
-        }
-    }
+//    func toggleAnimate() {
+//        switch state {
+//        case .phoneNumber:
+//            inputNumberView.hidePhoneInput()
+//            inputNumberView.showLoading()
+//            state = .loading
+//        case .loading:
+//            inputNumberView.hideLoading()
+//            inputNumberView.showCodeInput()
+//            inputNumberView.showGoBack()
+//            state = .code
+//        case .code:
+//            inputNumberView.hideCodeInput()
+//            inputNumberView.showPhoneInput()
+//            inputNumberView.hideGoBack()
+//            state = .phoneNumber
+//        }
+//    }
     
     func executeNext() {
         switch state {
@@ -164,12 +166,17 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
             if verifyCode() {
                 // enter app!
                 print("successful!")
-                let rootViewController = ContainerViewController()
-                presentViewController(rootViewController, animated: true, completion: nil)
+                inputNumberView.showNameInput()
+                state = .name
             } else {
                 // incorrect code, give option to resend/go back
                 inputNumberView.codeInputLabel.shake()
             }
+        case .name:
+            let rootViewController = HomeViewController()
+            let navVC = UINavigationController(rootViewController: rootViewController)
+            AppController.sharedController.displayContentController(navVC)
+//            presentViewController(navVC, animated: true, completion: nil)
         }
     }
     

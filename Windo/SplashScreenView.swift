@@ -13,10 +13,16 @@ class SplashScreenView: UIView {
     
     //MARK: Properties
     var windoLabel = UILabel()
+    var color: UIColor?
     
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
+    }
+    
+    convenience init(color: UIColor) {
+        self.init()
+        self.color = color
     }
     
     override init(frame: CGRect) {
@@ -35,7 +41,7 @@ class SplashScreenView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.lightTeal()
+        backgroundColor = color
         
         windoLabel.text = "windo"
         windoLabel.textColor = UIColor.whiteColor()

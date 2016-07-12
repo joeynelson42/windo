@@ -14,35 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        // Initialize Firebase
-//        FIRApp.configure()
-//        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-//        if FBSDKAccessToken.currentAccessToken() != nil {
-//            UserManager.sharedManager.login(false)
-//            UserManager.sharedManager.fetchUserProfile()
-//            rootViewController = ContainerViewController()
-//        } else {
-//            rootViewController = LoginViewController()
-//        }
-        //        self.appViewController = [[GDAppViewController alloc] init];
-        //        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        //        self.window.rootViewController = self.appViewController;
-        //        [self.window makeKeyAndVisible];
-        
-        
         
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let rootViewController = PhoneNumberInputViewController()
-        window!.rootViewController = rootViewController
-        window!.makeKeyAndVisible()
-        
-        if let font = UIFont(name: "Graphik-Medium", size: 20) {
-            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName : UIColor.mikeBlue()]
-        }
+        window?.rootViewController = AppController.sharedController.viewController
+        AppController.sharedController.viewController.view.frame = window?.bounds ?? CGRectZero
+        window?.makeKeyAndVisible()
 
         
         return true

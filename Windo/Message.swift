@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Message {
+struct Message {
     
     var userID: String!
     var eventID: String!

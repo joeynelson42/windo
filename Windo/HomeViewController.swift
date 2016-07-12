@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: CenterViewController{
+class HomeViewController: UIViewController{
     
     //MARK: Properties
     
@@ -24,7 +24,7 @@ class HomeViewController: CenterViewController{
                 
         let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         sideMenuButton.setImage(UIImage(named: "HamburgerIcon"), forState: .Normal)
-        sideMenuButton.addTarget(self, action: #selector(HomeViewController.toggleOpen), forControlEvents: .TouchUpInside)
+        sideMenuButton.addTarget(self, action: #selector(HomeViewController.toggleSplash), forControlEvents: .TouchUpInside)
         let sideMenuBarButton = UIBarButtonItem(customView: sideMenuButton)
         self.navigationItem.setLeftBarButtonItem(sideMenuBarButton, animated: true)
         
@@ -42,12 +42,11 @@ class HomeViewController: CenterViewController{
     }
     
     override func viewDidLayoutSubviews() {
-        showSplashScreen(homeView)
-        homeView.sendSubviewToBack(homeView.eventTableView)
+
     }
     
-    func toggleOpen(){
-        delegate?.toggleLeftPanel?()
+    func toggleSplash() {
+        AppController.sharedController.showSplashScreen()
     }
     
     func createNewEvent() {

@@ -24,6 +24,8 @@ class PhoneNumberInputView: UIView {
     
     let loadingView = WindoLoadingIcon()
     
+    let nameInputView = NameInputView()
+    
     // MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
@@ -161,6 +163,23 @@ class PhoneNumberInputView: UIView {
         }
     }
     
+    func showNameInput() {
+        nameInputView.addConstraints(
+            Constraint.ttbb.of(self),
+            Constraint.llrr.of(self)
+        )
+        
+        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+            let slide = CGAffineTransformMakeTranslation(-screenWidth, 0)
+            self.numberPad.transform = slide
+            self.codeInputLabel.transform = slide
+            self.codeExplanationLabel.transform = slide
+            self.layoutIfNeeded()
+            }, completion: { finished in
+                self.nameInputView.firstNameTextField.becomeFirstResponder()
+        })
+    }
+    
     // MARK: View Configuration
     
     override func updateConstraints() {
@@ -222,6 +241,7 @@ class PhoneNumberInputView: UIView {
         addSubview(goBackButton)
         addSubview(codeExplanationLabel)
         addSubview(loadingView)
+        addSubview(nameInputView)
     }
     
     func applyConstraints(){
@@ -274,6 +294,12 @@ class PhoneNumberInputView: UIView {
             Constraint.tt.of(self, offset: screenHeight/8),
             Constraint.cxcx.of(self),
             Constraint.wh.of(100)
+        )
+        
+        nameInputView.addConstraints(
+            Constraint.ttbb.of(self),
+            Constraint.lr.of(self),
+            Constraint.w.of(screenWidth)
         )
     }
 }

@@ -9,41 +9,53 @@
 import Foundation
 import CoreLocation
 
-class Event {
-
+struct Event {
     var ID: String!
     var name: String!
     var location: CLLocation!
-    var members: [User]!
-    var eventCreator: User!
+    var members: [String]!
+    var eventCreator: String!
     var dateCreated: NSDate!
-    var eventWindo: Windo!
-    var memberWindos: [Windo]!
-    var messages: [Message]!
+    var eventWindoID: String!
+    var memberWindoIDs: [String]!
     var possibleTimes: [NSDate]!
-    
-    // flags
-    var isPast: Bool!
-    var timesFound: Bool!
-    
-    // MARK: Public
-    init() {
-        
-    }
-    
-    init(id: String, name: String, location: CLLocation, members: [User], eventCreator: User, dateCreated: NSDate, eventWindo: Windo, memberSubmissions: [Windo], messages: [Message], possibleTimes: [NSDate]) {
-        self.ID = id
-        self.name = name
-        self.location = location
-        self.members = members
-        self.eventCreator = eventCreator
-        self.dateCreated = dateCreated
-        self.eventWindo = eventWindo
-        self.memberWindos = memberSubmissions
-        self.messages = messages
-        self.possibleTimes = possibleTimes
-    }
-    
-    // MARK: Private
-    
 }
+
+//class Event {
+//
+//    var ID: String!
+//    var name: String!
+//    var location: CLLocation!
+//    var members: [User]!
+//    var eventCreator: User!
+//    var dateCreated: NSDate!
+//    var eventWindo: Windo!
+//    var memberWindos: [Windo]!
+//    var messages: [Message]!
+//    var possibleTimes: [NSDate]!
+//    
+//    // flags
+//    var isPast: Bool!
+//    var timesFound: Bool!
+//    
+//    // MARK: Public
+//    init() {
+//        
+//    }
+//    
+//    init(id: String, name: String, location: CLLocation, members: [User], eventCreator: User, dateCreated: NSDate, eventWindo: Windo, memberSubmissions: [Windo], messages: [Message], possibleTimes: [NSDate]) {
+//        self.ID = id
+//        self.name = name
+//        self.location = location
+//        self.members = members
+//        self.eventCreator = eventCreator
+//        self.dateCreated = dateCreated
+//        self.eventWindo = eventWindo
+//        self.memberWindos = memberSubmissions
+//        self.messages = messages
+//        self.possibleTimes = possibleTimes
+//    }
+//    
+//    // MARK: Private
+//    
+//}

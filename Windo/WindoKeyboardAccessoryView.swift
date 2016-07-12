@@ -8,16 +8,28 @@
 
 import UIKit
 
+enum ColorTheme {
+    case blue
+    case teal
+    case purple
+}
+
 class WindoKeyboardAccessoryView: UIView {
     
     //MARK: Properties
     var doneButton = UIButton()
     var leftArrowButton = UIButton()
     var rightArrowButton = UIButton()
+    var state = ColorTheme.blue
     
     //MARK: Inits
     convenience init() {
         self.init(frame: CGRectZero)
+    }
+    
+    convenience init(frame: CGRect, state: ColorTheme) {
+        self.init(frame: frame)
+        self.state = state
     }
     
     override init(frame: CGRect) {
@@ -42,11 +54,23 @@ class WindoKeyboardAccessoryView: UIView {
         
         doneButton.setTitle("Done", forState: .Normal)
         doneButton.titleLabel?.font = UIFont.graphikMedium(18)
-        doneButton.setTitleColor(UIColor.blue(), forState: .Normal)
         
-        leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), forState: .Normal)
+        switch state {
+        case .blue:
+            doneButton.setTitleColor(UIColor.blue(), forState: .Normal)
+            leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), forState: .Normal)
+            rightArrowButton.setImage(UIImage(named: "blueRightArrow"), forState: .Normal)
+        case .teal:
+            doneButton.setTitleColor(UIColor.teal(), forState: .Normal)
+            leftArrowButton.setImage(UIImage(named: "tealLeftArrow"), forState: .Normal)
+            rightArrowButton.setImage(UIImage(named: "tealRightArrow"), forState: .Normal)
+        case .purple:
+            doneButton.setTitleColor(UIColor.purple(), forState: .Normal)
+            leftArrowButton.setImage(UIImage(named: "purpleLeftArrow"), forState: .Normal)
+            rightArrowButton.setImage(UIImage(named: "purpleRightArrow"), forState: .Normal)
+        }
         
-        rightArrowButton.setImage(UIImage(named: "blueRightArrow"), forState: .Normal)
+        
         
         addSubview(leftArrowButton)
         addSubview(rightArrowButton)

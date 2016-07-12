@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Windo {
+struct Windo {
     
     var ID: String!
     var ownerID: String!
     var eventID: String!
-    var days: [NSDate]!
+    var times: [NSDate]!
     var dateCreated: NSDate!
     
     // MARK: Public
