@@ -15,13 +15,16 @@ class AppController {
     let splashScreen = SplashScreenView()
     
     init() {
+        showSplashScreen()
         CloudManager.sharedManager.getUser { (success, user) in
             if success {
                 let homeVC = HomeViewController()
                 self.displayContentController(homeVC)
+                self.hideSplashScreen()
             } else {
                 let phoneInputVC = PhoneNumberInputViewController()
                 self.displayContentController(phoneInputVC)
+                self.hideSplashScreen()
             }
         }
     }

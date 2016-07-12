@@ -11,6 +11,7 @@ import UIKit
 class UserManager {
     
     static let sharedManager = UserManager()
+    var user: User?
     
     func storeUserPhoneNumber(phoneNumber: String) {
         NSUserDefaults.standardUserDefaults().setValue(phoneNumber, forKey: Constants.userDefaultKeys.kUserPhoneNumber)

@@ -9,17 +9,17 @@
 import Foundation
 import CloudKit
 
-struct User {
-    var recordID: CKRecordID!
+class User: NSObject, NSCoding{
+    var recordID: String!
     var phoneNumber: String!
     var email: String!
     var facebookID: String!
     var googleID: String!
     var firstName: String!
     var lastName: String!
-    var imageRecordID: CKRecordID!
+    var imageRecordID: String!
     
-    init(id: CKRecordID, number: String!, firstName: String, lastName: String) {
+    init(id: String, number: String!, firstName: String, lastName: String) {
         self.recordID = id
         self.phoneNumber = number
         self.email = ""
@@ -30,53 +30,67 @@ struct User {
         self.imageRecordID = nil
     }
     
-    init(id: CKRecordID, number: String!, email: String, facebookID: String, googleID: String, firstName: String, lastName: String, imageRecordID: CKRecordID) {
-                self.recordID = id
-                self.phoneNumber = number
-                self.email = email
-                self.facebookID = facebookID
-                self.googleID = googleID
-                self.firstName = firstName
-                self.lastName = lastName
-                self.imageRecordID = imageRecordID
-            }
+    init(id: String, number: String!, email: String, facebookID: String, googleID: String, firstName: String, lastName: String, imageRecordID: String) {
+        self.recordID = id
+        self.phoneNumber = number
+        self.email = email
+        self.facebookID = facebookID
+        self.googleID = googleID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.imageRecordID = imageRecordID
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        self.recordID = aDecoder.decodeObjectForKey("recordID") as! String
+        self.phoneNumber = aDecoder.decodeObjectForKey("phoneNumber") as! String
+        self.email = aDecoder.decodeObjectForKey("email") as! String
+        self.facebookID = aDecoder.decodeObjectForKey("facebookID") as! String
+        self.googleID = aDecoder.decodeObjectForKey("googleID") as! String
+        self.firstName = aDecoder.decodeObjectForKey("firstName") as! String
+        self.lastName = aDecoder.decodeObjectForKey("lastName") as! String
+        self.imageRecordID = aDecoder.decodeObjectForKey("imageRecordID") as! String
+    }
     
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(recordID, forKey: "recordID")
+        aCoder.encodeObject(phoneNumber, forKey: "phoneNumber")
+        aCoder.encodeObject(email, forKey: "email")
+        aCoder.encodeObject(facebookID, forKey: "facebookID")
+        aCoder.encodeObject(googleID, forKey: "googleID")
+        aCoder.encodeObject(firstName, forKey: "firstName")
+        aCoder.encodeObject(lastName, forKey: "lastName")
+        aCoder.encodeObject(imageRecordID, forKey: "imageRecordID")
+    }
 }
 
 
 
-//class User {
-//
-//    var ID: String!
-//    var email: String!
-//    var facebookID: String!
-//    var firstName: String!
-//    var lastName: String!
-//    var friendIDs: [String]!
-//    var eventIDs: [String]!
-//    
-//    // MARK: Public
-//    init() {
-//        
-//    }
-//    
-//    init(id: String, email: String, facebookID: String, name: String, friendIDs: [String], eventIDs: [String]) {
-//        self.ID = id
-//        self.email = email
-//        self.facebookID = facebookID
-////        self.name = name
-//        self.friendIDs = friendIDs
-//        self.eventIDs = eventIDs
-//    }
-//    
-//    
-//    // MARK: Private
-//    
-//    
-//}
-//
-//enum ResponseStatus : String {
-//    case NeedsResponse = "needsResponse", HasResponded = "hasResponded"
-//    static let allValues = [NeedsResponse, HasResponded]
-//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
