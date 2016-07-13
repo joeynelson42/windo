@@ -166,7 +166,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                 if success {
                     let homeVC = HomeViewController()
                     let navVC = UINavigationController(rootViewController: homeVC)
-                    AppController.sharedController.setNewBaseViewController(self, newViewController: navVC)
+                    AppController.sharedController.setNewBaseViewController(self, newViewController: navVC, color: UIColor.lightTeal())
                 } else {
                     // handle failed save
                 }

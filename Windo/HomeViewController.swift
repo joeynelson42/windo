@@ -46,7 +46,7 @@ class HomeViewController: UIViewController{
     }
     
     func toggleSplash() {
-        AppController.sharedController.showSplashScreen()
+//        AppController.sharedController.showSplashScreen()
     }
     
     func createNewEvent() {

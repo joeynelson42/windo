@@ -12,17 +12,10 @@ class AppController {
     
     static let sharedController = AppController()
     internal let viewController = AppViewController()
-    let splashScreen = SplashScreenView()
+    var splashScreen = SplashScreenView()
     
     init() {
-//        showSplashScreen()
-//        let homeVC = HomeViewController()
-//        let navVC = UINavigationController(rootViewController: homeVC)
-//        self.displayContentController(navVC)
-//        
-//        sleep(5)
-//        
-//        self.hideSplashScreen()
+        showSplashScreen(UIColor.lightTeal())
         
         CloudManager.sharedManager.getUser { (success, user) in
             dispatch_async(dispatch_get_main_queue()) {
@@ -58,8 +51,8 @@ class AppController {
         content.removeFromParentViewController()
     }
     
-    func setNewBaseViewController(oldViewController: UIViewController, newViewController: UIViewController) {
-        showSplashScreen()
+    func setNewBaseViewController(oldViewController: UIViewController, newViewController: UIViewController, color: UIColor) {
+        showSplashScreen(color)
         displayContentController(newViewController)
         
         sleep(3)
@@ -67,7 +60,8 @@ class AppController {
         hideSplashScreen()
     }
     
-    func showSplashScreen() {
+    func showSplashScreen(color: UIColor) {
+        splashScreen = SplashScreenView(color: color)
         viewController.view.addSubview(splashScreen)
         splashScreen.addConstraints(
             Constraint.llrr.of(viewController.view),
