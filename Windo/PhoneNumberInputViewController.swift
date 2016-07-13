@@ -134,26 +134,6 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     }
     
     // MARK: Flow
-
-//    func toggleAnimate() {
-//        switch state {
-//        case .phoneNumber:
-//            inputNumberView.hidePhoneInput()
-//            inputNumberView.showLoading()
-//            state = .loading
-//        case .loading:
-//            inputNumberView.hideLoading()
-//            inputNumberView.showCodeInput()
-//            inputNumberView.showGoBack()
-//            state = .code
-//        case .code:
-//            inputNumberView.hideCodeInput()
-//            inputNumberView.showPhoneInput()
-//            inputNumberView.hideGoBack()
-//            state = .phoneNumber
-//        }
-//    }
-    
     func executeNext() {
         switch state {
         case .phoneNumber:
@@ -173,10 +153,24 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                 inputNumberView.codeInputLabel.shake()
             }
         case .name:
-            let rootViewController = HomeViewController()
-            let navVC = UINavigationController(rootViewController: rootViewController)
-            AppController.sharedController.displayContentController(navVC)
-//            presentViewController(navVC, animated: true, completion: nil)
+            let user = User(id: "",
+                            number: phoneNumber,
+                            email: "",
+                            facebookID: "",
+                            googleID: "",
+                            firstName: inputNumberView.nameInputView.firstNameTextField.text!,
+                            lastName: inputNumberView.nameInputView.firstNameTextField.text!,
+                            imageRecordID: "")
+            
+            CloudManager.sharedManager.saveNewUser(user, completionHandler: { (user, success) in
+                if success {
+                    let homeVC = HomeViewController()
+                    let navVC = UINavigationController(rootViewController: homeVC)
+                    AppController.sharedController.setNewBaseViewController(self, newViewController: navVC)
+                } else {
+                    // handle failed save
+                }
+            })
         }
     }
     

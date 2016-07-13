@@ -15,26 +15,29 @@ class AppController {
     let splashScreen = SplashScreenView()
     
     init() {
-        showSplashScreen()
-        let homeVC = HomeViewController()
-        let navVC = UINavigationController(rootViewController: homeVC)
-        self.displayContentController(navVC)
+//        showSplashScreen()
+//        let homeVC = HomeViewController()
+//        let navVC = UINavigationController(rootViewController: homeVC)
+//        self.displayContentController(navVC)
+//        
+//        sleep(5)
+//        
+//        self.hideSplashScreen()
         
-        sleep(5)
-        
-        self.hideSplashScreen()
-        
-//        CloudManager.sharedManager.getUser { (success, user) in
-//            if success {
-//                let homeVC = HomeViewController()
-//                self.displayContentController(homeVC)
-//                self.hideSplashScreen()
-//            } else {
-//                let phoneInputVC = PhoneNumberInputViewController()
-//                self.displayContentController(phoneInputVC)
-//                self.hideSplashScreen()
-//            }
-//        }
+        CloudManager.sharedManager.getUser { (success, user) in
+            dispatch_async(dispatch_get_main_queue()) {
+                if success {
+                    let homeVC = HomeViewController()
+                    let navVC = UINavigationController(rootViewController: homeVC)
+                    self.displayContentController(navVC)
+                    self.hideSplashScreen()
+                } else {
+                    let phoneInputVC = PhoneNumberInputViewController()
+                    self.displayContentController(phoneInputVC)
+                    self.hideSplashScreen()
+                }
+            }
+        }
     }
     
     func displayContentController(content: UIViewController) {
@@ -53,6 +56,15 @@ class AppController {
         content.willMoveToParentViewController(nil)
         content.view.removeFromSuperview()
         content.removeFromParentViewController()
+    }
+    
+    func setNewBaseViewController(oldViewController: UIViewController, newViewController: UIViewController) {
+        showSplashScreen()
+        displayContentController(newViewController)
+        
+        sleep(3)
+        
+        hideSplashScreen()
     }
     
     func showSplashScreen() {
