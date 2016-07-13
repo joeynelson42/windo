@@ -16,17 +16,25 @@ class AppController {
     
     init() {
         showSplashScreen()
-        CloudManager.sharedManager.getUser { (success, user) in
-            if success {
-                let homeVC = HomeViewController()
-                self.displayContentController(homeVC)
-                self.hideSplashScreen()
-            } else {
-                let phoneInputVC = PhoneNumberInputViewController()
-                self.displayContentController(phoneInputVC)
-                self.hideSplashScreen()
-            }
-        }
+        let homeVC = HomeViewController()
+        let navVC = UINavigationController(rootViewController: homeVC)
+        self.displayContentController(navVC)
+        
+        sleep(5)
+        
+        self.hideSplashScreen()
+        
+//        CloudManager.sharedManager.getUser { (success, user) in
+//            if success {
+//                let homeVC = HomeViewController()
+//                self.displayContentController(homeVC)
+//                self.hideSplashScreen()
+//            } else {
+//                let phoneInputVC = PhoneNumberInputViewController()
+//                self.displayContentController(phoneInputVC)
+//                self.hideSplashScreen()
+//            }
+//        }
     }
     
     func displayContentController(content: UIViewController) {
