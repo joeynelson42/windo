@@ -20,6 +20,7 @@ class AppController {
         CloudManager.sharedManager.getUser { (success, user) in
             dispatch_async(dispatch_get_main_queue()) {
                 if success {
+                    UserManager.sharedManager.user = user
                     let homeVC = HomeViewController()
                     let navVC = UINavigationController(rootViewController: homeVC)
                     self.displayContentController(navVC)
@@ -27,6 +28,8 @@ class AppController {
                 } else {
                     let phoneInputVC = PhoneNumberInputViewController()
                     self.displayContentController(phoneInputVC)
+                    
+                    sleep(3)
                     self.hideSplashScreen()
                 }
             }
@@ -78,7 +81,6 @@ class AppController {
 class AppViewController: UIViewController {
     
     //MARK: Properties
-    
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
