@@ -153,7 +153,7 @@ class CloudManager: NSObject {
     }
     
     /// Updates the EventLists of each user with the new Event's ID
-    func updateExistingEventListsWithEventID(users: [PhoneNumber], eventID: String, completionHandler: (success:Bool, eventListsToCreate: [String]?, error: NSError?)->()) {
+    func updateExistingEventListsWithEventID(users: [PhoneNumber], eventID: String, completionHandler: (success:Bool, eventListsToCreate: [PhoneNumber]?, error: NSError?)->()) {
         
         var usersWithoutEventLists = users
         getExistingEventListRecordsWithUserList(users) { (success, eventListRecords, error) in
@@ -237,9 +237,7 @@ class CloudManager: NSObject {
         let firstName = userRecord.valueForKey("firstName") as! String
         let lastName = userRecord.valueForKey("lastName") as! String
         let imageRecordID = userRecord.valueForKey("imageRecordID") as! String
-        
         let parsedUser = User(id: id, number: phoneNumber, email: email, facebookID: facebookID, googleID: googleID, firstName: firstName, lastName: lastName, imageRecordID: imageRecordID)
-        
         return parsedUser
     }
     
