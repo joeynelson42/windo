@@ -22,6 +22,8 @@ class CloudManager: NSObject {
     let windoRecordType = "Windo"
     let messageRecordType = "Message"
     
+    typealias PhoneNumber = String
+    
     func requestPermission(completionHandler: (granted: Bool) -> ()) {
         defaultContainer.requestApplicationPermission(CKApplicationPermissions.UserDiscoverability, completionHandler: { applicationPermissionStatus, error in
             if applicationPermissionStatus == CKApplicationPermissionStatus.Granted {
@@ -121,7 +123,7 @@ class CloudManager: NSObject {
     
     // MARK: EventList
     /// Fetches user event list with a completion handler that includes either the fetched event list or the one created in the case of it being a new user with no events
-    func fetchUserEventList(user: User, completionHandler: (eventList: EventList?, success: Bool) -> ()) {
+//    func fetchUserEventList(user: User, completionHandler: (eventList: EventList?, success: Bool) -> ()) {
 //        let predicate = NSPredicate(format: "phoneNumber == \(user.phoneNumber)")
 //        let query = CKQuery(recordType: userEventListRecordType, predicate: predicate)
 //        
@@ -135,29 +137,55 @@ class CloudManager: NSObject {
 //                //create new EventList for user
 //            }
 //        }
-    }
+//    }
     
-    /// Updates the EventLists of each user with the new Event's ID
-    func updateUserEventListWithEventID(users: [String], eventID: String) {
-        
-        let predicate = NSPredicate(format: "phoneNumber IN %@", argumentArray: [users])
-        let query = CKQuery(recordType: userEventListRecordType, predicate: predicate)
-        
-        var eventLists = [EventList]()
-        publicDB.performQuery(query, inZoneWithID: nil) { (results, error) in
+    func updateEventMembersEventListsWithEventID(users: [PhoneNumber], eventID: String) {
+        updateExistingEventListsWithEventID(users, eventID: eventID) { (success, eventListsToCreate, error) in
             if error != nil {
-                // handle error
-            } else if results?.count > 0 {
-                for record in results! {
-                    var eventList = self.parseEventListRecord(record)
-                    eventList.events.append(eventID)
-                    
+                //handle error
+            } else if eventListsToCreate?.count > 0 {
+                for phoneNumber in eventListsToCreate! {
+                    let eventList = EventList(phoneNumber: phoneNumber, events: [eventID])
+                    self.updateUserEventList(eventList)
                 }
             }
         }
+    }
+    
+    /// Updates the EventLists of each user with the new Event's ID
+    func updateExistingEventListsWithEventID(users: [PhoneNumber], eventID: String, completionHandler: (success:Bool, eventListsToCreate: [String]?, error: NSError?)->()) {
         
+        var usersWithoutEventLists = users
+        getExistingEventListRecordsWithUserList(users) { (success, eventListRecords, error) in
+            if error != nil {
+                //handle error
+            } else if eventListRecords?.count > 0 {
+                for record in eventListRecords! {
+                    let eventList = self.parseEventListRecord(record)
+                    self.updateUserEventList(eventList)
+                    usersWithoutEventLists.removeAtIndex(usersWithoutEventLists.indexOf(eventList.phoneNumber)!)
+                }
+                
+                completionHandler(success: true, eventListsToCreate: usersWithoutEventLists, error: error)
+            }
+        }
         
-        //        let op = CKModifyRecordsOperation(recordsToSave: <#T##[CKRecord]?#>, recordIDsToDelete: nil)
+    }
+    
+    func getExistingEventListRecordsWithUserList(users: [PhoneNumber], completionHandler: (success:Bool, eventListRecords: [CKRecord]?, error:NSError?)->()) {
+        let predicate = NSPredicate(format: "phoneNumber IN %@", argumentArray: [users])
+        let query = CKQuery(recordType: userEventListRecordType, predicate: predicate)
+        
+        publicDB.performQuery(query, inZoneWithID: nil) { (results, error) in
+            if error != nil {
+                // handle error
+                completionHandler(success: false, eventListRecords: nil, error: error)
+            } else if results?.count > 0 {
+                completionHandler(success: true, eventListRecords: results, error: nil)
+            } else {
+                completionHandler(success: false, eventListRecords: nil, error: nil)
+            }
+        }
     }
     
     func updateUserEventList(eventList: EventList) {
@@ -191,9 +219,9 @@ class CloudManager: NSObject {
         
         savePublicRecord(eventRecord) { (success) in
             if success {
-                self.updateUserEventListWithEventID(event.members, eventID: event.ID)
+                self.updateEventMembersEventListsWithEventID(event.members, eventID: event.ID)
             } else {
-                
+                // handle failure
             }
         }
     }
