@@ -15,7 +15,8 @@ class AppController {
     var splashScreen = SplashScreenView()
     
     init() {
-        showSplashScreen(UIColor.lightTeal())
+        splashScreen.alpha = 0.0
+        showSplashScreen(UIColor.lightTeal(), fadeIn: false)
         
         CloudManager.sharedManager.getUser { (success, user) in
             dispatch_async(dispatch_get_main_queue()) {
@@ -28,8 +29,6 @@ class AppController {
                 } else {
                     let phoneInputVC = PhoneNumberInputViewController()
                     self.displayContentController(phoneInputVC)
-                    
-                    sleep(3)
                     self.hideSplashScreen()
                 }
             }
@@ -39,6 +38,11 @@ class AppController {
     func displayContentController(content: UIViewController) {
         viewController.addChildViewController(content)
         viewController.view.addSubview(content.view)
+        
+        // if splash screen is up, add the new viewController behind it
+        if viewController.view.subviews.contains(splashScreen) {
+            viewController.view.bringSubviewToFront(splashScreen)
+        }
         
         content.view.addConstraints(
             Constraint.llrr.of(viewController.view),
@@ -54,27 +58,31 @@ class AppController {
         content.removeFromParentViewController()
     }
     
-    func setNewBaseViewController(oldViewController: UIViewController, newViewController: UIViewController, color: UIColor) {
-        showSplashScreen(color)
-        displayContentController(newViewController)
-        
-        sleep(3)
-        
-        hideSplashScreen()
-    }
-    
-    func showSplashScreen(color: UIColor) {
+    func showSplashScreen(color: UIColor, fadeIn: Bool) {
         splashScreen = SplashScreenView(color: color)
+        if fadeIn { splashScreen.alpha = 0.0 }
         viewController.view.addSubview(splashScreen)
         splashScreen.addConstraints(
             Constraint.llrr.of(viewController.view),
             Constraint.ttbb.of(viewController.view)
         )
         viewController.view.bringSubviewToFront(splashScreen)
+        
+        if fadeIn {
+            UIView.animateWithDuration(0.25, delay: 0.25, options: .CurveLinear, animations: {
+                self.splashScreen.alpha = 1.0
+                }, completion: nil)
+        }
     }
     
     func hideSplashScreen() {
-        splashScreen.removeFromSuperview()
+        UIView.animateWithDuration(0.25, delay: 0.5, options: .CurveLinear, animations: {
+            self.splashScreen.alpha = 0.0
+        }) { (finished) in
+            if finished {
+                self.splashScreen.removeFromSuperview()
+            }
+        }
     }
 }
 

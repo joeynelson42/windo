@@ -153,24 +153,15 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                 inputNumberView.codeInputLabel.shake()
             }
         case .name:
-            let user = User(id: "",
-                            number: phoneNumber,
-                            email: "",
-                            facebookID: "",
-                            googleID: "",
-                            firstName: inputNumberView.nameInputView.firstNameTextField.text!,
-                            lastName: inputNumberView.nameInputView.firstNameTextField.text!,
-                            imageRecordID: "")
+            view.endEditing(true)
             
-            CloudManager.sharedManager.saveNewUser(user, completionHandler: { (user, success) in
-                if success {
-                    let homeVC = HomeViewController()
-                    let navVC = UINavigationController(rootViewController: homeVC)
-                    AppController.sharedController.setNewBaseViewController(self, newViewController: navVC, color: UIColor.lightTeal())
-                } else {
-                    // handle failed save
-                }
-            })
+            if inputNumberView.nameInputView.firstNameTextField.text == "" ||
+                inputNumberView.nameInputView.lastNameTextField.text == "" {
+                // TODO: show alert for incomplete name field(s)
+                return
+            } else {
+                finishInfoInput()
+            }
         }
     }
     
@@ -211,6 +202,30 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
         inputNumberView.showPhoneInput()
         inputNumberView.hideGoBack()
         state = .phoneNumber
+    }
+    
+    func finishInfoInput() {
+        let user = User(id: "",
+                        number: phoneNumber,
+                        email: "",
+                        facebookID: "",
+                        googleID: "",
+                        firstName: inputNumberView.nameInputView.firstNameTextField.text!,
+                        lastName: inputNumberView.nameInputView.firstNameTextField.text!,
+                        imageRecordID: "")
+        
+        AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
+        
+        CloudManager.sharedManager.saveNewUser(user, completionHandler: { (user, success) in
+            if success {
+                let homeVC = HomeViewController()
+                let navVC = UINavigationController(rootViewController: homeVC)
+                AppController.sharedController.displayContentController(navVC)
+                AppController.sharedController.hideSplashScreen()
+            } else {
+                // handle failed save
+            }
+        })
     }
     
     func verifyCode() -> Bool {
