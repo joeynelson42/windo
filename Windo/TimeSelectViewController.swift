@@ -305,33 +305,11 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
 
 extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
     func updateSelectedTimes(date: NSDate, time: Int) {
-        var newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
+        let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
         
-        // TODO: this is a crappy system. come up with a better one.
-        if newTime.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate(){
-            if createTabBar.selectedTimes.contains(newTime){
-                
-                guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
-                createTabBar.selectedTimes.removeAtIndex(index)
-                
-                for day in createTabBar.selectedDates {
-                    newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: time)
-                    
-                    if createTabBar.selectedTimes.contains(newTime){
-                        guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
-                        createTabBar.selectedTimes.removeAtIndex(index)
-                    }
-                }
-            }
-            else {
-                createTabBar.selectedTimes.append(newTime)
-                for day in createTabBar.selectedDates {
-                    newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: time)
-                    if !createTabBar.selectedTimes.contains(newTime){
-                        createTabBar.selectedTimes.append(newTime)
-                    }
-                }
-            }
+        // if AllDays time selected
+        if newTime.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate() {
+            createTabBar.addAllDaysTime(newTime)
             return
         }
         
@@ -353,8 +331,6 @@ extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
         components.hour = hourNumber
         components.minute = 0
         components.second = 0
-        
-        components.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         
         return date

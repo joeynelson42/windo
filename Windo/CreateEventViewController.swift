@@ -92,6 +92,8 @@ class CreateEventViewController: UIViewController {
         if gesture.state == .Ended {
             initialStates.removeAll()
         }
+        
+        createTabBar.datesChangedUpdateTimes()
     }
     
     func nextTapped(){

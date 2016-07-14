@@ -47,9 +47,9 @@ class CreateTabBarController: UITabBarController {
     func doneTapped(){
         switch selectedIndex {
         case 0:
-            navigationController?.popViewControllerAnimated(true)
-        case 1:
             selectedIndex = 1
+        case 1:
+            navigationController?.popViewControllerAnimated(true)
         default:
             return
         }
@@ -72,5 +72,62 @@ class CreateTabBarController: UITabBarController {
     func finalizeEvent() {
 //        invitees.append(UserManager.userProfile)
 //        DataProvider.sharedProvider.createEvent(invitees, selectedTimes: selectedTimes)
+    }
+    
+    func addAllDaysTime(date: NSDate) {
+        var newTime = date
+        if selectedTimes.contains(newTime){
+            
+            guard let index = selectedTimes.indexOf(newTime) else { return }
+            selectedTimes.removeAtIndex(index)
+            
+            for day in selectedDates {
+                newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour())
+                
+                if selectedTimes.contains(newTime){
+                    guard let index = selectedTimes.indexOf(newTime) else { return }
+                    selectedTimes.removeAtIndex(index)
+                }
+            }
+        }
+        else {
+            selectedTimes.append(newTime)
+            for day in selectedDates {
+                newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour())
+                if !selectedTimes.contains(newTime){
+                    selectedTimes.append(newTime)
+                }
+            }
+        }
+    }
+    
+    func datesChangedUpdateTimes() {
+        for time in selectedTimes {
+            var keepTime = false
+            for date in selectedDates {
+                if time.fullDate() == date.fullDate() {
+                    keepTime = true
+                }
+            }
+            
+            if !keepTime {
+                guard let index = selectedTimes.indexOf(time) else { return }
+                selectedTimes.removeAtIndex(index)
+            }
+        }
+    }
+    
+    func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int) -> NSDate {
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = NSDateComponents()
+        components.year = yearNumber
+        components.month = monthNumber
+        components.day = dayNumber
+        components.hour = hourNumber
+        components.minute = 0
+        components.second = 0
+        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        
+        return date
     }
 }

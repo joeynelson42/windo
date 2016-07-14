@@ -41,10 +41,6 @@ class HomeViewController: UIViewController{
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
     }
     
-    override func viewDidAppear(animated: Bool) {
-        AppController.sharedController.hideSplashScreen()
-    }
-    
     override func viewDidLayoutSubviews() {
 
     }

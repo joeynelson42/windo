@@ -104,12 +104,12 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         pmContainer.backgroundColor = UIColor.darkBlue()
         dragView.backgroundColor = UIColor.clearColor()
         
-        time0.backgroundColor = UIColor.fromHex(0x6587FF)
-        time1.backgroundColor = UIColor.fromHex(0x6587FF)
-        time2.backgroundColor = UIColor.fromHex(0x6587FF)
-        time3.backgroundColor = UIColor.fromHex(0x6587FF)
-        time4.backgroundColor = UIColor.fromHex(0x6587FF)
-        time5.backgroundColor = UIColor.fromHex(0x6587FF)
+        time0.backgroundColor = UIColor.blue()
+        time1.backgroundColor = UIColor.blue()
+        time2.backgroundColor = UIColor.blue()
+        time3.backgroundColor = UIColor.blue()
+        time4.backgroundColor = UIColor.blue()
+        time5.backgroundColor = UIColor.blue()
         
         
         let drag = UIPanGestureRecognizer(target: self, action: #selector(TimeSelectCollectionViewCell.handleCalendarGesture(_:)))
@@ -173,14 +173,14 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         )
         
         amLabel.addConstraints(
-            Constraint.tt.of(time0, offset: 2),
-            Constraint.ll.of(time0, offset: 2),
+            Constraint.tt.of(time6, offset: 3),
+            Constraint.ll.of(time6, offset: 3),
             Constraint.w.of(17)
         )
         
         pmLabel.addConstraints(
-            Constraint.tt.of(time12, offset: 2),
-            Constraint.ll.of(time12, offset: 2),
+            Constraint.tt.of(time12, offset: 3),
+            Constraint.ll.of(time12, offset: 3),
             Constraint.w.of(17)
         )
         
