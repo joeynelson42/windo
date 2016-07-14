@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Contacts
 
 class HomeViewController: UIViewController{
     
@@ -24,7 +25,7 @@ class HomeViewController: UIViewController{
                 
         let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         sideMenuButton.setImage(UIImage(named: "HamburgerIcon"), forState: .Normal)
-        sideMenuButton.addTarget(self, action: #selector(HomeViewController.toggleSplash), forControlEvents: .TouchUpInside)
+        sideMenuButton.addTarget(self, action: #selector(HomeViewController.openProfile), forControlEvents: .TouchUpInside)
         let sideMenuBarButton = UIBarButtonItem(customView: sideMenuButton)
         self.navigationItem.setLeftBarButtonItem(sideMenuBarButton, animated: true)
         
@@ -41,12 +42,8 @@ class HomeViewController: UIViewController{
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
     }
     
-    override func viewDidLayoutSubviews() {
+    func openProfile() {
 
-    }
-    
-    func toggleSplash() {
-//        AppController.sharedController.showSplashScreen()
     }
     
     func createNewEvent() {

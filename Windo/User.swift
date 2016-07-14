@@ -64,32 +64,27 @@ class User: NSObject, NSCoding{
     }
 }
 
+struct Invitee {
+    var firstName: String!
+    var lastName: String!
+    var phoneNumber: String!
+    
+    init(number: String!, firstName: String, lastName: String) {
+        self.phoneNumber = number
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+struct EventList {
+    var phoneNumber: String!
+    var events: [String]!
+    
+    init(phoneNumber: String, events: [String]) {
+        self.phoneNumber = phoneNumber
+        self.events = events
+    }
+}
 
 
 

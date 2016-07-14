@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 // ViewController 1: InviteViewController
 // ViewController 2: CreatEventViewController
@@ -15,8 +16,9 @@ import UIKit
 class CreateTabBarController: UITabBarController {
     
     //MARK: Properties
-    let newEvent = Event()
-    var invitees = [UserProfile]()
+    var eventName = ""
+    var eventLocation: CLLocation!
+    var invitees = [Invitee]()
     var selectedDates = [NSDate]()
     var selectedTimes = [NSDate]()
     
@@ -70,10 +72,25 @@ class CreateTabBarController: UITabBarController {
     }
     
     func finalizeEvent() {
-//        invitees.append(UserManager.userProfile)
-//        DataProvider.sharedProvider.createEvent(invitees, selectedTimes: selectedTimes)
+        let userInvitee = Invitee(number: UserManager.sharedManager.user!.phoneNumber, firstName: UserManager.sharedManager.user!.firstName, lastName: UserManager.sharedManager.user!.lastName)
+        invitees.append(userInvitee)
+        
+        let eventID = String.randomAlphaNumericString(15)
+        let windoID = String.randomAlphaNumericString(15)
+        
+        let eventWindo = Windo(id: windoID, ownerID: userInvitee.phoneNumber, eventID: eventID, times: selectedTimes, dateCreated: NSDate())
+        
+        var eventMembers = [String]()
+        for invitee in invitees {
+            eventMembers.append(invitee.phoneNumber)
+        }
+        
+        let _ = Event(id: eventID, name: eventName, location: eventLocation, members: eventMembers, eventCreator: userInvitee.phoneNumber, dateCreated: NSDate(), eventWindo: eventWindo.ID, memberSubmissions: [], possibleTimes: [])
+        
+//        CloudManager.sharedManager save event!
     }
     
+    // MARK: Time Management
     func addAllDaysTime(date: NSDate) {
         var newTime = date
         if selectedTimes.contains(newTime){

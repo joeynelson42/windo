@@ -19,8 +19,6 @@ class CreateEventViewController: UIViewController {
     var selectedTimes = [NSDate]()
     
     var filteredInvitees = [UserProfile]()
-//    let userProfile = UserManager.userProfile
-//    let allFriends = UserManager.friends
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -47,6 +45,12 @@ class CreateEventViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        
+        ContactManager.sharedManager.requestAccess { (success) in
+            if success {
+                ContactManager.sharedManager.fetchContacts()
+            }
+        }
         
         setNavigationButtons()
     }
@@ -149,20 +153,20 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         cell.userHandleLabel.text = "@\(friend.fullName.lowercaseString)"
         cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
         
-        if createTabBar.invitees.contains(friend){
-            cell.checkmarkImageView.alpha = 1.0
-            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            
-            cell.infoButton.alpha = 0.0
-            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        }
-        else{
-            cell.infoButton.alpha = 1.0
-            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            
-            cell.checkmarkImageView.alpha = 0.0
-            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        }
+//        if createTabBar.invitees.contains(friend){
+//            cell.checkmarkImageView.alpha = 1.0
+//            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+//            
+//            cell.infoButton.alpha = 0.0
+//            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+//        }
+//        else{
+//            cell.infoButton.alpha = 1.0
+//            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
+//            
+//            cell.checkmarkImageView.alpha = 0.0
+//            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+//        }
         
         cell.infoGestureRecognizer.addTarget(self, action: #selector(CreateEventViewController.openUserProfile(_:)))
         
@@ -174,21 +178,21 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
-        let friend = filteredInvitees[indexPath.row]
-        
-        if createTabBar.invitees.contains(friend){
-            let index = createTabBar.invitees.indexOf(friend)
-            createTabBar.invitees.removeAtIndex(index!)
-        } else{
-            createTabBar.invitees.append(friend)
-        }
-        
-        cell.animateChange()
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        createEventView.searchBar.reloadData()
+//        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
+//        let friend = filteredInvitees[indexPath.row]
+//        
+//        if createTabBar.invitees.contains(friend){
+//            let index = createTabBar.invitees.indexOf(friend)
+//            createTabBar.invitees.removeAtIndex(index!)
+//        } else{
+//            createTabBar.invitees.append(friend)
+//        }
+//        
+//        cell.animateChange()
+//        
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        
+//        createEventView.searchBar.reloadData()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -230,9 +234,9 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         return  UInt(createTabBar.invitees.count)
     }
     
-    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
-        return  createTabBar.invitees[Int(index)].fullName
-    }
+//    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
+//        return  createTabBar.invitees[Int(index)].fullName
+//    }
     
     func tokenField(tokenField: VENTokenField, didEnterText text: String) {
         

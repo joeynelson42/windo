@@ -16,9 +16,11 @@ struct Windo {
     var times: [NSDate]!
     var dateCreated: NSDate!
     
-    // MARK: Public
-    
-    // MARK: Private
-    
-    
+    init(id: String, ownerID: String, eventID: String, times: [NSDate], dateCreated: NSDate) {
+        self.ID = id
+        self.ownerID = ownerID
+        self.eventID = eventID
+        self.times = times
+        self.dateCreated = dateCreated
+    }
 }
