@@ -33,7 +33,20 @@ class ContactManager {
         }
     }
     
-    func fetchContacts() -> [CNContact] {
+    private func fetchInviteesWithCompletion(completion:(invitees: [Invitee], success: Bool)->()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            if let contacts = ContactManager.sharedManager.fetchContacts() {
+                let invitees = ContactManager.sharedManager.getInviteesFromContacts(contacts)
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(invitees: invitees, success: true)
+                }
+            } else {
+                completion(invitees: [], success: false)
+            }
+        }
+    }
+    
+    private func fetchContacts() -> [CNContact]? {
         let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         var contacts = [CNContact]()
@@ -42,20 +55,15 @@ class ContactManager {
             try store.enumerateContactsWithFetchRequest(fetchRequest) { (contact, nil) in
                 contacts.append(contact)
             }
+            
+            return contacts
         } catch {
             // handle fetch error
+            return nil
         }
-        
-        return contacts
     }
     
-    
-    // not sure if this will be necessary...we'll see how long it really takes to fetch contacts
-    func fetchContactsFromUserDefaults() {
-        
-    }
-    
-    func getInviteesFromContacts(contacts: [CNContact]) -> [Invitee] {
+    private func getInviteesFromContacts(contacts: [CNContact]) -> [Invitee] {
         var invitees = [Invitee]()
         
         for contact in contacts {
@@ -69,5 +77,18 @@ class ContactManager {
         }
         
         return invitees
+    }
+    
+    // MARK: UserDefaults
+    
+    func storeContacts(contacts: [Invitee]) {
+        let data = NSKeyedArchiver.archivedDataWithRootObject(contacts)
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kContacts)
+    }
+    
+    func fetchContactsFromDefaults() -> [Invitee]?{
+        guard let data = NSUserDefaults.standardUserDefaults().objectForKey(Constants.userDefaultKeys.kContacts) as? NSData else { return nil }
+        guard let contacts = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Invitee] else { return nil }
+        return contacts
     }
 }

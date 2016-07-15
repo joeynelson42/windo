@@ -64,7 +64,7 @@ class User: NSObject, NSCoding{
     }
 }
 
-struct Invitee {
+class Invitee {
     var firstName: String!
     var lastName: String!
     var phoneNumber: String!
@@ -73,6 +73,18 @@ struct Invitee {
         self.phoneNumber = number
         self.firstName = firstName
         self.lastName = lastName
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.phoneNumber = aDecoder.decodeObjectForKey("phoneNumber") as! String
+        self.firstName = aDecoder.decodeObjectForKey("firstName") as! String
+        self.lastName = aDecoder.decodeObjectForKey("lastName") as! String
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(phoneNumber, forKey: "phoneNumber")
+        aCoder.encodeObject(firstName, forKey: "firstName")
+        aCoder.encodeObject(lastName, forKey: "lastName")
     }
 }
 

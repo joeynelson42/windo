@@ -37,9 +37,14 @@ class HomeViewController: UIViewController{
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.translucent = false
         navigationController?.navigationBar.barTintColor = UIColor.lightTeal()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     func openProfile() {

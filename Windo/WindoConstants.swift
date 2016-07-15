@@ -37,6 +37,7 @@ struct Constants {
     struct userDefaultKeys {
         static let kUserPhoneNumber = "userPhoneNumber"
         static let kUser = "user"
+        static let kContacts = "contacts"
     }
 }
 

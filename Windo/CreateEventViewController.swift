@@ -18,7 +18,7 @@ class CreateEventViewController: UIViewController {
     var initialStates = [CGFloat]()
     var selectedTimes = [NSDate]()
     
-    var filteredInvitees = [UserProfile]()
+    var filteredInvitees = [Invitee]()
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -39,18 +39,10 @@ class CreateEventViewController: UIViewController {
         
         createEventView.searchBar.delegate = self
         createEventView.searchBar.dataSource = self
-        
-//        filteredInvitees = allFriends
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
-        ContactManager.sharedManager.requestAccess { (success) in
-            if success {
-                ContactManager.sharedManager.fetchContacts()
-            }
-        }
         
         setNavigationButtons()
     }
@@ -145,13 +137,13 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
-        let friend = filteredInvitees[indexPath.row]
+//        let friend = filteredInvitees[indexPath.row]
         
-        cell.profileImageView.setupView(friend, width: 44)
-        
-        cell.nameLabel.text = friend.fullName
-        cell.userHandleLabel.text = "@\(friend.fullName.lowercaseString)"
-        cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
+//        cell.profileImageView.setupView(friend, width: 44)
+//        
+//        cell.nameLabel.text = friend.fullName
+//        cell.userHandleLabel.text = "@\(friend.fullName.lowercaseString)"
+//        cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
         
 //        if createTabBar.invitees.contains(friend){
 //            cell.checkmarkImageView.alpha = 1.0
