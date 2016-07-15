@@ -33,7 +33,7 @@ class ContactManager {
         }
     }
     
-    private func fetchInviteesWithCompletion(completion:(invitees: [Invitee], success: Bool)->()) {
+    func fetchInviteesWithCompletion(completion:(invitees: [Invitee], success: Bool)->()) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             if let contacts = ContactManager.sharedManager.fetchContacts() {
                 let invitees = ContactManager.sharedManager.getInviteesFromContacts(contacts)

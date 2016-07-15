@@ -39,6 +39,11 @@ class CreateEventViewController: UIViewController {
         
         createEventView.searchBar.delegate = self
         createEventView.searchBar.dataSource = self
+        
+        if let contacts = ContactManager.sharedManager.fetchContactsFromDefaults() {
+            filteredInvitees = contacts
+//            createEventView.inviteeTableView.reloadData() // needed?
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
