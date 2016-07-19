@@ -61,14 +61,14 @@ class CloudManager: NSObject {
         }
     }
     
-    /// Will return User object from iCloud if user has already created account
+    /// Will return User object from iCloud if user has already created account, if successful user is saved in defaults
     func getUserFromCloud(completionHandler: (success: Bool, user: User?) -> ()) {
         defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
             if error != nil {
                 // iCloud error
                 completionHandler(success: false, user: nil)
             } else {
-                let predicate = NSPredicate(format: "userID CONTAINS '\(userRecordID!.recordName)'")
+                let predicate = NSPredicate(format: "userID == '\(userRecordID!.recordName)'")
                 let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
                 self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
                     if error != nil {
@@ -78,6 +78,7 @@ class CloudManager: NSObject {
                         // create User from CKRecord
                         if let userRecord = user?.first {
                             let fetchedUser = self.parseUserRecord(userRecord)
+                            self.storeUserInDefaults(fetchedUser)
                             completionHandler(success: true, user: fetchedUser)
                         }
                     }
@@ -108,8 +109,7 @@ class CloudManager: NSObject {
                 
                 self.savePrivateRecord(userRecord, completionHandler: { (success) in
                     if success {
-                        let data = NSKeyedArchiver.archivedDataWithRootObject(user)
-                        NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kUser)
+                        self.storeUserInDefaults(user)
                         completionHandler(user: user, success: true)
                     } else {
                         // handle failure
@@ -120,6 +120,10 @@ class CloudManager: NSObject {
         }
     }
     
+    func storeUserInDefaults(user: User) {
+        let data = NSKeyedArchiver.archivedDataWithRootObject(user)
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kUser)
+    }
     
     // MARK: EventList
     /// Fetches user event list with a completion handler that includes either the fetched event list or the one created in the case of it being a new user with no events

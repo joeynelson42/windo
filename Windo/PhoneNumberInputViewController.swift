@@ -205,7 +205,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     }
     
     func finishInfoInput() {
-        let user = User(id: "",
+        let userFromInput = User(id: "",
                         number: phoneNumber,
                         email: "",
                         facebookID: "",
@@ -215,17 +215,25 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                         imageRecordID: "")
         
         AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
-        
-        CloudManager.sharedManager.saveNewUser(user, completionHandler: { (user, success) in
+        CloudManager.sharedManager.getUserFromCloud { (success, user) in
             if success {
                 let homeVC = HomeViewController()
                 let navVC = UINavigationController(rootViewController: homeVC)
                 AppController.sharedController.displayContentController(navVC)
                 AppController.sharedController.hideSplashScreen()
             } else {
-                // handle failed save
+                CloudManager.sharedManager.saveNewUser(userFromInput, completionHandler: { (user, success) in
+                    if success {
+                        let homeVC = HomeViewController()
+                        let navVC = UINavigationController(rootViewController: homeVC)
+                        AppController.sharedController.displayContentController(navVC)
+                        AppController.sharedController.hideSplashScreen()
+                    } else {
+                        // handle failed save
+                    }
+                })
             }
-        })
+        }
     }
     
     func verifyCode() -> Bool {

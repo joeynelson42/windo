@@ -9,6 +9,12 @@
 import UIKit
 
 extension String {
+    
+    func isDigit() -> Bool {
+        if "0"..."9" ~= self { return true }
+        else { return false }
+    }
+    
     func getInitials() -> String{
         let firstInitial = "\(self[self.startIndex.advancedBy(0)])"
         

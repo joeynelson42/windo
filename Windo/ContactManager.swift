@@ -13,6 +13,29 @@ class ContactManager {
     
     static let sharedManager = ContactManager()
     let store = CNContactStore()
+    var contacts = [Invitee]()
+    
+    func sync(completionHandler: (success: Bool) -> ()) {
+        self.requestAccess { (success) in
+            if success {
+                if let _ = self.fetchContactsFromDefaults() {
+                    print("successfully retrieved contacts from defaults")
+                    completionHandler(success: true)
+                } else {
+                    self.fetchInviteesWithCompletion({ (invitees, success) in
+                        if success{
+                            print("successfully retrieved contacts and stored them in defaults")
+                            self.storeContacts(invitees)
+                            completionHandler(success: true)
+                        }
+                    })
+                }
+            } else {
+                print("failed to fetch contacts")
+                completionHandler(success: false)
+            }
+        }
+    }
     
     func requestAccess(completionHandler: (success: Bool) -> ()) {
         let status = CNContactStore.authorizationStatusForEntityType(.Contacts)
@@ -67,14 +90,16 @@ class ContactManager {
         var invitees = [Invitee]()
         
         for contact in contacts {
-            guard let number = contact.phoneNumbers.first!.value as? String,
-                    let firstName = contact.givenName as? String,
-                    let lastName = contact.familyName as? String
-                else { return [] }
+            if contact.phoneNumbers.count <= 0 {
+                break
+            }
             
-            let newInvitee = Invitee(number: number, firstName: firstName, lastName: lastName)
+            guard let number = contact.phoneNumbers[0].value as? CNPhoneNumber else { break }
+            let newInvitee = Invitee(number: number.stringValue, firstName: contact.givenName, lastName: contact.familyName)
             invitees.append(newInvitee)
         }
+        
+        self.contacts = invitees
         
         return invitees
     }
@@ -89,6 +114,7 @@ class ContactManager {
     func fetchContactsFromDefaults() -> [Invitee]?{
         guard let data = NSUserDefaults.standardUserDefaults().objectForKey(Constants.userDefaultKeys.kContacts) as? NSData else { return nil }
         guard let contacts = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Invitee] else { return nil }
+        self.contacts = contacts
         return contacts
     }
 }

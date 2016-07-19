@@ -64,10 +64,44 @@ class User: NSObject, NSCoding{
     }
 }
 
-class Invitee {
+class Invitee: NSObject, NSCoding {
     var firstName: String!
     var lastName: String!
     var phoneNumber: String!
+    
+    var fullName: String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+    
+    var formattedPhoneNumber: String {
+        get {
+            var formatted = phoneNumber.stringByReplacingOccurrencesOfString("+", withString: "")
+            
+            if String(formatted.characters.first!) == "1" {
+                formatted.removeAtIndex(formatted.startIndex.advancedBy(0))
+            }
+            
+            var indicesToRemove = [Int]()
+            for (index, char) in formatted.characters.enumerate() {
+                let stringChar = String(char)
+                if !stringChar.isDigit() {
+                    indicesToRemove.append(index)
+                }
+            }
+            
+            for index in indicesToRemove.reverse() {
+                formatted.removeAtIndex(formatted.startIndex.advancedBy(index))
+            }
+            
+            formatted.insert("(", atIndex: formatted.startIndex.advancedBy(0))
+            formatted.insert(")", atIndex: formatted.startIndex.advancedBy(4))
+            formatted.insert("-", atIndex: formatted.startIndex.advancedBy(8))
+            
+            return formatted
+        }
+    }
     
     init(number: String!, firstName: String, lastName: String) {
         self.phoneNumber = number

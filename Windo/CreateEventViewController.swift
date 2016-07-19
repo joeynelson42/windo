@@ -40,14 +40,13 @@ class CreateEventViewController: UIViewController {
         createEventView.searchBar.delegate = self
         createEventView.searchBar.dataSource = self
         
-        if let contacts = ContactManager.sharedManager.fetchContactsFromDefaults() {
-            filteredInvitees = contacts
-//            createEventView.inviteeTableView.reloadData() // needed?
+        if ContactManager.sharedManager.contacts.count > 0 {
+            filteredInvitees = ContactManager.sharedManager.contacts
         }
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         
         setNavigationButtons()
     }
@@ -142,28 +141,26 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
-//        let friend = filteredInvitees[indexPath.row]
         
-//        cell.profileImageView.setupView(friend, width: 44)
-//        
-//        cell.nameLabel.text = friend.fullName
-//        cell.userHandleLabel.text = "@\(friend.fullName.lowercaseString)"
-//        cell.userHandleLabel.text = cell.userHandleLabel.text?.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        let friend = filteredInvitees[indexPath.row]
+            
+        cell.nameLabel.text = "\(friend.firstName) \(friend.lastName)"
+        cell.userHandleLabel.text = "\(friend.formattedPhoneNumber)"
         
-//        if createTabBar.invitees.contains(friend){
-//            cell.checkmarkImageView.alpha = 1.0
-//            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
-//            
-//            cell.infoButton.alpha = 0.0
-//            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-//        }
-//        else{
-//            cell.infoButton.alpha = 1.0
-//            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
-//            
-//            cell.checkmarkImageView.alpha = 0.0
-//            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-//        }
+        if createTabBar.invitees.contains(friend){
+            cell.checkmarkImageView.alpha = 1.0
+            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            cell.infoButton.alpha = 0.0
+            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        }
+        else{
+            cell.infoButton.alpha = 1.0
+            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            cell.checkmarkImageView.alpha = 0.0
+            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        }
         
         cell.infoGestureRecognizer.addTarget(self, action: #selector(CreateEventViewController.openUserProfile(_:)))
         
@@ -175,21 +172,21 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
-//        let friend = filteredInvitees[indexPath.row]
-//        
-//        if createTabBar.invitees.contains(friend){
-//            let index = createTabBar.invitees.indexOf(friend)
-//            createTabBar.invitees.removeAtIndex(index!)
-//        } else{
-//            createTabBar.invitees.append(friend)
-//        }
-//        
-//        cell.animateChange()
-//        
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        
-//        createEventView.searchBar.reloadData()
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
+        let friend = filteredInvitees[indexPath.row]
+        
+        if createTabBar.invitees.contains(friend){
+            let index = createTabBar.invitees.indexOf(friend)
+            createTabBar.invitees.removeAtIndex(index!)
+        } else{
+            createTabBar.invitees.append(friend)
+        }
+        
+        cell.animateChange()
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        createEventView.searchBar.reloadData()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -219,10 +216,10 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func openUserProfile(sender: UITapGestureRecognizer) {
-        let profileVC = UserProfileViewController()
+//        let profileVC = UserProfileViewController()
 //        profileVC.user = allFriends[0]
-        profileVC.color = ThemeColor.Blue
-        navigationController?.pushViewController(profileVC, animated: true)
+//        profileVC.color = ThemeColor.Blue
+//        navigationController?.pushViewController(profileVC, animated: true)
     }
 }
 
@@ -231,9 +228,9 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         return  UInt(createTabBar.invitees.count)
     }
     
-//    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
-//        return  createTabBar.invitees[Int(index)].fullName
-//    }
+    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
+        return  createTabBar.invitees[Int(index)].fullName
+    }
     
     func tokenField(tokenField: VENTokenField, didEnterText text: String) {
         
@@ -267,24 +264,24 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         createEventView.layoutIfNeeded()
     }
     
-    func tokenFieldCollapsedText(tokenField: VENTokenField) -> String {
-        if createTabBar.invitees.count > 1 {
-            return "\(createTabBar.invitees.count) people"
-        } else {
-            return "1 person"
-        }
-    }
+//    func tokenFieldCollapsedText(tokenField: VENTokenField) -> String {
+//        if createTabBar.invitees.count > 1 {
+//            return "\(createTabBar.invitees.count) people"
+//        } else {
+//            return "1 person"
+//        }
+//    }
     
     func updateSearchResultsForSearchController(searchString: String) {
         defer {createEventView.inviteeTableView.reloadData()}
         
         if (searchString == "") {
-//            filteredInvitees = allFriends
+            filteredInvitees = ContactManager.sharedManager.contacts
             return
         }
         
         filteredInvitees.removeAll(keepCapacity: false)
-//        filteredInvitees = allFriends.filter() { $0.fullName.containsString(searchString) }
+        filteredInvitees = ContactManager.sharedManager.contacts.filter() { $0.fullName.containsString(searchString) }
     }
 }
 

@@ -45,16 +45,12 @@ class HomeViewController: UIViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        ContactManager.sharedManager.requestAccess { (success) in
-            if success {
-                ContactManager.sharedManager.fetchInviteesWithCompletion({ (invitees, success) in
-                    ContactManager.sharedManager.storeContacts(invitees)
-                    print(invitees)
-                })
-            } else {
-                print("failed to fetch contacts")
-            }
+        ContactManager.sharedManager.sync { (success) -> () in
+//            if success {
+//                for contact in ContactManager.sharedManager.contacts {
+//                    print("\(contact.firstName) \(contact.lastName)")
+//                }
+//            }
         }
     }
     

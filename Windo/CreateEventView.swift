@@ -115,9 +115,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
         
-        addSubview(searchBar)
-        addSubview(inviteeTableView)
-        
         addSubview(locationCell)
         addSubview(nameCell)
         addSubviews(inviteeSeparator, locationSeparator, nameSeparator)
@@ -126,6 +123,9 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
+        
+        addSubview(searchBar)
+        addSubview(inviteeTableView)
     }
     
     func applyConstraints(){
