@@ -144,8 +144,9 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
             enterCodeInputState()
         case .code:
             if verifyCode() {
-                // enter app!
-                print("successful!")
+                // if user isn't new then enter app
+                
+                
                 inputNumberView.showNameInput()
                 state = .name
             } else {
@@ -215,7 +216,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                         imageRecordID: "")
         
         AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
-        CloudManager.sharedManager.getUserFromCloud { (success, user) in
+        CloudManager.sharedManager.getUserWithPhoneNumber(phoneNumber, completionHandler: { (success, user) in
             if success {
                 let homeVC = HomeViewController()
                 let navVC = UINavigationController(rootViewController: homeVC)
@@ -233,7 +234,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                     }
                 })
             }
-        }
+        })
     }
     
     func verifyCode() -> Bool {

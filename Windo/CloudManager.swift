@@ -40,13 +40,8 @@ class CloudManager: NSObject {
             if success {
                 completionHandler(success: true, user: defaultsUser)
             } else {
-                self.getUserFromCloud({ (success, cloudUser) in
-                    if success {
-                        completionHandler(success: true, user: cloudUser)
-                    } else {
-                        completionHandler(success: false, user: nil)
-                    }
-                })
+                // User is new/not logged in
+                completionHandler(success: false, user: nil)
             }
         }
     }
@@ -61,27 +56,46 @@ class CloudManager: NSObject {
         }
     }
     
-    /// Will return User object from iCloud if user has already created account, if successful user is saved in defaults
-    func getUserFromCloud(completionHandler: (success: Bool, user: User?) -> ()) {
-        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
+    /// Will return User object from iCloud if user has already created account, if successful -> user is saved in defaults
+//    func getUserFromCloud(completionHandler: (success: Bool, user: User?) -> ()) {
+//        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
+//            if error != nil {
+//                // iCloud error
+//                completionHandler(success: false, user: nil)
+//            } else {
+//                let predicate = NSPredicate(format: "userID == '\(userRecordID!.recordName)'")
+//                let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
+//                self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
+//                    if error != nil {
+//                        print("failed to fetch user \n \(error)")
+//                        completionHandler(success: false, user: nil)
+//                    } else {
+//                        // create User from CKRecord
+//                        if let userRecord = user?.first {
+//                            let fetchedUser = self.parseUserRecord(userRecord)
+//                            self.storeUserInDefaults(fetchedUser)
+//                            completionHandler(success: true, user: fetchedUser)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    /// Sends fetch request to iCloud using the phoneNumber as the predicate
+    func getUserWithPhoneNumber(phoneNumber: String, completionHandler: (success: Bool, user: User?) -> ()) {
+        let predicate = NSPredicate(format: "phoneNumber == '\(phoneNumber)'")
+        let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
+        self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
             if error != nil {
-                // iCloud error
+                print("failed to fetch user \n \(error)")
                 completionHandler(success: false, user: nil)
             } else {
-                let predicate = NSPredicate(format: "userID == '\(userRecordID!.recordName)'")
-                let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
-                self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
-                    if error != nil {
-                        print("failed to fetch user \n \(error)")
-                        completionHandler(success: false, user: nil)
-                    } else {
-                        // create User from CKRecord
-                        if let userRecord = user?.first {
-                            let fetchedUser = self.parseUserRecord(userRecord)
-                            self.storeUserInDefaults(fetchedUser)
-                            completionHandler(success: true, user: fetchedUser)
-                        }
-                    }
+                // create User from CKRecord
+                if let userRecord = user?.first {
+                    let fetchedUser = self.parseUserRecord(userRecord)
+                    self.storeUserInDefaults(fetchedUser)
+                    completionHandler(success: true, user: fetchedUser)
                 }
             }
         }
@@ -120,7 +134,7 @@ class CloudManager: NSObject {
         }
     }
     
-    func storeUserInDefaults(user: User) {
+    private func storeUserInDefaults(user: User) {
         let data = NSKeyedArchiver.archivedDataWithRootObject(user)
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kUser)
     }
