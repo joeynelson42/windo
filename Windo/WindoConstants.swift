@@ -16,6 +16,7 @@ var keyboardHeight: CGFloat = 216
 let phoneInputCharacterSize = (screenWidth * 0.0775)
 
 let timeSelectSize: CGFloat = (screenWidth)/7
+let eventNameMaxLength: Int = 25
 let centerPanelExpandedOffset: CGFloat = 75
 
 let idLength = 12

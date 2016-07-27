@@ -260,6 +260,18 @@ class CreateEventView: UIView, UITextFieldDelegate {
         }
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if textField.tag == 1 {
+            if textField.text?.characters.count < eventNameMaxLength {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+    
     func toggleBetweenTextFields(){
         if nameTextField.isFirstResponder() {
             locationTextField.becomeFirstResponder()
