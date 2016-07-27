@@ -42,6 +42,12 @@ extension NSDate{
         return date
     }
     
+    func minute() -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let day = calendar.components([.Minute], fromDate: self)
+        return day.minute
+    }
+    
     func hour() -> Int {
         let calendar = NSCalendar.currentCalendar()
         let day = calendar.components([.Hour], fromDate: self)
