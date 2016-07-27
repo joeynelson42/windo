@@ -6,4 +6,13 @@
 //  Copyright © 2016 NelsonJE. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SumbitTimesViewController: UIViewController {
+    
+    let submitView = SubmitTimesView()
+    
+    override func viewDidLoad() {
+        self.view = submitView
+    }
+}

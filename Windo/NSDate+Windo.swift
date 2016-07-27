@@ -11,14 +11,14 @@ import UIKit
 
 extension NSDate{
     
-    static func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int) -> NSDate {
+    static func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> NSDate {
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
         let components = NSDateComponents()
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
         components.hour = hourNumber
-        components.minute = 0
+        components.minute = minuteNumber
         components.second = 0
         guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
         

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol TimeCellDelegate {
+    func timeCellStateChanged(newState: TimeCellState, date: NSDate)
+}
+
 enum TimeCellState: Int {
     case selected = 0
     case unselected
@@ -18,9 +22,16 @@ enum TimeCellState: Int {
 class TimeCell: UIView {
     
     //MARK: Properties
-    var state = TimeCellState.unselected
+    var state = TimeCellState.unselected {
+        didSet {
+            guard let _ = delegate else { return }
+            delegate.timeCellStateChanged(state, date: self.time)
+        }
+    }
+    
     var colorTheme = ColorTheme(color: .blue)
     var time = NSDate()
+    var delegate: TimeCellDelegate!
     
     var selectedBackground = UIView()
     var timeButton = UIButton()
@@ -30,11 +41,12 @@ class TimeCell: UIView {
         self.init(frame: CGRectZero)
     }
     
-    convenience init(state: TimeCellState, colorTheme: ColorTheme, time: NSDate){
+    convenience init(state: TimeCellState, colorTheme: ColorTheme, time: NSDate, delegate: TimeCellDelegate){
         self.init(frame: CGRectZero)
         self.state = state
         self.colorTheme = colorTheme
         self.time = time
+        self.delegate = delegate
     }
     
     private override init(frame: CGRect) {
@@ -51,14 +63,41 @@ class TimeCell: UIView {
     func handleTap() {
         switch state {
         case .selected:
-            state = .unselected
+            handleDeselect()
         case .unselected:
-            state = .selected
+            handleSelect()
         case .hidden:
             break
         case .unavailable:
             break
         }
+    }
+    
+    func handleSelect() {
+        state = .selected
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            self.timeButton.alpha = 1.0
+            self.selectedBackground.alpha = 1.0
+            self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            }, completion: nil)
+    }
+    
+    func handleDeselect() {
+        state = .unselected
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            self.timeButton.alpha = 0.75
+            self.selectedBackground.alpha = 0.0
+            self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            }, completion: nil)
+    }
+    
+    func unhide() {
+        state = .unselected
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            self.timeButton.alpha = 1.0
+            }, completion: nil)
     }
     
     //MARK: View Configuration
@@ -71,8 +110,13 @@ class TimeCell: UIView {
     
     func configureSubviews() {
         selectedBackground.backgroundColor = colorTheme.darkColor
+        backgroundColor = colorTheme.baseColor
         
-        timeButton.setTitle("\(time.hour()):\(time.minute())", forState: .Normal)
+        if time.minute() == 0 {
+            timeButton.setTitle("\(time.hour())", forState: .Normal)
+        } else {
+            timeButton.setTitle("\(time.hour()):\(time.minute())", forState: .Normal)
+        }
         timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         timeButton.titleLabel?.font = UIFont.graphikRegular(20)
         
@@ -99,11 +143,15 @@ class TimeCell: UIView {
     func configureUnselected() {
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         selectedBackground.alpha = 0.0
+        
+        timeButton.alpha = 1.0
     }
     
     func configureHidden() {
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         selectedBackground.alpha = 0.0
+        
+        timeButton.alpha = 0.0
     }
     
     func configureUnavailable() {
