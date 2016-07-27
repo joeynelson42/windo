@@ -102,7 +102,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         let timesTitle = NSMutableAttributedString(string: "Specify Times", attributes: underlineAttribute)
         timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, timesTitle.length))
         
-        doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: .blue)
+        doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: ColorTheme(color: .blue))
         locationTextField.inputAccessoryView = doneKeyboardAccessory
         nameTextField.inputAccessoryView = doneKeyboardAccessory
         

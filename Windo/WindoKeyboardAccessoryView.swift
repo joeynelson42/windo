@@ -8,19 +8,13 @@
 
 import UIKit
 
-enum ColorTheme {
-    case blue
-    case teal
-    case purple
-}
-
 class WindoKeyboardAccessoryView: UIView {
     
     //MARK: Properties
     var doneButton = UIButton()
     var leftArrowButton = UIButton()
     var rightArrowButton = UIButton()
-    var state = ColorTheme.blue
+    var state: ColorTheme!
     
     //MARK: Inits
     convenience init() {
@@ -55,7 +49,7 @@ class WindoKeyboardAccessoryView: UIView {
         doneButton.setTitle("Done", forState: .Normal)
         doneButton.titleLabel?.font = UIFont.graphikMedium(18)
         
-        switch state {
+        switch state.color {
         case .blue:
             doneButton.setTitleColor(UIColor.blue(), forState: .Normal)
             leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), forState: .Normal)

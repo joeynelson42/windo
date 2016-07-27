@@ -48,7 +48,7 @@ class NameInputView: UIView, UITextFieldDelegate {
         helpLabel.textColor = UIColor.whiteColor()
         helpLabel.textAlignment = .Center
         
-        doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: .teal)
+        doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: ColorTheme(color: .teal))
         doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(NameInputView.keyboardDismiss), forControlEvents: .TouchUpInside)
         doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
         doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
