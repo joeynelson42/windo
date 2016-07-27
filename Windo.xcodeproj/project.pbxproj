@@ -108,6 +108,11 @@
 		8182E1EF1D37F07300F87679 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8182E1EE1D37F07300F87679 /* ContactManager.swift */; };
 		81C5C0CC1D0A394200BD057A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C5C0CB1D0A394200BD057A /* UserProfile.swift */; };
 		81C88F781D4903EB00436657 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F771D4903EB00436657 /* ColorTheme.swift */; };
+		81C88F7A1D49065300436657 /* SubmitTimesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F791D49065300436657 /* SubmitTimesViewController.swift */; };
+		81C88F7C1D49066600436657 /* SubmitTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7B1D49066600436657 /* SubmitTimesView.swift */; };
+		81C88F7E1D4906EC00436657 /* ExpandingTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */; };
+		81C88F801D4906F500436657 /* ExpandingTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */; };
+		81C88F821D49072700436657 /* SubmitTimesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */; };
 		81D6FCFB1D36BB8D00BC492A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D6FCFA1D36BB8D00BC492A /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -216,6 +221,11 @@
 		8182E1EE1D37F07300F87679 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		81C5C0CB1D0A394200BD057A /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		81C88F771D4903EB00436657 /* ColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		81C88F791D49065300436657 /* SubmitTimesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesViewController.swift; sourceTree = "<group>"; };
+		81C88F7B1D49066600436657 /* SubmitTimesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesView.swift; sourceTree = "<group>"; };
+		81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTimeCell.swift; sourceTree = "<group>"; };
+		81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTimeRow.swift; sourceTree = "<group>"; };
+		81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesCollectionViewCell.swift; sourceTree = "<group>"; };
 		81D6FCF91D36BB8000BC492A /* Windo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Windo.entitlements; sourceTree = "<group>"; };
 		81D6FCFA1D36BB8D00BC492A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		98F3F93B3A0634E6EB12EB31 /* Pods-Windo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Windo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Windo/Pods-Windo.release.xcconfig"; sourceTree = "<group>"; };
@@ -324,6 +334,7 @@
 				6392EF771C97678C003C29CE /* Details */,
 				6392EF781C976796003C29CE /* Messages */,
 				6392EF791C97679C003C29CE /* Results */,
+				81C88F831D49074500436657 /* SubmitTimes */,
 			);
 			name = EventDetails;
 			sourceTree = "<group>";
@@ -580,6 +591,18 @@
 			name = "Time Selection";
 			sourceTree = "<group>";
 		};
+		81C88F831D49074500436657 /* SubmitTimes */ = {
+			isa = PBXGroup;
+			children = (
+				81C88F791D49065300436657 /* SubmitTimesViewController.swift */,
+				81C88F7B1D49066600436657 /* SubmitTimesView.swift */,
+				81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */,
+				81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */,
+				81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */,
+			);
+			name = SubmitTimes;
+			sourceTree = "<group>";
+		};
 		C6FF5DE3068700CB180488FA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,6 +762,7 @@
 				6328512C1D348406009F5D43 /* AppViewController.swift in Sources */,
 				8182E1EF1D37F07300F87679 /* ContactManager.swift in Sources */,
 				6350145F1D050F7C00864A73 /* IncomingChatCell.swift in Sources */,
+				81C88F7A1D49065300436657 /* SubmitTimesViewController.swift in Sources */,
 				6383D8511CA4AD54008F23B8 /* WindoTimeViewController.swift in Sources */,
 				639973F31D3083D6002C1845 /* Alerts.swift in Sources */,
 				63FF08EE1CB4482D00255A4A /* TimeSelectViewController.swift in Sources */,
@@ -781,6 +805,7 @@
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,
 				639973EC1D30567D002C1845 /* WindoLoadingIcon.swift in Sources */,
+				81C88F821D49072700436657 /* SubmitTimesCollectionViewCell.swift in Sources */,
 				63FF08F01CB4483500255A4A /* TimeSelectView.swift in Sources */,
 				635014611D050F8700864A73 /* OutgoingChatCell.swift in Sources */,
 				6395B1511C741C8B008D0ED5 /* HomeViewController.swift in Sources */,
@@ -796,6 +821,8 @@
 				81120E6F1D47DC4700F6AB5E /* EventManager.swift in Sources */,
 				6353E1131CBC6318008117B3 /* UIString+.swift in Sources */,
 				63290F521D2DED9C0099741A /* PhoneNumberInputView.swift in Sources */,
+				81C88F7E1D4906EC00436657 /* ExpandingTimeCell.swift in Sources */,
+				81C88F7C1D49066600436657 /* SubmitTimesView.swift in Sources */,
 				6353E10B1CBC1911008117B3 /* EventResultsView.swift in Sources */,
 				63B35D481CF889A7008761F5 /* Message.swift in Sources */,
 				6394638B1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift in Sources */,
@@ -809,6 +836,7 @@
 				63A8683F1D006990002978F7 /* UserProfileView.swift in Sources */,
 				6383D8531CA4AD6C008F23B8 /* WindoTimeCell.swift in Sources */,
 				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
+				81C88F801D4906F500436657 /* ExpandingTimeRow.swift in Sources */,
 				6353E1091CBC1909008117B3 /* EventResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
