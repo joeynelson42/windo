@@ -28,7 +28,6 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
     var baseTime = NSDate()
     var delegate: ExpandingTimeRowDelegate!
     
-    var expandButton = UIButton()
     var hour1: ExpandingTimeCell!
     var hour2: ExpandingTimeCell!
     var hour3: ExpandingTimeCell!
@@ -48,10 +47,6 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
         self.colorTheme = colorTheme
         self.baseTime = baseTime
         self.delegate = delegate
-        
-        self.expandButton.addTarget(.TouchUpInside) { 
-            self.toggleCellExpand()
-        }
     }
     
     private override init(frame: CGRect) {
@@ -97,7 +92,6 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
     
     func configureSubviews() {
         backgroundColor = colorTheme.darkColor
-        expandButton.backgroundColor = UIColor.whiteColor()
         clipsToBounds = false
         let times = createTimes()
         var timeCellState = ExpandingTimeCellState.closed
@@ -116,50 +110,44 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
         hour5 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[4], delegate: self)
         hour6 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[5], delegate: self)
         
-        addSubviews(hour1, hour2, hour3, hour4, hour5, hour6, expandButton)
+        addSubviews(hour1, hour2, hour3, hour4, hour5, hour6)
     }
     
     func applyConstraints() {
         hour1.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.ll.of(self, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
+            Constraint.wh.of(timeSelectSize)
         )
         
         hour2.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.lr.of(hour1, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
+            Constraint.wh.of(timeSelectSize)
         )
         
         hour3.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.lr.of(hour2, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
+            Constraint.wh.of(timeSelectSize)
         )
         
         hour4.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.lr.of(hour3, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
+            Constraint.wh.of(timeSelectSize)
         )
         
         hour5.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.lr.of(hour4, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
+            Constraint.wh.of(timeSelectSize)
         )
         
         hour6.addConstraints(
-            Constraint.cycy.of(self),
+            Constraint.tt.of(self, offset: 1),
             Constraint.lr.of(hour5, offset: 1),
-            Constraint.wh.of(timeSelectSize + 1)
-        )
-        
-        expandButton.addConstraints(
-            Constraint.lr.of(hour6, offset: 10),
-            Constraint.cycy.of(self),
-            Constraint.wh.of(40)
+            Constraint.wh.of(timeSelectSize)
         )
     }
     

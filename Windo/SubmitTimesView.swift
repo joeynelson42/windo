@@ -11,7 +11,8 @@ import UIKit
 class SubmitTimesView: UIView, ExpandingTimeRowDelegate{
     
     //MARK: Properties
-    var row: ExpandingTimeRow!
+    var rows = SubmitTimesCollectionViewCell()
+    var expandRow2Button = UIButton()
     
     //MARK: Inits
     convenience init() {
@@ -35,30 +36,42 @@ class SubmitTimesView: UIView, ExpandingTimeRowDelegate{
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.greenColor()
+        backgroundColor = UIColor.blue()
         
-        
-        if let _ = row {
-            return
+//        expandRow2Button.setImage(expandRowImage, forState: .Normal)
+//        expandRow2Button.alpha = expandRowPassiveAlpha
+        expandRow2Button.backgroundColor = .purple()
+        expandRow2Button.addTarget(.TouchUpInside) {
+            self.rows.applyConstraints()
+            self.rows.addExpandedRow2Constraints()
+            self.rows.row2.toggleCellExpand()
+            
+            UIView.animateWithDuration(0.25, animations: {
+                self.layoutIfNeeded()
+            })
         }
         
-        let date = NSDate.createDateWithComponents(NSDate().year(), monthNumber: NSDate().month(), dayNumber: NSDate().day(), hourNumber: 6, minuteNumber: 0)
-        
-        row = ExpandingTimeRow(state: .closed, colorTheme: ColorTheme(color: .blue), baseTime: date, delegate: self)
-        addSubview(row)
+        addSubview(rows)
+        addSubview(expandRow2Button)
     }
     
     func applyConstraints(){
-        row.addConstraints(
-            Constraint.cxcx.of(self),
-            Constraint.cycy.of(self),
-            Constraint.h.of(timeSelectSize + 2),
-            Constraint.w.of((timeSelectSize + 7) * 6)
+        rows.addConstraints(
+            Constraint.tt.of(self, offset: 100),
+            Constraint.rr.of(self, offset: -timeSelectSize),
+            Constraint.h.of((timeSelectSize + 2) * 4),
+            Constraint.w.of((timeSelectSize * 6) + 7)
+        )
+        
+        expandRow2Button.addConstraints(
+            Constraint.lr.of(self.rows.row2, offset: 5),
+            Constraint.cyt.of(self.rows.row2, offset: timeSelectSize/2),
+            Constraint.wh.of(40)
         )
     }
     
     func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
-//        print(date)
+
     }
     
     func stateForTime(time: NSDate) -> TimeCellState {

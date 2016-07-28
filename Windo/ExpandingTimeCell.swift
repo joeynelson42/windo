@@ -71,9 +71,9 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         halfCell.unhide()
         threeQuartersCell.unhide()
         
-        UIView.animateWithDuration(0.5) {
-            self.layoutIfNeeded()
-        }
+//        UIView.animateWithDuration(0.5) {
+//            self.layoutIfNeeded()
+//        }
     }
     
     // MARK: TimeCellDelegate Methods
@@ -117,31 +117,31 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     func applyConstraints() {
         if state == .closed {
             hourCell.addConstraints(
-                Constraint.cycy.of(self),
+                Constraint.tt.of(self),
                 Constraint.cxcx.of(self),
                 Constraint.wh.of(timeSelectSize)
             )
             
             quarterCell.addConstraints(
-                Constraint.cycy.of(self),
+                Constraint.tt.of(self),
                 Constraint.cxcx.of(self),
                 Constraint.wh.of(timeSelectSize)
             )
             
             halfCell.addConstraints(
-                Constraint.cycy.of(self),
+                Constraint.tt.of(self),
                 Constraint.cxcx.of(self),
                 Constraint.wh.of(timeSelectSize)
             )
             
             threeQuartersCell.addConstraints(
-                Constraint.cycy.of(self),
+                Constraint.tt.of(self),
                 Constraint.cxcx.of(self),
                 Constraint.wh.of(timeSelectSize)
             )
         } else {
             hourCell.addConstraints(
-                Constraint.cycy.of(self),
+                Constraint.tt.of(self),
                 Constraint.cxcx.of(self),
                 Constraint.wh.of(timeSelectSize)
             )

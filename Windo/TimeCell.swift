@@ -118,7 +118,7 @@ class TimeCell: UIView {
             timeButton.setTitle("\(time.hour()):\(time.minute())", forState: .Normal)
         }
         timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        timeButton.titleLabel?.font = UIFont.graphikRegular(20)
+        timeButton.titleLabel?.font = UIFont.graphikRegular(18)
         
         switch state {
         case .selected:
