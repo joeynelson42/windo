@@ -28,23 +28,15 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     var baseTime = NSDate()
     var delegate: ExpandingTimeCellDelegate!
     
-    var hourCell: TimeCell!
-    var quarterCell: TimeCell!
-    var halfCell: TimeCell!
-    var threeQuartersCell: TimeCell!
+    var hourCell = TimeCell()
+    var quarterCell = TimeCell()
+    var halfCell = TimeCell()
+    var threeQuartersCell = TimeCell()
     
     //MARK: Inits
     
     private convenience init() {
         self.init(frame: CGRectZero)
-    }
-    
-    convenience init(state: ExpandingTimeCellState, colorTheme: ColorTheme, time: NSDate, delegate: ExpandingTimeCellDelegate){
-        self.init(frame: CGRectZero)
-        self.state = state
-        self.colorTheme = colorTheme
-        self.baseTime = time
-        self.delegate = delegate
     }
     
     private override init(frame: CGRect) {
@@ -71,9 +63,9 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         halfCell.unhide()
         threeQuartersCell.unhide()
         
-//        UIView.animateWithDuration(0.5) {
-//            self.layoutIfNeeded()
-//        }
+        UIView.animateWithDuration(0.5) {
+            self.layoutIfNeeded()
+        }
     }
     
     // MARK: TimeCellDelegate Methods
@@ -94,19 +86,26 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         backgroundColor = colorTheme.darkColor
         clipsToBounds = false
         let times = createTimes()
-        
-        if let _ = hourCell {
-            return
-        }
-//        hourCell = TimeCell(state: delegate.stateForTime(times[0]), colorTheme: colorTheme, time: times[0], delegate: self)
-//        quarterCell = TimeCell(state: delegate.stateForTime(times[1]), colorTheme: colorTheme, time: times[1], delegate: self)
-//        halfCell = TimeCell(state: delegate.stateForTime(times[2]), colorTheme: colorTheme, time: times[2], delegate: self)
-//        threeQuartersCell = TimeCell(state: delegate.stateForTime(times[3]), colorTheme: colorTheme, time: times[3], delegate: self)
 
-        hourCell = TimeCell(state: delegate.stateForTime(times[0]), colorTheme: colorTheme, time: times[0], delegate: self)
-        quarterCell = TimeCell(state: .hidden, colorTheme: colorTheme, time: times[1], delegate: self)
-        halfCell = TimeCell(state: .hidden, colorTheme: colorTheme, time: times[2], delegate: self)
-        threeQuartersCell = TimeCell(state: .hidden, colorTheme: colorTheme, time: times[3], delegate: self)
+        hourCell.state = delegate.stateForTime(times[0])
+        hourCell.colorTheme = colorTheme
+        hourCell.time = times[0]
+        hourCell.delegate = self
+        
+        quarterCell.state = delegate.stateForTime(times[1])
+        quarterCell.colorTheme = colorTheme
+        quarterCell.time = times[1]
+        quarterCell.delegate = self
+        
+        halfCell.state = delegate.stateForTime(times[2])
+        halfCell.colorTheme = colorTheme
+        halfCell.time = times[2]
+        halfCell.delegate = self
+        
+        threeQuartersCell.state = delegate.stateForTime(times[3])
+        threeQuartersCell.colorTheme = colorTheme
+        threeQuartersCell.time = times[3]
+        threeQuartersCell.delegate = self
         
         addSubview(threeQuartersCell)
         addSubview(halfCell)
@@ -148,20 +147,20 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
             
             quarterCell.addConstraints(
                 Constraint.tb.of(hourCell, offset: 1),
-                Constraint.wh.of(timeSelectSize),
-                Constraint.cxcx.of(self)
+                Constraint.cxcx.of(self),
+                Constraint.wh.of(timeSelectSize)
             )
             
             halfCell.addConstraints(
                 Constraint.tb.of(quarterCell, offset: 1),
-                Constraint.wh.of(timeSelectSize),
-                Constraint.cxcx.of(self)
+                Constraint.cxcx.of(self),
+                Constraint.wh.of(timeSelectSize)
             )
             
             threeQuartersCell.addConstraints(
                 Constraint.tb.of(halfCell, offset: 1),
-                Constraint.wh.of(timeSelectSize),
-                Constraint.cxcx.of(self)
+                Constraint.cxcx.of(self),
+                Constraint.wh.of(timeSelectSize)
             )
         }
     }

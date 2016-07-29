@@ -28,27 +28,19 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
     var baseTime = NSDate()
     var delegate: ExpandingTimeRowDelegate!
     
-    var hour1: ExpandingTimeCell!
-    var hour2: ExpandingTimeCell!
-    var hour3: ExpandingTimeCell!
-    var hour4: ExpandingTimeCell!
-    var hour5: ExpandingTimeCell!
-    var hour6: ExpandingTimeCell!
+    var hour1 = ExpandingTimeCell()
+    var hour2 = ExpandingTimeCell()
+    var hour3 = ExpandingTimeCell()
+    var hour4 = ExpandingTimeCell()
+    var hour5 = ExpandingTimeCell()
+    var hour6 = ExpandingTimeCell()
     
     //MARK: Inits
     
     private convenience init() {
         self.init(frame: CGRectZero)
     }
-    
-    convenience init(state: ExpandingTimeRowState, colorTheme: ColorTheme, baseTime: NSDate, delegate: ExpandingTimeRowDelegate){
-        self.init(frame: CGRectZero)
-        self.state = state
-        self.colorTheme = colorTheme
-        self.baseTime = baseTime
-        self.delegate = delegate
-    }
-    
+        
     private override init(frame: CGRect) {
         super.init(frame: frame)
         self.setNeedsUpdateConstraints()
@@ -61,8 +53,6 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
     //MARK: Methods
     
     func toggleCellExpand() {
-        
-        
         hour1.toggle()
         hour2.toggle()
         hour3.toggle()
@@ -99,16 +89,35 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
             timeCellState = .expanded
         }
         
-        if let _ = hour1 {
-            return
-        }
+        hour1.state = timeCellState
+        hour1.colorTheme = colorTheme
+        hour1.baseTime = times[0]
+        hour1.delegate = self
         
-        hour1 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[0], delegate: self)
-        hour2 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[1], delegate: self)
-        hour3 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[2], delegate: self)
-        hour4 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[3], delegate: self)
-        hour5 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[4], delegate: self)
-        hour6 = ExpandingTimeCell(state: timeCellState, colorTheme: colorTheme, time: times[5], delegate: self)
+        hour2.state = timeCellState
+        hour2.colorTheme = colorTheme
+        hour2.baseTime = times[1]
+        hour2.delegate = self
+        
+        hour3.state = timeCellState
+        hour3.colorTheme = colorTheme
+        hour3.baseTime = times[2]
+        hour3.delegate = self
+        
+        hour4.state = timeCellState
+        hour4.colorTheme = colorTheme
+        hour4.baseTime = times[3]
+        hour4.delegate = self
+        
+        hour5.state = timeCellState
+        hour5.colorTheme = colorTheme
+        hour5.baseTime = times[4]
+        hour5.delegate = self
+        
+        hour6.state = timeCellState
+        hour6.colorTheme = colorTheme
+        hour6.baseTime = times[5]
+        hour6.delegate = self
         
         addSubviews(hour1, hour2, hour3, hour4, hour5, hour6)
     }

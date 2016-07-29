@@ -37,16 +37,8 @@ class TimeCell: UIView {
     var timeButton = UIButton()
     
     //MARK: Inits
-    private convenience init() {
+    convenience init() {
         self.init(frame: CGRectZero)
-    }
-    
-    convenience init(state: TimeCellState, colorTheme: ColorTheme, time: NSDate, delegate: TimeCellDelegate){
-        self.init(frame: CGRectZero)
-        self.state = state
-        self.colorTheme = colorTheme
-        self.time = time
-        self.delegate = delegate
     }
     
     private override init(frame: CGRect) {
@@ -108,6 +100,11 @@ class TimeCell: UIView {
         applyConstraints()
     }
     
+    func applyConstraints() {
+        selectedBackground.fillSuperview()
+        timeButton.fillSuperview()
+    }
+    
     func configureSubviews() {
         selectedBackground.backgroundColor = colorTheme.darkColor
         backgroundColor = colorTheme.baseColor
@@ -158,10 +155,5 @@ class TimeCell: UIView {
         backgroundColor = UIColor.lightGrayColor()
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         selectedBackground.alpha = 0.0
-    }
-    
-    func applyConstraints() {
-        selectedBackground.fillSuperview()
-        timeButton.fillSuperview()
     }
 }
