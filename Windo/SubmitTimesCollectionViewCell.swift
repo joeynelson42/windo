@@ -59,6 +59,8 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     func configureSubviews() {
         let times = createTimes()
         
+        clipsToBounds = false
+        
         row1.state = .closed
         row1.colorTheme = colorTheme
         row1.baseTime = times[0]
@@ -161,15 +163,25 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     
     func toggleRow1() {
         self.applyConstraints()
-
-        row1.addConstraints(
-            Constraint.tt.of(self, offset: 1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of((timeSelectSize * 4) + 5),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
         
-        self.row1.toggleCellExpand()
+        self.row1.toggle()
+        
+        if row1.state == .expanded {
+            row1.addConstraints(
+                Constraint.tt.of(self, offset: 1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of((timeSelectSize * 4) + 5),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        } else {
+            row1.addConstraints(
+                Constraint.tt.of(self, offset: 1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of(timeSelectSize + 2),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        }
+        
         self.row1.state = .expanded
         UIView.animateWithDuration(0.25, animations: {
             self.layoutIfNeeded()
@@ -179,15 +191,24 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     func toggleRow2() {
         self.applyConstraints()
         
-        row2.addConstraints(
-            Constraint.tb.of(row1, offset: 1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of((timeSelectSize * 4) + 5),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        self.row2.toggle()
         
-        self.row2.toggleCellExpand()
-        self.row2.state = .expanded
+        if row2.state == .expanded {
+            row2.addConstraints(
+                Constraint.tb.of(row1, offset: 1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of((timeSelectSize * 4) + 5),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        } else {
+            row2.addConstraints(
+                Constraint.tb.of(row1, offset: -1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of(timeSelectSize + 2),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        }
+        
         UIView.animateWithDuration(0.25, animations: {
             self.layoutIfNeeded()
         })
@@ -196,14 +217,24 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     func toggleRow3() {
         self.applyConstraints()
         
-        row3.addConstraints(
-            Constraint.tb.of(row2, offset: 1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of((timeSelectSize * 4) + 5),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        self.row3.toggle()
         
-        self.row3.toggleCellExpand()
+        if row3.state == .expanded {
+            row3.addConstraints(
+                Constraint.tb.of(row2, offset: 1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of((timeSelectSize * 4) + 5),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        } else {
+            row3.addConstraints(
+                Constraint.tb.of(row2, offset: -1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of(timeSelectSize + 2),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        }
+        
         self.row3.state = .expanded
         UIView.animateWithDuration(0.25, animations: {
             self.layoutIfNeeded()
@@ -213,14 +244,24 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     func toggleRow4() {
         self.applyConstraints()
         
-        row4.addConstraints(
-            Constraint.tb.of(row3, offset: 1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of((timeSelectSize * 4) + 5),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        self.row4.toggle()
         
-        self.row4.toggleCellExpand()
+        if row4.state == .expanded {
+            row4.addConstraints(
+                Constraint.tb.of(row3, offset: 1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of((timeSelectSize * 4) + 5),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        } else {
+            row4.addConstraints(
+                Constraint.tb.of(row3, offset: -1),
+                Constraint.cxcx.of(self),
+                Constraint.h.of(timeSelectSize + 2),
+                Constraint.w.of((timeSelectSize * 6) + 7)
+            )
+        }
+    
         self.row4.state = .expanded
         UIView.animateWithDuration(0.25, animations: {
             self.layoutIfNeeded()

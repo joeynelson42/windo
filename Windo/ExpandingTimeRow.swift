@@ -52,6 +52,16 @@ class ExpandingTimeRow: UIView, ExpandingTimeCellDelegate {
     
     //MARK: Methods
     
+    func toggle() {
+        if state == .closed {
+            state = .expanded
+        } else {
+            state = .closed
+        }
+        
+        toggleCellExpand()
+    }
+    
     func toggleCellExpand() {
         hour1.toggle()
         hour2.toggle()
