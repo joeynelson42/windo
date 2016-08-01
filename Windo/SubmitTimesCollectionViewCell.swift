@@ -30,6 +30,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     var state = SubmitTimesCollectionViewCellState.closed
     var times = [TimeCell]()
     var initialStates = [CGFloat]()
+    var toggledButton = UIButton()
     
     var cellContainer = UIView()
     var tapContainer = UIView()
@@ -154,7 +155,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         cellContainer.addConstraints(
             Constraint.tt.of(self, offset: 50),
             Constraint.bb.of(timeCell23, offset: 1),
-            Constraint.cxcx.of(self),
+            Constraint.ll.of(self, offset: timeSelectSize/2),
             Constraint.w.of((timeSelectSize * 6) + 7)
         )
         
@@ -169,7 +170,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         expandRow1Button.addConstraints(
             Constraint.lr.of(timeCell5, offset: 0),
             Constraint.cyt.of(timeCell0, offset: timeSelectSize/2),
-            Constraint.wh.of(40)
+            Constraint.wh.of(timeSelectSize)
         )
         
         // row2
@@ -178,7 +179,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         expandRow2Button.addConstraints(
             Constraint.cxcx.of(expandRow1Button),
             Constraint.cyt.of(timeCell6, offset: timeSelectSize/2),
-            Constraint.wh.of(40)
+            Constraint.wh.of(timeSelectSize)
         )
         
         // row3
@@ -187,7 +188,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         expandRow3Button.addConstraints(
             Constraint.cxcx.of(expandRow1Button),
             Constraint.cyt.of(timeCell12, offset: timeSelectSize/2),
-            Constraint.wh.of(40)
+            Constraint.wh.of(timeSelectSize)
         )
         
         // row4
@@ -196,7 +197,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         expandRow4Button.addConstraints(
             Constraint.cxcx.of(expandRow1Button),
             Constraint.cyt.of(timeCell18, offset: timeSelectSize/2),
-            Constraint.wh.of(40)
+            Constraint.wh.of(timeSelectSize)
         )
     }
     
@@ -244,9 +245,12 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             selectedRow = rowForIndex(button.tag)
             state = SubmitTimesCollectionViewCellState(rawValue: button.tag)!
             toggleExpandedRowConstraints(button.tag, expanded: true)
+            toggledButton = button
             
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
+                self.toggledButton.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2))
+                self.toggledButton.alpha = 1.0
             }
             
             for cell in selectedRow {
@@ -260,6 +264,8 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             toggleExpandedRowConstraints(button.tag, expanded: false)
             
             UIView.animateWithDuration(0.25) {
+                self.toggledButton.transform = CGAffineTransformIdentity
+                self.toggledButton.alpha = 0.75
                 self.layoutIfNeeded()
             }
             
@@ -280,9 +286,15 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             state = SubmitTimesCollectionViewCellState(rawValue: button.tag)!
             toggleExpandedRowConstraints(button.tag, expanded: true)
             
-            UIView.animateWithDuration(0.25) {
+            UIView.animateWithDuration(0.25, animations: { 
+                self.toggledButton.transform = CGAffineTransformIdentity
+                self.toggledButton.alpha = 0.75
+                button.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2))
+                button.alpha = 1.0
                 self.layoutIfNeeded()
-            }
+                }, completion: { (finished) in
+                    self.toggledButton = button
+            })
             
             for cell in selectedRow {
                 cell.toggle()
