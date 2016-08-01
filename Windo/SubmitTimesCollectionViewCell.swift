@@ -13,22 +13,63 @@ protocol SubmitTimesCollectionViewCellDelegate {
     func timeCellStateChanged(newState: TimeCellState, date: NSDate)
 }
 
-class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
+enum SubmitTimesCollectionViewCellState: Int {
+    case closed = 0
+    case row1Expanded = 1
+    case row2Expanded = 2
+    case row3Expanded = 3
+    case row4Expanded = 4
+}
+
+class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDelegate {
     
     //MARK: Properties
     var delegate: SubmitTimesCollectionViewCellDelegate!
     var date = NSDate()
     var colorTheme = ColorTheme(color: .blue)
+    var state = SubmitTimesCollectionViewCellState.closed
+    var times = [TimeCell]()
+    var initialStates = [CGFloat]()
+    
+    var cellContainer = UIView()
+    var tapContainer = UIView()
+    
+    var cells = [ExpandingTimeCell]()
+    var row1 = [ExpandingTimeCell]()
+    var row2 = [ExpandingTimeCell]()
+    var row3 = [ExpandingTimeCell]()
+    var row4 = [ExpandingTimeCell]()
     
     var expandRow1Button = UIButton()
     var expandRow2Button = UIButton()
     var expandRow3Button = UIButton()
     var expandRow4Button = UIButton()
     
-    var row1 = ExpandingTimeRow()
-    var row2 = ExpandingTimeRow()
-    var row3 = ExpandingTimeRow()
-    var row4 = ExpandingTimeRow()
+    //row 1
+    var timeCell0 = ExpandingTimeCell()
+    var timeCell1 = ExpandingTimeCell()
+    var timeCell2 = ExpandingTimeCell()
+    var timeCell3 = ExpandingTimeCell()
+    var timeCell4 = ExpandingTimeCell()
+    var timeCell5 = ExpandingTimeCell()
+    var timeCell6 = ExpandingTimeCell()
+    var timeCell7 = ExpandingTimeCell()
+    var timeCell8 = ExpandingTimeCell()
+    var timeCell9 = ExpandingTimeCell()
+    var timeCell10 = ExpandingTimeCell()
+    var timeCell11 = ExpandingTimeCell()
+    var timeCell12 = ExpandingTimeCell()
+    var timeCell13 = ExpandingTimeCell()
+    var timeCell14 = ExpandingTimeCell()
+    var timeCell15 = ExpandingTimeCell()
+    var timeCell16 = ExpandingTimeCell()
+    var timeCell17 = ExpandingTimeCell()
+    var timeCell18 = ExpandingTimeCell()
+    var timeCell19 = ExpandingTimeCell()
+    var timeCell20 = ExpandingTimeCell()
+    var timeCell21 = ExpandingTimeCell()
+    var timeCell22 = ExpandingTimeCell()
+    var timeCell23 = ExpandingTimeCell()
     
     //MARK: Inits
     override init(frame: CGRect) {
@@ -40,15 +81,6 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
         super.init(coder: aDecoder)
     }
     
-    // MARK: ExpandingTimeRowDelegate
-    func stateForTime(time: NSDate) -> TimeCellState {
-        return TimeCellState.unselected
-    }
-    
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
-//        delegate.timeCellStateChanged(newState, date: date)
-    }
-    
     // MARK: View Configuration
     override func updateConstraints() {
         super.updateConstraints()
@@ -57,226 +89,285 @@ class SubmitTimesCollectionViewCell: UIView, ExpandingTimeRowDelegate {
     }
     
     func configureSubviews() {
+        
+        cellContainer.backgroundColor = colorTheme.darkColor
+        tapContainer.backgroundColor = UIColor.clearColor()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SubmitTimesCollectionViewCell.handleTap(_:)))
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(SubmitTimesCollectionViewCell.handleTap(_:)))
+        tapContainer.addGestureRecognizer(tap)
+        tapContainer.addGestureRecognizer(pan)
+        
         let times = createTimes()
         
-        clipsToBounds = false
-        
-        row1.state = .closed
-        row1.colorTheme = colorTheme
-        row1.baseTime = times[0]
-        row1.delegate = self
-        
-        row2.state = .closed
-        row2.colorTheme = colorTheme
-        row2.baseTime = times[1]
-        row2.delegate = self
-        
-        row3.state = .closed
-        row3.colorTheme = colorTheme
-        row3.baseTime = times[2]
-        row3.delegate = self
-        
-        row4.state = .closed
-        row4.colorTheme = colorTheme
-        row4.baseTime = times[3]
-        row4.delegate = self
-        
         let expandRowImage = UIImage(named: "expandArrow")
-        let expandRowPassiveAlpha:CGFloat = 1.0
+        let expandRowPassiveAlpha:CGFloat = 0.75
         
         expandRow1Button.setImage(expandRowImage, forState: .Normal)
         expandRow1Button.alpha = expandRowPassiveAlpha
-        expandRow1Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow1), forControlEvents: .TouchUpInside)
+        expandRow1Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow1Button.tag = 1
         
         expandRow2Button.setImage(expandRowImage, forState: .Normal)
         expandRow2Button.alpha = expandRowPassiveAlpha
-        expandRow2Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow2), forControlEvents: .TouchUpInside)
+        expandRow2Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow2Button.tag = 2
         
         expandRow3Button.setImage(expandRowImage, forState: .Normal)
         expandRow3Button.alpha = expandRowPassiveAlpha
-        expandRow3Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow3), forControlEvents: .TouchUpInside)
+        expandRow3Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow3Button.tag = 3
         
         expandRow4Button.setImage(expandRowImage, forState: .Normal)
         expandRow4Button.alpha = expandRowPassiveAlpha
-        expandRow4Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow4), forControlEvents: .TouchUpInside)
+        expandRow4Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow4Button.tag = 4
         
-        addSubviews(row1, row2, row3, row4)
+        row1 = [timeCell0, timeCell1, timeCell2, timeCell3, timeCell4, timeCell5]
+        row2 = [timeCell6, timeCell7, timeCell8, timeCell9, timeCell10, timeCell11]
+        row3 = [timeCell12, timeCell13, timeCell14, timeCell15, timeCell16, timeCell17]
+        row4 = [timeCell18, timeCell19, timeCell20, timeCell21, timeCell22, timeCell23]
+        cells = [timeCell0, timeCell1, timeCell2, timeCell3, timeCell4, timeCell5, timeCell6, timeCell7, timeCell8, timeCell9, timeCell10, timeCell11, timeCell12, timeCell13, timeCell14, timeCell15, timeCell16, timeCell17, timeCell18, timeCell19, timeCell20, timeCell21, timeCell22, timeCell23]
+        
+        addSubview(cellContainer)
+        
+        for (index, cell) in cells.enumerate() {
+            cell.delegate = self
+            cell.baseTime = times[index]
+            cell.colorTheme = colorTheme
+            cell.state = .closed
+            addSubview(cell)
+            
+            self.times.append(cell.hourCell)
+            self.times.append(cell.quarterCell)
+            self.times.append(cell.halfCell)
+            self.times.append(cell.threeQuartersCell)
+        }
+        
         addSubview(expandRow1Button)
         addSubview(expandRow2Button)
         addSubview(expandRow3Button)
         addSubview(expandRow4Button)
+        addSubview(tapContainer)
     }
     
     func applyConstraints() {
-        row1.addConstraints(
-            Constraint.tt.of(self, offset: 1),
+        cellContainer.addConstraints(
+            Constraint.tt.of(self, offset: 50),
+            Constraint.bb.of(timeCell23, offset: 1),
             Constraint.cxcx.of(self),
-            Constraint.h.of(timeSelectSize + 2),
             Constraint.w.of((timeSelectSize * 6) + 7)
         )
+        
+        tapContainer.addConstraints(
+            Constraint.ttbb.of(cellContainer),
+            Constraint.llrr.of(cellContainer)
+        )
+        
+        // row1
+        toggleExpandedRowConstraints(1, expanded: false)
         
         expandRow1Button.addConstraints(
-            Constraint.lr.of(row1, offset: 5),
-            Constraint.cyt.of(row1, offset: timeSelectSize/2),
+            Constraint.lr.of(timeCell5, offset: 0),
+            Constraint.cyt.of(timeCell0, offset: timeSelectSize/2),
             Constraint.wh.of(40)
         )
         
-        row2.addConstraints(
-            Constraint.tb.of(row1, offset: -1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of(timeSelectSize + 2),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        // row2
+        toggleExpandedRowConstraints(2, expanded: false)
         
         expandRow2Button.addConstraints(
-            Constraint.lr.of(row2, offset: 5),
-            Constraint.cyt.of(row2, offset: timeSelectSize/2),
+            Constraint.cxcx.of(expandRow1Button),
+            Constraint.cyt.of(timeCell6, offset: timeSelectSize/2),
             Constraint.wh.of(40)
         )
         
-        row3.addConstraints(
-            Constraint.tb.of(row2, offset: -1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of(timeSelectSize + 2),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        // row3
+        toggleExpandedRowConstraints(3, expanded: false)
         
         expandRow3Button.addConstraints(
-            Constraint.lr.of(row3, offset: 5),
-            Constraint.cyt.of(row3, offset: timeSelectSize/2),
+            Constraint.cxcx.of(expandRow1Button),
+            Constraint.cyt.of(timeCell12, offset: timeSelectSize/2),
             Constraint.wh.of(40)
         )
         
-        row4.addConstraints(
-            Constraint.tb.of(row3, offset: -1),
-            Constraint.cxcx.of(self),
-            Constraint.h.of(timeSelectSize + 2),
-            Constraint.w.of((timeSelectSize * 6) + 7)
-        )
+        // row4
+        toggleExpandedRowConstraints(4, expanded: false)
         
         expandRow4Button.addConstraints(
-            Constraint.lr.of(row4, offset: 5),
-            Constraint.cyt.of(row4, offset: timeSelectSize/2),
+            Constraint.cxcx.of(expandRow1Button),
+            Constraint.cyt.of(timeCell18, offset: timeSelectSize/2),
             Constraint.wh.of(40)
         )
     }
     
-    func toggleRow1() {
-        self.applyConstraints()
-        
-        self.row1.toggle()
-        
-        if row1.state == .expanded {
-            row1.addConstraints(
-                Constraint.tt.of(self, offset: 1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of((timeSelectSize * 4) + 5),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
-        } else {
-            row1.addConstraints(
-                Constraint.tt.of(self, offset: 1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of(timeSelectSize + 2),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
+    // MARK: Methods
+    func handleTap(gestureRecognizer: UIGestureRecognizer) {
+        if initialStates.isEmpty {
+            for time in times {
+                initialStates.append(time.selectedBackground.alpha)
+            }
         }
         
-        self.row1.state = .expanded
-        UIView.animateWithDuration(0.25, animations: {
-            self.layoutIfNeeded()
-        })
-    }
-    
-    func toggleRow2() {
-        self.applyConstraints()
-        
-        self.row2.toggle()
-        
-        if row2.state == .expanded {
-            row2.addConstraints(
-                Constraint.tb.of(row1, offset: 1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of((timeSelectSize * 4) + 5),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
-        } else {
-            row2.addConstraints(
-                Constraint.tb.of(row1, offset: -1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of(timeSelectSize + 2),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
+        for (index, cell) in cells.enumerate() {
+            if cell.frame.contains(gestureRecognizer.locationInView(self)) {
+                
+                var timeCell = TimeCell()
+                var timeIndex = index * 4
+                if cell.hourCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                    timeCell = cell.hourCell
+                } else if cell.quarterCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                    timeCell = cell.quarterCell
+                    timeIndex += 1
+                } else if cell.halfCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                    timeCell = cell.halfCell
+                    timeIndex += 2
+                } else if cell.threeQuartersCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                    timeCell = cell.threeQuartersCell
+                    timeIndex += 3
+                }
+                if timeCell.selectedBackground.alpha  == initialStates[timeIndex] {
+                    timeCell.handleTap()
+                }
+            }
         }
         
-        UIView.animateWithDuration(0.25, animations: {
-            self.layoutIfNeeded()
-        })
-    }
-    
-    func toggleRow3() {
-        self.applyConstraints()
-        
-        self.row3.toggle()
-        
-        if row3.state == .expanded {
-            row3.addConstraints(
-                Constraint.tb.of(row2, offset: 1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of((timeSelectSize * 4) + 5),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
-        } else {
-            row3.addConstraints(
-                Constraint.tb.of(row2, offset: -1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of(timeSelectSize + 2),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
+        if gestureRecognizer.state == .Ended {
+            initialStates.removeAll()
         }
-        
-        self.row3.state = .expanded
-        UIView.animateWithDuration(0.25, animations: {
-            self.layoutIfNeeded()
-        })
     }
     
-    func toggleRow4() {
-        self.applyConstraints()
+    func toggleRow(button: UIButton) {
+        var selectedRow = [ExpandingTimeCell]()
         
-        self.row4.toggle()
-        
-        if row4.state == .expanded {
-            row4.addConstraints(
-                Constraint.tb.of(row3, offset: 1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of((timeSelectSize * 4) + 5),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
+        if state == .closed {
+            // just toggle the row
+            selectedRow = rowForIndex(button.tag)
+            state = SubmitTimesCollectionViewCellState(rawValue: button.tag)!
+            toggleExpandedRowConstraints(button.tag, expanded: true)
+            
+            UIView.animateWithDuration(0.25) {
+                self.layoutIfNeeded()
+            }
+            
+            for cell in selectedRow {
+                cell.toggle()
+            }
+            
+        } else if button.tag == state.rawValue {
+            // close the toggled row
+            selectedRow = rowForIndex(button.tag)
+            state = .closed
+            toggleExpandedRowConstraints(button.tag, expanded: false)
+            
+            UIView.animateWithDuration(0.25) {
+                self.layoutIfNeeded()
+            }
+            
+            for cell in selectedRow {
+                cell.toggle()
+            }
         } else {
-            row4.addConstraints(
-                Constraint.tb.of(row3, offset: -1),
-                Constraint.cxcx.of(self),
-                Constraint.h.of(timeSelectSize + 2),
-                Constraint.w.of((timeSelectSize * 6) + 7)
-            )
+            // toggle the row and close the already toggled row
+            // close the toggled row
+            selectedRow = rowForIndex(state.rawValue)
+            toggleExpandedRowConstraints(state.rawValue, expanded: false)
+            
+            for cell in selectedRow {
+                cell.toggle()
+            }
+            
+            selectedRow = rowForIndex(button.tag)
+            state = SubmitTimesCollectionViewCellState(rawValue: button.tag)!
+            toggleExpandedRowConstraints(button.tag, expanded: true)
+            
+            UIView.animateWithDuration(0.25) {
+                self.layoutIfNeeded()
+            }
+            
+            for cell in selectedRow {
+                cell.toggle()
+            }
         }
-    
-        self.row4.state = .expanded
-        UIView.animateWithDuration(0.25, animations: {
-            self.layoutIfNeeded()
-        })
     }
     
+    // MARK: ExpandingTimeCellDelegate
+    func stateForTime(time: NSDate) -> TimeCellState {
+        return TimeCellState.unselected
+    }
+    
+    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
+        //        delegate.timeCellStateChanged(newState, date: date)
+    }
+
     // MARK: Utilities
     
     func createTimes() -> [NSDate]{
         var times = [NSDate]()
         
-        for n in 0...3 {
-            times.append(NSDate.createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: n * 6, minuteNumber: 0))
+        for n in 0...23 {
+            times.append(NSDate.createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: n, minuteNumber: 0))
         }
         
         return times
+    }
+    
+    func rowForIndex(index: Int) -> [ExpandingTimeCell] {
+        switch index {
+        case 1:
+            return row1
+        case 2:
+            return row2
+        case 3:
+            return row3
+        case 4:
+            return row4
+        default:
+            return []
+        }
+    }
+    
+    func toggleExpandedRowConstraints(rowIndex: Int, expanded: Bool) {
+        var topConstraint: APConstraint!
+        var leftConstraint: APConstraint!
+        let widthConstraint = Constraint.w.of(timeSelectSize)
+        var heightConstraint: APConstraint!
+        
+        if expanded {
+            heightConstraint = Constraint.h.of((timeSelectSize * 4) + 3)
+        } else {
+            heightConstraint = Constraint.h.of(timeSelectSize)
+        }
+        
+        switch rowIndex {
+        case 1:
+            topConstraint = Constraint.tt.of(cellContainer, offset: 1)
+        case 2:
+            topConstraint = Constraint.tb.of(timeCell0, offset: 1)
+        case 3:
+            topConstraint = Constraint.tb.of(timeCell6, offset: 1)
+        case 4:
+            topConstraint = Constraint.tb.of(timeCell12, offset: 1)
+        default:
+            return
+        }
+        
+        let row = rowForIndex(rowIndex)
+        var previousCell = ExpandingTimeCell()
+        for cell in row {
+            if cell == row.first {
+                leftConstraint = Constraint.ll.of(cellContainer, offset: 1)
+            } else {
+                leftConstraint = Constraint.lr.of(previousCell, offset: 1)
+            }
+            
+            cell.addConstraints(
+                topConstraint,
+                leftConstraint,
+                widthConstraint,
+                heightConstraint
+            )
+            
+            previousCell = cell
+        }
     }
 }

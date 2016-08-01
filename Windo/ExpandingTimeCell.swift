@@ -63,7 +63,7 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         halfCell.unhide()
         threeQuartersCell.unhide()
         
-        UIView.animateWithDuration(0.5) {
+        UIView.animateWithDuration(0.25) {
             self.layoutIfNeeded()
         }
     }

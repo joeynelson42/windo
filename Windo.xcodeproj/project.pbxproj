@@ -111,7 +111,6 @@
 		81C88F7A1D49065300436657 /* SubmitTimesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F791D49065300436657 /* SubmitTimesViewController.swift */; };
 		81C88F7C1D49066600436657 /* SubmitTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7B1D49066600436657 /* SubmitTimesView.swift */; };
 		81C88F7E1D4906EC00436657 /* ExpandingTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */; };
-		81C88F801D4906F500436657 /* ExpandingTimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */; };
 		81C88F821D49072700436657 /* SubmitTimesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */; };
 		81C88F851D4907F500436657 /* TimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C88F841D4907F500436657 /* TimeCell.swift */; };
 		81D6FCFB1D36BB8D00BC492A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D6FCFA1D36BB8D00BC492A /* CloudKit.framework */; };
@@ -225,7 +224,6 @@
 		81C88F791D49065300436657 /* SubmitTimesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesViewController.swift; sourceTree = "<group>"; };
 		81C88F7B1D49066600436657 /* SubmitTimesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesView.swift; sourceTree = "<group>"; };
 		81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTimeCell.swift; sourceTree = "<group>"; };
-		81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandingTimeRow.swift; sourceTree = "<group>"; };
 		81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitTimesCollectionViewCell.swift; sourceTree = "<group>"; };
 		81C88F841D4907F500436657 /* TimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeCell.swift; sourceTree = "<group>"; };
 		81D6FCF91D36BB8000BC492A /* Windo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Windo.entitlements; sourceTree = "<group>"; };
@@ -599,7 +597,6 @@
 				81C88F791D49065300436657 /* SubmitTimesViewController.swift */,
 				81C88F7B1D49066600436657 /* SubmitTimesView.swift */,
 				81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */,
-				81C88F7F1D4906F500436657 /* ExpandingTimeRow.swift */,
 				81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */,
 				81C88F841D4907F500436657 /* TimeCell.swift */,
 			);
@@ -840,7 +837,6 @@
 				63A8683F1D006990002978F7 /* UserProfileView.swift in Sources */,
 				6383D8531CA4AD6C008F23B8 /* WindoTimeCell.swift in Sources */,
 				6395B1301C741969008D0ED5 /* AppDelegate.swift in Sources */,
-				81C88F801D4906F500436657 /* ExpandingTimeRow.swift in Sources */,
 				6353E1091CBC1909008117B3 /* EventResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

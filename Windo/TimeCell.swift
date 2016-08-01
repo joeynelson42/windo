@@ -87,9 +87,6 @@ class TimeCell: UIView {
     
     func unhide() {
         state = .unselected
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
-            self.timeButton.alpha = 1.0
-            }, completion: nil)
     }
     
     //MARK: View Configuration
@@ -108,14 +105,18 @@ class TimeCell: UIView {
     func configureSubviews() {
         selectedBackground.backgroundColor = colorTheme.darkColor
         backgroundColor = colorTheme.baseColor
+        var hour = time.hour() % 12
+        if hour == 0 {
+            hour = 12
+        }
         
         if time.minute() == 0 {
-            timeButton.setTitle("\(time.hour())", forState: .Normal)
+            timeButton.setTitle("\(hour)", forState: .Normal)
         } else {
-            timeButton.setTitle("\(time.hour()):\(time.minute())", forState: .Normal)
+            timeButton.setTitle("\(hour):\(time.minute())", forState: .Normal)
         }
         timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        timeButton.titleLabel?.font = UIFont.graphikRegular(18)
+        timeButton.titleLabel?.font = UIFont.graphikRegular(16)
         
         switch state {
         case .selected:
@@ -141,7 +142,7 @@ class TimeCell: UIView {
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         selectedBackground.alpha = 0.0
         
-        timeButton.alpha = 1.0
+        timeButton.alpha = 0.75
     }
     
     func configureHidden() {

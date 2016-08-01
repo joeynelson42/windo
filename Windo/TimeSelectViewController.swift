@@ -94,7 +94,7 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
         timeCollectionView.tag = 0
         timeCollectionView.delegate = self
         timeCollectionView.dataSource = self
-        timeCollectionView.registerClass(TimeSelectCollectionViewCell.self, forCellWithReuseIdentifier: "timeSelectCell")
+        timeCollectionView.registerClass(SubmitTimesCollectionViewCell.self, forCellWithReuseIdentifier: "timeSelectCell")
         timeCollectionView.backgroundColor = UIColor.blue()
         timeCollectionView.showsVerticalScrollIndicator = false
         timeCollectionView.showsHorizontalScrollIndicator = false
@@ -149,7 +149,7 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if collectionView.tag == 0 {
-            let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! TimeSelectCollectionViewCell
+            let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! SubmitTimesCollectionViewCell
             cell.backgroundColor = UIColor.clearColor()
             
             var selectedTimeIndices = [Int]()
@@ -168,9 +168,9 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
                 }
             }
             
-            cell.delegate = self
-            cell.configureTimes()
-            cell.updateTimesStates(selectedTimeIndices)
+//            cell.delegate = self
+//            cell.configureTimes()
+//            cell.updateTimesStates(selectedTimeIndices)
             
             return cell
         }

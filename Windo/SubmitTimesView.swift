@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SubmitTimesView: UIView, ExpandingTimeRowDelegate{
+class SubmitTimesView: UIView{
     
     //MARK: Properties
     var rows = SubmitTimesCollectionViewCell()
@@ -43,9 +43,9 @@ class SubmitTimesView: UIView, ExpandingTimeRowDelegate{
     func applyConstraints(){
         rows.addConstraints(
             Constraint.tt.of(self, offset: 100),
-            Constraint.ll.of(self, offset: 0),
-            Constraint.h.of((timeSelectSize + 2) * 4),
-            Constraint.w.of(screenWidth)
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(screenHeight)
         )
     }
     
