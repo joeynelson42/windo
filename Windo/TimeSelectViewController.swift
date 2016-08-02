@@ -160,6 +160,9 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
                 cell.updateWithDate(createTabBar.selectedDates[indexPath.row - 1])
             }
             cell.delegate = self
+            for time in cell.times {
+                time.updateWithState(stateForTime(time.time))
+            }
             
             return cell
         }
@@ -293,24 +296,6 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
 }
 
 extension TimeSelectViewController: SubmitTimesCollectionViewCellDelegate {
-    func updateSelectedTimes(date: NSDate, time: Int) {
-        let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
-        
-        // if AllDays time selected
-        if newTime.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate() {
-            createTabBar.addAllDaysTime(newTime)
-            return
-        }
-        
-        if createTabBar.selectedTimes.contains(newTime){
-            guard let index = createTabBar.selectedTimes.indexOf(newTime) else { return }
-            createTabBar.selectedTimes.removeAtIndex(index)
-        }
-        else {
-            createTabBar.selectedTimes.append(newTime)
-        }
-    }
-    
     func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
         if date.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate() {
             createTabBar.addAllDaysTime(date)

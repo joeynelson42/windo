@@ -25,6 +25,10 @@ extension NSDate{
         return date
     }
     
+    func getWindoDate() -> WindoDate {
+        return WindoDate(year: self.year(), month: self.month(), day: self.day(), hour: self.hour(), minute: self.minute(), second: 0)
+    }
+    
     func getFormattedDate(endDate: NSDate) -> String{
         var date = ""
         if(self.fullDate() == endDate.fullDate()){

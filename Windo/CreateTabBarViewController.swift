@@ -85,7 +85,7 @@ class CreateTabBarController: UITabBarController {
             eventMembers.append(invitee.phoneNumber)
         }
         
-        let _ = Event(id: eventID, name: eventName, location: eventLocation, members: eventMembers, eventCreator: userInvitee.phoneNumber, dateCreated: NSDate(), eventWindo: eventWindo.ID, memberSubmissions: [], possibleTimes: [])
+        let _ = Event(id: eventID, name: eventName, location: eventLocation, members: eventMembers, eventCreator: userInvitee.phoneNumber, dateCreated: NSDate(), eventWindo: eventWindo.ID, memberSubmissions: [], possibleTimes: [], timeZone: "")
         
 //        CloudManager.sharedManager save event!
     }

@@ -85,7 +85,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     // MARK: View Configuration
     override func prepareForReuse() {
         for time in times {
-            time.updateWithState(delegate.stateForTime(time.time))
+            time.updateWithState(.unselected)
         }
     }
     
@@ -243,7 +243,6 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
                 }
                 if timeCell.selectedBackground.alpha  == initialStates[timeIndex] {
                     timeCell.handleTap()
-                    print(timeCell.time)
                 }
             }
         }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol TimeCellDelegate {
     func timeCellStateChanged(newState: TimeCellState, date: NSDate)
+//    func stateForTime(time: NSDate) -> TimeCellState
 }
 
 enum TimeCellState: Int {
@@ -43,6 +44,81 @@ class TimeCell: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: View Configuration
+    
+    override func updateConstraints() {
+        super.updateConstraints()
+        configureSubviews()
+        applyConstraints()
+    }
+    
+    func applyConstraints() {
+        selectedBackground.fillSuperview()
+        timeButton.fillSuperview()
+    }
+    
+    func configureSubviews() {
+        selectedBackground.backgroundColor = colorTheme.darkColor
+        
+        backgroundColor = colorTheme.baseColor
+        if time.minute() == 0 {
+            backgroundColor = colorTheme.lightColor
+        }
+        var hour = time.hour() % 12
+        if hour == 0 {
+            hour = 12
+        }
+        
+        if time.minute() == 0 {
+            timeButton.setTitle("\(hour)", forState: .Normal)
+        } else {
+            timeButton.setTitle("\(hour):\(time.minute())", forState: .Normal)
+        }
+        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        timeButton.titleLabel?.font = UIFont.graphikRegular(16)
+        
+        switch state {
+        case .selected:
+            configureSelected()
+        case .unselected:
+            configureUnselected()
+        case .hidden:
+            configureHidden()
+        case .unavailable:
+            configureUnavailable()
+        }
+        
+        addSubview(selectedBackground)
+        addSubview(timeButton)
+    }
+    
+    func configureSelected() {
+        selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        selectedBackground.alpha = 1.0
+        
+        timeButton.alpha = 1.0
+    }
+    
+    func configureUnselected() {
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.alpha = 0.0
+        
+        timeButton.alpha = 0.75
+    }
+    
+    func configureHidden() {
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.alpha = 0.0
+        
+        timeButton.alpha = 0.0
+    }
+    
+    func configureUnavailable() {
+        backgroundColor = UIColor.lightGrayColor()
+        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.alpha = 0.0
     }
     
     //MARK: Methods
@@ -80,79 +156,6 @@ class TimeCell: UIView {
             self.selectedBackground.alpha = 0.0
             self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
             }, completion: nil)
-    }
-    
-    func unhide() {
-        state = .unselected
-    }
-    
-    //MARK: View Configuration
-    
-    override func updateConstraints() {
-        super.updateConstraints()
-        configureSubviews()
-        applyConstraints()
-    }
-    
-    func applyConstraints() {
-        selectedBackground.fillSuperview()
-        timeButton.fillSuperview()
-    }
-    
-    func configureSubviews() {
-        selectedBackground.backgroundColor = colorTheme.darkColor
-        backgroundColor = colorTheme.baseColor
-        var hour = time.hour() % 12
-        if hour == 0 {
-            hour = 12
-        }
-        
-        if time.minute() == 0 {
-            timeButton.setTitle("\(hour)", forState: .Normal)
-        } else {
-            timeButton.setTitle("\(hour):\(time.minute())", forState: .Normal)
-        }
-        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        timeButton.titleLabel?.font = UIFont.graphikRegular(16)
-        
-        switch state {
-        case .selected:
-            configureSelected()
-        case .unselected:
-            configureUnselected()
-        case .hidden:
-            configureHidden()
-        case .unavailable:
-            configureUnavailable()
-        }
-        
-        addSubview(selectedBackground)
-        addSubview(timeButton)
-    }
-    
-    func configureSelected() {
-        selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
-        selectedBackground.alpha = 1.0
-    }
-    
-    func configureUnselected() {
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        selectedBackground.alpha = 0.0
-        
-        timeButton.alpha = 0.75
-    }
-    
-    func configureHidden() {
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        selectedBackground.alpha = 0.0
-        
-        timeButton.alpha = 0.0
-    }
-    
-    func configureUnavailable() {
-        backgroundColor = UIColor.lightGrayColor()
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
-        selectedBackground.alpha = 0.0
     }
     
     func updateWithState(state: TimeCellState) {
