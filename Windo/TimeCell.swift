@@ -22,12 +22,7 @@ enum TimeCellState: Int {
 class TimeCell: UIView {
     
     //MARK: Properties
-    var state = TimeCellState.unselected {
-        didSet {
-            guard let _ = delegate else { return }
-            delegate.timeCellStateChanged(state, date: self.time)
-        }
-    }
+    var state = TimeCellState.unselected
     
     var colorTheme = ColorTheme(color: .blue)
     var time = NSDate()
@@ -56,8 +51,10 @@ class TimeCell: UIView {
         switch state {
         case .selected:
             handleDeselect()
+            delegate.timeCellStateChanged(.unselected, date: time)
         case .unselected:
             handleSelect()
+            delegate.timeCellStateChanged(.selected, date: time)
         case .hidden:
             break
         case .unavailable:

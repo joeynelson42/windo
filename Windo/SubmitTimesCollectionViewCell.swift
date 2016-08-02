@@ -308,7 +308,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     }
     
     func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
-        //        delegate.timeCellStateChanged(newState, date: date)
+        delegate.timeCellStateChanged(newState, date: date)
     }
 
     // MARK: Utilities

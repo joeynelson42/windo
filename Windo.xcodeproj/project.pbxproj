@@ -277,7 +277,6 @@
 		6328512D1D348483009F5D43 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				6395B12F1C741969008D0ED5 /* AppDelegate.swift */,
 				6328512B1D348406009F5D43 /* AppViewController.swift */,
 				6328512E1D34885B009F5D43 /* SplashScreenView.swift */,
 			);
@@ -396,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				81D6FCF91D36BB8000BC492A /* Windo.entitlements */,
+				6395B12F1C741969008D0ED5 /* AppDelegate.swift */,
 				6328512D1D348483009F5D43 /* Navigation */,
 				6395B15C1C742181008D0ED5 /* WindoConstants.swift */,
 				632A4F611CB312CE001D6983 /* Tutorial */,

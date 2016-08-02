@@ -168,7 +168,7 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
                 }
             }
             
-//            cell.delegate = self
+            cell.delegate = self
 //            cell.configureTimes()
 //            cell.updateTimesStates(selectedTimeIndices)
             
@@ -303,7 +303,7 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
     }
 }
 
-extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
+extension TimeSelectViewController: SubmitTimesCollectionViewCellDelegate {
     func updateSelectedTimes(date: NSDate, time: Int) {
         let newTime = createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: time)
         
@@ -319,6 +319,31 @@ extension TimeSelectViewController: TimeSelectCollectionViewCellDelegate {
         }
         else {
             createTabBar.selectedTimes.append(newTime)
+        }
+    }
+    
+    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
+        if date.fullDate() == createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0).fullDate() {
+            createTabBar.addAllDaysTime(date)
+            return
+        }
+        
+        switch newState {
+        case .selected:
+            createTabBar.selectedTimes.append(date)
+        case .unselected:
+            guard let index = createTabBar.selectedTimes.indexOf(date) else { return }
+            createTabBar.selectedTimes.removeAtIndex(index)
+        default:
+            break
+        }
+    }
+    
+    func stateForTime(time: NSDate) -> TimeCellState {
+        if createTabBar.selectedTimes.contains(time) {
+            return TimeCellState.selected
+        } else {
+            return TimeCellState.unselected
         }
     }
     
