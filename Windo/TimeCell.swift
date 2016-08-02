@@ -154,4 +154,18 @@ class TimeCell: UIView {
         selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         selectedBackground.alpha = 0.0
     }
+    
+    func updateWithState(state: TimeCellState) {
+        self.state = state
+        switch state {
+        case .selected:
+            configureSelected()
+        case .unselected:
+            configureUnselected()
+        case .unavailable:
+            configureUnavailable()
+        case .hidden:
+            configureHidden()
+        }
+    }
 }

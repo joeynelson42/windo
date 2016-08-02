@@ -25,7 +25,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     //MARK: Properties
     var delegate: SubmitTimesCollectionViewCellDelegate!
-    var date = NSDate()
+    var date: NSDate!
     var colorTheme = ColorTheme(color: .blue)
     var state = SubmitTimesCollectionViewCellState.closed
     var times = [TimeCell]()
@@ -75,7 +75,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     //MARK: Inits
     override init(frame: CGRect) {
         super.init(frame: CGRectZero)
-        self.updateConstraints()
+        setNeedsUpdateConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,6 +83,12 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     }
     
     // MARK: View Configuration
+    override func prepareForReuse() {
+        for time in times {
+            time.updateWithState(delegate.stateForTime(time.time))
+        }
+    }
+    
     override func updateConstraints() {
         super.updateConstraints()
         configureSubviews()
@@ -130,7 +136,6 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         cells = [timeCell0, timeCell1, timeCell2, timeCell3, timeCell4, timeCell5, timeCell6, timeCell7, timeCell8, timeCell9, timeCell10, timeCell11, timeCell12, timeCell13, timeCell14, timeCell15, timeCell16, timeCell17, timeCell18, timeCell19, timeCell20, timeCell21, timeCell22, timeCell23]
         
         addSubview(cellContainer)
-        
         for (index, cell) in cells.enumerate() {
             cell.delegate = self
             cell.baseTime = times[index]
@@ -228,6 +233,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
                 }
                 if timeCell.selectedBackground.alpha  == initialStates[timeIndex] {
                     timeCell.handleTap()
+                    print(timeCell.time)
                 }
             }
         }
@@ -304,7 +310,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     // MARK: ExpandingTimeCellDelegate
     func stateForTime(time: NSDate) -> TimeCellState {
-        return TimeCellState.unselected
+        return delegate.stateForTime(time)
     }
     
     func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
@@ -317,7 +323,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         var times = [NSDate]()
         
         for n in 0...23 {
-            times.append(NSDate.createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: n, minuteNumber: 0))
+            times.append(createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: n, minuteNumber: 0))
         }
         
         return times
@@ -381,5 +387,19 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             
             previousCell = cell
         }
+    }
+    
+    func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> NSDate {
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components = NSDateComponents()
+        components.year = yearNumber
+        components.month = monthNumber
+        components.day = dayNumber
+        components.hour = hourNumber
+        components.minute = minuteNumber
+        components.second = 0
+        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        
+        return date
     }
 }

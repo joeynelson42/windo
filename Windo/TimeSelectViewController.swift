@@ -152,7 +152,6 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! SubmitTimesCollectionViewCell
             cell.backgroundColor = UIColor.clearColor()
             
-            var selectedTimeIndices = [Int]()
             if indexPath.row == 0 {
                 let date = createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0)
                 cell.date = date
@@ -160,17 +159,7 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             else {
                 cell.date = createTabBar.selectedDates[indexPath.row - 1]
             }
-            
-            for time in createTabBar.selectedTimes {
-                if time.fullDate() == cell.date.fullDate() {
-                    let selectedTime = time.hour()
-                    selectedTimeIndices.append(selectedTime)
-                }
-            }
-            
             cell.delegate = self
-//            cell.configureTimes()
-//            cell.updateTimesStates(selectedTimeIndices)
             
             return cell
         }
@@ -266,8 +255,8 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             blue = rgb.blue
             
             timeCollectionView.backgroundColor = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
-            timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
-            timeSelectView.helpLabel.alpha = tempPercent
+//            timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
+//            timeSelectView.helpLabel.alpha = tempPercent
             
         }
     }
