@@ -25,7 +25,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     //MARK: Properties
     var delegate: SubmitTimesCollectionViewCellDelegate!
-    var date: NSDate!
+    var date = NSDate()
     var colorTheme = ColorTheme(color: .blue)
     var state = SubmitTimesCollectionViewCellState.closed
     var times = [TimeCell]()
@@ -75,7 +75,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     //MARK: Inits
     override init(frame: CGRect) {
         super.init(frame: CGRectZero)
-        setNeedsUpdateConstraints()
+        self.updateConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -207,6 +207,16 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     }
     
     // MARK: Methods
+    func updateWithDate(date: NSDate) {
+        self.date = date
+        
+        let times = createTimes()
+        
+        for (index, cell) in cells.enumerate() {
+            cell.baseTime = times[index]
+        }
+    }
+    
     func handleTap(gestureRecognizer: UIGestureRecognizer) {
         if initialStates.isEmpty {
             for time in times {

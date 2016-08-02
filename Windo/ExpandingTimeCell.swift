@@ -25,7 +25,11 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     var state = ExpandingTimeCellState.closed
     
     var colorTheme = ColorTheme(color: .blue)
-    var baseTime = NSDate()
+    var baseTime = NSDate() {
+        didSet {
+            self.updateTimes()
+        }
+    }
     var delegate: ExpandingTimeCellDelegate!
     
     var hourCell = TimeCell()
@@ -163,6 +167,15 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
                 Constraint.wh.of(timeSelectSize)
             )
         }
+    }
+    
+    func updateTimes() {
+        let times = createTimes()
+        
+        hourCell.time = times[0]
+        quarterCell.time = times[1]
+        halfCell.time = times[2]
+        threeQuartersCell.time = times[3]
     }
     
     // MARK: Utilities

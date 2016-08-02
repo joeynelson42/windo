@@ -154,10 +154,10 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             
             if indexPath.row == 0 {
                 let date = createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0)
-                cell.date = date
+                cell.updateWithDate(date)
             }
             else {
-                cell.date = createTabBar.selectedDates[indexPath.row - 1]
+                cell.updateWithDate(createTabBar.selectedDates[indexPath.row - 1])
             }
             cell.delegate = self
             
