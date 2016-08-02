@@ -63,10 +63,6 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         
         applyConstraints()
         
-//        quarterCell.unhide()
-//        halfCell.unhide()
-//        threeQuartersCell.unhide()
-        
         UIView.animateWithDuration(0.25) {
             self.layoutIfNeeded()
         }

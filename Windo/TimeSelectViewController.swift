@@ -20,7 +20,7 @@ class TimeSelectViewController: UIViewController {
     var scrubberScrolling = false
     var hasLaidOutViews = false
     var scrubberSelectedIndex = 1
-    var expandedRowIndex = 0
+    var cellExpandedRowIndex = 0
     
     var red:CGFloat = 0
     var green:CGFloat = 0
@@ -153,9 +153,11 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             let cell = timeCollectionView.dequeueReusableCellWithReuseIdentifier("timeSelectCell", forIndexPath: indexPath) as! SubmitTimesCollectionViewCell
             cell.backgroundColor = UIColor.clearColor()
             
+            var expandRowImage = UIImage(named: "expandArrow")
             if indexPath.row == 0 {
-                let date = createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0)
+                let date = NSDate.createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0, minuteNumber: 0)
                 cell.updateWithDate(date)
+                expandRowImage = UIImage(named: "blueLeftArrow")
             }
             else {
                 cell.updateWithDate(createTabBar.selectedDates[indexPath.row - 1])
@@ -164,6 +166,10 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             for time in cell.times {
                 time.updateWithState(stateForTime(time.time))
             }
+            cell.expandRow1Button.setImage(expandRowImage, forState: .Normal)
+            cell.expandRow2Button.setImage(expandRowImage, forState: .Normal)
+            cell.expandRow3Button.setImage(expandRowImage, forState: .Normal)
+            cell.expandRow4Button.setImage(expandRowImage, forState: .Normal)
             
             return cell
         }
@@ -252,11 +258,11 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             } else {
                 tempPercent = 1.0 //this is probably the wrong number
             }
-            let rgb = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
+            let backgroundRGB = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
             
-            red = rgb.red
-            green = rgb.green
-            blue = rgb.blue
+            red = backgroundRGB.red
+            green = backgroundRGB.green
+            blue = backgroundRGB.blue
             
             timeCollectionView.backgroundColor = UIColor(red:red/256, green:green/256, blue:blue/256, alpha: 1.0)
 //            timeSelectView.allDaysHelpLabel.alpha = 1 - tempPercent
@@ -323,7 +329,11 @@ extension TimeSelectViewController: SubmitTimesCollectionViewCellDelegate {
     }
     
     func rowExpanded(rowIndex: Int) {
-        expandedRowIndex = rowIndex
+        cellExpandedRowIndex = rowIndex
+    }
+    
+    func expandedRowIndex() -> Int {
+        return cellExpandedRowIndex
     }
     
     func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int) -> NSDate {

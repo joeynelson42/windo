@@ -166,7 +166,7 @@
 		6392EF6C1C976740003C29CE /* EventDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		6392EF6E1C97674F003C29CE /* EventMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMessagesViewController.swift; sourceTree = "<group>"; };
 		6392EF701C97675A003C29CE /* EventMessagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMessagesView.swift; sourceTree = "<group>"; };
-		6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectCollectionViewCell.swift; sourceTree = "<group>"; };
+		6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSelectCollectionViewCell.swift; path = Windo/TimeSelectCollectionViewCell.swift; sourceTree = "<group>"; };
 		6395B12C1C741969008D0ED5 /* Windo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Windo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6395B12F1C741969008D0ED5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6395B1311C741969008D0ED5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		63EA86C41CA9A4640046963B /* WindoKeyboardAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindoKeyboardAccessoryView.swift; sourceTree = "<group>"; };
 		63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectViewController.swift; sourceTree = "<group>"; };
 		63FF08EF1CB4483500255A4A /* TimeSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSelectView.swift; sourceTree = "<group>"; };
-		63FF08F21CB46EE100255A4A /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		63FF08F21CB46EE100255A4A /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeView.swift; path = Windo/TimeView.swift; sourceTree = "<group>"; };
 		6DC387DACDCA7B78D21DBE7D /* libPods-Windo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Windo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81120E6E1D47DC4700F6AB5E /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		8182E1EE1D37F07300F87679 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
@@ -321,6 +321,8 @@
 		6353E1071CBC14E1008117B3 /* Deprecated (but still loved) */ = {
 			isa = PBXGroup;
 			children = (
+				6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */,
+				63FF08F21CB46EE100255A4A /* TimeView.swift */,
 				6395B1541C741CB6008D0ED5 /* Login */,
 				63A28B0E1CA33555000826DC /* Invite (Deprecated) */,
 				630D7BEB1CA87AB600D85C86 /* Old Time Selection */,
@@ -587,9 +589,10 @@
 			children = (
 				63FF08ED1CB4482D00255A4A /* TimeSelectViewController.swift */,
 				63FF08EF1CB4483500255A4A /* TimeSelectView.swift */,
-				6394638A1CB6B5C2008438C9 /* TimeSelectCollectionViewCell.swift */,
-				63FF08F21CB46EE100255A4A /* TimeView.swift */,
 				630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */,
+				81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */,
+				81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */,
+				81C88F841D4907F500436657 /* TimeCell.swift */,
 			);
 			name = "Time Selection";
 			sourceTree = "<group>";
@@ -599,9 +602,6 @@
 			children = (
 				81C88F791D49065300436657 /* SubmitTimesViewController.swift */,
 				81C88F7B1D49066600436657 /* SubmitTimesView.swift */,
-				81C88F811D49072700436657 /* SubmitTimesCollectionViewCell.swift */,
-				81C88F7D1D4906EC00436657 /* ExpandingTimeCell.swift */,
-				81C88F841D4907F500436657 /* TimeCell.swift */,
 			);
 			name = SubmitTimes;
 			sourceTree = "<group>";

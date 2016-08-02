@@ -12,6 +12,7 @@ protocol SubmitTimesCollectionViewCellDelegate {
     func stateForTime(time: NSDate) -> TimeCellState
     func timeCellStateChanged(newState: TimeCellState, date: NSDate)
     func rowExpanded(rowIndex: Int)
+    func expandedRowIndex() -> Int
 }
 
 enum SubmitTimesCollectionViewCellState: Int {
@@ -87,8 +88,10 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     override func prepareForReuse() {
         for time in times {
             time.updateWithState(.unselected)
-//            applyConstraints()
-//            layoutIfNeeded()
+        }
+        
+        if state.rawValue != delegate.expandedRowIndex() {
+            expandRowAtIndex(delegate.expandedRowIndex())
         }
     }
     
@@ -109,25 +112,20 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         
         let times = createTimes()
         
-        let expandRowImage = UIImage(named: "expandArrow")
         let expandRowPassiveAlpha:CGFloat = 0.75
         
-        expandRow1Button.setImage(expandRowImage, forState: .Normal)
         expandRow1Button.alpha = expandRowPassiveAlpha
         expandRow1Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
         expandRow1Button.tag = 1
         
-        expandRow2Button.setImage(expandRowImage, forState: .Normal)
         expandRow2Button.alpha = expandRowPassiveAlpha
         expandRow2Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
         expandRow2Button.tag = 2
         
-        expandRow3Button.setImage(expandRowImage, forState: .Normal)
         expandRow3Button.alpha = expandRowPassiveAlpha
         expandRow3Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
         expandRow3Button.tag = 3
         
-        expandRow4Button.setImage(expandRowImage, forState: .Normal)
         expandRow4Button.alpha = expandRowPassiveAlpha
         expandRow4Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
         expandRow4Button.tag = 4
@@ -163,7 +161,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         cellContainer.addConstraints(
             Constraint.tt.of(self, offset: 50),
             Constraint.bb.of(timeCell23, offset: 1),
-            Constraint.ll.of(self, offset: timeSelectSize/2),
+            Constraint.rr.of(self, offset: -timeSelectSize),
             Constraint.w.of((timeSelectSize * 6) + 7)
         )
         
@@ -223,6 +221,8 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     func expandRowAtIndex(rowIndex: Int) {
         if let button = buttonForIndex(rowIndex) {
             toggleRow(button)
+        } else {
+            toggleRow(toggledButton)
         }
     }
     
@@ -325,6 +325,10 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
         
         delegate.rowExpanded(state.rawValue)
+    }
+    
+    func expandButtonAction(button: UIButton) {
+        
     }
     
     // MARK: ExpandingTimeCellDelegate
