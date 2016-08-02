@@ -99,7 +99,7 @@ class CreateTabBarController: UITabBarController {
             selectedTimes.removeAtIndex(index)
             
             for day in selectedDates {
-                newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour())
+                newTime = NSDate.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
                 
                 if selectedTimes.contains(newTime){
                     guard let index = selectedTimes.indexOf(newTime) else { return }
@@ -110,7 +110,7 @@ class CreateTabBarController: UITabBarController {
         else {
             selectedTimes.append(newTime)
             for day in selectedDates {
-                newTime = createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour())
+                newTime = NSDate.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
                 if !selectedTimes.contains(newTime){
                     selectedTimes.append(newTime)
                 }
@@ -132,19 +132,5 @@ class CreateTabBarController: UITabBarController {
                 selectedTimes.removeAtIndex(index)
             }
         }
-    }
-    
-    func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int) -> NSDate {
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let components = NSDateComponents()
-        components.year = yearNumber
-        components.month = monthNumber
-        components.day = dayNumber
-        components.hour = hourNumber
-        components.minute = 0
-        components.second = 0
-        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
-        
-        return date
     }
 }

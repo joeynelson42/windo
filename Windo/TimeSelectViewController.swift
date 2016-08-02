@@ -20,6 +20,7 @@ class TimeSelectViewController: UIViewController {
     var scrubberScrolling = false
     var hasLaidOutViews = false
     var scrubberSelectedIndex = 1
+    var expandedRowIndex = 0
     
     var red:CGFloat = 0
     var green:CGFloat = 0
@@ -319,6 +320,10 @@ extension TimeSelectViewController: SubmitTimesCollectionViewCellDelegate {
         } else {
             return TimeCellState.unselected
         }
+    }
+    
+    func rowExpanded(rowIndex: Int) {
+        expandedRowIndex = rowIndex
     }
     
     func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int) -> NSDate {

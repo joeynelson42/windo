@@ -11,6 +11,7 @@ import UIKit
 protocol SubmitTimesCollectionViewCellDelegate {
     func stateForTime(time: NSDate) -> TimeCellState
     func timeCellStateChanged(newState: TimeCellState, date: NSDate)
+    func rowExpanded(rowIndex: Int)
 }
 
 enum SubmitTimesCollectionViewCellState: Int {
@@ -86,6 +87,8 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     override func prepareForReuse() {
         for time in times {
             time.updateWithState(.unselected)
+//            applyConstraints()
+//            layoutIfNeeded()
         }
     }
     
@@ -217,6 +220,12 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
     }
     
+    func expandRowAtIndex(rowIndex: Int) {
+        if let button = buttonForIndex(rowIndex) {
+            toggleRow(button)
+        }
+    }
+    
     func handleTap(gestureRecognizer: UIGestureRecognizer) {
         if initialStates.isEmpty {
             for time in times {
@@ -271,7 +280,6 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             for cell in selectedRow {
                 cell.toggle()
             }
-            
         } else if button.tag == state.rawValue {
             // close the toggled row
             selectedRow = rowForIndex(button.tag)
@@ -315,6 +323,8 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
                 cell.toggle()
             }
         }
+        
+        delegate.rowExpanded(state.rawValue)
     }
     
     // MARK: ExpandingTimeCellDelegate
@@ -336,6 +346,21 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
         
         return times
+    }
+    
+    func buttonForIndex(index: Int) -> UIButton? {
+        switch index {
+        case 1:
+            return expandRow1Button
+        case 2:
+            return expandRow2Button
+        case 3:
+            return expandRow3Button
+        case 4:
+            return expandRow4Button
+        default:
+            return nil
+        }
     }
     
     func rowForIndex(index: Int) -> [ExpandingTimeCell] {
