@@ -16,4 +16,8 @@ extension UIFont {
     class func graphikRegular(fontSize: CGFloat) -> UIFont {
         return UIFont(name: "Graphik-Regular", size: fontSize)!
     }
+    
+    class func graphikLight(fontSize: CGFloat) -> UIFont {
+        return UIFont(name: "Graphik-Light", size: fontSize)!
+    }
 }

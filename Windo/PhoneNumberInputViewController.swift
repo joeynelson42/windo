@@ -218,6 +218,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
         AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
         CloudManager.sharedManager.getUserWithPhoneNumber(phoneNumber, completionHandler: { (success, user) in
             if success {
+                UserManager.sharedManager.user = user
                 let homeVC = HomeViewController()
                 let navVC = UINavigationController(rootViewController: homeVC)
                 AppController.sharedController.displayContentController(navVC)
@@ -225,6 +226,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
             } else {
                 CloudManager.sharedManager.saveNewUser(userFromInput, completionHandler: { (user, success) in
                     if success {
+                        UserManager.sharedManager.user = user
                         let homeVC = HomeViewController()
                         let navVC = UINavigationController(rootViewController: homeVC)
                         AppController.sharedController.displayContentController(navVC)
