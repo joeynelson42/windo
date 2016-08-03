@@ -25,34 +25,16 @@ class SettingsViewController: UIViewController {
     
     func addTargets() {
         settingsView.inviteFriendsCell.gr.addTarget(self, action: #selector(SettingsViewController.inviteFriendsTapped))
-        settingsView.inviteFriendsCell.titleButton.addTarget(.TouchUpInside) { 
-            self.inviteFriendsTapped()
-        }
-        
+
         settingsView.notificationsCell.gr.addTarget(self, action: #selector(SettingsViewController.notificationsTapped))
-        settingsView.notificationsCell.titleButton.addTarget(.TouchUpInside) {
-            self.notificationsTapped()
-        }
         
         settingsView.accountCell.gr.addTarget(self, action: #selector(SettingsViewController.accountTapped))
-        settingsView.accountCell.titleButton.addTarget(.TouchUpInside) {
-            self.accountTapped()
-        }
         
         settingsView.privacyCell.gr.addTarget(self, action: #selector(SettingsViewController.privacyTapped))
-        settingsView.privacyCell.titleButton.addTarget(.TouchUpInside) {
-            self.privacyTapped()
-        }
         
         settingsView.supportCell.gr.addTarget(self, action: #selector(SettingsViewController.supportTapped))
-        settingsView.supportCell.titleButton.addTarget(.TouchUpInside) {
-            self.supportTapped()
-        }
         
         settingsView.signOutCell.gr.addTarget(self, action: #selector(SettingsViewController.signOutTapped))
-        settingsView.signOutCell.titleButton.addTarget(.TouchUpInside) {
-            self.signOutTapped()
-        }
     }
     
     func inviteFriendsTapped() {
@@ -60,11 +42,11 @@ class SettingsViewController: UIViewController {
     }
     
     func notificationsTapped() {
-        
+        settingsView.toggleNotifications()
     }
     
     func accountTapped() {
-        
+        settingsView.toggleAccount()
     }
     
     func privacyTapped() {

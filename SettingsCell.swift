@@ -8,14 +8,21 @@
 
 import UIKit
 
+enum SettingsCellState {
+    case closed
+    case expanded
+}
+
 class SettingsCell: UIView {
     
     //MARK: Properties
     
-    let titleButton = UIButton()
+    let titleLabel = UILabel()
     let expandingSeparator = UIView()
+    let tapContainer = UIView()
     let gr = UITapGestureRecognizer()
     
+    var state = SettingsCellState.closed
     var colorTheme: ColorTheme!
     
     //MARK: Inits
@@ -43,30 +50,58 @@ class SettingsCell: UIView {
     
     func configureSubviews(){
         backgroundColor = colorTheme.baseColor
+        clipsToBounds = false
         
-        addGestureRecognizer(gr)
+        tapContainer.addGestureRecognizer(gr)
         
-        titleButton.titleLabel?.font = UIFont.graphikRegular(18)
-        titleButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleButton.setTitleColor(colorTheme.darkColor, forState: .Highlighted)
+        titleLabel.font = UIFont.graphikRegular(18)
+        titleLabel.textColor = UIColor.whiteColor()
         
         expandingSeparator.backgroundColor = colorTheme.darkColor
-        addSubview(titleButton)
+        addSubview(titleLabel)
         addSubview(expandingSeparator)
+        addSubview(tapContainer)
     }
     
     func applyConstraints(){
-        titleButton.addConstraints(
-            Constraint.cycy.of(self),
+        titleLabel.addConstraints(
+            Constraint.cyt.of(self, offset: 30),
             Constraint.ll.of(self, offset: 30)
         )
         
         expandingSeparator.addConstraints(
-            Constraint.bb.of(self),
+            Constraint.tcy.of(titleLabel, offset: 29),
             Constraint.ll.of(self, offset: 20),
             Constraint.h.of(1),
             Constraint.w.of(screenWidth - 20)
         )
+        
+        tapContainer.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.llrr.of(self),
+            Constraint.h.of(60)
+        )
+    }
+    
+    // MARK: Methods
+    
+    func toggleSeparatorWithHeight(height: CGFloat) {
+        var titleColor = UIColor.mikeBlue(0.55)
+        if height == 0 {
+            titleColor = UIColor.whiteColor()
+        }
+        
+        expandingSeparator.addConstraints(
+            Constraint.tcy.of(titleLabel, offset: 29),
+            Constraint.ll.of(self, offset: 20),
+            Constraint.h.of(height + 1),
+            Constraint.w.of(screenWidth - 20)
+        )
+        
+        UIView.animateWithDuration(0.5) {
+            self.titleLabel.textColor = titleColor
+            self.layoutIfNeeded()
+        }
     }
     
     // MARK: Utilities

@@ -9,6 +9,12 @@
 
 import UIKit
 
+enum SettingsViewState {
+    case closed
+    case notificationsExpanded
+    case accountExpanded
+}
+
 class SettingsView: UIView {
     
     //MARK: Properties
@@ -29,6 +35,10 @@ class SettingsView: UIView {
     var colorTheme: ColorTheme!
     
     var scrollViewHeight: CGFloat!
+    var state = SettingsViewState.closed
+    
+    let notificationsExpandedHeight:CGFloat = 250
+    let accountExpandedHeight:CGFloat = 200
     
     //MARK: Inits
     
@@ -80,22 +90,22 @@ class SettingsView: UIView {
             initials.name = user.fullName()
         }
         
-        inviteFriendsCell.titleButton.setTitle("Invite Friends", forState: .Normal)
+        inviteFriendsCell.titleLabel.text = "Invite Friends"
         inviteFriendsCell.colorTheme = colorTheme
         
-        notificationsCell.titleButton.setTitle("Notifications", forState: .Normal)
+        notificationsCell.titleLabel.text = "Notifications"
         notificationsCell.colorTheme = colorTheme
         
-        accountCell.titleButton.setTitle("Account", forState: .Normal)
+        accountCell.titleLabel.text = "Account"
         accountCell.colorTheme = colorTheme
         
-        privacyCell.titleButton.setTitle("Privacy", forState: .Normal)
+        privacyCell.titleLabel.text = "Privacy"
         privacyCell.colorTheme = colorTheme
         
-        supportCell.titleButton.setTitle("Support", forState: .Normal)
+        supportCell.titleLabel.text = "Support"
         supportCell.colorTheme = colorTheme
         
-        signOutCell.titleButton.setTitle("Sign Out", forState: .Normal)
+        signOutCell.titleLabel.text = "Sign Out"
         signOutCell.colorTheme = colorTheme
         signOutCell.expandingSeparator.alpha = 0.0
         
@@ -183,5 +193,85 @@ class SettingsView: UIView {
             Constraint.llrr.of(containerView),
             Constraint.h.of(60)
         )
+    }
+    
+    // MARK: Methods
+    
+    func expandScrollViewWithHeight(height: CGFloat) {
+        scrollView.contentSize = CGSizeMake(screenWidth, scrollViewHeight + height)
+        containerView.addConstraints(
+            Constraint.tt.of(scrollView),
+            Constraint.ll.of(scrollView),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(scrollViewHeight + height)
+        )
+        
+        UIView.animateWithDuration(0.5) { 
+            self.layoutIfNeeded()
+        }
+    }
+    
+    func close() {
+        state = .closed
+        applyConstraints()
+        UIView.animateWithDuration(0.25, animations: {
+            self.scrollView.contentOffset.y = 0
+            self.layoutIfNeeded()
+            }, completion: { (finished) in
+                self.scrollView.contentSize = CGSizeMake(screenWidth, self.scrollViewHeight)
+        })
+    }
+    
+    func toggleNotifications() {
+        if state == .notificationsExpanded {
+            notificationsCell.toggleSeparatorWithHeight(0)
+            close()
+        } else {
+            closeExpandedCell()
+            state = .notificationsExpanded
+            expandScrollViewWithHeight(notificationsExpandedHeight)
+            notificationsCell.addConstraints(
+                Constraint.tb.of(inviteFriendsCell),
+                Constraint.llrr.of(containerView),
+                Constraint.h.of(notificationsExpandedHeight + 60)
+            )
+            notificationsCell.toggleSeparatorWithHeight(notificationsExpandedHeight)
+            UIView.animateWithDuration(0.5) {
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func toggleAccount() {
+        if state == .accountExpanded {
+            accountCell.toggleSeparatorWithHeight(0)
+            close()
+        } else {
+            closeExpandedCell()
+            state = .accountExpanded
+            expandScrollViewWithHeight(accountExpandedHeight)
+            accountCell.addConstraints(
+                Constraint.tb.of(notificationsCell),
+                Constraint.llrr.of(containerView),
+                Constraint.h.of(accountExpandedHeight + 60)
+            )
+            accountCell.toggleSeparatorWithHeight(accountExpandedHeight)
+            
+            UIView.animateWithDuration(0.5) {
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func closeExpandedCell() {
+        applyConstraints()
+        switch state {
+        case .notificationsExpanded:
+            notificationsCell.toggleSeparatorWithHeight(0)
+        case .accountExpanded:
+            accountCell.toggleSeparatorWithHeight(0)
+        default:
+            return
+        }
     }
 }
