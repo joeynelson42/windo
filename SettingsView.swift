@@ -17,9 +17,18 @@ class SettingsView: UIView {
     let scrollView = UIScrollView()
     let containerView = UIView()
     
+    let inviteFriendsCell = SettingsCell()
+    let notificationsCell = SettingsCell()
+    let accountCell = SettingsCell()
+    let privacyCell = SettingsCell()
+    let supportCell = SettingsCell()
+    let signOutCell = SettingsCell()
+    
     var nameLabel = UILabel()
     var initials = UserInitialsView()
     var colorTheme: ColorTheme!
+    
+    var scrollViewHeight: CGFloat!
     
     //MARK: Inits
     
@@ -45,9 +54,14 @@ class SettingsView: UIView {
     }
     
     func configureSubviews(){
+        scrollViewHeight = screenHeight/3 + (7 * 60)
+        if scrollViewHeight < screenHeight {
+            scrollViewHeight = screenHeight
+        }
+        
         backgroundColor = colorTheme.lightColor
-        scrollView.contentSize = CGSizeMake(screenWidth, screenHeight * 2)
-//        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSizeMake(screenWidth, scrollViewHeight)
+        scrollView.showsVerticalScrollIndicator = false
         
         containerView.backgroundColor = colorTheme.baseColor
         
@@ -66,12 +80,40 @@ class SettingsView: UIView {
             initials.name = user.fullName()
         }
         
+        inviteFriendsCell.titleButton.setTitle("Invite Friends", forState: .Normal)
+        inviteFriendsCell.colorTheme = colorTheme
+        
+        notificationsCell.titleButton.setTitle("Notifications", forState: .Normal)
+        notificationsCell.colorTheme = colorTheme
+        
+        accountCell.titleButton.setTitle("Account", forState: .Normal)
+        accountCell.colorTheme = colorTheme
+        
+        privacyCell.titleButton.setTitle("Privacy", forState: .Normal)
+        privacyCell.colorTheme = colorTheme
+        
+        supportCell.titleButton.setTitle("Support", forState: .Normal)
+        supportCell.colorTheme = colorTheme
+        
+        signOutCell.titleButton.setTitle("Sign Out", forState: .Normal)
+        signOutCell.colorTheme = colorTheme
+        signOutCell.expandingSeparator.alpha = 0.0
+        
+        
         addSubview(scrollView)
         scrollView.addSubview(containerView)
         
         navBar.addSubview(initials)
         navBar.addSubview(nameLabel)
         addSubview(navBar)
+        
+        containerView.addSubview(inviteFriendsCell)
+        containerView.addSubview(notificationsCell)
+        containerView.addSubview(accountCell)
+        containerView.addSubview(privacyCell)
+        containerView.addSubview(supportCell)
+        containerView.addSubview(signOutCell)
+        
     }
     
     func applyConstraints(){
@@ -86,7 +128,7 @@ class SettingsView: UIView {
             Constraint.tt.of(scrollView),
             Constraint.ll.of(scrollView),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(screenHeight * 2)
+            Constraint.h.of(scrollViewHeight)
         )
         
         navBar.addConstraints(
@@ -104,6 +146,42 @@ class SettingsView: UIView {
         nameLabel.addConstraints(
             Constraint.tb.of(initials, offset: 20),
             Constraint.cxcx.of(navBar)
+        )
+        
+        inviteFriendsCell.addConstraints(
+            Constraint.tt.of(containerView, offset: screenHeight/3),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
+        )
+        
+        notificationsCell.addConstraints(
+            Constraint.tb.of(inviteFriendsCell),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
+        )
+        
+        accountCell.addConstraints(
+            Constraint.tb.of(notificationsCell),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
+        )
+        
+        privacyCell.addConstraints(
+            Constraint.tb.of(accountCell),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
+        )
+        
+        supportCell.addConstraints(
+            Constraint.tb.of(privacyCell),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
+        )
+        
+        signOutCell.addConstraints(
+            Constraint.tb.of(supportCell),
+            Constraint.llrr.of(containerView),
+            Constraint.h.of(60)
         )
     }
 }

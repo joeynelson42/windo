@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		22952435DDD418BBEFFAEC79 /* libPods-Windo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC387DACDCA7B78D21DBE7D /* libPods-Windo.a */; };
 		63063A971D51A79100B0CAF1 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63063A961D51A79100B0CAF1 /* UIDevice+.swift */; };
+		63063A991D51AEE700B0CAF1 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63063A981D51AEE700B0CAF1 /* SettingsCell.swift */; };
 		630AC0C11CB6EAAF0016E3C7 /* ScrubberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */; };
 		631B59D11D047E2500BC32E8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B59CE1D047E2500BC32E8 /* FBSDKCoreKit.framework */; };
 		631B59D21D047E2600BC32E8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631B59CF1D047E2500BC32E8 /* FBSDKLoginKit.framework */; };
@@ -122,6 +123,7 @@
 
 /* Begin PBXFileReference section */
 		63063A961D51A79100B0CAF1 /* UIDevice+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		63063A981D51AEE700B0CAF1 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		630AC0C01CB6EAAF0016E3C7 /* ScrubberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrubberCell.swift; sourceTree = "<group>"; };
 		631B59CE1D047E2500BC32E8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		631B59CF1D047E2500BC32E8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				63A8683E1D006990002978F7 /* UserProfileView.swift */,
 				63A868411D0069AD002978F7 /* SettingsViewController.swift */,
 				63A868431D0069B6002978F7 /* SettingsView.swift */,
+				63063A981D51AEE700B0CAF1 /* SettingsCell.swift */,
 				635A482C1D5180F700A930ED /* UserInitialsView.swift */,
 			);
 			name = Settings;
@@ -817,6 +820,7 @@
 				63AD31E51C979EFE0086B919 /* DetailsTabBarController.swift in Sources */,
 				6328512F1D34885B009F5D43 /* SplashScreenView.swift in Sources */,
 				63FF08F31CB46EE100255A4A /* TimeView.swift in Sources */,
+				63063A991D51AEE700B0CAF1 /* SettingsCell.swift in Sources */,
 				6383D8571CA4AE8F008F23B8 /* WindoCollectionCell.swift in Sources */,
 				6395B14B1C741BDD008D0ED5 /* UIColor+Windo.swift in Sources */,
 				63A28B141CA36EB0000826DC /* CalendarDayView.swift in Sources */,

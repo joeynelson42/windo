@@ -20,42 +20,99 @@ class SettingsViewController: UIViewController {
         settingsView.colorTheme = ColorTheme(color: .teal)
         view = settingsView
         settingsView.scrollView.delegate = self
+        addTargets()
+    }
+    
+    func addTargets() {
+        settingsView.inviteFriendsCell.gr.addTarget(self, action: #selector(SettingsViewController.inviteFriendsTapped))
+        settingsView.inviteFriendsCell.titleButton.addTarget(.TouchUpInside) { 
+            self.inviteFriendsTapped()
+        }
+        
+        settingsView.notificationsCell.gr.addTarget(self, action: #selector(SettingsViewController.notificationsTapped))
+        settingsView.notificationsCell.titleButton.addTarget(.TouchUpInside) {
+            self.notificationsTapped()
+        }
+        
+        settingsView.accountCell.gr.addTarget(self, action: #selector(SettingsViewController.accountTapped))
+        settingsView.accountCell.titleButton.addTarget(.TouchUpInside) {
+            self.accountTapped()
+        }
+        
+        settingsView.privacyCell.gr.addTarget(self, action: #selector(SettingsViewController.privacyTapped))
+        settingsView.privacyCell.titleButton.addTarget(.TouchUpInside) {
+            self.privacyTapped()
+        }
+        
+        settingsView.supportCell.gr.addTarget(self, action: #selector(SettingsViewController.supportTapped))
+        settingsView.supportCell.titleButton.addTarget(.TouchUpInside) {
+            self.supportTapped()
+        }
+        
+        settingsView.signOutCell.gr.addTarget(self, action: #selector(SettingsViewController.signOutTapped))
+        settingsView.signOutCell.titleButton.addTarget(.TouchUpInside) {
+            self.signOutTapped()
+        }
+    }
+    
+    func inviteFriendsTapped() {
+        
+    }
+    
+    func notificationsTapped() {
+        
+    }
+    
+    func accountTapped() {
+        
+    }
+    
+    func privacyTapped() {
+        
+    }
+    
+    func supportTapped() {
+        
+    }
+    
+    func signOutTapped() {
+        
     }
 }
 
 extension SettingsViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let offset = scrollView.contentOffset.y
-        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
-        let percent = offset/navBarMaxOffset
-        
-        if percent > 0 && percent < 0.25 {
-            UIView.animateWithDuration(0.25, animations: { 
-                scrollView.contentOffset.y = 0
-            })
-        } else if percent > 0 && percent < 1.0 {
-            UIView.animateWithDuration(0.25, animations: {
-                scrollView.contentOffset.y = 160
-            })
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
-        let percent = offset/navBarMaxOffset
-        
-        if percent > 0 && percent < 0.5 {
-            UIView.animateWithDuration(0.25, animations: {
-                scrollView.contentOffset.y = 0
-            })
-        } else if percent > 0 && percent < 1.0 {
-            UIView.animateWithDuration(0.25, animations: {
-                scrollView.contentOffset.y = 160
-            })
-        }
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        let offset = scrollView.contentOffset.y
+//        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
+//        let percent = offset/navBarMaxOffset
+//        
+//        if percent > 0 && percent < 0.25 {
+//            UIView.animateWithDuration(0.25, animations: { 
+//                scrollView.contentOffset.y = 0
+//            })
+//        } else if percent > 0 && percent < 1.0 {
+//            UIView.animateWithDuration(0.25, animations: {
+//                scrollView.contentOffset.y = 70
+//            })
+//        }
+//    }
+//    
+//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        let offset = scrollView.contentOffset.y
+//        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
+//        let percent = offset/navBarMaxOffset
+//        
+//        if percent > 0 && percent < 0.5 {
+//            UIView.animateWithDuration(0.25, animations: {
+//                scrollView.contentOffset.y = 0
+//            })
+//        } else if percent > 0 && percent < 1.0 {
+//            UIView.animateWithDuration(0.25, animations: {
+//                scrollView.contentOffset.y = 70
+//            })
+//        }
+//    }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
