@@ -30,6 +30,9 @@ class SettingsView: UIView {
     let supportCell = SettingsCell()
     let signOutCell = SettingsCell()
     
+    let accountSettingsView = AccountSettingsView()
+    let notificationsView = NotificationSettingsView()
+    
     var nameLabel = UILabel()
     var initials = UserInitialsView()
     var colorTheme: ColorTheme!
@@ -37,8 +40,16 @@ class SettingsView: UIView {
     var scrollViewHeight: CGFloat!
     var state = SettingsViewState.closed
     
-    let notificationsExpandedHeight:CGFloat = 250
-    let accountExpandedHeight:CGFloat = 200
+    // View Constants
+    let toggleOpenSpeed:Double = 0.35
+    let toggleCloseSpeed:Double = 0.25
+    
+    let notificationsExpandedHeight:CGFloat = 311
+    let notificationScrollToPercent: CGFloat = 0.334
+    
+    let accountExpandedHeight:CGFloat = 181
+    let accountScrollToPercent: CGFloat = 0.29
+    
     
     //MARK: Inits
     
@@ -69,7 +80,7 @@ class SettingsView: UIView {
             scrollViewHeight = screenHeight
         }
         
-        backgroundColor = colorTheme.lightColor
+        backgroundColor = colorTheme.baseColor
         scrollView.contentSize = CGSizeMake(screenWidth, scrollViewHeight)
         scrollView.showsVerticalScrollIndicator = false
         
@@ -109,10 +120,10 @@ class SettingsView: UIView {
         signOutCell.colorTheme = colorTheme
         signOutCell.expandingSeparator.alpha = 0.0
         
+        notificationsView.colorTheme = colorTheme
         
         addSubview(scrollView)
         scrollView.addSubview(containerView)
-        
         navBar.addSubview(initials)
         navBar.addSubview(nameLabel)
         addSubview(navBar)
@@ -124,6 +135,8 @@ class SettingsView: UIView {
         containerView.addSubview(supportCell)
         containerView.addSubview(signOutCell)
         
+        accountCell.expandingSeparator.addSubview(accountSettingsView)
+        notificationsCell.expandingSeparator.addSubview(notificationsView)
     }
     
     func applyConstraints(){
@@ -193,6 +206,9 @@ class SettingsView: UIView {
             Constraint.llrr.of(containerView),
             Constraint.h.of(60)
         )
+        
+        accountSettingsView.fillSuperview()
+        notificationsView.fillSuperview()
     }
     
     // MARK: Methods
@@ -206,15 +222,16 @@ class SettingsView: UIView {
             Constraint.h.of(scrollViewHeight + height)
         )
         
-        UIView.animateWithDuration(0.5) { 
+        UIView.animateWithDuration(toggleOpenSpeed) {
             self.layoutIfNeeded()
         }
     }
     
     func close() {
         state = .closed
+        endEditing(true)
         applyConstraints()
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animateWithDuration(toggleCloseSpeed, animations: {
             self.scrollView.contentOffset.y = 0
             self.layoutIfNeeded()
             }, completion: { (finished) in
@@ -236,7 +253,8 @@ class SettingsView: UIView {
                 Constraint.h.of(notificationsExpandedHeight + 60)
             )
             notificationsCell.toggleSeparatorWithHeight(notificationsExpandedHeight)
-            UIView.animateWithDuration(0.5) {
+            UIView.animateWithDuration(toggleOpenSpeed) {
+                self.scrollView.contentOffset.y = screenHeight * self.notificationScrollToPercent
                 self.layoutIfNeeded()
             }
         }
@@ -257,7 +275,8 @@ class SettingsView: UIView {
             )
             accountCell.toggleSeparatorWithHeight(accountExpandedHeight)
             
-            UIView.animateWithDuration(0.5) {
+            UIView.animateWithDuration(toggleOpenSpeed) {
+                self.scrollView.contentOffset.y = screenHeight * self.accountScrollToPercent
                 self.layoutIfNeeded()
             }
         }

@@ -129,7 +129,7 @@ extension SettingsViewController: UIScrollViewDelegate {
         
         let percent = offset/navBarMaxOffset
         
-        print(offset)
+        print(offset/screenHeight)
         
         if offset < 0 {
             navBarTransform = CGAffineTransformMakeScale(-percent * navBarMaxScale + 1, -percent * navBarMaxScale + 1)

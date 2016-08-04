@@ -25,6 +25,9 @@ class SettingsCell: UIView {
     var state = SettingsCellState.closed
     var colorTheme: ColorTheme!
     
+    // View Constants
+    let toggleOpenSpeed:Double = 0.35
+    
     //MARK: Inits
     
     convenience init() {
@@ -50,7 +53,7 @@ class SettingsCell: UIView {
     
     func configureSubviews(){
         backgroundColor = colorTheme.baseColor
-        clipsToBounds = false
+        clipsToBounds = true
         
         tapContainer.addGestureRecognizer(gr)
         
@@ -98,7 +101,7 @@ class SettingsCell: UIView {
             Constraint.w.of(screenWidth - 20)
         )
         
-        UIView.animateWithDuration(0.5) {
+        UIView.animateWithDuration(toggleOpenSpeed) {
             self.titleLabel.textColor = titleColor
             self.layoutIfNeeded()
         }
