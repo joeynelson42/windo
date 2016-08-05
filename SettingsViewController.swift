@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class SettingsViewController: UIViewController {
     
@@ -38,7 +39,9 @@ class SettingsViewController: UIViewController {
     }
     
     func inviteFriendsTapped() {
+        //TODO: Show list similar to invitees in CreateEvent
         
+        settingsView.savingLabel.start()
     }
     
     func notificationsTapped() {
@@ -50,51 +53,64 @@ class SettingsViewController: UIViewController {
     }
     
     func privacyTapped() {
-        
+        // TODO: What do we show here?
+        settingsView.savingLabel.finish()
     }
     
     func supportTapped() {
+        if !MFMailComposeViewController.canSendMail() {
+            // TODO: Alert mail not available
+            return
+        }
         
+        let mailVC = MFMailComposeViewController()
+        mailVC.mailComposeDelegate = self
+        
+        mailVC.setToRecipients(["joeyedmondnelson@gmail.com"])
+        mailVC.setSubject("Windo Support Ticket #\(String.randomNumericString(4))")
+        mailVC.setMessageBody("", isHTML: false)
+        
+        presentViewController(mailVC, animated: true, completion: nil)
     }
     
     func signOutTapped() {
-        
+        //TODO: Sign out functionality
     }
 }
 
 extension SettingsViewController: UIScrollViewDelegate {
     
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        let offset = scrollView.contentOffset.y
-//        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
-//        let percent = offset/navBarMaxOffset
-//        
-//        if percent > 0 && percent < 0.25 {
-//            UIView.animateWithDuration(0.25, animations: { 
-//                scrollView.contentOffset.y = 0
-//            })
-//        } else if percent > 0 && percent < 1.0 {
-//            UIView.animateWithDuration(0.25, animations: {
-//                scrollView.contentOffset.y = 70
-//            })
-//        }
-//    }
-//    
-//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        let offset = scrollView.contentOffset.y
-//        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
-//        let percent = offset/navBarMaxOffset
-//        
-//        if percent > 0 && percent < 0.5 {
-//            UIView.animateWithDuration(0.25, animations: {
-//                scrollView.contentOffset.y = 0
-//            })
-//        } else if percent > 0 && percent < 1.0 {
-//            UIView.animateWithDuration(0.25, animations: {
-//                scrollView.contentOffset.y = 70
-//            })
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offset = scrollView.contentOffset.y
+        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
+        let percent = offset/navBarMaxOffset
+        
+        if percent > 0 && percent < 0.25 {
+            UIView.animateWithDuration(0.25, animations: { 
+                scrollView.contentOffset.y = 0
+            })
+        } else if percent > 0 && percent < 1.0 {
+            UIView.animateWithDuration(0.25, animations: {
+                scrollView.contentOffset.y = 160
+            })
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y
+        let navBarMaxOffset: CGFloat = screenHeight/3 - 60
+        let percent = offset/navBarMaxOffset
+        
+        if percent > 0 && percent < 0.5 {
+            UIView.animateWithDuration(0.25, animations: {
+                scrollView.contentOffset.y = 0
+            })
+        } else if percent > 0 && percent < 1.0 {
+            UIView.animateWithDuration(0.25, animations: {
+                scrollView.contentOffset.y = 70
+            })
+        }
+    }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
@@ -145,5 +161,20 @@ extension SettingsViewController: UIScrollViewDelegate {
         
         settingsView.navBar.transform = navBarTransform
         settingsView.initials.transform = CGAffineTransformConcat(initialsScale, initialsTranslate)
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        if error != nil {
+            return
+        }
+        
+        if result == MFMailComposeResultSent {
+            //TODO: Notify successful message sending
+            print("sent!")
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

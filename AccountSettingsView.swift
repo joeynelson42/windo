@@ -23,6 +23,8 @@ class AccountSettingsView: UIView {
     var emailLabel = UILabel()
     var emailTextField = UITextField()
     
+    var keyboardAccessory = WindoKeyboardAccessoryView()
+
     var colorTheme: ColorTheme!
     
     //MARK: Inits
@@ -75,22 +77,42 @@ class AccountSettingsView: UIView {
         
         let textFieldFont = UIFont.graphikRegular(21)
         let textFieldColor = UIColor.whiteColor()
+        let textFieldTintColor = colorTheme.lightColor
         
         firstNameTextField.font = textFieldFont
         firstNameTextField.textColor = textFieldColor
         firstNameTextField.text = "Yuki"
+        firstNameTextField.tintColor = textFieldTintColor
         
         lastNameTextField.font = textFieldFont
         lastNameTextField.textColor = textFieldColor
         lastNameTextField.text = "Dorff"
+        lastNameTextField.tintColor = textFieldTintColor
         
         phoneTextField.font = textFieldFont
         phoneTextField.textColor = textFieldColor
         phoneTextField.keyboardType = .NumberPad
+        phoneTextField.tintColor = textFieldTintColor
         
         emailTextField.font = textFieldFont
         emailTextField.textColor = textFieldColor
+        emailTextField.tintColor = textFieldTintColor
         
+        keyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: colorTheme)
+        keyboardAccessory.leftArrowButton.addTarget(.TouchUpInside) { 
+            self.togglePreviousInput()
+        }
+        keyboardAccessory.rightArrowButton.addTarget(.TouchUpInside) { 
+            self.toggleNextInput()
+        }
+        keyboardAccessory.doneButton.addTarget(.TouchUpInside) { 
+            self.endEditing(true)
+        }
+        
+        firstNameTextField.inputAccessoryView = keyboardAccessory
+        lastNameTextField.inputAccessoryView = keyboardAccessory
+        phoneTextField.inputAccessoryView = keyboardAccessory
+        emailTextField.inputAccessoryView = keyboardAccessory
         
         addSubviews(firstNameLabel, lastNameLabel, phoneLabel, emailLabel)
         addSubviews(firstNameTextField, lastNameTextField, phoneTextField, emailTextField)
@@ -147,7 +169,29 @@ class AccountSettingsView: UIView {
     }
     
     // MARK: Methods
+    func toggleNextInput() {
+        if firstNameTextField.isFirstResponder() {
+            lastNameTextField.becomeFirstResponder()
+        } else if lastNameTextField.isFirstResponder() {
+            phoneTextField.becomeFirstResponder()
+        } else if phoneTextField.isFirstResponder() {
+            emailTextField.becomeFirstResponder()
+        } else if emailTextField.isFirstResponder() {
+            firstNameTextField.becomeFirstResponder()
+        }
+    }
     
+    func togglePreviousInput() {
+        if firstNameTextField.isFirstResponder() {
+            emailTextField.becomeFirstResponder()
+        } else if lastNameTextField.isFirstResponder() {
+            firstNameTextField.becomeFirstResponder()
+        } else if phoneTextField.isFirstResponder() {
+            lastNameTextField.becomeFirstResponder()
+        } else if emailTextField.isFirstResponder() {
+            phoneTextField.becomeFirstResponder()
+        }
+    }
     
     // MARK: Utilities
     

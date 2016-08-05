@@ -30,6 +30,8 @@ class SettingsView: UIView {
     let supportCell = SettingsCell()
     let signOutCell = SettingsCell()
     
+    let savingLabel = SavingLabel()
+    
     let accountSettingsView = AccountSettingsView()
     let notificationsView = NotificationSettingsView()
     
@@ -121,6 +123,9 @@ class SettingsView: UIView {
         signOutCell.expandingSeparator.alpha = 0.0
         
         notificationsView.colorTheme = colorTheme
+        accountSettingsView.colorTheme = colorTheme
+
+        savingLabel.colorTheme = colorTheme
         
         addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -137,6 +142,8 @@ class SettingsView: UIView {
         
         accountCell.expandingSeparator.addSubview(accountSettingsView)
         notificationsCell.expandingSeparator.addSubview(notificationsView)
+        
+        inviteFriendsCell.addSubview(savingLabel)
     }
     
     func applyConstraints(){
@@ -209,6 +216,13 @@ class SettingsView: UIView {
         
         accountSettingsView.fillSuperview()
         notificationsView.fillSuperview()
+        
+        savingLabel.addConstraints(
+            Constraint.rr.of(inviteFriendsCell),
+            Constraint.cycy.of(inviteFriendsCell),
+            Constraint.h.of(15),
+            Constraint.w.of(100)
+        )
     }
     
     // MARK: Methods

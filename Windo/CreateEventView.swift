@@ -35,7 +35,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
     var calendarContainer = WindoCalendarView()
     
     //misc
-//    var setAvailabilityButton = UIButton()
     var doneKeyboardAccessory = WindoKeyboardAccessoryView()
     
     //MARK: View Configuration
