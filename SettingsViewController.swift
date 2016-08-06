@@ -22,6 +22,7 @@ class SettingsViewController: UIViewController {
         view = settingsView
         settingsView.scrollView.delegate = self
         addTargets()
+        addObservers()
     }
     
     func addTargets() {
@@ -36,12 +37,36 @@ class SettingsViewController: UIViewController {
         settingsView.supportCell.gr.addTarget(self, action: #selector(SettingsViewController.supportTapped))
         
         settingsView.signOutCell.gr.addTarget(self, action: #selector(SettingsViewController.signOutTapped))
+        
+        settingsView.backButton.addTarget(.TouchUpInside) {
+            self.dismissAnimated()
+        }
     }
+    
+    func addObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveFirstName), name: Constants.notifications.firstNameWasChanged, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveLastName), name: Constants.notifications.lastNameWasChanged, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.savePhone), name: Constants.notifications.phoneNumberWasChanged, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveEmail), name: Constants.notifications.emailWasChanged, object: nil)
+    }
+    
+    func dismissAnimated() {
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.timingFunction  = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        settingsView.window?.layer.addAnimation(transition, forKey: nil)
+        dismissViewControllerAnimated(false, completion: nil)
+    }
+    
+    // MARK: Cell Tap Handling
     
     func inviteFriendsTapped() {
         //TODO: Show list similar to invitees in CreateEvent
-        
-        settingsView.savingLabel.start()
     }
     
     func notificationsTapped() {
@@ -54,7 +79,6 @@ class SettingsViewController: UIViewController {
     
     func privacyTapped() {
         // TODO: What do we show here?
-        settingsView.savingLabel.finish()
     }
     
     func supportTapped() {
@@ -76,6 +100,42 @@ class SettingsViewController: UIViewController {
     func signOutTapped() {
         //TODO: Sign out functionality
     }
+    
+    // MARK: Notification Handling
+    // TODO: This needs to be tested
+    
+    func saveFirstName() {
+        guard let firstName = settingsView.accountSettingsView.firstNameTextField.text else { return }
+        settingsView.accountSettingsView.firstNameSaveLabel.start()
+        CloudManager.sharedManager.editUserInfo(["firstName":firstName], completion: { finished in
+            self.settingsView.accountSettingsView.firstNameSaveLabel.finish()
+        })
+    }
+    
+    func saveLastName() {
+        guard let lastName = settingsView.accountSettingsView.lastNameTextField.text else { return }
+        settingsView.accountSettingsView.lastNameSaveLabel.start()
+        CloudManager.sharedManager.editUserInfo(["lastName":lastName], completion: { finished in
+            self.settingsView.accountSettingsView.lastNameSaveLabel.finish()
+        })
+    }
+    
+    func savePhone() {
+        guard let phone = settingsView.accountSettingsView.phoneTextField.text else { return }
+        settingsView.accountSettingsView.phoneSaveLabel.start()
+        CloudManager.sharedManager.editUserInfo(["phoneNumber":phone], completion: { finished in
+            self.settingsView.accountSettingsView.phoneSaveLabel.finish()
+        })
+    }
+    
+    func saveEmail() {
+        guard let email = settingsView.accountSettingsView.emailTextField.text else { return }
+        settingsView.accountSettingsView.emailSaveLabel.start()
+        CloudManager.sharedManager.editUserInfo(["email":email], completion: { finished in
+            self.settingsView.accountSettingsView.emailSaveLabel.finish()
+        })
+    }
+    
 }
 
 extension SettingsViewController: UIScrollViewDelegate {

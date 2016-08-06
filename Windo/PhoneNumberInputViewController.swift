@@ -212,25 +212,30 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
                         facebookID: "",
                         googleID: "",
                         firstName: inputNumberView.nameInputView.firstNameTextField.text!,
-                        lastName: inputNumberView.nameInputView.firstNameTextField.text!,
+                        lastName: inputNumberView.nameInputView.lastNameTextField.text!,
                         imageRecordID: "")
         
         AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
         CloudManager.sharedManager.getUserWithPhoneNumber(phoneNumber, completionHandler: { (success, user) in
             if success {
-                UserManager.sharedManager.user = user
-                let homeVC = HomeViewController()
-                let navVC = UINavigationController(rootViewController: homeVC)
-                AppController.sharedController.displayContentController(navVC)
-                AppController.sharedController.hideSplashScreen()
-            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    UserManager.sharedManager.user = user
+                    let homeVC = HomeViewController()
+                    let navVC = UINavigationController(rootViewController: homeVC)
+                    AppController.sharedController.displayContentController(navVC)
+                    AppController.sharedController.hideSplashScreen()
+                }
+            }
+            else {
                 CloudManager.sharedManager.saveNewUser(userFromInput, completionHandler: { (user, success) in
                     if success {
-                        UserManager.sharedManager.user = user
-                        let homeVC = HomeViewController()
-                        let navVC = UINavigationController(rootViewController: homeVC)
-                        AppController.sharedController.displayContentController(navVC)
-                        AppController.sharedController.hideSplashScreen()
+                        dispatch_async(dispatch_get_main_queue()) {
+                            UserManager.sharedManager.user = user
+                            let homeVC = HomeViewController()
+                            let navVC = UINavigationController(rootViewController: homeVC)
+                            AppController.sharedController.displayContentController(navVC)
+                            AppController.sharedController.hideSplashScreen()
+                        }
                     } else {
                         // handle failed save
                     }

@@ -22,6 +22,7 @@ class SettingsView: UIView {
     let navBar = UIView()
     let scrollView = UIScrollView()
     let containerView = UIView()
+    let backButton = UIButton()
     
     let inviteFriendsCell = SettingsCell()
     let notificationsCell = SettingsCell()
@@ -29,8 +30,6 @@ class SettingsView: UIView {
     let privacyCell = SettingsCell()
     let supportCell = SettingsCell()
     let signOutCell = SettingsCell()
-    
-    let savingLabel = SavingLabel()
     
     let accountSettingsView = AccountSettingsView()
     let notificationsView = NotificationSettingsView()
@@ -90,6 +89,8 @@ class SettingsView: UIView {
         
         navBar.backgroundColor = colorTheme.lightColor
         
+        backButton.setImage(UIImage(named: "whiteBackArrow"), forState: .Normal)
+        
         initials.cornerRadius = 40
         initials.fontSize = 50
         
@@ -124,14 +125,13 @@ class SettingsView: UIView {
         
         notificationsView.colorTheme = colorTheme
         accountSettingsView.colorTheme = colorTheme
-
-        savingLabel.colorTheme = colorTheme
         
         addSubview(scrollView)
         scrollView.addSubview(containerView)
         navBar.addSubview(initials)
         navBar.addSubview(nameLabel)
         addSubview(navBar)
+        addSubview(backButton)
         
         containerView.addSubview(inviteFriendsCell)
         containerView.addSubview(notificationsCell)
@@ -142,8 +142,6 @@ class SettingsView: UIView {
         
         accountCell.expandingSeparator.addSubview(accountSettingsView)
         notificationsCell.expandingSeparator.addSubview(notificationsView)
-        
-        inviteFriendsCell.addSubview(savingLabel)
     }
     
     func applyConstraints(){
@@ -176,6 +174,12 @@ class SettingsView: UIView {
         nameLabel.addConstraints(
             Constraint.tb.of(initials, offset: 20),
             Constraint.cxcx.of(navBar)
+        )
+        
+        backButton.addConstraints(
+            Constraint.tt.of(self, offset: 30),
+            Constraint.rr.of(self, offset: -30),
+            Constraint.wh.of(20)
         )
         
         inviteFriendsCell.addConstraints(
@@ -216,13 +220,6 @@ class SettingsView: UIView {
         
         accountSettingsView.fillSuperview()
         notificationsView.fillSuperview()
-        
-        savingLabel.addConstraints(
-            Constraint.rr.of(inviteFriendsCell),
-            Constraint.cycy.of(inviteFriendsCell),
-            Constraint.h.of(15),
-            Constraint.w.of(100)
-        )
     }
     
     // MARK: Methods

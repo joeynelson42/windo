@@ -56,32 +56,6 @@ class CloudManager: NSObject {
         }
     }
     
-    /// Will return User object from iCloud if user has already created account, if successful -> user is saved in defaults
-//    func getUserFromCloud(completionHandler: (success: Bool, user: User?) -> ()) {
-//        defaultContainer.fetchUserRecordIDWithCompletionHandler { (userRecordID, error) in
-//            if error != nil {
-//                // iCloud error
-//                completionHandler(success: false, user: nil)
-//            } else {
-//                let predicate = NSPredicate(format: "userID == '\(userRecordID!.recordName)'")
-//                let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
-//                self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
-//                    if error != nil {
-//                        print("failed to fetch user \n \(error)")
-//                        completionHandler(success: false, user: nil)
-//                    } else {
-//                        // create User from CKRecord
-//                        if let userRecord = user?.first {
-//                            let fetchedUser = self.parseUserRecord(userRecord)
-//                            self.storeUserInDefaults(fetchedUser)
-//                            completionHandler(success: true, user: fetchedUser)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
     /// Sends fetch request to iCloud using the phoneNumber as the predicate
     func getUserWithPhoneNumber(phoneNumber: String, completionHandler: (success: Bool, user: User?) -> ()) {
         let predicate = NSPredicate(format: "phoneNumber == '\(phoneNumber)'")
@@ -96,6 +70,8 @@ class CloudManager: NSObject {
                     let fetchedUser = self.parseUserRecord(userRecord)
                     self.storeUserInDefaults(fetchedUser)
                     completionHandler(success: true, user: fetchedUser)
+                } else {
+                    completionHandler(success: false, user: nil)
                 }
             }
         }
@@ -132,6 +108,32 @@ class CloudManager: NSObject {
                 })
             }
         }
+    }
+    
+    func editUserInfo(userInfo: [String:String], completion: (Bool)->()) {
+        // TODO: this
+//        let phoneNumber = 
+//        let predicate = NSPredicate(format: "phoneNumber == '\()'")
+//        let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
+//        self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
+//            if error != nil {
+//                print("failed to fetch user \n \(error)")
+//                completionHandler(success: false, user: nil)
+//            } else {
+//                // create User from CKRecord
+//                if let userRecord = user?.first {
+//                    let fetchedUser = self.parseUserRecord(userRecord)
+//                    self.storeUserInDefaults(fetchedUser)
+//                    completionHandler(success: true, user: fetchedUser)
+//                }
+//            }
+//        }
+//        
+//        for (field, newInfo) in userInfo {
+//            
+//        }
+//        
+//        completion(true)
     }
     
     private func storeUserInDefaults(user: User) {

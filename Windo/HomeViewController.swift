@@ -45,17 +45,21 @@ class HomeViewController: UIViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        ContactManager.sharedManager.sync { (success) -> () in
-//            if success {
-//                for contact in ContactManager.sharedManager.contacts {
-//                    print("\(contact.firstName) \(contact.lastName)")
-//                }
-//            }
-        }
+//        ContactManager.sharedManager.sync { (success) -> () in
+//
+//        }
     }
     
     func openProfile() {
-
+        let settingsVC = SettingsViewController()
+        let transition = CATransition()
+        transition.duration = 0.4
+        transition.timingFunction  = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        homeView.window?.layer.addAnimation(transition, forKey: nil)
+        
+        self.presentViewController(settingsVC, animated: false, completion: nil)
     }
     
     func createNewEvent() {

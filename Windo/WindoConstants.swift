@@ -40,6 +40,13 @@ struct Constants {
         static let kUser = "user"
         static let kContacts = "contacts"
     }
+    
+    struct notifications {
+        static let firstNameWasChanged = "usernameWasChanged"
+        static let lastNameWasChanged = "lastNameWasChanged"
+        static let phoneNumberWasChanged = "phoneNumberWasChanged"
+        static let emailWasChanged = "emailWasChanged"
+    }
 }
 
 

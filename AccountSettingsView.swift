@@ -13,15 +13,19 @@ class AccountSettingsView: UIView {
     //MARK: Properties
     var firstNameLabel = UILabel()
     var firstNameTextField = UITextField()
+    var firstNameSaveLabel = SavingLabel()
     
     var lastNameLabel = UILabel()
     var lastNameTextField = UITextField()
+    var lastNameSaveLabel = SavingLabel()
     
     var phoneLabel = UILabel()
     var phoneTextField = UITextField()
+    var phoneSaveLabel = SavingLabel()
     
     var emailLabel = UILabel()
     var emailTextField = UITextField()
+    var emailSaveLabel = SavingLabel()
     
     var keyboardAccessory = WindoKeyboardAccessoryView()
 
@@ -114,8 +118,14 @@ class AccountSettingsView: UIView {
         phoneTextField.inputAccessoryView = keyboardAccessory
         emailTextField.inputAccessoryView = keyboardAccessory
         
+        firstNameSaveLabel.colorTheme = colorTheme
+        lastNameSaveLabel.colorTheme = colorTheme
+        phoneSaveLabel.colorTheme = colorTheme
+        emailSaveLabel.colorTheme = colorTheme
+        
         addSubviews(firstNameLabel, lastNameLabel, phoneLabel, emailLabel)
         addSubviews(firstNameTextField, lastNameTextField, phoneTextField, emailTextField)
+        addSubviews(firstNameSaveLabel, lastNameSaveLabel, phoneSaveLabel, emailSaveLabel)
     }
     
     func applyConstraints(){
@@ -131,6 +141,12 @@ class AccountSettingsView: UIView {
             Constraint.bb.of(firstNameTextField)
         )
         
+        firstNameSaveLabel.addConstraints(
+            Constraint.cycy.of(firstNameTextField),
+            Constraint.rr.of(self),
+            Constraint.h.of(15)
+        )
+        
         lastNameTextField.addConstraints(
             Constraint.tb.of(firstNameTextField, offset: 25),
             Constraint.ll.of(self, offset: 66),
@@ -141,6 +157,12 @@ class AccountSettingsView: UIView {
         lastNameLabel.addConstraints(
             Constraint.rl.of(lastNameTextField, offset: -7),
             Constraint.bb.of(lastNameTextField)
+        )
+        
+        lastNameSaveLabel.addConstraints(
+            Constraint.cycy.of(lastNameTextField),
+            Constraint.rr.of(self),
+            Constraint.h.of(15)
         )
         
         phoneTextField.addConstraints(
@@ -155,6 +177,12 @@ class AccountSettingsView: UIView {
             Constraint.bb.of(phoneTextField)
         )
         
+        phoneSaveLabel.addConstraints(
+            Constraint.cycy.of(phoneTextField),
+            Constraint.rr.of(self),
+            Constraint.h.of(15)
+        )
+        
         emailTextField.addConstraints(
             Constraint.tb.of(phoneLabel, offset: 25),
             Constraint.ll.of(self, offset: 66),
@@ -165,6 +193,12 @@ class AccountSettingsView: UIView {
         emailLabel.addConstraints(
             Constraint.rl.of(emailTextField, offset: -7),
             Constraint.bb.of(emailTextField)
+        )
+        
+        emailSaveLabel.addConstraints(
+            Constraint.cycy.of(emailTextField),
+            Constraint.rr.of(self),
+            Constraint.h.of(15)
         )
     }
     
@@ -195,4 +229,15 @@ class AccountSettingsView: UIView {
     
     // MARK: Utilities
     
+}
+
+extension AccountSettingsView: UITextFieldDelegate {
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        // TODO: Restrict name length?
+        // TODO: Send save request with each new character
+        
+        
+        return true
+    }
 }
