@@ -75,6 +75,7 @@ class Invitee: NSObject, NSCoding {
         }
     }
     
+    // TODO: Make this work
     var formattedPhoneNumber: String {
         get {
             var formatted = phoneNumber.stringByReplacingOccurrencesOfString("+", withString: "")

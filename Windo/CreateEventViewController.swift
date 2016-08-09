@@ -114,6 +114,14 @@ class CreateEventViewController: UIViewController {
     
     func doneTapped() {
         createEventView.inviteeTableView.hidden = true
+        
+        createEventView.searchBar.addConstraints(
+            Constraint.tt.of(createEventView),
+            Constraint.llrr.of(createEventView),
+            Constraint.h.of(50)
+        )
+        createEventView.layoutIfNeeded()
+        
         setNavigationButtons()
         createEventView.endEditing(true)
     }
@@ -183,6 +191,7 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
         cell.animateChange()
+        updateSearchResultsForSearchController("")
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
@@ -216,10 +225,10 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func openUserProfile(sender: UITapGestureRecognizer) {
-//        let profileVC = UserProfileViewController()
+        let profileVC = UserProfileViewController()
 //        profileVC.user = allFriends[0]
-//        profileVC.color = ThemeColor.Blue
-//        navigationController?.pushViewController(profileVC, animated: true)
+        profileVC.color = ThemeColor.Blue
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 }
 
@@ -234,8 +243,6 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     
     func tokenField(tokenField: VENTokenField, didEnterText text: String) {
         
-//        createTabBar.invitees.append(text)
-//        createEventView.searchBar.reloadData()
     }
     
     func tokenField(tokenField: VENTokenField, didDeleteTokenAtIndex index: UInt) {
@@ -245,12 +252,16 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     }
     
     func tokenField(tokenField: VENTokenField, didChangeText text: String?) {
-        createEventView.inviteeTableView.hidden = false
-        createEventView.bringSubviewToFront(createEventView.inviteeTableView)
-        setNavigationButtons()
-        
         if let searchText = text {
             updateSearchResultsForSearchController(searchText)
+        }
+    }
+    
+    func tokenFieldDidBeginEditing(tokenField: VENTokenField) {
+        if createEventView.inviteeTableView.hidden == true {
+            createEventView.inviteeTableView.hidden = false
+            createEventView.bringSubviewToFront(createEventView.inviteeTableView)
+            setNavigationButtons()
         }
     }
     

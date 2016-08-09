@@ -146,7 +146,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         )
         
         inviteeSeparator.addConstraints(
-            Constraint.tb.of(searchBar, offset: -1),
+            Constraint.tb.of(searchBar),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(1)

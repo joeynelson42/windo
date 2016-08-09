@@ -45,9 +45,9 @@ class HomeViewController: UIViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        ContactManager.sharedManager.sync { (success) -> () in
-//
-//        }
+        ContactManager.sharedManager.sync { (success) -> () in
+
+        }
     }
     
     func openProfile() {
@@ -66,6 +66,7 @@ class HomeViewController: UIViewController{
         let createTabVC = CreateTabBarController()
         let vc1 = CreateEventViewController()
         let vc2 = TimeSelectViewController()
+        
         let controllers = [vc1, vc2]
         
         vc1.tabBarItem = UITabBarItem(
