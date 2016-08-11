@@ -92,7 +92,7 @@ class SettingsView: UIView {
         backButton.setImage(UIImage(named: "whiteBackArrow"), forState: .Normal)
         
         initials.cornerRadius = 40
-        initials.fontSize = 50
+        initials.fontSize = 45
         
         nameLabel.text = "Yuki Dorff"
         nameLabel.font = UIFont.graphikMedium(22)

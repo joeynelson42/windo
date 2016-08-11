@@ -16,7 +16,14 @@ class UserInitialsView: UIView {
     var initials = UILabel()
     var cornerRadius: CGFloat = 0
     var fontSize: CGFloat = 15
-    var name = "Yuki Dorff"
+    var name = "Yuki Dorff" {
+        didSet {
+            initials.text = getInitials(name)
+        }
+    }
+    
+    var borderWidth: CGFloat = 1.5
+    var borderColor = UIColor.whiteColor().CGColor
     
     //MARK: Inits
     
@@ -43,8 +50,8 @@ class UserInitialsView: UIView {
     
     func configureSubviews(){
         container.backgroundColor = UIColor.clearColor()
-        container.layer.borderColor = UIColor.whiteColor().CGColor
-        container.layer.borderWidth = 2
+        container.layer.borderColor = borderColor
+        container.layer.borderWidth = borderWidth
         container.layer.cornerRadius = cornerRadius
         
         initials.text = getInitials(name)
@@ -63,10 +70,18 @@ class UserInitialsView: UIView {
     
     // MARK: Utilities
     
-    func getInitials(name: String) -> String{
+    func getInitials(name: String) -> String {
+        if name.isEmpty {
+            return ""
+        }
+        
         let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
         
         guard let index = name.characters.indexOf(" ") else {
+            return firstInitial.uppercaseString
+        }
+        
+        if name.startIndex.distanceTo(index) + 1 >= name.characters.count {
             return firstInitial.uppercaseString
         }
         

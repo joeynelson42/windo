@@ -150,12 +150,15 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
         
-        let friend = filteredInvitees[indexPath.row]
+        let invitee = filteredInvitees[indexPath.row]
             
-        cell.nameLabel.text = "\(friend.firstName) \(friend.lastName)"
-        cell.userHandleLabel.text = "\(friend.formattedPhoneNumber)"
+        cell.nameLabel.text = "\(invitee.fullName)"
+//        cell.subtitleLabel.text = "\(invitee.phoneNumber)"
+        cell.initials.name = invitee.fullName
         
-        if createTabBar.invitees.contains(friend){
+//        print("\(invitee.fullName) == \(invitee.fullName.getInitials())")
+        
+        if createTabBar.invitees.contains(invitee){
             cell.checkmarkImageView.alpha = 1.0
             cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
             
@@ -238,7 +241,7 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     }
     
     func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
-        return  createTabBar.invitees[Int(index)].fullName
+        return  createTabBar.invitees[Int(index)].firstName
     }
     
     func tokenField(tokenField: VENTokenField, didEnterText text: String) {

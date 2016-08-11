@@ -12,8 +12,10 @@ class InviteeCell: UITableViewCell {
     
     //MARK: Properties
     var nameLabel = UILabel()
-    var userHandleLabel = UILabel()
-    var profileImageView = WindoProfileImageView()
+    var subtitleLabel = UILabel()
+    
+    var initials = UserInitialsView()
+    
     var checkmarkImageView = UIImageView()
     var infoButton = UIButton()
     var infoGestureContainer = UIView()
@@ -31,6 +33,10 @@ class InviteeCell: UITableViewCell {
     
     //MARK: View Configuration
     
+    override func prepareForReuse() {
+        
+    }
+    
     override func updateConstraints() {
         super.updateConstraints()
         configureSubviews()
@@ -43,21 +49,24 @@ class InviteeCell: UITableViewCell {
         nameLabel.textColor = UIColor.blue()
         nameLabel.font = UIFont.graphikRegular(16)
         
-        userHandleLabel.textColor = UIColor.blue()
-        userHandleLabel.font = UIFont.graphikRegular(14)
-        userHandleLabel.alpha = 0.8
+        subtitleLabel.textColor = UIColor.blue()
+        subtitleLabel.font = UIFont.graphikRegular(14)
+        subtitleLabel.alpha = 0.8
         
         checkmarkImageView.image = UIImage(named: "checkmarkIcon")
         checkmarkImageView.contentMode = .ScaleAspectFit
         
         infoButton.setImage(UIImage(named: "BlueInfoIcon"), forState: .Normal)
         
-        profileImageView.layer.borderWidth = 1.2
-        profileImageView.layer.borderColor = UIColor.blue().CGColor
+        initials.cornerRadius = 22
+        initials.borderColor = UIColor.blue().CGColor
+        initials.borderWidth = 1
+        initials.initials.textColor = UIColor.blue()
+        initials.fontSize = 22
         
         addSubview(nameLabel)
-        addSubview(userHandleLabel)
-        addSubview(profileImageView)
+        addSubview(subtitleLabel)
+        addSubview(initials)
         addSubview(checkmarkImageView)
         addSubview(infoButton)
         addSubview(infoGestureContainer)
@@ -65,20 +74,20 @@ class InviteeCell: UITableViewCell {
     }
     
     func applyConstraints(){
-        profileImageView.addConstraints(
+        initials.addConstraints(
             Constraint.ll.of(self, offset: 24),
             Constraint.cycy.of(self),
             Constraint.wh.of(44)
         )
         
         nameLabel.addConstraints(
-            Constraint.lr.of(profileImageView, offset: 17),
+            Constraint.lr.of(initials, offset: 17),
             Constraint.cycy.of(self, offset: -9),
             Constraint.w.of(200),
             Constraint.h.of(16)
         )
         
-        userHandleLabel.addConstraints(
+        subtitleLabel.addConstraints(
             Constraint.ll.of(nameLabel),
             Constraint.tb.of(nameLabel, offset: 3),
             Constraint.w.of(200),
