@@ -37,8 +37,8 @@ class CreateEventViewController: UIViewController {
         createEventView.inviteeTableView.delegate = self
         createEventView.inviteeTableView.dataSource = self
         
-        createEventView.searchBar.delegate = self
-        createEventView.searchBar.dataSource = self
+        createEventView.tokenBar.delegate = self
+        createEventView.tokenBar.dataSource = self
         
         if ContactManager.sharedManager.contacts.count > 0 {
             filteredInvitees = ContactManager.sharedManager.contacts
@@ -48,13 +48,13 @@ class CreateEventViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        setNavigationButtons()
+        setNavigationButtons(false)
     }
 
     //MARK: Methods
     
-    func setNavigationButtons() {
-        if createEventView.inviteeTableView.hidden == true {
+    func setNavigationButtons(tableShowing: Bool) {
+        if !tableShowing {
             createTabBar.title = "Create Event"
             
             let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
@@ -113,17 +113,8 @@ class CreateEventViewController: UIViewController {
     }
     
     func doneTapped() {
-        createEventView.inviteeTableView.hidden = true
-        
-        createEventView.searchBar.addConstraints(
-            Constraint.tt.of(createEventView),
-            Constraint.llrr.of(createEventView),
-            Constraint.h.of(50)
-        )
-        createEventView.layoutIfNeeded()
-        
-        setNavigationButtons()
-        createEventView.endEditing(true)
+        setNavigationButtons(false)
+        createEventView.toggleTableView(false)
     }
     
     func doNothing(){}
@@ -198,7 +189,7 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        createEventView.searchBar.reloadData()
+        createEventView.tokenBar.reloadData()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -250,7 +241,7 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     
     func tokenField(tokenField: VENTokenField, didDeleteTokenAtIndex index: UInt) {
         createTabBar.invitees.removeAtIndex(Int(index))
-        createEventView.searchBar.reloadData()
+        createEventView.tokenBar.reloadData()
         createEventView.inviteeTableView.reloadData()
     }
     
@@ -264,12 +255,12 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         if createEventView.inviteeTableView.hidden == true {
             createEventView.inviteeTableView.hidden = false
             createEventView.bringSubviewToFront(createEventView.inviteeTableView)
-            setNavigationButtons()
+            setNavigationButtons(true)
         }
     }
     
     func tokenField(tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
-        createEventView.searchBar.addConstraints(
+        createEventView.tokenBar.addConstraints(
             Constraint.tt.of(createEventView),
             Constraint.llrr.of(createEventView),
             Constraint.h.of(height)

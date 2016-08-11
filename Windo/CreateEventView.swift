@@ -14,7 +14,8 @@ class CreateEventView: UIView, UITextFieldDelegate {
 
     //invitees
     var inviteeTableView = UITableView()
-    var searchBar = VENTokenField()
+    var tokenBar = VENTokenField()
+    var collapsedLabel = UILabel()
     
     //location
     var locationCell = UIView()
@@ -57,13 +58,15 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
         inviteeTableView.hidden = true
         
-        searchBar.delimiters = [",", ";", "--"]
-        searchBar.placeholderText = "Invite some friends!"
-        searchBar.toLabelText = "Invite:"
-        searchBar.backgroundColor = UIColor.lightBlue()
-        searchBar.setColorScheme(UIColor.whiteColor())
-        searchBar.toLabelTextColor = UIColor.darkBlue()
-        searchBar.inputTextFieldTextColor = UIColor.whiteColor()
+        tokenBar.delimiters = [",", ";", "--"]
+        tokenBar.placeholderText = "Invite some friends!"
+        tokenBar.backgroundColor = UIColor.lightBlue()
+        tokenBar.toLabelText = ""
+        tokenBar.setColorScheme(UIColor.whiteColor())
+        tokenBar.toLabelTextColor = UIColor.darkBlue()
+        tokenBar.inputTextFieldTextColor = UIColor.whiteColor()
+        
+//        collapsedLabel.
         
         locationCell.backgroundColor = UIColor.lightBlue()
         let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
@@ -123,15 +126,16 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTitleLabel)
         addSubview(calendarContainer)
         
-        addSubview(searchBar)
+        addSubview(tokenBar)
         addSubview(inviteeTableView)
+        addSubview(collapsedLabel)
     }
     
     func applyConstraints(){
         
         let cellSize = screenHeight * 0.08995502
         
-        searchBar.addConstraints(
+        tokenBar.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
@@ -139,21 +143,21 @@ class CreateEventView: UIView, UITextFieldDelegate {
         )
         
         inviteeTableView.addConstraints(
-            Constraint.tb.of(searchBar),
+            Constraint.tb.of(tokenBar),
             Constraint.bb.of(self),
             Constraint.llrr.of(self),
             Constraint.w.of(screenWidth)
         )
         
         inviteeSeparator.addConstraints(
-            Constraint.tb.of(searchBar),
+            Constraint.tb.of(tokenBar),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(1)
         )
         
         locationCell.addConstraints(
-            Constraint.tb.of(searchBar),
+            Constraint.tb.of(tokenBar),
             Constraint.ll.of(self),
             Constraint.w.of(screenWidth),
             Constraint.h.of(cellSize)
@@ -168,14 +172,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         locationTitleLabel.addConstraints(
             Constraint.cycy.of(locationCell),
-            Constraint.ll.of(self, offset: 16),
+            Constraint.ll.of(self, offset: 20),
             Constraint.w.of(100),
             Constraint.h.of(16)
         )
         
         locationTextField.addConstraints(
             Constraint.cycy.of(locationCell, offset: 5),
-            Constraint.ll.of(self, offset: 16),
+            Constraint.ll.of(self, offset: 20),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
         )
@@ -196,14 +200,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
 
         nameTitleLabel.addConstraints(
             Constraint.cycy.of(nameCell),
-            Constraint.ll.of(self, offset: 16),
+            Constraint.ll.of(self, offset: 20),
             Constraint.w.of(100),
             Constraint.h.of(16)
         )
 
         nameTextField.addConstraints(
             Constraint.cycy.of(nameCell, offset: 5),
-            Constraint.ll.of(self, offset: 16),
+            Constraint.ll.of(self, offset: 20),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
         )
@@ -214,6 +218,27 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.w.of(screenWidth),
             Constraint.h.of(calendarContainer.calendarHeight())
         )
+    }
+    
+    func toggleTableView(show: Bool) {
+        if show {
+            
+        } else {
+            tokenBar.addConstraints(
+                Constraint.tt.of(self),
+                Constraint.cxcx.of(self),
+                Constraint.w.of(screenWidth),
+                Constraint.h.of(50)
+            )
+            
+            UIView.animateWithDuration(0.0001, animations: {
+                self.layoutIfNeeded()
+            }) { (finished) in
+                self.inviteeTableView.hidden = true
+            }
+            
+            endEditing(true)
+        }
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
