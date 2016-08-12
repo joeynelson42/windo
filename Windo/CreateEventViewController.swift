@@ -114,7 +114,12 @@ class CreateEventViewController: UIViewController {
     
     func doneTapped() {
         setNavigationButtons(false)
-        createEventView.toggleTableView(false)
+        
+        if createTabBar.invitees.count == 0 {
+            createEventView.hideTableView("", numberOfInvitees: 0)
+        } else {
+            createEventView.hideTableView(createTabBar.invitees[0].firstName, numberOfInvitees: createTabBar.invitees.count)
+        }
     }
     
     func doNothing(){}
@@ -253,17 +258,22 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     
     func tokenFieldDidBeginEditing(tokenField: VENTokenField) {
         if createEventView.inviteeTableView.hidden == true {
-            createEventView.inviteeTableView.hidden = false
+            createEventView.showTableView()
             createEventView.bringSubviewToFront(createEventView.inviteeTableView)
             setNavigationButtons(true)
         }
     }
     
     func tokenField(tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
+        var cellHeight = height
+        if height < 50 {
+            cellHeight = 50
+        }
+        
         createEventView.tokenBar.addConstraints(
             Constraint.tt.of(createEventView),
             Constraint.llrr.of(createEventView),
-            Constraint.h.of(height)
+            Constraint.h.of(cellHeight)
         )
         
         createEventView.layoutIfNeeded()

@@ -15,6 +15,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     //invitees
     var inviteeTableView = UITableView()
     var tokenBar = VENTokenField()
+    var collapsedCell = UIView()
     var collapsedLabel = UILabel()
     
     //location
@@ -59,21 +60,28 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeTableView.hidden = true
         
         tokenBar.delimiters = [",", ";", "--"]
-        tokenBar.placeholderText = "Invite some friends!"
+        tokenBar.placeholderText = ""
         tokenBar.backgroundColor = UIColor.lightBlue()
         tokenBar.toLabelText = ""
         tokenBar.setColorScheme(UIColor.whiteColor())
         tokenBar.toLabelTextColor = UIColor.darkBlue()
         tokenBar.inputTextFieldTextColor = UIColor.whiteColor()
         
-//        collapsedLabel.
+        collapsedCell.backgroundColor = UIColor.lightBlue()
+        var collapsedGR = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.toggleTokenBar))
+        collapsedCell.addGestureRecognizer(collapsedGR)
+        
+        collapsedLabel.font = UIFont.graphikRegular(16)
+        collapsedLabel.textColor = UIColor.whiteColor()
+        collapsedLabel.text = "Invite some friends!"
+        collapsedLabel.backgroundColor = UIColor.lightBlue()
         
         locationCell.backgroundColor = UIColor.lightBlue()
         let locationTap = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.locationTapped))
         locationCell.addGestureRecognizer(locationTap)
         
         locationTitleLabel.text = "Event Location"
-        locationTitleLabel.font = UIFont.graphikRegular(14)
+        locationTitleLabel.font = UIFont.graphikRegular(16)
         locationTitleLabel.textColor = UIColor.whiteColor()
         
         locationTextField.textColor = UIColor.whiteColor()
@@ -87,7 +95,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameCell.addGestureRecognizer(nameTap)
         
         nameTitleLabel.text = "Event Name"
-        nameTitleLabel.font = UIFont.graphikRegular(14)
+        nameTitleLabel.font = UIFont.graphikRegular(16)
         nameTitleLabel.textColor = UIColor.whiteColor()
         
         nameTextField.textColor = UIColor.whiteColor()
@@ -128,7 +136,8 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         addSubview(tokenBar)
         addSubview(inviteeTableView)
-        addSubview(collapsedLabel)
+        addSubview(collapsedCell)
+        collapsedCell.addSubview(collapsedLabel)
     }
     
     func applyConstraints(){
@@ -138,6 +147,18 @@ class CreateEventView: UIView, UITextFieldDelegate {
         tokenBar.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(50)
+        )
+        
+        collapsedCell.addConstraints(
+            Constraint.ttbb.of(tokenBar),
+            Constraint.llrr.of(tokenBar)
+        )
+        
+        collapsedLabel.addConstraints(
+            Constraint.cycy.of(collapsedCell),
+            Constraint.ll.of(collapsedCell, offset: 20),
             Constraint.w.of(screenWidth),
             Constraint.h.of(50)
         )
@@ -173,7 +194,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTitleLabel.addConstraints(
             Constraint.cycy.of(locationCell),
             Constraint.ll.of(self, offset: 20),
-            Constraint.w.of(100),
+            Constraint.w.of(200),
             Constraint.h.of(16)
         )
         
@@ -201,7 +222,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTitleLabel.addConstraints(
             Constraint.cycy.of(nameCell),
             Constraint.ll.of(self, offset: 20),
-            Constraint.w.of(100),
+            Constraint.w.of(200),
             Constraint.h.of(16)
         )
 
@@ -220,29 +241,44 @@ class CreateEventView: UIView, UITextFieldDelegate {
         )
     }
     
-    func toggleTableView(show: Bool) {
-        if show {
-            
-        } else {
-            tokenBar.addConstraints(
-                Constraint.tt.of(self),
-                Constraint.cxcx.of(self),
-                Constraint.w.of(screenWidth),
-                Constraint.h.of(50)
-            )
-            
-            UIView.animateWithDuration(0.0001, animations: {
-                self.layoutIfNeeded()
-            }) { (finished) in
-                self.inviteeTableView.hidden = true
-            }
-            
-            endEditing(true)
+    func toggleTokenBar() {
+        tokenBar.becomeFirstResponder()
+    }
+    
+    func hideTableView(firstInviteeName: String, numberOfInvitees: Int) {
+        tokenBar.addConstraints(
+            Constraint.tt.of(self),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(50)
+        )
+        
+        switch numberOfInvitees {
+        case 0:
+            collapsedLabel.text = "Invite some friends!"
+        case 1:
+            collapsedLabel.text = firstInviteeName
+        case 2:
+            collapsedLabel.text = "\(firstInviteeName) and 1 other"
+        default:
+            collapsedLabel.text = "\(firstInviteeName) and \(numberOfInvitees - 1) others"
         }
+        
+        self.layoutIfNeeded()
+        self.inviteeTableView.hidden = true
+        self.collapsedCell.hidden = false
+
+        endEditing(true)
+    }
+    
+    func showTableView() {
+        inviteeTableView.hidden = false
+        collapsedCell.hidden = true
+        tokenBar.reloadData()
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        let moveUp = CGAffineTransformMakeTranslation(-9, -20)
+        let moveUp = CGAffineTransformMakeTranslation(-18, -20)
         let shrink = CGAffineTransformMakeScale(0.85, 0.85)
         
         switch(textField.tag){
