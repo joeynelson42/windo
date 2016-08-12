@@ -38,6 +38,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     //misc
     var doneKeyboardAccessory = WindoKeyboardAccessoryView()
+    let cellSize = screenHeight * 0.08995502
     
     //MARK: View Configuration
     
@@ -49,8 +50,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func configureSubviews(){        
         backgroundColor = UIColor.blue()
-//        let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.keyboardDismiss))
-//        addGestureRecognizer(keyboardDismiss)
         
         inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
@@ -68,8 +67,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         tokenBar.inputTextFieldTextColor = UIColor.whiteColor()
         
         collapsedCell.backgroundColor = UIColor.lightBlue()
-        var collapsedGR = UITapGestureRecognizer(target: self, action: #selector(CreateEventView.toggleTokenBar))
-        collapsedCell.addGestureRecognizer(collapsedGR)
+        collapsedCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CreateEventView.toggleTokenBar)))
         
         collapsedLabel.font = UIFont.graphikRegular(16)
         collapsedLabel.textColor = UIColor.whiteColor()
@@ -142,25 +140,25 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func applyConstraints(){
         
-        let cellSize = screenHeight * 0.08995502
-        
         tokenBar.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(50)
+            Constraint.h.of(cellSize)
         )
         
         collapsedCell.addConstraints(
-            Constraint.ttbb.of(tokenBar),
-            Constraint.llrr.of(tokenBar)
+            Constraint.tt.of(self),
+            Constraint.cxcx.of(self),
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(cellSize)
         )
         
         collapsedLabel.addConstraints(
             Constraint.cycy.of(collapsedCell),
             Constraint.ll.of(collapsedCell, offset: 20),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(50)
+            Constraint.h.of(cellSize)
         )
         
         inviteeTableView.addConstraints(
@@ -194,12 +192,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTitleLabel.addConstraints(
             Constraint.cycy.of(locationCell),
             Constraint.ll.of(self, offset: 20),
-            Constraint.w.of(200),
+            Constraint.w.of(screenWidth),
             Constraint.h.of(16)
         )
         
         locationTextField.addConstraints(
-            Constraint.cycy.of(locationCell, offset: 5),
+            Constraint.cycy.of(locationCell),
             Constraint.ll.of(self, offset: 20),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
@@ -222,12 +220,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTitleLabel.addConstraints(
             Constraint.cycy.of(nameCell),
             Constraint.ll.of(self, offset: 20),
-            Constraint.w.of(200),
+            Constraint.w.of(screenWidth),
             Constraint.h.of(16)
         )
 
         nameTextField.addConstraints(
-            Constraint.cycy.of(nameCell, offset: 5),
+            Constraint.cycy.of(nameCell),
             Constraint.ll.of(self, offset: 20),
             Constraint.w.of(screenWidth),
             Constraint.h.of(16)
@@ -250,7 +248,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
             Constraint.w.of(screenWidth),
-            Constraint.h.of(50)
+            Constraint.h.of(cellSize)
         )
         
         switch numberOfInvitees {
@@ -278,43 +276,45 @@ class CreateEventView: UIView, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        let moveUp = CGAffineTransformMakeTranslation(-18, -20)
-        let shrink = CGAffineTransformMakeScale(0.85, 0.85)
+//        let moveUp = CGAffineTransformMakeTranslation(-18, -20)
+//        let shrink = CGAffineTransformMakeScale(0.85, 0.85)
         
-        switch(textField.tag){
+        switch(textField.tag) {
         case 0:
-            UIView.animateWithDuration(0.15, animations: { Void in
-                self.locationTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
-                self.locationTitleLabel.alpha = 0.75
-            })
+            locationTitleLabel.hidden = true
+//            UIView.animateWithDuration(0.15, animations: { Void in
+//                self.locationTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
+//                self.locationTitleLabel.alpha = 0.75
+//            })
         case 1:
-            UIView.animateWithDuration(0.15, animations: { Void in
-                self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
-                self.nameTitleLabel.alpha = 0.75
-            })
+            nameTitleLabel.hidden = true
+//            UIView.animateWithDuration(0.15, animations: { Void in
+//                self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
+//                self.nameTitleLabel.alpha = 0.75
+//            })
         default:
             break
         }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        
-        let moveDown = CGAffineTransformMakeTranslation(0, 0)
-        let grow = CGAffineTransformMakeScale(1.0, 1.0)
+        if textField.text != ""{ return }
+//        let moveDown = CGAffineTransformMakeTranslation(0, 0)
+//        let grow = CGAffineTransformMakeScale(1.0, 1.0)
         
         switch(textField.tag){
         case 0:
-            if textField.text != ""{ return }
-            UIView.animateWithDuration(0.15, animations: { Void in
-                self.locationTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
-                self.locationTitleLabel.alpha = 1.0
-            })
+            locationTitleLabel.hidden = false
+//            UIView.animateWithDuration(0.15, animations: { Void in
+//                self.locationTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
+//                self.locationTitleLabel.alpha = 1.0
+//            })
         case 1:
-            if textField.text != ""{ return }
-            UIView.animateWithDuration(0.15, animations: { Void in
-                self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
-                self.nameTitleLabel.alpha = 1.0
-            })
+            nameTitleLabel.hidden = false
+//            UIView.animateWithDuration(0.15, animations: { Void in
+//                self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
+//                self.nameTitleLabel.alpha = 1.0
+//            })
         default:
             break
         }

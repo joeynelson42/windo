@@ -245,6 +245,11 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             timeCollectionView.contentOffset.x = scrubberCellWidth * percent
         }
         
+        // handle paging manually for scrubber
+        if scrollView.tag == 1 {
+            
+        }
+        
         if scrollView.tag == 0 {
             let percent = scrollView.contentOffset.x/(screenWidth * CGFloat(createTabBar.selectedDates.count))
             let allDaysThreshold = screenWidth / (screenWidth * CGFloat(createTabBar.selectedDates.count))
@@ -252,11 +257,10 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             var tempPercent:CGFloat = 0
             
             
-            // TODO: Test if this fixes the incomplete animation due to fast scrolling
             if percent <= allDaysThreshold{
                 tempPercent = percent / allDaysThreshold
             } else {
-                tempPercent = 1.0 //this is probably the wrong number
+                tempPercent = 1.0
             }
             let backgroundRGB = transitionColorToColor(UIColor.whiteColor(), toColor: UIColor.blue(), percent: tempPercent)
             

@@ -37,6 +37,9 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     var cellContainer = UIView()
     var tapContainer = UIView()
     
+    let amLabel = UILabel()
+    let pmLabel = UILabel()
+    
     var cells = [ExpandingTimeCell]()
     var row1 = [ExpandingTimeCell]()
     var row2 = [ExpandingTimeCell]()
@@ -110,6 +113,14 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         tapContainer.addGestureRecognizer(tap)
         tapContainer.addGestureRecognizer(pan)
         
+        amLabel.text = "AM"
+        amLabel.textColor = UIColor.darkBlue()
+        amLabel.font = UIFont.graphikRegular(10)
+        
+        pmLabel.text = "PM"
+        pmLabel.textColor = UIColor.darkBlue()
+        pmLabel.font = UIFont.graphikRegular(10)
+        
         let times = createTimes()
         
         let expandRowPassiveAlpha:CGFloat = 0.75
@@ -155,6 +166,8 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         addSubview(expandRow3Button)
         addSubview(expandRow4Button)
         addSubview(tapContainer)
+        addSubview(amLabel)
+        addSubview(pmLabel)
     }
     
     func applyConstraints() {
@@ -204,6 +217,16 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             Constraint.cxcx.of(expandRow1Button),
             Constraint.cyt.of(timeCell18, offset: timeSelectSize/2),
             Constraint.wh.of(timeSelectSize)
+        )
+        
+        amLabel.addConstraints(
+            Constraint.tt.of(timeCell0, offset: 4),
+            Constraint.ll.of(timeCell0, offset: 4)
+        )
+        
+        pmLabel.addConstraints(
+            Constraint.tt.of(timeCell12, offset: 4),
+            Constraint.ll.of(timeCell12, offset: 4)
         )
     }
     

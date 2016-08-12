@@ -104,7 +104,7 @@ class CreateEventViewController: UIViewController {
             createTabBar.selectedIndex = 1
         }
         else {
-            noDaysAlert()
+            createTabBar.displayNoDaysAlert()
         }
     }
     
@@ -123,15 +123,6 @@ class CreateEventViewController: UIViewController {
     }
     
     func doNothing(){}
-    
-    func noDaysAlert(){
-        let alertController = UIAlertController(title: "Hey!", message: "Select some days on the calendar first!", preferredStyle: .Alert)
-        
-        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
-        alertController.addAction(cancelAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
-    }
 }
 
 extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource {
@@ -266,26 +257,19 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     
     func tokenField(tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
         var cellHeight = height
-        if height < 50 {
-            cellHeight = 50
+        if height < createEventView.cellSize {
+            cellHeight = createEventView.cellSize
         }
         
         createEventView.tokenBar.addConstraints(
             Constraint.tt.of(createEventView),
-            Constraint.llrr.of(createEventView),
+            Constraint.cxcx.of(createEventView),
+            Constraint.w.of(screenWidth),
             Constraint.h.of(cellHeight)
         )
         
         createEventView.layoutIfNeeded()
     }
-    
-//    func tokenFieldCollapsedText(tokenField: VENTokenField) -> String {
-//        if createTabBar.invitees.count > 1 {
-//            return "\(createTabBar.invitees.count) people"
-//        } else {
-//            return "1 person"
-//        }
-//    }
     
     func updateSearchResultsForSearchController(searchString: String) {
         defer {createEventView.inviteeTableView.reloadData()}

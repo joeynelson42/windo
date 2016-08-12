@@ -18,10 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //MARK: Initial View Controller
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = AppController.sharedController.viewController
-        AppController.sharedController.viewController.view.frame = window?.bounds ?? CGRectZero
+//        window?.rootViewController = AppController.sharedController.viewController
+//        AppController.sharedController.viewController.view.frame = window?.bounds ?? CGRectZero
 
-//        window?.rootViewController = SettingsViewController()
+        let homeVC = HomeViewController()
+        let navVC = UINavigationController(rootViewController: homeVC)
+        
+        window?.rootViewController = navVC
         window?.makeKeyAndVisible()
 
         

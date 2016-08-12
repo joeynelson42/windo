@@ -49,12 +49,25 @@ class CreateTabBarController: UITabBarController {
     func doneTapped(){
         switch selectedIndex {
         case 0:
-            selectedIndex = 1
+            if selectedDates.count > 0 {
+                selectedIndex = 1
+            } else {
+                displayNoDaysAlert()
+            }
         case 1:
             navigationController?.popViewControllerAnimated(true)
         default:
             return
         }
+    }
+    
+    func displayNoDaysAlert(){
+        let alertController = UIAlertController(title: "Hey!", message: "Select some days on the calendar first!", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func displayCancelAlert(){
