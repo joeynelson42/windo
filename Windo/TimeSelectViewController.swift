@@ -158,9 +158,13 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
                 let date = NSDate.createDateWithComponents(1991, monthNumber: 4, dayNumber: 23, hourNumber: 0, minuteNumber: 0)
                 cell.updateWithDate(date)
                 expandRowImage = UIImage(named: "blueLeftArrow")
+                cell.helpLabel.text = "Select times for all your days,\nall at once!"
+                cell.helpLabel.textColor = UIColor.darkBlue()
             }
             else {
                 cell.updateWithDate(createTabBar.selectedDates[indexPath.row - 1])
+                cell.helpLabel.text = "Select some times for your friends to choose from!"
+                cell.helpLabel.textColor = UIColor.whiteColor()
             }
             cell.delegate = self
             for time in cell.times {
@@ -230,24 +234,18 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
             }
         }
         
+        let cellCount = CGFloat(createTabBar.selectedDates.count)
         if scrollView.tag == 0  && timesScrolling == true{
-            let cellCount = CGFloat(createTabBar.selectedDates.count)
             let percent = scrollView.contentOffset.x/(screenWidth * cellCount)
             
             let scrubberCellWidth = cellCount * (screenWidth/5)
             scrubber.contentOffset.x = scrubberCellWidth * percent
         }
         else if scrollView.tag == 1 && scrubberScrolling == true {
-            let cellCount = CGFloat(createTabBar.selectedDates.count)
             let percent = scrollView.contentOffset.x/(screenWidth/5 * cellCount)
             
             let scrubberCellWidth = cellCount * (screenWidth)
             timeCollectionView.contentOffset.x = scrubberCellWidth * percent
-        }
-        
-        // handle paging manually for scrubber
-        if scrollView.tag == 1 {
-            
         }
         
         if scrollView.tag == 0 {
@@ -280,14 +278,48 @@ extension TimeSelectViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        // handle paging manually for scrubber
+        if scrollView.tag == 1 {
+            handleScrubberPaging()
+        }
+        
         timesScrolling = false
         scrubberScrolling = false
         highlightScrubberCenter()
     }
     
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        // handle paging manually for scrubber
+        if scrollView.tag == 1 && !decelerate {
+            handleScrubberPaging()
+        }
+    }
+    
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         timesScrolling = false
         scrubberScrolling = false
+    }
+    
+    func handleScrubberPaging() {
+        let cellCount = CGFloat(createTabBar.selectedDates.count)
+        var pagingOffsets = [CGFloat]()
+        for i in 0...Int(cellCount) {
+            pagingOffsets.append(CGFloat(i) * (screenWidth/5))
+        }
+        
+        let currentOffset = scrubber.contentOffset.x
+        var closestOffset: CGFloat = 0
+        for offset in pagingOffsets {
+            if abs(currentOffset - closestOffset) > abs(currentOffset - offset) {
+                closestOffset = offset
+            }
+        }
+        
+        UIView.animateWithDuration(0.35, animations: {
+            self.scrubber.contentOffset.x = closestOffset
+            }, completion: { (finished) in
+                self.highlightScrubberCenter()
+        })
     }
     
     func highlightScrubberCenter(){

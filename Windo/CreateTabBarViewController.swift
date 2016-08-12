@@ -49,10 +49,14 @@ class CreateTabBarController: UITabBarController {
     func doneTapped(){
         switch selectedIndex {
         case 0:
-            if selectedDates.count > 0 {
-                selectedIndex = 1
-            } else {
+            
+            if invitees.count == 0 {
+                displayNoInviteesAlert()
+            } else if selectedDates.count == 0 {
                 displayNoDaysAlert()
+            } else {
+                selectedIndex = 1
+                title = "Specify Times"
             }
         case 1:
             navigationController?.popViewControllerAnimated(true)
@@ -61,8 +65,17 @@ class CreateTabBarController: UITabBarController {
         }
     }
     
+    func displayNoInviteesAlert(){
+        let alertController = UIAlertController(title: "Invite friends", message: "It's not a party without people.", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     func displayNoDaysAlert(){
-        let alertController = UIAlertController(title: "Hey!", message: "Select some days on the calendar first!", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Select days", message: "Select some days on the calendar first.", preferredStyle: .Alert)
         
         let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
         alertController.addAction(cancelAction)

@@ -80,7 +80,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         locationTitleLabel.text = "Event Location"
         locationTitleLabel.font = UIFont.graphikRegular(16)
-        locationTitleLabel.textColor = UIColor.whiteColor()
+        locationTitleLabel.textColor = UIColor.darkBlue()
         
         locationTextField.textColor = UIColor.whiteColor()
         locationTextField.font = UIFont.graphikRegular(16)
@@ -94,7 +94,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         nameTitleLabel.text = "Event Name"
         nameTitleLabel.font = UIFont.graphikRegular(16)
-        nameTitleLabel.textColor = UIColor.whiteColor()
+        nameTitleLabel.textColor = UIColor.darkBlue()
         
         nameTextField.textColor = UIColor.whiteColor()
         nameTextField.font = UIFont.graphikRegular(16)

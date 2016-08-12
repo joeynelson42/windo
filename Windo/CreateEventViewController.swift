@@ -97,15 +97,7 @@ class CreateEventViewController: UIViewController {
     }
     
     func nextTapped(){
-        let dates = createEventView.calendarContainer.selectedDays
-        
-        if dates.count > 0 {
-            createTabBar.title = "Specify Times"
-            createTabBar.selectedIndex = 1
-        }
-        else {
-            createTabBar.displayNoDaysAlert()
-        }
+        createTabBar.doneTapped()
     }
     
     func cancelTapped(){

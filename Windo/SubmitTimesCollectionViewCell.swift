@@ -39,6 +39,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     let amLabel = UILabel()
     let pmLabel = UILabel()
+    let helpLabel = UILabel()
     
     var cells = [ExpandingTimeCell]()
     var row1 = [ExpandingTimeCell]()
@@ -121,6 +122,11 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         pmLabel.textColor = UIColor.darkBlue()
         pmLabel.font = UIFont.graphikRegular(10)
         
+        helpLabel.font = UIFont.graphikRegular(14)
+        helpLabel.numberOfLines = 0
+        helpLabel.lineBreakMode = .ByWordWrapping
+        helpLabel.textAlignment = .Center
+        
         let times = createTimes()
         
         let expandRowPassiveAlpha:CGFloat = 0.75
@@ -168,6 +174,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         addSubview(tapContainer)
         addSubview(amLabel)
         addSubview(pmLabel)
+        addSubview(helpLabel)
     }
     
     func applyConstraints() {
@@ -227,6 +234,11 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         pmLabel.addConstraints(
             Constraint.tt.of(timeCell12, offset: 4),
             Constraint.ll.of(timeCell12, offset: 4)
+        )
+        
+        helpLabel.addConstraints(
+            Constraint.llrr.of(self, offset: 0.2 * screenWidth),
+            Constraint.tb.of(timeCell23, offset: 30)
         )
     }
     
