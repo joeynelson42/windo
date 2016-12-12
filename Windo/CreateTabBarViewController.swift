@@ -37,13 +37,13 @@ class CreateTabBarController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = UIColor.lightBlue()
-        navigationController?.navigationBar.tintColor = UIColor.darkBlue()
-        navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkBlue()]
+        navigationController?.navigationBar.tintColor = UIColor.extraDarkBlue()
+        navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.extraDarkBlue()]
         navigationController?.navigationBar.isTranslucent = false
     }
     
     func cancelTapped(){
-        navigationController?.popViewController(animated: true)
+        let _ = navigationController?.popViewController(animated: true)
     }
     
     func doneTapped(){
@@ -59,7 +59,7 @@ class CreateTabBarController: UITabBarController {
                 title = "Specify Times"
             }
         case 1:
-            navigationController?.popViewController(animated: true)
+            let _ = navigationController?.popViewController(animated: true)
         default:
             return
         }
@@ -90,7 +90,7 @@ class CreateTabBarController: UITabBarController {
         alertController.addAction(cancelAction)
         
         let destroyAction = UIAlertAction(title: "Discard", style: .destructive) { (action) in
-            self.navigationController?.popViewController(animated: true)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(destroyAction)
         

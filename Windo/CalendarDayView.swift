@@ -20,10 +20,10 @@ enum DayState{
     case empty
 }
 
-class CalendarDayView: UIView {
+class CalendarDayView: FSCalendarCell {
     
     //MARK: Properties
-    var delegate: CalendarDayDelegate!
+//    var delegate: CalendarDayDelegate!
     var state = DayState.empty
     
     var selectedBackground = UIView()
@@ -64,7 +64,7 @@ class CalendarDayView: UIView {
     func configureSubviews(){
         backgroundColor = UIColor.blue()
         
-        dateButton.setTitle("\(day)", for: UIControlState())
+//        dateButton.setTitle("\(day)", for: UIControlState())
         dateButton.setTitleColor(UIColor.white, for: UIControlState())
         dateButton.alpha = 0.75
         dateButton.titleLabel?.font = UIFont.graphikRegular(18)
@@ -116,7 +116,7 @@ class CalendarDayView: UIView {
                 }, completion: nil)
         }
         
-        delegate.updateSelectedDays!(day)
+//        delegate.updateSelectedDays!(day)
     }
     
     func updateState(){

@@ -94,7 +94,7 @@ class ContactManager {
                 break
             }
             
-            guard let number = contact.phoneNumbers[0].value as? CNPhoneNumber else { break }
+            guard let number = contact.phoneNumbers.first?.value else { break }
             let newInvitee = Invitee(number: number.stringValue, firstName: contact.givenName, lastName: contact.familyName)
             invitees.append(newInvitee)
         }

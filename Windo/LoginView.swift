@@ -14,7 +14,7 @@ class LoginView: UIView {
     var windoLabel = UILabel()
     var facebookButton = GHButton()
     
-    let loginButton = FBSDKLoginButton()
+//    let loginButton = FBSDKLoginButton()
     
     //MARK: Inits
     convenience init() {
@@ -54,7 +54,7 @@ class LoginView: UIView {
                 
         addSubview(windoLabel)
         addSubview(facebookButton)
-        addSubview(loginButton)
+//        addSubview(loginButton)
     }
     
     func applyConstraints(){
@@ -70,11 +70,11 @@ class LoginView: UIView {
             Constraint.h.of(35)
         )
         
-        loginButton.addConstraints(
-            Constraint.cxcx.of(self),
-            Constraint.tb.of(self, offset: 25),
-            Constraint.w.of(200),
-            Constraint.h.of(35)
-        )
+//        loginButton.addConstraints(
+//            Constraint.cxcx.of(self),
+//            Constraint.tb.of(self, offset: 25),
+//            Constraint.w.of(200),
+//            Constraint.h.of(35)
+//        )
     }
 }

@@ -45,7 +45,8 @@ class CreateEventView: UIView, UITextFieldDelegate {
     var nameSeparator = UIView()
     
     //calendar!
-    var calendarContainer = WindoCalendarView()
+//    var calendarContainer = WindoCalendarView()
+    let calendar = FSCalendar()
     
     //misc
     var doneKeyboardAccessory = WindoKeyboardAccessoryView()
@@ -61,6 +62,53 @@ class CreateEventView: UIView, UITextFieldDelegate {
     
     func configureSubviews(){        
         backgroundColor = UIColor.blue()
+        
+        calendar.allowsMultipleSelection = true
+        calendar.backgroundColor = UIColor.blue()
+        
+        calendar.calendarHeaderView.backgroundColor = UIColor.blue()
+        calendar.calendarWeekdayView.backgroundColor = UIColor.blue()
+        
+        calendar.appearance.headerTitleFont = UIFont.graphikRegular(18)
+        calendar.appearance.headerTitleColor = .extraDarkBlue()
+        
+        calendar.appearance.titleDefaultColor = .white
+        calendar.appearance.titleSelectionColor = .white
+        calendar.appearance.titleOffset = CGPoint(x:0, y: 4)
+        
+        calendar.appearance.weekdayTextColor = .extraDarkBlue()
+        calendar.appearance.weekdayFont = UIFont.graphikRegular(10)
+        calendar.appearance.adjustsFontSizeToFitContentSize = false
+        
+        calendar.clipsToBounds = true // Remove top/bottom line
+        calendar.swipeToChooseGesture.isEnabled = true // Swipe-To-Choose
+        calendar.swipeToChooseGesture.minimumPressDuration = 0.25
+        
+        calendar.appearance.eventSelectionColor = UIColor.white
+        calendar.appearance.eventOffset = CGPoint(x: 0, y: -7)
+        calendar.today = nil // Hide the today circle
+        calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
+        
+        for (index,label) in calendar.calendarWeekdayView.weekdayLabels.allObjects.enumerated() {
+            switch index {
+            case 0:
+                label.text = "S"
+            case 1:
+                label.text = "M"
+            case 2:
+                label.text = "T"
+            case 3:
+                label.text = "W"
+            case 4:
+                label.text = "Th"
+            case 5:
+                label.text = "F"
+            case 6:
+                label.text = "S"
+            default:
+                print("no more days")
+            }
+        }
         
         inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
@@ -132,7 +180,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), for: .touchUpInside)
         
         //Calendar
-        calendarContainer.backgroundColor = UIColor.blue()
+//        calendarContainer.backgroundColor = UIColor.blue()
         
         addSubview(locationCell)
         addSubview(nameCell)
@@ -142,6 +190,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
 //        addSubview(calendarContainer)
+        addSubview(calendar)
         
         addSubview(tokenBar)
         addSubview(inviteeTableView)
@@ -242,6 +291,16 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.h.of(16)
         )
         
+        
+        calendar.addConstraints(
+            Constraint.cxcx.of(self),
+            Constraint.tb.of(nameCell, offset: 2),
+            Constraint.llrr.of(self),
+            Constraint.bb.of(self)
+//            Constraint.h.of(calendarContainer.calendarHeight())
+        )
+
+//
 //        calendarContainer.addConstraints(
 //            Constraint.cxcx.of(self),
 //            Constraint.tb.of(nameCell, offset: 2),

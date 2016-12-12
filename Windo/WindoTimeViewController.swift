@@ -67,7 +67,7 @@ class WindoTimeViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         let sendAction = UIAlertAction(title: "Send!", style: .default) { (action) in
-            self.navigationController?.popViewController(animated: true)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(sendAction)
         

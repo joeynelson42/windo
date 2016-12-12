@@ -40,7 +40,7 @@ public extension UIDevice {
         let modelCode = withUnsafeMutablePointer(to: &systemInfo.machine) {
             ptr in String(cString: UnsafeRawPointer(ptr).assumingMemoryBound(to: CChar.self))
         }
-        var modelMap : [ String : Model ] = [
+        let modelMap : [ String : Model ] = [
             "i386"      : .simulator,
             "x86_64"    : .simulator,
             "iPod1,1"   : .iPod1,

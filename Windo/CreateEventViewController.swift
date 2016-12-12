@@ -30,15 +30,18 @@ class CreateEventViewController: UIViewController {
         let drag = UIPanGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
         let tap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
         
-        createEventView.calendarContainer.dragView.addGestureRecognizer(drag)
-        createEventView.calendarContainer.dragView.addGestureRecognizer(tap)
-        createEventView.calendarContainer.delegate = self
-        
+//        createEventView.calendarContainer.dragView.addGestureRecognizer(drag)
+//        createEventView.calendarContainer.dragView.addGestureRecognizer(tap)
+//        createEventView.calendarContainer.delegate = self
+//        
         createEventView.inviteeTableView.delegate = self
         createEventView.inviteeTableView.dataSource = self
         
         createEventView.tokenBar.delegate = self
         createEventView.tokenBar.dataSource = self
+        
+        createEventView.calendar.dataSource = self
+        createEventView.calendar.delegate = self
         
         if ContactManager.sharedManager.contacts.count > 0 {
             filteredInvitees = ContactManager.sharedManager.contacts
@@ -74,26 +77,26 @@ class CreateEventViewController: UIViewController {
     }
     
     func handleCalendarGesture(_ gesture: UIGestureRecognizer){
-        let days = createEventView.calendarContainer.days
-        if initialStates.isEmpty {
-            for day in days {
-                initialStates.append(day.selectedBackground.alpha)
-            }
-        }
-        
-        for (index,day) in days.enumerated() {
-            if day.frame.contains(gesture.location(in: createEventView.calendarContainer)){
-                if (day.selectedBackground.alpha == initialStates[index]){
-                    day.tapped()
-                }
-            }
-        }
-        
-        if gesture.state == .ended {
-            initialStates.removeAll()
-        }
-        
-        createTabBar.datesChangedUpdateTimes()
+//        let days = createEventView.calendarContainer.days
+//        if initialStates.isEmpty {
+//            for day in days {
+//                initialStates.append(day.selectedBackground.alpha)
+//            }
+//        }
+//        
+//        for (index,day) in days.enumerated() {
+//            if day.frame.contains(gesture.location(in: createEventView.calendarContainer)){
+//                if (day.selectedBackground.alpha == initialStates[index]){
+//                    day.tapped()
+//                }
+//            }
+//        }
+//        
+//        if gesture.state == .ended {
+//            initialStates.removeAll()
+//        }
+//        
+//        createTabBar.datesChangedUpdateTimes()
     }
     
     func nextTapped(){
@@ -276,9 +279,59 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
     }
 }
 
-extension CreateEventViewController: WindoCalendarDelegate {
+extension CreateEventViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func daysSelectedDidChange(_ dates: [Date]) {
         createTabBar.selectedDates = dates
+    }
+   
+    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
+        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
+        return cell
+    }
+
+    func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
+        guard let calendarCell = cell as? CalendarCell else { return }
+        calendarCell.updateWithSelectedState()
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        guard let cell = calendar.cell(for: date, at: monthPosition) as? CalendarCell else { return }
+        cell.updateWithSelectedState(animated: true)
+    }
+    
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        guard let cell = calendar.cell(for: date, at: monthPosition) as? CalendarCell else { return }
+        cell.updateWithSelectedState(animated: true)
+    }
+    
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition)   -> Bool {
+        return monthPosition == .current;
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+    
+    //
+    //    func maximumDate(for calendar: FSCalendar) -> Date {
+    //        let oneYearFromNow = self.gregorian.date(byAdding: .year, value: 1, to: Date(), wrappingComponents: true)
+    //        return oneYearFromNow!
+    //    }
+    
+    func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {
+//        if self.gregorian.isDateInToday(date) {
+//            return "今"
+//        }
+        return nil
+    }
+    
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        return 0
+    }
+    
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        self.createEventView.calendar.frame.size.height = bounds.height
+//        self.eventLabel.frame.origin.y = calendar.frame.maxY + 10
     }
 }

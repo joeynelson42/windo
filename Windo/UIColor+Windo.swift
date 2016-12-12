@@ -72,6 +72,11 @@ extension UIColor{
         return color
     }
     
+    class func extraDarkBlue() -> UIColor{
+        let color = UIColor.fromHex(0x160A63, alpha: 1.0)
+        return color
+    }
+    
     class func mikeBlue() -> UIColor{
         let color = UIColor.fromHex(0x000667, alpha: 1.0)
         return color
