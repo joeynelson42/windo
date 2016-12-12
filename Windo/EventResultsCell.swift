@@ -11,7 +11,7 @@ import UIKit
 class EventResultsCell: UITableViewCell {
     
     //MARK: Properties
-    var date = NSDate()
+    var date = Date()
     var dayOfTheWeekLabel = UILabel()
     var dateLabel = UILabel()
     var timeLabel = UILabel()
@@ -48,11 +48,11 @@ class EventResultsCell: UITableViewCell {
         backgroundColor = UIColor.purple()
         
         dayOfTheWeekLabel.text = date.abbrevDayOfWeek()
-        dayOfTheWeekLabel.textColor = UIColor.whiteColor()
+        dayOfTheWeekLabel.textColor = UIColor.white
         dayOfTheWeekLabel.font = UIFont.graphikMedium(14)
         
         dateLabel.text = "\(date.monthAbbrevCap()) \(date.day())"
-        dateLabel.textColor = UIColor.whiteColor()
+        dateLabel.textColor = UIColor.white
         dateLabel.font = UIFont.graphikRegular(14)
         
         if date.hour() < 12 {
@@ -115,40 +115,40 @@ extension EventResultsCell: UICollectionViewDelegate, UICollectionViewDataSource
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22)
         layout.minimumLineSpacing = 10
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 34, height: 34)
         responseCollectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         responseCollectionView.delegate = self
         responseCollectionView.dataSource = self
-        responseCollectionView.registerClass(ResponseCell.self, forCellWithReuseIdentifier: "responseCell")
+        responseCollectionView.register(ResponseCell.self, forCellWithReuseIdentifier: "responseCell")
         responseCollectionView.showsVerticalScrollIndicator = false
         responseCollectionView.showsHorizontalScrollIndicator = false
-        responseCollectionView.backgroundColor = UIColor.clearColor()
+        responseCollectionView.backgroundColor = UIColor.clear
         addSubview(responseCollectionView)
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return members.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = responseCollectionView.dequeueReusableCellWithReuseIdentifier("responseCell", forIndexPath: indexPath) as! ResponseCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = responseCollectionView.dequeueReusableCell(withReuseIdentifier: "responseCell", for: indexPath) as! ResponseCell
         cell.layer.cornerRadius = 17
-        cell.initials.text = members[indexPath.row].getInitials()
+        cell.initials.text = members[(indexPath as NSIndexPath).row].getInitials()
         cell.whSize = 34
         
-        if indexPath.row > 3 {
+        if (indexPath as NSIndexPath).row > 3 {
             cell.alpha = 0.5
         }
         else {
             cell.alpha = 1.0
         }
         
-        if members[indexPath.row] == "John Jackson" {
+        if members[(indexPath as NSIndexPath).row] == "John Jackson" {
             cell.imageView.image = UIImage(named: "John Profile")
         }
         

@@ -19,7 +19,7 @@ class SavingLabel: UIView {
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -46,9 +46,9 @@ class SavingLabel: UIView {
         mainLabel.font = UIFont.graphikLight(14)
         
         savingOrb.alpha = 0.0
-        savingOrb.backgroundColor = UIColor.clearColor()
+        savingOrb.backgroundColor = UIColor.clear
         savingOrb.layer.cornerRadius = 4
-        savingOrb.layer.borderColor = colorTheme.lightColor.CGColor
+        savingOrb.layer.borderColor = colorTheme.lightColor.cgColor
         savingOrb.layer.borderWidth = 1.0
         
         addSubview(mainLabel)
@@ -74,33 +74,33 @@ class SavingLabel: UIView {
     
     func start() {
         if savingOrb.alpha == 0.0 {
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.savingOrb.alpha = 1.0
                 self.mainLabel.alpha = 1.0
-            }) { (finished) in
-                UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: {
-                    self.savingOrb.transform = CGAffineTransformMakeScale(0.8, 0.8)
+            }, completion: { (finished) in
+                UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0, options: [.autoreverse, .repeat, .curveLinear], animations: {
+                    self.savingOrb.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
                     }, completion: nil)
-            }
+            }) 
         } else {
-            UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0, options: [.Autoreverse, .Repeat, .CurveLinear], animations: {
-                self.savingOrb.transform = CGAffineTransformMakeScale(0.8, 0.8)
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0, options: [.autoreverse, .repeat, .curveLinear], animations: {
+                self.savingOrb.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
                 }, completion: nil)
         }
     }
     
     func finish() {
-        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.CurveEaseOut], animations: {
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.curveEaseOut], animations: {
             self.mainLabel.text = "Saved!"
             self.savingOrb.backgroundColor = self.colorTheme.lightColor
-            self.savingOrb.transform = CGAffineTransformIdentity
+            self.savingOrb.transform = CGAffineTransform.identity
             }) { (finished) in
-                UIView.animateWithDuration(0.5, animations: { 
+                UIView.animate(withDuration: 0.5, animations: { 
                     self.savingOrb.alpha = 0.0
                     self.mainLabel.alpha = 0.0
                     }, completion: { void in
                         self.mainLabel.text = "Saving..."
-                        self.savingOrb.backgroundColor = UIColor.clearColor()
+                        self.savingOrb.backgroundColor = UIColor.clear
                     })
         }
     }

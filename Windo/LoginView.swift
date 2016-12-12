@@ -18,7 +18,7 @@ class LoginView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -42,15 +42,15 @@ class LoginView: UIView {
         backgroundColor = UIColor.lightTeal()
         
         windoLabel.text = "windo"
-        windoLabel.textColor = UIColor.whiteColor()
+        windoLabel.textColor = UIColor.white
         windoLabel.font = UIFont.graphikRegular(35)
                 
-        facebookButton.layer.borderColor = UIColor.whiteColor().CGColor
+        facebookButton.layer.borderColor = UIColor.white.cgColor
         facebookButton.layer.borderWidth = 1
-        facebookButton.setTitle("SIGN IN WITH FACEBOOK", forState: .Normal)
-        facebookButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        facebookButton.setTitle("SIGN IN WITH FACEBOOK", for: UIControlState())
+        facebookButton.setTitleColor(UIColor.white, for: UIControlState())
         facebookButton.titleLabel?.font = UIFont.graphikMedium(13)
-        facebookButton.titleLabel?.textAlignment = .Left
+        facebookButton.titleLabel?.textAlignment = .left
                 
         addSubview(windoLabel)
         addSubview(facebookButton)

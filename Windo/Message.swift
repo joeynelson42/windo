@@ -13,7 +13,7 @@ struct Message {
     var userID: String!
     var eventID: String!
     var body: String!
-    var timestamp: NSDate!
+    var timestamp: Date!
     
     // MARK: Public
     

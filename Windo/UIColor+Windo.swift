@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIColor{
-    class func fromHex(rgbValue:UInt32, alpha:Double=1.0) -> UIColor{
+    class func fromHex(_ rgbValue:UInt32, alpha:Double=1.0) -> UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
         let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
         let blue = CGFloat(rgbValue & 0xFF)/256.0
@@ -52,7 +52,7 @@ extension UIColor{
         return color
     }
     
-    class func darkPurple(alpha: Double) -> UIColor{
+    class func darkPurple(_ alpha: Double) -> UIColor{
         let color = UIColor.fromHex(0x590196, alpha: alpha)
         return color
     }
@@ -77,7 +77,7 @@ extension UIColor{
         return color
     }
     
-    class func mikeBlue(alpha: Double) -> UIColor{
+    class func mikeBlue(_ alpha: Double) -> UIColor{
         let color = UIColor.fromHex(0x000667, alpha: alpha)
         return color
     }
@@ -85,7 +85,7 @@ extension UIColor{
     
     
     
-    class func stringToHex(s: NSString)->Int{
+    class func stringToHex(_ s: NSString)->Int{
         let numbers = [
             "a": 10, "A": 10,
             "b": 11, "B": 11,
@@ -124,39 +124,39 @@ extension UIColor{
         }
     }
     
-    class func ColorFromRedGreenBlue(red: NSString, green: NSString, blue: NSString)->UIColor{
+    class func ColorFromRedGreenBlue(_ red: NSString, green: NSString, blue: NSString)->UIColor{
         
-        var first: NSString = red.substringToIndex(1)
-        var second = red.substringFromIndex(1)
+        var first: NSString = red.substring(to: 1) as NSString
+        var second = red.substring(from: 1)
         var varOne = stringToHex(first)
-        var varTwo = stringToHex(second)
+        var varTwo = stringToHex(second as NSString)
         let redValue: CGFloat = (CGFloat(varOne) * 16.0 + CGFloat(varTwo)) / 255.0
         
-        first = green.substringToIndex(1)
-        second = green.substringFromIndex(1)
+        first = green.substring(to: 1) as NSString
+        second = green.substring(from: 1)
         varOne = stringToHex(first)
-        varTwo = stringToHex(second)
+        varTwo = stringToHex(second as NSString)
         let greenValue: CGFloat = (CGFloat(varOne) * 16.0 + CGFloat(varTwo)) / 255.0
         
-        first = blue.substringToIndex(1)
-        second = blue.substringFromIndex(1)
+        first = blue.substring(to: 1) as NSString
+        second = blue.substring(from: 1)
         varOne = stringToHex(first)
-        varTwo = stringToHex(second)
+        varTwo = stringToHex(second as NSString)
         let blueValue: CGFloat = (CGFloat(varOne) * 16.0 + CGFloat(varTwo)) / 255.0
         
         return UIColor(red: redValue, green: greenValue, blue: blueValue, alpha: 1.0)
     }
     
-    class func languageCellColor(hex: String)->UIColor{
+    class func languageCellColor(_ hex: String)->UIColor{
         var color = NSAttributedString(string: hex)
         var range = NSMakeRange(1, color.length - 1)
-        color = color.attributedSubstringFromRange(range)
+        color = color.attributedSubstring(from: range)
         range = NSMakeRange(0, 2)
-        let red = color.attributedSubstringFromRange(range)
+        let red = color.attributedSubstring(from: range)
         range = NSMakeRange(2, 2)
-        let green = color.attributedSubstringFromRange(range)
+        let green = color.attributedSubstring(from: range)
         range = NSMakeRange(4, 2)
-        let blue = color.attributedSubstringFromRange(range)
-        return ColorFromRedGreenBlue(red.string, green: green.string, blue: blue.string)
+        let blue = color.attributedSubstring(from: range)
+        return ColorFromRedGreenBlue(red.string as NSString, green: green.string as NSString, blue: blue.string as NSString)
     }
 }

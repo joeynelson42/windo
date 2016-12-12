@@ -15,67 +15,67 @@ class ContactManager {
     let store = CNContactStore()
     var contacts = [Invitee]()
     
-    func sync(completionHandler: (success: Bool) -> ()) {
+    func sync(_ completionHandler: @escaping (_ success: Bool) -> ()) {
         self.requestAccess { (success) in
             if success {
                 if let _ = self.fetchContactsFromDefaults() {
                     print("successfully retrieved contacts from defaults")
-                    completionHandler(success: true)
+                    completionHandler(true)
                 } else {
                     self.fetchInviteesWithCompletion({ (invitees, success) in
                         if success{
                             print("successfully retrieved contacts and stored them in defaults")
                             self.storeContacts(invitees)
-                            completionHandler(success: true)
+                            completionHandler(true)
                         }
                     })
                 }
             } else {
                 print("failed to fetch contacts")
-                completionHandler(success: false)
+                completionHandler(false)
             }
         }
     }
     
-    func requestAccess(completionHandler: (success: Bool) -> ()) {
-        let status = CNContactStore.authorizationStatusForEntityType(.Contacts)
-        if status == .Authorized {
-            completionHandler(success: true)
-        } else if status == .Denied || status == .Restricted {
-            completionHandler(success: false)
+    func requestAccess(_ completionHandler: @escaping (_ success: Bool) -> ()) {
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        if status == .authorized {
+            completionHandler(true)
+        } else if status == .denied || status == .restricted {
+            completionHandler(false)
         } else {
-            store.requestAccessForEntityType(.Contacts) { (success, error) in
+            store.requestAccess(for: .contacts) { (success, error) in
                 if error != nil {
                     // handle error
                 } else {
                     // success!
                 }
                 
-                completionHandler(success: success)
+                completionHandler(success)
             }
         }
     }
     
-    func fetchInviteesWithCompletion(completion:(invitees: [Invitee], success: Bool)->()) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+    func fetchInviteesWithCompletion(_ completion:@escaping (_ invitees: [Invitee], _ success: Bool)->()) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             if let contacts = ContactManager.sharedManager.fetchContacts() {
                 let invitees = ContactManager.sharedManager.getInviteesFromContacts(contacts)
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(invitees: invitees, success: true)
+                DispatchQueue.main.async {
+                    completion(invitees, true)
                 }
             } else {
-                completion(invitees: [], success: false)
+                completion([], false)
             }
         }
     }
     
-    private func fetchContacts() -> [CNContact]? {
+    fileprivate func fetchContacts() -> [CNContact]? {
         let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
-        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
         var contacts = [CNContact]()
         
         do {
-            try store.enumerateContactsWithFetchRequest(fetchRequest) { (contact, nil) in
+            try store.enumerateContacts(with: fetchRequest) { (contact, nil) in
                 contacts.append(contact)
             }
             
@@ -86,7 +86,7 @@ class ContactManager {
         }
     }
     
-    private func getInviteesFromContacts(contacts: [CNContact]) -> [Invitee] {
+    fileprivate func getInviteesFromContacts(_ contacts: [CNContact]) -> [Invitee] {
         var invitees = [Invitee]()
         
         for contact in contacts {
@@ -106,14 +106,14 @@ class ContactManager {
     
     // MARK: UserDefaults
     
-    func storeContacts(contacts: [Invitee]) {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(contacts)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kContacts)
+    func storeContacts(_ contacts: [Invitee]) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: contacts)
+        UserDefaults.standard.set(data, forKey: Constants.userDefaultKeys.kContacts)
     }
     
     func fetchContactsFromDefaults() -> [Invitee]?{
-        guard let data = NSUserDefaults.standardUserDefaults().objectForKey(Constants.userDefaultKeys.kContacts) as? NSData else { return nil }
-        guard let contacts = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Invitee] else { return nil }
+        guard let data = UserDefaults.standard.object(forKey: Constants.userDefaultKeys.kContacts) as? Data else { return nil }
+        guard let contacts = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Invitee] else { return nil }
         self.contacts = contacts
         return contacts
     }

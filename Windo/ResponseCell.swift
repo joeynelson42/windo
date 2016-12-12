@@ -17,7 +17,7 @@ class ResponseCell: UICollectionViewCell {
     
     //MARK: Inits
     override init(frame: CGRect) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.updateConstraints()
     }
     
@@ -36,11 +36,11 @@ class ResponseCell: UICollectionViewCell {
     func configureSubviews(){
         backgroundColor = UIColor.darkPurple(0.46)
         
-        initials.textColor = UIColor.whiteColor()
+        initials.textColor = UIColor.white
         initials.font = UIFont.graphikRegular(15)
-        initials.textAlignment = .Center
+        initials.textAlignment = .center
         
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = whSize/2
         

@@ -11,11 +11,11 @@ import UIKit
 class WindoProfileImageView: UIView {
     
     //MARK: Properties
-    private var cachePolicy = NSURLRequestCachePolicy.ReturnCacheDataElseLoad
-    private var blurRadius: CGFloat?
-    private var urlString: String?
-    private var request: NSMutableURLRequest?
-    private var task: NSURLSessionDataTask?
+    fileprivate var cachePolicy = NSURLRequest.CachePolicy.returnCacheDataElseLoad
+    fileprivate var blurRadius: CGFloat?
+    fileprivate var urlString: String?
+    fileprivate var request: NSMutableURLRequest?
+    fileprivate var task: URLSessionDataTask?
     
     var imageView = UIImageView()
     var initals = UILabel()
@@ -51,9 +51,9 @@ class WindoProfileImageView: UIView {
     func configureSubviews(){
         clipsToBounds = true
         
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         
-        initals.textAlignment = .Center
+        initals.textAlignment = .center
         
         addSubview(initals)
         addSubview(imageView)
@@ -71,12 +71,12 @@ class WindoProfileImageView: UIView {
         )
     }
     
-    func setupView(user: UserProfile, width: CGFloat, withCachePolicy cachePolicy: NSURLRequestCachePolicy = .ReturnCacheDataElseLoad, blurRadius: CGFloat? = nil) {
+    func setupView(_ user: UserProfile, width: CGFloat, withCachePolicy cachePolicy: NSURLRequest.CachePolicy = .returnCacheDataElseLoad, blurRadius: CGFloat? = nil) {
         // Don't bother reloading if the url isn't changing, unless the cache policy reqeusts it
         if user.profilePictureURL == self.urlString &&
-            cachePolicy != .ReloadIgnoringCacheData &&
-            cachePolicy != .ReloadIgnoringLocalCacheData &&
-            cachePolicy != .ReloadIgnoringLocalAndRemoteCacheData {
+            cachePolicy != .reloadIgnoringCacheData &&
+            cachePolicy != .reloadIgnoringLocalCacheData &&
+            cachePolicy != .reloadIgnoringLocalAndRemoteCacheData {
             return
         }
         // Note: Image access must occur on main queue
@@ -98,42 +98,42 @@ class WindoProfileImageView: UIView {
     
     /// Attempts to download an image from the given URL, and displays it once the download has completed.
     /// This must be called from the background queue.
-    private func executeQuery() {
-        guard let urlString = self.urlString else {
-            return
-        }
-        guard let url = NSURL(string: urlString) else {
-            return
-        }
-        // Only need to initialize request once; afterwards we just reset the URL and task object
-        if self.request == nil {
-            self.request = NSMutableURLRequest(URL: url)
-            self.request!.cachePolicy = self.cachePolicy
-        } else {
-            self.request!.URL = url
-        }
-        self.task = NSURLSession.sharedSession().dataTaskWithRequest(self.request!, completionHandler: { (data, response, error) in
-            guard error == nil else {
-                return
-            }
-            guard let imageData = data else {
-                return
-            }
-            guard let image = UIImage(data: imageData) else {
-                return
-            }
-            // Blur image if requested
-//            let outputImage = image.blurredImageWithRadius(self.blurRadius)
-            // Display image on main queue
-            dispatch_async(dispatch_get_main_queue()) {
-                
-                // Animate the placeholder view away
-                UIView.animateWithDuration(0.2) {
-                    self.imageView.image = image
-//                    self.placeholderView.alpha = 0
-                }
-            }
-        })
-        self.task?.resume()
+    fileprivate func executeQuery() {
+//        guard let urlString = self.urlString else {
+//            return
+//        }
+//        guard let url = URL(string: urlString) else {
+//            return
+//        }
+//        // Only need to initialize request once; afterwards we just reset the URL and task object
+//        if self.request == nil {
+//            self.request = NSMutableURLRequest(url: url)
+//            self.request!.cachePolicy = self.cachePolicy
+//        } else {
+//            self.request!.url = url
+//        }
+//        self.task = URLSession.shared.dataTask(with: self.request!, completionHandler: { (data, response, error) in
+//            guard error == nil else {
+//                return
+//            }
+//            guard let imageData = data else {
+//                return
+//            }
+//            guard let image = UIImage(data: imageData) else {
+//                return
+//            }
+//            // Blur image if requested
+////            let outputImage = image.blurredImageWithRadius(self.blurRadius)
+//            // Display image on main queue
+//            DispatchQueue.main.async {
+//                
+//                // Animate the placeholder view away
+//                UIView.animate(withDuration: 0.2, animations: {
+//                    self.imageView.image = image
+////                    self.placeholderView.alpha = 0
+//                }) 
+//            }
+//        })
+//        self.task?.resume()
     }
 }

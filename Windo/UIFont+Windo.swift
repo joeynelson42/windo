@@ -9,15 +9,15 @@
 import UIKit
 
 extension UIFont {
-    class func graphikMedium(fontSize: CGFloat) -> UIFont {
+    class func graphikMedium(_ fontSize: CGFloat) -> UIFont {
         return UIFont(name: "Graphik-Medium", size: fontSize)!
     }
     
-    class func graphikRegular(fontSize: CGFloat) -> UIFont {
+    class func graphikRegular(_ fontSize: CGFloat) -> UIFont {
         return UIFont(name: "Graphik-Regular", size: fontSize)!
     }
     
-    class func graphikLight(fontSize: CGFloat) -> UIFont {
+    class func graphikLight(_ fontSize: CGFloat) -> UIFont {
         return UIFont(name: "Graphik-Light", size: fontSize)!
     }
 }

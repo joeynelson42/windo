@@ -27,8 +27,8 @@ class EventDetailsViewController: UIViewController {
         detailsView.memberTableView.dataSource = self
         
         members = ["Ray Elder", "Sarah Kay Miller", "Yuki Dorff", "Joey Nelson", "John Jackson", "Blake Hopkin", "Paul Turner", "Vladi Falk"]
-        detailsView.addMemberButton.addTarget(self, action: #selector(EventDetailsViewController.addMemberTapped), forControlEvents: .TouchUpInside)
-        detailsView.anytimeWorks.addTarget(self, action: #selector(EventDetailsViewController.dismissResponseNeeded), forControlEvents: .TouchUpInside)
+        detailsView.addMemberButton.addTarget(self, action: #selector(EventDetailsViewController.addMemberTapped), for: .touchUpInside)
+        detailsView.anytimeWorks.addTarget(self, action: #selector(EventDetailsViewController.dismissResponseNeeded), for: .touchUpInside)
         
         if responseNeeded{
             showResponseOptions()
@@ -59,85 +59,85 @@ class EventDetailsViewController: UIViewController {
     }
     
     func showResponseOptions(){
-        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
-        detailsView.backgroundColor = UIColor.whiteColor()
+        tabBarController?.navigationController?.navigationBar.barTintColor = UIColor.white
+        detailsView.backgroundColor = UIColor.white
         
-        detailsView.separatingLine.hidden = true
-        detailsView.locationTitleLabel.hidden = true
-        detailsView.locationLabel.hidden = true
-        detailsView.dateTimeTitleLabel.hidden = true
-        detailsView.dateTimeLabel.hidden = true
+        detailsView.separatingLine.isHidden = true
+        detailsView.locationTitleLabel.isHidden = true
+        detailsView.locationLabel.isHidden = true
+        detailsView.dateTimeTitleLabel.isHidden = true
+        detailsView.dateTimeLabel.isHidden = true
         
-        detailsView.anytimeWorks.hidden = false
-        detailsView.submitTimes.hidden = false
-        detailsView.responseLabel.hidden = false
+        detailsView.anytimeWorks.isHidden = false
+        detailsView.submitTimes.isHidden = false
+        detailsView.responseLabel.isHidden = false
         
-        detailsView.blurView.hidden = false
+        detailsView.blurView.isHidden = false
         
-        tabBarController?.tabBar.hidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     func hideResponseOptions(){
         tabBarController?.navigationController?.navigationBar.barTintColor = UIColor.purple()
         detailsView.backgroundColor = UIColor.lightPurple()
         
-        detailsView.separatingLine.hidden = false
-        detailsView.locationTitleLabel.hidden = false
-        detailsView.locationLabel.hidden = false
-        detailsView.dateTimeTitleLabel.hidden = false
-        detailsView.dateTimeLabel.hidden = false
+        detailsView.separatingLine.isHidden = false
+        detailsView.locationTitleLabel.isHidden = false
+        detailsView.locationLabel.isHidden = false
+        detailsView.dateTimeTitleLabel.isHidden = false
+        detailsView.dateTimeLabel.isHidden = false
         
-        detailsView.anytimeWorks.hidden = true
-        detailsView.submitTimes.hidden = true
-        detailsView.responseLabel.hidden = true
+        detailsView.anytimeWorks.isHidden = true
+        detailsView.submitTimes.isHidden = true
+        detailsView.responseLabel.isHidden = true
         
-        detailsView.blurView.hidden = true
+        detailsView.blurView.isHidden = true
         
-        tabBarController?.tabBar.hidden = false
+        tabBarController?.tabBar.isHidden = false
     }
 }
 
 extension EventDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("memberCell") as! GroupMemberCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "memberCell") as! GroupMemberCell
         
-        cell.nameLabel.text = members[indexPath.row]
-        cell.initialsLabel.text = getInitials(members[indexPath.row])
+        cell.nameLabel.text = members[(indexPath as NSIndexPath).row]
+        cell.initialsLabel.text = getInitials(members[(indexPath as NSIndexPath).row])
         cell.infoGestureRecognizer.addTarget(self, action: #selector(EventDetailsViewController.openUserProfile(_:)))
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
     
-    func getInitials(name: String) -> String{
-        let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
+    func getInitials(_ name: String) -> String{
+        let firstInitial = "\(name[name.characters.index(name.startIndex, offsetBy: 0)])"
         
-        guard let index = name.characters.indexOf(" ") else {
-            return firstInitial.uppercaseString
+        guard let index = name.characters.index(of: " ") else {
+            return firstInitial.uppercased()
         }
         
-        let secondInitial = "\(name[name.startIndex.advancedBy(name.startIndex.distanceTo(index) + 1)])"
+        let secondInitial = "\(name[name.characters.index(name.startIndex, offsetBy: name.characters.distance(from: name.startIndex, to: index) + 1)])"
         
         let initials = "\(firstInitial)\(secondInitial)"
         
-        return initials.uppercaseString
+        return initials.uppercased()
     }
     
-    func openUserProfile(sender: UITapGestureRecognizer) {
+    func openUserProfile(_ sender: UITapGestureRecognizer) {
         let profileVC = UserProfileViewController()
-        profileVC.color = ThemeColor.Purple
+        profileVC.color = ThemeColor.purple
         navigationController?.pushViewController(profileVC, animated: true)
     }
 }

@@ -28,7 +28,7 @@ class CodeInputLabel: UIView, Shakes {
     
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(size: CGFloat, font: UIFont) {
@@ -46,7 +46,7 @@ class CodeInputLabel: UIView, Shakes {
     }
     
     // MARK: Methods
-    func setNumberForIndex(number: String, index: Int) {
+    func setNumberForIndex(_ number: String, index: Int) {
         guard let input = getInputByIndex(index) else { return }
         input.character = number
         lastInputIndex = index
@@ -67,7 +67,7 @@ class CodeInputLabel: UIView, Shakes {
         sixth.character = ""
     }
     
-    func getInputByIndex(index: Int) -> InputCharacter?{
+    func getInputByIndex(_ index: Int) -> InputCharacter?{
         switch index {
         case 1:
             return first
@@ -86,7 +86,7 @@ class CodeInputLabel: UIView, Shakes {
         }
     }
     
-    func toggleSeparatorFadeIfNeeded(indexEdited: Int) {
+    func toggleSeparatorFadeIfNeeded(_ indexEdited: Int) {
         if indexEdited != 3 {
             return
         }
@@ -97,7 +97,7 @@ class CodeInputLabel: UIView, Shakes {
             targetAlpha = separatorFadeAlpha
         }
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
             self.layoutIfNeeded()
             self.hyphen.alpha = targetAlpha
             }, completion: nil)
@@ -112,11 +112,11 @@ class CodeInputLabel: UIView, Shakes {
     }
     
     func configureSubviews(){
-        let separatorColor = UIColor.whiteColor()
+        let separatorColor = UIColor.white
         
         hyphen.text = "-"
         hyphen.textColor = separatorColor
-        hyphen.textAlignment = .Center
+        hyphen.textAlignment = .center
         hyphen.font = characterFont
         hyphen.alpha = separatorFadeAlpha
         

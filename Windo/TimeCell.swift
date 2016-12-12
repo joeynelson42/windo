@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TimeCellDelegate {
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate)
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date)
 //    func stateForTime(time: NSDate) -> TimeCellState
 }
 
@@ -26,7 +26,7 @@ class TimeCell: UIView {
     var state = TimeCellState.unselected
     
     var colorTheme = ColorTheme(color: .blue)
-    var time = NSDate()
+    var time = Date()
     var delegate: TimeCellDelegate!
     
     var selectedBackground = UIView()
@@ -34,10 +34,10 @@ class TimeCell: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
-    private override init(frame: CGRect) {
+    fileprivate override init(frame: CGRect) {
         super.init(frame: frame)
         self.setNeedsUpdateConstraints()
     }
@@ -72,11 +72,11 @@ class TimeCell: UIView {
         }
         
         if time.minute() == 0 {
-            timeButton.setTitle("\(hour)", forState: .Normal)
+            timeButton.setTitle("\(hour)", for: UIControlState())
         } else {
-            timeButton.setTitle("\(hour):\(time.minute())", forState: .Normal)
+            timeButton.setTitle("\(hour):\(time.minute())", for: UIControlState())
         }
-        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        timeButton.setTitleColor(UIColor.white, for: UIControlState())
         timeButton.titleLabel?.font = UIFont.graphikRegular(16)
         
         switch state {
@@ -95,29 +95,29 @@ class TimeCell: UIView {
     }
     
     func configureSelected() {
-        selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selectedBackground.alpha = 1.0
         
         timeButton.alpha = 1.0
     }
     
     func configureUnselected() {
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         selectedBackground.alpha = 0.0
         
         timeButton.alpha = 0.75
     }
     
     func configureHidden() {
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         selectedBackground.alpha = 0.0
         
         timeButton.alpha = 0.0
     }
     
     func configureUnavailable() {
-        backgroundColor = UIColor.lightGrayColor()
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        backgroundColor = UIColor.lightGray
+        selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         selectedBackground.alpha = 0.0
     }
     
@@ -141,24 +141,24 @@ class TimeCell: UIView {
     func handleSelect() {
         state = .selected
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
             self.timeButton.alpha = 1.0
             self.selectedBackground.alpha = 1.0
-            self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            self.selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }, completion: nil)
     }
     
     func handleDeselect() {
         state = .unselected
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
             self.timeButton.alpha = 0.75
             self.selectedBackground.alpha = 0.0
-            self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            self.selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             }, completion: nil)
     }
     
-    func updateWithState(state: TimeCellState) {
+    func updateWithState(_ state: TimeCellState) {
         self.state = state
         switch state {
         case .selected:

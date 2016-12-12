@@ -13,7 +13,7 @@ class UserProfileViewController: UIViewController {
     //MARK: Properties
     
     var profileView: UserProfileView!
-    var color = ThemeColor.Teal
+    var color = ThemeColor.teal
     var user = UserProfile()
     
     //MARK: Lifecycle Methods

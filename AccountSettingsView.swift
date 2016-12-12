@@ -34,7 +34,7 @@ class AccountSettingsView: UIView {
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -56,8 +56,8 @@ class AccountSettingsView: UIView {
     
     func configureSubviews(){
         let helpLabelFont = UIFont.graphikRegular(14)
-        let helpLabelTextColor = UIColor.whiteColor()
-        let helpLabelAlignment = NSTextAlignment.Right
+        let helpLabelTextColor = UIColor.white
+        let helpLabelAlignment = NSTextAlignment.right
         
         firstNameLabel.text = "First:"
         firstNameLabel.font = helpLabelFont
@@ -80,7 +80,7 @@ class AccountSettingsView: UIView {
         emailLabel.textAlignment = helpLabelAlignment
         
         let textFieldFont = UIFont.graphikRegular(21)
-        let textFieldColor = UIColor.whiteColor()
+        let textFieldColor = UIColor.white
         let textFieldTintColor = colorTheme.lightColor
         
         firstNameTextField.font = textFieldFont
@@ -95,7 +95,7 @@ class AccountSettingsView: UIView {
         
         phoneTextField.font = textFieldFont
         phoneTextField.textColor = textFieldColor
-        phoneTextField.keyboardType = .NumberPad
+        phoneTextField.keyboardType = .numberPad
         phoneTextField.tintColor = textFieldTintColor
         
         emailTextField.font = textFieldFont
@@ -103,15 +103,9 @@ class AccountSettingsView: UIView {
         emailTextField.tintColor = textFieldTintColor
         
         keyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: colorTheme)
-        keyboardAccessory.leftArrowButton.addTarget(.TouchUpInside) { 
-            self.togglePreviousInput()
-        }
-        keyboardAccessory.rightArrowButton.addTarget(.TouchUpInside) { 
-            self.toggleNextInput()
-        }
-        keyboardAccessory.doneButton.addTarget(.TouchUpInside) { 
-            self.endEditing(true)
-        }
+        keyboardAccessory.leftArrowButton.addTarget(self, action: #selector(togglePreviousInput), for: .touchUpInside)
+        keyboardAccessory.rightArrowButton.addTarget(self, action: #selector(toggleNextInput), for: .touchUpInside)
+        keyboardAccessory.doneButton.addTarget(self, action: #selector(hideKeyboard), for: .touchUpInside)
         
         firstNameTextField.inputAccessoryView = keyboardAccessory
         lastNameTextField.inputAccessoryView = keyboardAccessory
@@ -204,27 +198,31 @@ class AccountSettingsView: UIView {
     
     // MARK: Methods
     func toggleNextInput() {
-        if firstNameTextField.isFirstResponder() {
+        if firstNameTextField.isFirstResponder {
             lastNameTextField.becomeFirstResponder()
-        } else if lastNameTextField.isFirstResponder() {
+        } else if lastNameTextField.isFirstResponder {
             phoneTextField.becomeFirstResponder()
-        } else if phoneTextField.isFirstResponder() {
+        } else if phoneTextField.isFirstResponder {
             emailTextField.becomeFirstResponder()
-        } else if emailTextField.isFirstResponder() {
+        } else if emailTextField.isFirstResponder {
             firstNameTextField.becomeFirstResponder()
         }
     }
     
     func togglePreviousInput() {
-        if firstNameTextField.isFirstResponder() {
+        if firstNameTextField.isFirstResponder {
             emailTextField.becomeFirstResponder()
-        } else if lastNameTextField.isFirstResponder() {
+        } else if lastNameTextField.isFirstResponder {
             firstNameTextField.becomeFirstResponder()
-        } else if phoneTextField.isFirstResponder() {
+        } else if phoneTextField.isFirstResponder {
             lastNameTextField.becomeFirstResponder()
-        } else if emailTextField.isFirstResponder() {
+        } else if emailTextField.isFirstResponder {
             phoneTextField.becomeFirstResponder()
         }
+    }
+    
+    func hideKeyboard() {
+        self.endEditing(true)
     }
     
     // MARK: Utilities
@@ -233,7 +231,7 @@ class AccountSettingsView: UIView {
 
 extension AccountSettingsView: UITextFieldDelegate {
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // TODO: Restrict name length?
         // TODO: Send save request with each new character
         

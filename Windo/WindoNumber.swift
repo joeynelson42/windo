@@ -11,12 +11,12 @@ import UIKit
 class WindoNumber: UIButton {
     
     //MARK: Properties
-    let highlightedBorderColor = UIColor.whiteColor().CGColor
-    let fadedBorderColor = UIColor.fromHex(0xFFFFF, alpha: 0.75).CGColor
+    let highlightedBorderColor = UIColor.white.cgColor
+    let fadedBorderColor = UIColor.fromHex(0xFFFFF, alpha: 0.75).cgColor
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         configureSubviews()
     }
     
@@ -29,11 +29,11 @@ class WindoNumber: UIButton {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         layer.borderColor = fadedBorderColor
         layer.borderWidth = 1.0
         
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setTitleColor(UIColor.white, for: UIControlState())
         titleLabel!.font = UIFont.graphikRegular(25)
     }
     
@@ -43,36 +43,36 @@ class WindoNumber: UIButton {
     internal var pressSpringDuration = 0.35
     internal var releaseSpringDuration = 0.45
     
-    override internal func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        UIView.animateWithDuration(self.pressSpringDuration, delay: 0, usingSpringWithDamping: self.pressSpringDamping, initialSpringVelocity: 0, options: [.CurveLinear, .AllowUserInteraction], animations: { () -> Void in
-            self.transform = CGAffineTransformMakeScale(self.minimumScale, self.minimumScale)
+    override internal func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        UIView.animate(withDuration: self.pressSpringDuration, delay: 0, usingSpringWithDamping: self.pressSpringDamping, initialSpringVelocity: 0, options: [.curveLinear, .allowUserInteraction], animations: { () -> Void in
+            self.transform = CGAffineTransform(scaleX: self.minimumScale, y: self.minimumScale)
             self.layer.borderColor = self.highlightedBorderColor
             }, completion: nil)
     }
     
-    override internal func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        UIView.animateWithDuration(self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.CurveLinear, .AllowUserInteraction], animations: { () -> Void in
-            self.transform = CGAffineTransformIdentity
+    override internal func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        UIView.animate(withDuration: self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.curveLinear, .allowUserInteraction], animations: { () -> Void in
+            self.transform = CGAffineTransform.identity
             self.layer.borderColor = self.fadedBorderColor
             }, completion: nil)
     }
     
-    override internal func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let location = touches.first!.locationInView(self)
-        if !CGRectContainsPoint(self.bounds, location) {
-            UIView.animateWithDuration(self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.CurveLinear, .AllowUserInteraction], animations: { () -> Void in
-                self.transform = CGAffineTransformIdentity
+    override internal func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let location = touches.first!.location(in: self)
+        if !self.bounds.contains(location) {
+            UIView.animate(withDuration: self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.curveLinear, .allowUserInteraction], animations: { () -> Void in
+                self.transform = CGAffineTransform.identity
                 self.layer.borderColor = self.fadedBorderColor
                 }, completion: nil)
         }
     }
     
-    override internal func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
-        UIView.animateWithDuration(self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.CurveLinear, .AllowUserInteraction], animations: { () -> Void in
-            self.transform = CGAffineTransformIdentity
+    override internal func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        UIView.animate(withDuration: self.releaseSpringDuration, delay: 0, usingSpringWithDamping: self.releaseSpringDamping, initialSpringVelocity: 0, options: [.curveLinear, .allowUserInteraction], animations: { () -> Void in
+            self.transform = CGAffineTransform.identity
             self.layer.borderColor = self.fadedBorderColor
             }, completion: nil)
     }

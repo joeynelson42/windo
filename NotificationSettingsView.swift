@@ -30,7 +30,7 @@ class NotificationSettingsView: UIView {
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -57,8 +57,8 @@ class NotificationSettingsView: UIView {
         
         
         let titleLabelFont = UIFont.graphikRegular(16)
-        let titleLabelTextColor = UIColor.whiteColor()
-        let titleLabelAlignment = NSTextAlignment.Center
+        let titleLabelTextColor = UIColor.white
+        let titleLabelAlignment = NSTextAlignment.center
         
         newEventsTitleLabel.text = "New events"
         newEventsTitleLabel.font = titleLabelFont
@@ -80,8 +80,8 @@ class NotificationSettingsView: UIView {
         infoChangedTitleLabel.textColor = titleLabelTextColor
         infoChangedTitleLabel.textAlignment = titleLabelAlignment
         
-        let untoggledCheckColor = UIColor.clearColor()
-        let toggledColor = UIColor.whiteColor()
+        let untoggledCheckColor = UIColor.clear
+        let toggledColor = UIColor.white
         
         newEventsCheckmark.setUntoggledColor(untoggledCheckColor)
         newEventsCheckmark.setToggledColor(toggledColor)

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FSCalendar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FrameAccessor.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +32,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>85618EF1C124F9E5CBA6D8A71177D2CE</key>
+		<key>4D70540979D0D203ACA13E9C5DEE6CCE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD8916CAE2DB8A44D5993923FEF14E86</key>
+		<key>67BCC9449176014A1C4D3F895A07C907</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9773DF82FC9BEB2FF0E15F2628ACE346</key>
 		<dict>
 			<key>primary</key>
 			<true/>

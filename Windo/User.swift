@@ -42,25 +42,25 @@ class User: NSObject, NSCoding{
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.recordID = aDecoder.decodeObjectForKey("recordID") as! String
-        self.phoneNumber = aDecoder.decodeObjectForKey("phoneNumber") as! String
-        self.email = aDecoder.decodeObjectForKey("email") as! String
-        self.facebookID = aDecoder.decodeObjectForKey("facebookID") as! String
-        self.googleID = aDecoder.decodeObjectForKey("googleID") as! String
-        self.firstName = aDecoder.decodeObjectForKey("firstName") as! String
-        self.lastName = aDecoder.decodeObjectForKey("lastName") as! String
-        self.imageRecordID = aDecoder.decodeObjectForKey("imageRecordID") as! String
+        self.recordID = aDecoder.decodeObject(forKey: "recordID") as! String
+        self.phoneNumber = aDecoder.decodeObject(forKey: "phoneNumber") as! String
+        self.email = aDecoder.decodeObject(forKey: "email") as! String
+        self.facebookID = aDecoder.decodeObject(forKey: "facebookID") as! String
+        self.googleID = aDecoder.decodeObject(forKey: "googleID") as! String
+        self.firstName = aDecoder.decodeObject(forKey: "firstName") as! String
+        self.lastName = aDecoder.decodeObject(forKey: "lastName") as! String
+        self.imageRecordID = aDecoder.decodeObject(forKey: "imageRecordID") as! String
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(recordID, forKey: "recordID")
-        aCoder.encodeObject(phoneNumber, forKey: "phoneNumber")
-        aCoder.encodeObject(email, forKey: "email")
-        aCoder.encodeObject(facebookID, forKey: "facebookID")
-        aCoder.encodeObject(googleID, forKey: "googleID")
-        aCoder.encodeObject(firstName, forKey: "firstName")
-        aCoder.encodeObject(lastName, forKey: "lastName")
-        aCoder.encodeObject(imageRecordID, forKey: "imageRecordID")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(recordID, forKey: "recordID")
+        aCoder.encode(phoneNumber, forKey: "phoneNumber")
+        aCoder.encode(email, forKey: "email")
+        aCoder.encode(facebookID, forKey: "facebookID")
+        aCoder.encode(googleID, forKey: "googleID")
+        aCoder.encode(firstName, forKey: "firstName")
+        aCoder.encode(lastName, forKey: "lastName")
+        aCoder.encode(imageRecordID, forKey: "imageRecordID")
     }
 }
 
@@ -78,27 +78,27 @@ class Invitee: NSObject, NSCoding {
     // TODO: Make this work
     var formattedPhoneNumber: String {
         get {
-            var formatted = phoneNumber.stringByReplacingOccurrencesOfString("+", withString: "")
+            var formatted = phoneNumber.replacingOccurrences(of: "+", with: "")
             
             if String(formatted.characters.first!) == "1" {
-                formatted.removeAtIndex(formatted.startIndex.advancedBy(0))
+                formatted.remove(at: formatted.characters.index(formatted.startIndex, offsetBy: 0))
             }
             
             var indicesToRemove = [Int]()
-            for (index, char) in formatted.characters.enumerate() {
+            for (index, char) in formatted.characters.enumerated() {
                 let stringChar = String(char)
                 if !stringChar.isDigit() {
                     indicesToRemove.append(index)
                 }
             }
             
-            for index in indicesToRemove.reverse() {
-                formatted.removeAtIndex(formatted.startIndex.advancedBy(index))
+            for index in indicesToRemove.reversed() {
+                formatted.remove(at: formatted.characters.index(formatted.startIndex, offsetBy: index))
             }
             
-            formatted.insert("(", atIndex: formatted.startIndex.advancedBy(0))
-            formatted.insert(")", atIndex: formatted.startIndex.advancedBy(4))
-            formatted.insert("-", atIndex: formatted.startIndex.advancedBy(8))
+            formatted.insert("(", at: formatted.characters.index(formatted.startIndex, offsetBy: 0))
+            formatted.insert(")", at: formatted.characters.index(formatted.startIndex, offsetBy: 4))
+            formatted.insert("-", at: formatted.characters.index(formatted.startIndex, offsetBy: 8))
             
             return formatted
         }
@@ -111,15 +111,15 @@ class Invitee: NSObject, NSCoding {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.phoneNumber = aDecoder.decodeObjectForKey("phoneNumber") as! String
-        self.firstName = aDecoder.decodeObjectForKey("firstName") as! String
-        self.lastName = aDecoder.decodeObjectForKey("lastName") as! String
+        self.phoneNumber = aDecoder.decodeObject(forKey: "phoneNumber") as! String
+        self.firstName = aDecoder.decodeObject(forKey: "firstName") as! String
+        self.lastName = aDecoder.decodeObject(forKey: "lastName") as! String
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(phoneNumber, forKey: "phoneNumber")
-        aCoder.encodeObject(firstName, forKey: "firstName")
-        aCoder.encodeObject(lastName, forKey: "lastName")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(phoneNumber, forKey: "phoneNumber")
+        aCoder.encode(firstName, forKey: "firstName")
+        aCoder.encode(lastName, forKey: "lastName")
     }
 }
 

@@ -7,6 +7,17 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class CreateEventView: UIView, UITextFieldDelegate {
     
@@ -54,23 +65,23 @@ class CreateEventView: UIView, UITextFieldDelegate {
         inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
         inviteeTableView.separatorColor = UIColor.blue()
-        inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
-        inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
-        inviteeTableView.hidden = true
+        inviteeTableView.register(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
+        inviteeTableView.register(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
+        inviteeTableView.isHidden = true
         
         tokenBar.delimiters = [",", ";", "--"]
         tokenBar.placeholderText = ""
         tokenBar.backgroundColor = UIColor.lightBlue()
         tokenBar.toLabelText = ""
-        tokenBar.setColorScheme(UIColor.whiteColor())
+        tokenBar.setColorScheme(UIColor.white)
         tokenBar.toLabelTextColor = UIColor.darkBlue()
-        tokenBar.inputTextFieldTextColor = UIColor.whiteColor()
+        tokenBar.inputTextFieldTextColor = UIColor.white
         
         collapsedCell.backgroundColor = UIColor.lightBlue()
         collapsedCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CreateEventView.toggleTokenBar)))
         
         collapsedLabel.font = UIFont.graphikRegular(16)
-        collapsedLabel.textColor = UIColor.whiteColor()
+        collapsedLabel.textColor = UIColor.white
         collapsedLabel.text = "Invite some friends!"
         collapsedLabel.backgroundColor = UIColor.lightBlue()
         
@@ -82,9 +93,9 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTitleLabel.font = UIFont.graphikRegular(16)
         locationTitleLabel.textColor = UIColor.darkBlue()
         
-        locationTextField.textColor = UIColor.whiteColor()
+        locationTextField.textColor = UIColor.white
         locationTextField.font = UIFont.graphikRegular(16)
-        locationTextField.tintColor = UIColor.whiteColor()
+        locationTextField.tintColor = UIColor.white
         locationTextField.tag = 0
         locationTextField.delegate = self
         
@@ -96,9 +107,9 @@ class CreateEventView: UIView, UITextFieldDelegate {
         nameTitleLabel.font = UIFont.graphikRegular(16)
         nameTitleLabel.textColor = UIColor.darkBlue()
         
-        nameTextField.textColor = UIColor.whiteColor()
+        nameTextField.textColor = UIColor.white
         nameTextField.font = UIFont.graphikRegular(16)
-        nameTextField.tintColor = UIColor.whiteColor()
+        nameTextField.tintColor = UIColor.white
         nameTextField.tag = 1
         nameTextField.delegate = self
         
@@ -106,19 +117,19 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationSeparator.backgroundColor = UIColor.darkBlue()
         nameSeparator.backgroundColor = UIColor.darkBlue()
         
-        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
         let timesTitle = NSMutableAttributedString(string: "Specify Times", attributes: underlineAttribute)
-        timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, timesTitle.length))
+        timesTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSMakeRange(0, timesTitle.length))
         
         doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: ColorTheme(color: .blue))
         locationTextField.inputAccessoryView = doneKeyboardAccessory
         nameTextField.inputAccessoryView = doneKeyboardAccessory
         
-        doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(CreateEventView.keyboardDismiss), forControlEvents: .TouchUpInside)
+        doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(CreateEventView.keyboardDismiss), for: .touchUpInside)
         
-        doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
+        doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), for: .touchUpInside)
         
-        doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
+        doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), for: .touchUpInside)
         
         //Calendar
         calendarContainer.backgroundColor = UIColor.blue()
@@ -130,7 +141,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(locationTitleLabel)
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
-        addSubview(calendarContainer)
+//        addSubview(calendarContainer)
         
         addSubview(tokenBar)
         addSubview(inviteeTableView)
@@ -231,19 +242,19 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.h.of(16)
         )
         
-        calendarContainer.addConstraints(
-            Constraint.cxcx.of(self),
-            Constraint.tb.of(nameCell, offset: 2),
-            Constraint.w.of(screenWidth),
-            Constraint.h.of(calendarContainer.calendarHeight())
-        )
+//        calendarContainer.addConstraints(
+//            Constraint.cxcx.of(self),
+//            Constraint.tb.of(nameCell, offset: 2),
+//            Constraint.w.of(screenWidth),
+//            Constraint.h.of(calendarContainer.calendarHeight())
+//        )
     }
     
     func toggleTokenBar() {
         tokenBar.becomeFirstResponder()
     }
     
-    func hideTableView(firstInviteeName: String, numberOfInvitees: Int) {
+    func hideTableView(_ firstInviteeName: String, numberOfInvitees: Int) {
         tokenBar.addConstraints(
             Constraint.tt.of(self),
             Constraint.cxcx.of(self),
@@ -263,31 +274,31 @@ class CreateEventView: UIView, UITextFieldDelegate {
         }
         
         self.layoutIfNeeded()
-        self.inviteeTableView.hidden = true
-        self.collapsedCell.hidden = false
+        self.inviteeTableView.isHidden = true
+        self.collapsedCell.isHidden = false
 
         endEditing(true)
     }
     
     func showTableView() {
-        inviteeTableView.hidden = false
-        collapsedCell.hidden = true
+        inviteeTableView.isHidden = false
+        collapsedCell.isHidden = true
         tokenBar.reloadData()
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
 //        let moveUp = CGAffineTransformMakeTranslation(-18, -20)
 //        let shrink = CGAffineTransformMakeScale(0.85, 0.85)
         
         switch(textField.tag) {
         case 0:
-            locationTitleLabel.hidden = true
+            locationTitleLabel.isHidden = true
 //            UIView.animateWithDuration(0.15, animations: { Void in
 //                self.locationTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
 //                self.locationTitleLabel.alpha = 0.75
 //            })
         case 1:
-            nameTitleLabel.hidden = true
+            nameTitleLabel.isHidden = true
 //            UIView.animateWithDuration(0.15, animations: { Void in
 //                self.nameTitleLabel.transform = CGAffineTransformConcat(moveUp, shrink)
 //                self.nameTitleLabel.alpha = 0.75
@@ -297,20 +308,20 @@ class CreateEventView: UIView, UITextFieldDelegate {
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text != ""{ return }
 //        let moveDown = CGAffineTransformMakeTranslation(0, 0)
 //        let grow = CGAffineTransformMakeScale(1.0, 1.0)
         
         switch(textField.tag){
         case 0:
-            locationTitleLabel.hidden = false
+            locationTitleLabel.isHidden = false
 //            UIView.animateWithDuration(0.15, animations: { Void in
 //                self.locationTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
 //                self.locationTitleLabel.alpha = 1.0
 //            })
         case 1:
-            nameTitleLabel.hidden = false
+            nameTitleLabel.isHidden = false
 //            UIView.animateWithDuration(0.15, animations: { Void in
 //                self.nameTitleLabel.transform = CGAffineTransformConcat(moveDown, grow)
 //                self.nameTitleLabel.alpha = 1.0
@@ -320,7 +331,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.tag == 1 {
             if textField.text?.characters.count < eventNameMaxLength {
                 return true
@@ -333,7 +344,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
     }
     
     func toggleBetweenTextFields(){
-        if nameTextField.isFirstResponder() {
+        if nameTextField.isFirstResponder {
             locationTextField.becomeFirstResponder()
         }
         else {
@@ -353,12 +364,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         locationTextField.becomeFirstResponder()
     }
     
-    func keyboardShown(notification: NSNotification) {
-        let info  = notification.userInfo!
-        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+    func keyboardShown(_ notification: Notification) {
+        let info  = (notification as NSNotification).userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]! as AnyObject
         
-        let rawFrame = value.CGRectValue
-        let keyboardFrame = convertRect(rawFrame, fromView: nil)
+        let rawFrame = value.cgRectValue
+        let keyboardFrame = convert(rawFrame!, from: nil)
         keyboardHeight = keyboardFrame.height
     }
 }

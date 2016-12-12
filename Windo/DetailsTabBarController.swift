@@ -18,12 +18,12 @@ class DetailsTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         title = "Michael's Party"
-        tabBar.tintColor = UIColor.whiteColor()
+        tabBar.tintColor = UIColor.white
         tabBar.barTintColor = UIColor.darkPurple()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.translucent = false
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.purple()
         navigationController?.navigationBar.tintColor = UIColor.darkPurple()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkPurple()]

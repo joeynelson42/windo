@@ -55,7 +55,7 @@ class SettingsView: UIView {
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -82,22 +82,22 @@ class SettingsView: UIView {
         }
         
         backgroundColor = colorTheme.baseColor
-        scrollView.contentSize = CGSizeMake(screenWidth, scrollViewHeight)
+        scrollView.contentSize = CGSize(width: screenWidth, height: scrollViewHeight)
         scrollView.showsVerticalScrollIndicator = false
         
         containerView.backgroundColor = colorTheme.baseColor
         
         navBar.backgroundColor = colorTheme.lightColor
         
-        backButton.setImage(UIImage(named: "whiteBackArrow"), forState: .Normal)
+        backButton.setImage(UIImage(named: "whiteBackArrow"), for: UIControlState())
         
         initials.cornerRadius = 40
         initials.fontSize = 45
         
         nameLabel.text = "Yuki Dorff"
         nameLabel.font = UIFont.graphikMedium(22)
-        nameLabel.textAlignment = .Center
-        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.textAlignment = .center
+        nameLabel.textColor = UIColor.white
         
         if let user = UserManager.sharedManager.user {
             nameLabel.text = user.fullName()
@@ -224,8 +224,8 @@ class SettingsView: UIView {
     
     // MARK: Methods
     
-    func expandScrollViewWithHeight(height: CGFloat) {
-        scrollView.contentSize = CGSizeMake(screenWidth, scrollViewHeight + height)
+    func expandScrollViewWithHeight(_ height: CGFloat) {
+        scrollView.contentSize = CGSize(width: screenWidth, height: scrollViewHeight + height)
         containerView.addConstraints(
             Constraint.tt.of(scrollView),
             Constraint.ll.of(scrollView),
@@ -233,20 +233,20 @@ class SettingsView: UIView {
             Constraint.h.of(scrollViewHeight + height)
         )
         
-        UIView.animateWithDuration(toggleOpenSpeed) {
+        UIView.animate(withDuration: toggleOpenSpeed, animations: {
             self.layoutIfNeeded()
-        }
+        }) 
     }
     
     func close() {
         state = .closed
         endEditing(true)
         applyConstraints()
-        UIView.animateWithDuration(toggleCloseSpeed, animations: {
+        UIView.animate(withDuration: toggleCloseSpeed, animations: {
             self.scrollView.contentOffset.y = 0
             self.layoutIfNeeded()
             }, completion: { (finished) in
-                self.scrollView.contentSize = CGSizeMake(screenWidth, self.scrollViewHeight)
+                self.scrollView.contentSize = CGSize(width: screenWidth, height: self.scrollViewHeight)
         })
     }
     
@@ -264,10 +264,10 @@ class SettingsView: UIView {
                 Constraint.h.of(notificationsExpandedHeight + 60)
             )
             notificationsCell.toggleSeparatorWithHeight(notificationsExpandedHeight)
-            UIView.animateWithDuration(toggleOpenSpeed) {
+            UIView.animate(withDuration: toggleOpenSpeed, animations: {
                 self.scrollView.contentOffset.y = screenHeight * self.notificationScrollToPercent
                 self.layoutIfNeeded()
-            }
+            }) 
         }
     }
     
@@ -286,10 +286,10 @@ class SettingsView: UIView {
             )
             accountCell.toggleSeparatorWithHeight(accountExpandedHeight)
             
-            UIView.animateWithDuration(toggleOpenSpeed) {
+            UIView.animate(withDuration: toggleOpenSpeed, animations: {
                 self.scrollView.contentOffset.y = screenHeight * self.accountScrollToPercent
                 self.layoutIfNeeded()
-            }
+            }) 
         }
     }
     

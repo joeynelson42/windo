@@ -11,14 +11,14 @@ import UIKit
 
 @objc
 protocol WindoCollectionCellDelegate {
-    optional func updateSelectedTimes(date: NSDate, time: Int)
-    optional func isTimeSelected(date: NSDate, time: Int) -> Bool
+    @objc optional func updateSelectedTimes(_ date: Date, time: Int)
+    @objc optional func isTimeSelected(_ date: Date, time: Int) -> Bool
 }
 
 class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     
     //MARK: Properties
-    var date = NSDate()
+    var date = Date()
     var delegate: WindoCollectionCellDelegate!
     
     //date header
@@ -36,7 +36,7 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
     
     //MARK: Inits
     override init(frame: CGRect) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.updateConstraints()
     }
     
@@ -103,23 +103,23 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         dateHeaderContainer.backgroundColor = UIColor.lightBlue()
         
         dayNumberLabel.font = UIFont.graphikRegular(12)
-        dayNumberLabel.textColor = UIColor.whiteColor()
-        dayNumberLabel.textAlignment = .Center
+        dayNumberLabel.textColor = UIColor.white
+        dayNumberLabel.textAlignment = .center
         
         weekdayLabel.font = UIFont.graphikMedium(16)
-        weekdayLabel.textColor = UIColor.whiteColor()
-        weekdayLabel.textAlignment = .Center
+        weekdayLabel.textColor = UIColor.white
+        weekdayLabel.textAlignment = .center
         
         amLabel.text = "AM"
         amLabel.textColor = UIColor.darkBlue()
         amLabel.font = UIFont.graphikRegular(10)
-        amLabel.textAlignment = .Center
+        amLabel.textAlignment = .center
         amLabel.backgroundColor = UIColor.blue()
         
         pmLabel.text = "PM"
         pmLabel.textColor = UIColor.darkBlue()
         pmLabel.font = UIFont.graphikRegular(10)
-        pmLabel.textAlignment = .Center
+        pmLabel.textAlignment = .center
         pmLabel.backgroundColor = UIColor.blue()
         
         scrollView.delegate = self
@@ -399,11 +399,11 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
         }
     }
     
-    func updateSelectedTimes(time: Int) {
+    func updateSelectedTimes(_ time: Int) {
         delegate.updateSelectedTimes!(date, time: time)
     }
     
-    func isTimeSelected(time: Int) -> Bool {
+    func isTimeSelected(_ time: Int) -> Bool {
         return delegate.isTimeSelected!(date, time: time)
     }
 }
@@ -411,22 +411,22 @@ class WindoCollectionCell: UICollectionViewCell, WindoTimeCellDelegate {
 
 extension WindoCollectionCell: UIScrollViewDelegate {
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard let _ = pmLabelCenter else {
             pmLabelCenter = pmLabel.center
             return
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= 655 {
-            UIView.animateWithDuration(0.1, animations: {
-                self.amLabel.transform = CGAffineTransformMakeTranslation(0, -50)
+            UIView.animate(withDuration: 0.1, animations: {
+                self.amLabel.transform = CGAffineTransform(translationX: 0, y: -50)
             })
         }
         else {
-            UIView.animateWithDuration(0.1, animations: {
-                self.amLabel.transform = CGAffineTransformMakeTranslation(0, 0)
+            UIView.animate(withDuration: 0.1, animations: {
+                self.amLabel.transform = CGAffineTransform(translationX: 0, y: 0)
             })
         }
 

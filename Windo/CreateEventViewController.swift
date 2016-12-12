@@ -16,7 +16,7 @@ class CreateEventViewController: UIViewController {
     var createEventView: CreateEventView!
     var members = [String]()
     var initialStates = [CGFloat]()
-    var selectedTimes = [NSDate]()
+    var selectedTimes = [Date]()
     
     var filteredInvitees = [Invitee]()
     
@@ -45,7 +45,7 @@ class CreateEventViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         setNavigationButtons(false)
@@ -53,27 +53,27 @@ class CreateEventViewController: UIViewController {
 
     //MARK: Methods
     
-    func setNavigationButtons(tableShowing: Bool) {
+    func setNavigationButtons(_ tableShowing: Bool) {
         if !tableShowing {
             createTabBar.title = "Create Event"
             
-            let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
-            createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+            let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateEventViewController.cancelTapped))
+            createTabBar.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
             
-            let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.nextTapped))
-            createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+            let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateEventViewController.nextTapped))
+            createTabBar.navigationItem.setRightBarButton(doneBarButton, animated: true)
         } else {
             createTabBar.title = "Invite Friends"
             
-            let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.doNothing))
-            createTabBar.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+            let cancelBarButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateEventViewController.doNothing))
+            createTabBar.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
             
-            let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateEventViewController.doneTapped))
-            createTabBar.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+            let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateEventViewController.doneTapped))
+            createTabBar.navigationItem.setRightBarButton(doneBarButton, animated: true)
         }
     }
     
-    func handleCalendarGesture(gesture: UIGestureRecognizer){
+    func handleCalendarGesture(_ gesture: UIGestureRecognizer){
         let days = createEventView.calendarContainer.days
         if initialStates.isEmpty {
             for day in days {
@@ -81,15 +81,15 @@ class CreateEventViewController: UIViewController {
             }
         }
         
-        for (index,day) in days.enumerate() {
-            if day.frame.contains(gesture.locationInView(createEventView.calendarContainer)){
+        for (index,day) in days.enumerated() {
+            if day.frame.contains(gesture.location(in: createEventView.calendarContainer)){
                 if (day.selectedBackground.alpha == initialStates[index]){
                     day.tapped()
                 }
             }
         }
         
-        if gesture.state == .Ended {
+        if gesture.state == .ended {
             initialStates.removeAll()
         }
         
@@ -118,18 +118,18 @@ class CreateEventViewController: UIViewController {
 }
 
 extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredInvitees.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("inviteeCell") as! InviteeCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "inviteeCell") as! InviteeCell
         
-        let invitee = filteredInvitees[indexPath.row]
+        let invitee = filteredInvitees[(indexPath as NSIndexPath).row]
             
         cell.nameLabel.text = "\(invitee.fullName)"
 //        cell.subtitleLabel.text = "\(invitee.phoneNumber)"
@@ -139,17 +139,17 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         
         if createTabBar.invitees.contains(invitee){
             cell.checkmarkImageView.alpha = 1.0
-            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            cell.checkmarkImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             
             cell.infoButton.alpha = 0.0
-            cell.infoButton.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            cell.infoButton.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         }
         else{
             cell.infoButton.alpha = 1.0
-            cell.infoButton.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            cell.infoButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             
             cell.checkmarkImageView.alpha = 0.0
-            cell.checkmarkImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            cell.checkmarkImageView.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         }
         
         cell.infoGestureRecognizer.addTarget(self, action: #selector(CreateEventViewController.openUserProfile(_:)))
@@ -157,17 +157,17 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! InviteeCell
-        let friend = filteredInvitees[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! InviteeCell
+        let friend = filteredInvitees[(indexPath as NSIndexPath).row]
         
         if createTabBar.invitees.contains(friend){
-            let index = createTabBar.invitees.indexOf(friend)
-            createTabBar.invitees.removeAtIndex(index!)
+            let index = createTabBar.invitees.index(of: friend)
+            createTabBar.invitees.remove(at: index!)
         } else{
             createTabBar.invitees.append(friend)
         }
@@ -175,17 +175,17 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         cell.animateChange()
         updateSearchResultsForSearchController("")
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         createEventView.tokenBar.reloadData()
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("inviteeHeaderCell") as! InviteeHeaderCell
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "inviteeHeaderCell") as! InviteeHeaderCell
         
         let bgColor = UIColor.darkBlue()
         var label = ""
@@ -202,52 +202,52 @@ extension CreateEventViewController: UITableViewDelegate, UITableViewDataSource 
         return header
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
     
-    func openUserProfile(sender: UITapGestureRecognizer) {
+    func openUserProfile(_ sender: UITapGestureRecognizer) {
         let profileVC = UserProfileViewController()
 //        profileVC.user = allFriends[0]
-        profileVC.color = ThemeColor.Blue
+        profileVC.color = ThemeColor.blue
         navigationController?.pushViewController(profileVC, animated: true)
     }
 }
 
 extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSource {
-    func numberOfTokensInTokenField(tokenField: VENTokenField) -> UInt {
+    func numberOfTokens(in tokenField: VENTokenField) -> UInt {
         return  UInt(createTabBar.invitees.count)
     }
     
-    func tokenField(tokenField: VENTokenField, titleForTokenAtIndex index: UInt) -> String {
+    func tokenField(_ tokenField: VENTokenField, titleForTokenAt index: UInt) -> String {
         return  createTabBar.invitees[Int(index)].firstName
     }
     
-    func tokenField(tokenField: VENTokenField, didEnterText text: String) {
+    func tokenField(_ tokenField: VENTokenField, didEnterText text: String) {
         
     }
     
-    func tokenField(tokenField: VENTokenField, didDeleteTokenAtIndex index: UInt) {
-        createTabBar.invitees.removeAtIndex(Int(index))
+    func tokenField(_ tokenField: VENTokenField, didDeleteTokenAt index: UInt) {
+        createTabBar.invitees.remove(at: Int(index))
         createEventView.tokenBar.reloadData()
         createEventView.inviteeTableView.reloadData()
     }
     
-    func tokenField(tokenField: VENTokenField, didChangeText text: String?) {
+    func tokenField(_ tokenField: VENTokenField, didChangeText text: String?) {
         if let searchText = text {
             updateSearchResultsForSearchController(searchText)
         }
     }
     
-    func tokenFieldDidBeginEditing(tokenField: VENTokenField) {
-        if createEventView.inviteeTableView.hidden == true {
+    func tokenFieldDidBeginEditing(_ tokenField: VENTokenField) {
+        if createEventView.inviteeTableView.isHidden == true {
             createEventView.showTableView()
-            createEventView.bringSubviewToFront(createEventView.inviteeTableView)
+            createEventView.bringSubview(toFront: createEventView.inviteeTableView)
             setNavigationButtons(true)
         }
     }
     
-    func tokenField(tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
+    func tokenField(_ tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
         var cellHeight = height
         if height < createEventView.cellSize {
             cellHeight = createEventView.cellSize
@@ -263,7 +263,7 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
         createEventView.layoutIfNeeded()
     }
     
-    func updateSearchResultsForSearchController(searchString: String) {
+    func updateSearchResultsForSearchController(_ searchString: String) {
         defer {createEventView.inviteeTableView.reloadData()}
         
         if (searchString == "") {
@@ -271,14 +271,14 @@ extension CreateEventViewController: VENTokenFieldDelegate, VENTokenFieldDataSou
             return
         }
         
-        filteredInvitees.removeAll(keepCapacity: false)
-        filteredInvitees = ContactManager.sharedManager.contacts.filter() { $0.fullName.containsString(searchString) }
+        filteredInvitees.removeAll(keepingCapacity: false)
+        filteredInvitees = ContactManager.sharedManager.contacts.filter() { $0.fullName.contains(searchString) }
     }
 }
 
 extension CreateEventViewController: WindoCalendarDelegate {
     
-    func daysSelectedDidChange(dates: [NSDate]) {
+    func daysSelectedDidChange(_ dates: [Date]) {
         createTabBar.selectedDates = dates
     }
 }

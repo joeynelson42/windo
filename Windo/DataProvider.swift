@@ -20,7 +20,7 @@ class DataProvider {
     
     // MARK: Events
     
-    func createEvent(invitees: [UserProfile], selectedTimes: [NSDate]) {
+    func createEvent(_ invitees: [UserProfile], selectedTimes: [Date]) {
 //        let id = String.randomAlphaNumericString(20)
 //        let creator = UserManager.userProfile.fbID
 //        let originTimeZone = NSTimeZone.localTimeZone().abbreviation

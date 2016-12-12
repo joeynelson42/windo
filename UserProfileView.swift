@@ -9,9 +9,9 @@
 import UIKit
 
 enum ThemeColor {
-    case Teal
-    case Blue
-    case Purple
+    case teal
+    case blue
+    case purple
 }
 
 class UserProfileView: UIView {
@@ -22,11 +22,11 @@ class UserProfileView: UIView {
     var responseRating = UILabel()
     var addFriend = GHButton()
     
-    var themeColor = ThemeColor.Teal
+    var themeColor = ThemeColor.teal
     
     //MARK: Inits
     convenience init(color: ThemeColor) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         self.themeColor = color
     }
     
@@ -56,8 +56,8 @@ class UserProfileView: UIView {
         responseRating.text = "RESPONSE RATING: 87.5%"
         responseRating.font = UIFont.graphikRegular(12)
         
-        addFriend.setTitle("Add Friend", forState: .Normal)
-        addFriend.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        addFriend.setTitle("Add Friend", for: UIControlState())
+        addFriend.setTitleColor(UIColor.white, for: UIControlState())
         addFriend.titleLabel?.font = UIFont.graphikRegular(15)
         addFriend.layer.cornerRadius = 6
         
@@ -93,22 +93,22 @@ class UserProfileView: UIView {
     
     func configureColors(){
         switch themeColor {
-        case .Teal:
+        case .teal:
             backgroundColor = UIColor.lightTeal()
-            profileImage.layer.borderColor = UIColor.mikeBlue().CGColor
+            profileImage.layer.borderColor = UIColor.mikeBlue().cgColor
             nameLabel.textColor = UIColor.mikeBlue()
             responseRating.textColor = UIColor.mikeBlue()
             addFriend.backgroundColor = UIColor.darkTeal()
             break
-        case .Blue:
+        case .blue:
             backgroundColor = UIColor.lightBlue()
-            profileImage.layer.borderColor = UIColor.darkBlue().CGColor
+            profileImage.layer.borderColor = UIColor.darkBlue().cgColor
             nameLabel.textColor = UIColor.darkBlue()
             responseRating.textColor = UIColor.darkBlue()
             addFriend.backgroundColor = UIColor.darkBlue()
-        case .Purple:
+        case .purple:
             backgroundColor = UIColor.lightPurple()
-            profileImage.layer.borderColor = UIColor.darkPurple().CGColor
+            profileImage.layer.borderColor = UIColor.darkPurple().cgColor
             nameLabel.textColor = UIColor.darkPurple()
             responseRating.textColor = UIColor.darkPurple()
             addFriend.backgroundColor = UIColor.darkPurple()

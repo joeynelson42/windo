@@ -17,7 +17,7 @@ class SplashScreenView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(color: UIColor) {
@@ -44,9 +44,9 @@ class SplashScreenView: UIView {
         backgroundColor = color
         
         windoLabel.text = "windo"
-        windoLabel.textColor = UIColor.whiteColor()
-        windoLabel.font = UIFont.systemFontOfSize(35)
-        windoLabel.textAlignment = .Center
+        windoLabel.textColor = UIColor.white
+        windoLabel.font = UIFont.systemFont(ofSize: 35)
+        windoLabel.textAlignment = .center
         
         addSubview(windoLabel)
     }

@@ -29,13 +29,13 @@ class InviteView: UIView {
         inviteeTableView.backgroundColor = UIColor.darkBlue()
         inviteeTableView.showsVerticalScrollIndicator = false
         inviteeTableView.separatorColor = UIColor.blue()
-        inviteeTableView.registerClass(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
-        inviteeTableView.registerClass(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
+        inviteeTableView.register(InviteeCell.self, forCellReuseIdentifier: "inviteeCell")
+        inviteeTableView.register(InviteeHeaderCell.self, forHeaderFooterViewReuseIdentifier: "inviteeHeaderCell")
         
         searchBar.delimiters = [",", ";", "--"]
         searchBar.placeholderText = "Invite some friends!"
         searchBar.toLabelText = "Invite:"
-        searchBar.backgroundColor = UIColor.whiteColor()
+        searchBar.backgroundColor = UIColor.white
         searchBar.setColorScheme(UIColor.darkBlue())
         searchBar.tintColor = UIColor.lightBlue()
         searchBar.toLabelTextColor = UIColor.blue()

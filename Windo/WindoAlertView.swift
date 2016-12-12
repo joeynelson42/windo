@@ -24,11 +24,11 @@ class WindoAlertView: UIView {
     var actionStackView = UIStackView()
     
     var message = ""
-    var alertColor = UIColor.whiteColor()
+    var alertColor = UIColor.white
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(color: UIColor, message: String) {
@@ -54,20 +54,20 @@ class WindoAlertView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         
-        messageContainer.backgroundColor = UIColor.whiteColor()
+        messageContainer.backgroundColor = UIColor.white
         messageContainer.layer.cornerRadius = 5.0
         
         messageLabel.text = message
         messageLabel.textColor = alertColor
         messageLabel.font = UIFont.graphikRegular(16)
         messageLabel.numberOfLines = 0
-        messageLabel.textAlignment = .Center
+        messageLabel.textAlignment = .center
         
-        actionStackView.alignment = .Center
-        actionStackView.axis = .Vertical
-        actionStackView.distribution = .EqualCentering
+        actionStackView.alignment = .center
+        actionStackView.axis = .vertical
+        actionStackView.distribution = .equalCentering
         actionStackView.spacing = 0
         
         addSubview(messageContainer)
@@ -95,28 +95,29 @@ class WindoAlertView: UIView {
         )
     }
     
-    func addAction(type: WindoButtonType, title: String, action: () -> Void) {
-        let newButton = UIButton()
-        
-        switch type {
-        case .simple:
-            newButton.setTitleColor(alertColor, forState: .Normal)
-        case .secondary:
-            newButton.setTitleColor(alertColor, forState: .Normal)
-            newButton.titleLabel!.alpha = 0.65
-        case .destructive:
-            newButton.setTitleColor(.redColor(), forState: .Normal)
-        }
-        
-        newButton.setTitle(title, forState: .Normal)
-        newButton.addTarget(.TouchUpInside, action: action)
-        newButton.backgroundColor = UIColor.whiteColor()
-        
-        newButton.addConstraints(
-            Constraint.w.of(screenWidth * 0.8),
-            Constraint.h.of(60)
-        )
-        
-        actionStackView.addArrangedSubview(newButton)
+    func addAction(_ type: WindoButtonType, title: String, action: () -> Void) {
+//        let newButton = UIButton()
+//        
+//        switch type {
+//        case .simple:
+//            newButton.setTitleColor(alertColor, for: UIControlState())
+//        case .secondary:
+//            newButton.setTitleColor(alertColor, for: UIControlState())
+//            newButton.titleLabel!.alpha = 0.65
+//        case .destructive:
+//            newButton.setTitleColor(.red, for: UIControlState())
+//        }
+//        
+//        newButton.setTitle(title, for: UIControlState())
+//        newButton.addTarget(self, action: action, for: .touchDown)
+////        newButton.addTarget(.touchUpInside, action: action)
+//        newButton.backgroundColor = UIColor.white
+//        
+//        newButton.addConstraints(
+//            Constraint.w.of(screenWidth * 0.8),
+//            Constraint.h.of(60)
+//        )
+//        
+//        actionStackView.addArrangedSubview(newButton)
     }
 }

@@ -19,7 +19,7 @@ class NameInputView: UIView, UITextFieldDelegate {
     
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -45,34 +45,34 @@ class NameInputView: UIView, UITextFieldDelegate {
         helpLabel.font = UIFont.graphikRegular(20)
         helpLabel.text = "Oh, and by the way,\nwhat's your name?"
         helpLabel.numberOfLines = 0
-        helpLabel.textColor = UIColor.whiteColor()
-        helpLabel.textAlignment = .Center
+        helpLabel.textColor = UIColor.white
+        helpLabel.textAlignment = .center
         
         doneKeyboardAccessory = WindoKeyboardAccessoryView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 50), state: ColorTheme(color: .teal))
-        doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(NameInputView.keyboardDismiss), forControlEvents: .TouchUpInside)
-        doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
-        doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), forControlEvents: .TouchUpInside)
+        doneKeyboardAccessory.doneButton.addTarget(self, action: #selector(NameInputView.keyboardDismiss), for: .touchUpInside)
+        doneKeyboardAccessory.leftArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), for: .touchUpInside)
+        doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(NameInputView.toggleBetweenTextFields), for: .touchUpInside)
         
         firstNameTextField.font = UIFont.graphikRegular(35)
-        firstNameTextField.backgroundColor = UIColor.clearColor()
-        firstNameTextField.textColor = UIColor.whiteColor()
+        firstNameTextField.backgroundColor = UIColor.clear
+        firstNameTextField.textColor = UIColor.white
         firstNameTextField.placeholder = "First"
-        firstNameTextField.tintColor = UIColor.whiteColor()
-        firstNameTextField.textAlignment = .Center
+        firstNameTextField.tintColor = UIColor.white
+        firstNameTextField.textAlignment = .center
         firstNameTextField.inputAccessoryView = doneKeyboardAccessory
         
         lastNameTextField.font = UIFont.graphikRegular(35)
-        lastNameTextField.backgroundColor = UIColor.clearColor()
-        lastNameTextField.textColor = UIColor.whiteColor()
+        lastNameTextField.backgroundColor = UIColor.clear
+        lastNameTextField.textColor = UIColor.white
         lastNameTextField.placeholder = "Last"
-        lastNameTextField.tintColor = UIColor.whiteColor()
-        lastNameTextField.textAlignment = .Center
+        lastNameTextField.tintColor = UIColor.white
+        lastNameTextField.textAlignment = .center
         lastNameTextField.inputAccessoryView = doneKeyboardAccessory
         
-        enterButton.setTitle("ENTER", forState: .Normal)
-        enterButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        enterButton.setTitle("ENTER", for: UIControlState())
+        enterButton.setTitleColor(UIColor.white, for: UIControlState())
         enterButton.titleLabel?.font = UIFont.graphikRegular(20)
-        enterButton.layer.borderColor = UIColor.whiteColor().CGColor
+        enterButton.layer.borderColor = UIColor.white.cgColor
         enterButton.layer.borderWidth = 1.5
         
         addSubview(helpLabel)
@@ -113,7 +113,7 @@ class NameInputView: UIView, UITextFieldDelegate {
     }
     
     func toggleBetweenTextFields(){
-        if firstNameTextField.isFirstResponder() {
+        if firstNameTextField.isFirstResponder {
             lastNameTextField.becomeFirstResponder()
         }
         else {

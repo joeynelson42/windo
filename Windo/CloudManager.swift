@@ -8,13 +8,33 @@
 
 import Foundation
 import CloudKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class CloudManager: NSObject {
     
     static let sharedManager = CloudManager()
-    var defaultContainer = CKContainer.defaultContainer()
-    let publicDB = CKContainer.defaultContainer().publicCloudDatabase
-    let privateDB = CKContainer.defaultContainer().privateCloudDatabase
+    var defaultContainer = CKContainer.default()
+    let publicDB = CKContainer.default().publicCloudDatabase
+    let privateDB = CKContainer.default().privateCloudDatabase
     
     let userRecordType = "User"
     let userEventListRecordType = "UserEventList"
@@ -24,93 +44,93 @@ class CloudManager: NSObject {
     
     typealias PhoneNumber = String
     
-    func requestPermission(completionHandler: (granted: Bool) -> ()) {
-        defaultContainer.requestApplicationPermission(CKApplicationPermissions.UserDiscoverability, completionHandler: { applicationPermissionStatus, error in
-            if applicationPermissionStatus == CKApplicationPermissionStatus.Granted {
-                completionHandler(granted: true)
+    func requestPermission(_ completionHandler: @escaping (_ granted: Bool) -> ()) {
+        defaultContainer.requestApplicationPermission(CKApplicationPermissions.userDiscoverability, completionHandler: { applicationPermissionStatus, error in
+            if applicationPermissionStatus == CKApplicationPermissionStatus.granted {
+                completionHandler(true)
             } else {
-                completionHandler(granted: false)
+                completionHandler(false)
             }
         })
     }
     
     // MARK: User
-    func getUser(completionHandler: (success: Bool, user: User?) -> ()) {
+    func getUser(_ completionHandler: (_ success: Bool, _ user: User?) -> ()) {
         getUserFromDefaults { (success, defaultsUser) in
             if success {
-                completionHandler(success: true, user: defaultsUser)
+                completionHandler(true, defaultsUser)
             } else {
                 // User is new/not logged in
-                completionHandler(success: false, user: nil)
+                completionHandler(false, nil)
             }
         }
     }
     
     /// Will return user object if stored in NSUserDefaults
-    func getUserFromDefaults(completionHandler: (success: Bool, user: User?) -> ()) {
-        if let userData = NSUserDefaults.standardUserDefaults().objectForKey(Constants.userDefaultKeys.kUser) as? NSData {
-            let user = NSKeyedUnarchiver.unarchiveObjectWithData(userData) as! User
-            completionHandler(success: true, user: user)
+    func getUserFromDefaults(_ completionHandler: (_ success: Bool, _ user: User?) -> ()) {
+        if let userData = UserDefaults.standard.object(forKey: Constants.userDefaultKeys.kUser) as? Data {
+            let user = NSKeyedUnarchiver.unarchiveObject(with: userData) as! User
+            completionHandler(true, user)
         } else {
-            completionHandler(success: false, user: nil)
+            completionHandler(false, nil)
         }
     }
     
     /// Sends fetch request to iCloud using the phoneNumber as the predicate
-    func getUserWithPhoneNumber(phoneNumber: String, completionHandler: (success: Bool, user: User?) -> ()) {
+    func getUserWithPhoneNumber(_ phoneNumber: String, completionHandler: @escaping (_ success: Bool, _ user: User?) -> ()) {
         let predicate = NSPredicate(format: "phoneNumber == '\(phoneNumber)'")
         let query = CKQuery(recordType: self.userRecordType, predicate: predicate)
-        self.privateDB.performQuery(query, inZoneWithID: nil) { user, error in
+        self.privateDB.perform(query, inZoneWith: nil) { user, error in
             if error != nil {
                 print("failed to fetch user \n \(error)")
-                completionHandler(success: false, user: nil)
+                completionHandler(false, nil)
             } else {
                 // create User from CKRecord
                 if let userRecord = user?.first {
                     let fetchedUser = self.parseUserRecord(userRecord)
                     self.storeUserInDefaults(fetchedUser)
-                    completionHandler(success: true, user: fetchedUser)
+                    completionHandler(true, fetchedUser)
                 } else {
-                    completionHandler(success: false, user: nil)
+                    completionHandler(false, nil)
                 }
             }
         }
     }
     
     /// Stores user object in iCloud and, if successful, saves it to UserDefaults
-    func saveNewUser(user: User, completionHandler: (user: User?,success: Bool) -> ()) {
-        defaultContainer.fetchUserRecordIDWithCompletionHandler { (appleUserRecordID, error) in
+    func saveNewUser(_ user: User, completionHandler: @escaping (_ user: User?,_ success: Bool) -> ()) {
+        defaultContainer.fetchUserRecordID { (appleUserRecordID, error) in
             if error != nil {
                 // handle error
-                completionHandler(user: nil, success: false)
+                completionHandler(nil, false)
             } else {
                 let recordID = CKRecordID(recordName: user.phoneNumber)
                 let userRecord = CKRecord(recordType: self.userRecordType, recordID: recordID)
                 user.recordID = appleUserRecordID?.recordName
                 
-                userRecord.setObject(user.recordID, forKey: "userID")
-                userRecord.setObject(user.phoneNumber, forKey: "phoneNumber")
-                userRecord.setObject(user.firstName, forKey: "firstName")
-                userRecord.setObject(user.lastName, forKey: "lastName")
-                userRecord.setObject(user.email, forKey: "email")
-                userRecord.setObject(user.facebookID, forKey: "facebookID")
-                userRecord.setObject(user.googleID, forKey: "googleID")
-                userRecord.setObject(user.imageRecordID, forKey: "imageRecordID")
+                userRecord.setObject(user.recordID as CKRecordValue?, forKey: "userID")
+                userRecord.setObject(user.phoneNumber as CKRecordValue?, forKey: "phoneNumber")
+                userRecord.setObject(user.firstName as CKRecordValue?, forKey: "firstName")
+                userRecord.setObject(user.lastName as CKRecordValue?, forKey: "lastName")
+                userRecord.setObject(user.email as CKRecordValue?, forKey: "email")
+                userRecord.setObject(user.facebookID as CKRecordValue?, forKey: "facebookID")
+                userRecord.setObject(user.googleID as CKRecordValue?, forKey: "googleID")
+                userRecord.setObject(user.imageRecordID as CKRecordValue?, forKey: "imageRecordID")
                 
                 self.savePrivateRecord(userRecord, completionHandler: { (success) in
                     if success {
                         self.storeUserInDefaults(user)
-                        completionHandler(user: user, success: true)
+                        completionHandler(user, true)
                     } else {
                         // handle failure
-                        completionHandler(user: nil, success: false)
+                        completionHandler(nil, false)
                     }
                 })
             }
         }
     }
     
-    func editUserInfo(userInfo: [String:String], completion: (Bool)->()) {
+    func editUserInfo(_ userInfo: [String:String], completion: (Bool)->()) {
         // TODO: this
 //        let phoneNumber = 
 //        let predicate = NSPredicate(format: "phoneNumber == '\()'")
@@ -136,9 +156,9 @@ class CloudManager: NSObject {
 //        completion(true)
     }
     
-    private func storeUserInDefaults(user: User) {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(user)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: Constants.userDefaultKeys.kUser)
+    fileprivate func storeUserInDefaults(_ user: User) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: user)
+        UserDefaults.standard.set(data, forKey: Constants.userDefaultKeys.kUser)
     }
     
     // MARK: EventList
@@ -159,7 +179,7 @@ class CloudManager: NSObject {
 //        }
 //    }
     
-    func updateEventMembersEventListsWithEventID(users: [PhoneNumber], eventID: String) {
+    func updateEventMembersEventListsWithEventID(_ users: [PhoneNumber], eventID: String) {
         updateExistingEventListsWithEventID(users, eventID: eventID) { (success, eventListsToCreate, error) in
             if error != nil {
                 //handle error
@@ -173,7 +193,7 @@ class CloudManager: NSObject {
     }
     
     /// Updates the EventLists of each user with the new Event's ID
-    func updateExistingEventListsWithEventID(users: [PhoneNumber], eventID: String, completionHandler: (success:Bool, eventListsToCreate: [PhoneNumber]?, error: NSError?)->()) {
+    func updateExistingEventListsWithEventID(_ users: [PhoneNumber], eventID: String, completionHandler: @escaping (_ success:Bool, _ eventListsToCreate: [PhoneNumber]?, _ error: NSError?)->()) {
         
         var usersWithoutEventLists = users
         getExistingEventListRecordsWithUserList(users) { (success, eventListRecords, error) in
@@ -183,37 +203,37 @@ class CloudManager: NSObject {
                 for record in eventListRecords! {
                     let eventList = self.parseEventListRecord(record)
                     self.updateUserEventList(eventList)
-                    usersWithoutEventLists.removeAtIndex(usersWithoutEventLists.indexOf(eventList.phoneNumber)!)
+                    usersWithoutEventLists.remove(at: usersWithoutEventLists.index(of: eventList.phoneNumber)!)
                 }
                 
-                completionHandler(success: true, eventListsToCreate: usersWithoutEventLists, error: error)
+                completionHandler(true, usersWithoutEventLists, error)
             }
         }
         
     }
     
-    func getExistingEventListRecordsWithUserList(users: [PhoneNumber], completionHandler: (success:Bool, eventListRecords: [CKRecord]?, error:NSError?)->()) {
+    func getExistingEventListRecordsWithUserList(_ users: [PhoneNumber], completionHandler: @escaping (_ success:Bool, _ eventListRecords: [CKRecord]?, _ error:NSError?)->()) {
         let predicate = NSPredicate(format: "phoneNumber IN %@", argumentArray: [users])
         let query = CKQuery(recordType: userEventListRecordType, predicate: predicate)
         
-        publicDB.performQuery(query, inZoneWithID: nil) { (results, error) in
+        publicDB.perform(query, inZoneWith: nil) { (results, error) in
             if error != nil {
                 // handle error
-                completionHandler(success: false, eventListRecords: nil, error: error)
+                completionHandler(false, nil, error as NSError?)
             } else if results?.count > 0 {
-                completionHandler(success: true, eventListRecords: results, error: nil)
+                completionHandler(true, results, nil)
             } else {
-                completionHandler(success: false, eventListRecords: nil, error: nil)
+                completionHandler(false, nil, nil)
             }
         }
     }
     
-    func updateUserEventList(eventList: EventList) {
+    func updateUserEventList(_ eventList: EventList) {
         let recordID = CKRecordID(recordName: eventList.phoneNumber)
         let eventListRecord = CKRecord(recordType: userEventListRecordType, recordID: recordID)
         
-        eventListRecord.setObject(eventList.phoneNumber, forKey: "phoneNumber")
-        eventListRecord.setObject(eventList.events, forKey: "events")
+        eventListRecord.setObject(eventList.phoneNumber as CKRecordValue?, forKey: "phoneNumber")
+        eventListRecord.setObject(eventList.events as CKRecordValue?, forKey: "events")
         
         savePublicRecord(eventListRecord) { (success) in
             
@@ -223,19 +243,19 @@ class CloudManager: NSObject {
     // MARK: Event
     
     /// Saves event to PublicDB, updates EventLists of each invitee with EventID
-    func saveEvent(event: Event, completionHandler: (success: Bool, error: NSError?) -> ()) {
+    func saveEvent(_ event: Event, completionHandler: (_ success: Bool, _ error: NSError?) -> ()) {
         let recordID = CKRecordID(recordName: event.ID)
         let eventRecord = CKRecord(recordType: eventRecordType, recordID: recordID)
         
-        eventRecord.setObject(event.ID, forKey: "id")
-        eventRecord.setObject(event.name, forKey: "name")
+        eventRecord.setObject(event.ID as CKRecordValue?, forKey: "id")
+        eventRecord.setObject(event.name as CKRecordValue?, forKey: "name")
         eventRecord.setObject(event.location, forKey: "location")
-        eventRecord.setObject(event.members, forKey: "members")
-        eventRecord.setObject(event.eventCreator, forKey: "creator")
-        eventRecord.setObject(event.dateCreated, forKey: "dateCreated")
-        eventRecord.setObject(event.eventWindoID, forKey: "eventWindoID")
-        eventRecord.setObject(event.memberWindoIDs, forKey: "memberWindoIDs")
-        eventRecord.setObject(event.possibleTimes, forKey: "possibleTimes")
+        eventRecord.setObject(event.members as CKRecordValue?, forKey: "members")
+        eventRecord.setObject(event.eventCreator as CKRecordValue?, forKey: "creator")
+        eventRecord.setObject(event.dateCreated as CKRecordValue?, forKey: "dateCreated")
+        eventRecord.setObject(event.eventWindoID as CKRecordValue?, forKey: "eventWindoID")
+        eventRecord.setObject(event.memberWindoIDs as CKRecordValue?, forKey: "memberWindoIDs")
+        eventRecord.setObject(event.possibleTimes as CKRecordValue?, forKey: "possibleTimes")
         
         savePublicRecord(eventRecord) { (success) in
             if success {
@@ -248,43 +268,43 @@ class CloudManager: NSObject {
     
     // MARK: CKRecord Parsing
     /// Takes CKRecord and returns User object
-    private func parseUserRecord(userRecord: CKRecord) -> User {
-        let id = userRecord.valueForKey("userID") as! String
-        let phoneNumber = userRecord.valueForKey("phoneNumber") as! String
-        let email = userRecord.valueForKey("email") as! String
-        let facebookID = userRecord.valueForKey("facebookID") as! String
-        let googleID = userRecord.valueForKey("googleID") as! String
-        let firstName = userRecord.valueForKey("firstName") as! String
-        let lastName = userRecord.valueForKey("lastName") as! String
-        let imageRecordID = userRecord.valueForKey("imageRecordID") as! String
+    fileprivate func parseUserRecord(_ userRecord: CKRecord) -> User {
+        let id = userRecord.value(forKey: "userID") as! String
+        let phoneNumber = userRecord.value(forKey: "phoneNumber") as! String
+        let email = userRecord.value(forKey: "email") as! String
+        let facebookID = userRecord.value(forKey: "facebookID") as! String
+        let googleID = userRecord.value(forKey: "googleID") as! String
+        let firstName = userRecord.value(forKey: "firstName") as! String
+        let lastName = userRecord.value(forKey: "lastName") as! String
+        let imageRecordID = userRecord.value(forKey: "imageRecordID") as! String
         let parsedUser = User(id: id, number: phoneNumber, email: email, facebookID: facebookID, googleID: googleID, firstName: firstName, lastName: lastName, imageRecordID: imageRecordID)
         return parsedUser
     }
     
-    private func parseEventListRecord(eventListRecord: CKRecord) -> EventList {
-        let phoneNumber = eventListRecord.objectForKey("phoneNumber") as! String
-        let events = eventListRecord.objectForKey("events") as! [String]
+    fileprivate func parseEventListRecord(_ eventListRecord: CKRecord) -> EventList {
+        let phoneNumber = eventListRecord.object(forKey: "phoneNumber") as! String
+        let events = eventListRecord.object(forKey: "events") as! [String]
         let eventList = EventList(phoneNumber: phoneNumber, events: events)
         return eventList
     }
     
     // MARK: Utility
-    private func savePublicRecord(record: CKRecord, completionHandler: (success: Bool) -> ()) {
-        publicDB.saveRecord(record, completionHandler: { savedRecord, error in
+    fileprivate func savePublicRecord(_ record: CKRecord, completionHandler: @escaping (_ success: Bool) -> ()) {
+        publicDB.save(record, completionHandler: { savedRecord, error in
             if error != nil {
                 print("failed to save record \n \(error)")
             } else {
-                completionHandler(success: true)
+                completionHandler(true)
             }
         })
     }
     
-    private func savePrivateRecord(record: CKRecord, completionHandler: (success: Bool) -> ()) {
-        privateDB.saveRecord(record, completionHandler: { savedRecord, error in
+    fileprivate func savePrivateRecord(_ record: CKRecord, completionHandler: @escaping (_ success: Bool) -> ()) {
+        privateDB.save(record, completionHandler: { savedRecord, error in
             if error != nil {
                 print("failed to save record \n \(error)")
             } else {
-                completionHandler(success: true)
+                completionHandler(true)
             }
         })
     }

@@ -48,20 +48,20 @@ class UserProfile: NSObject {
             return ""
         }
         
-        let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
+        let firstInitial = "\(name[name.characters.index(name.startIndex, offsetBy: 0)])"
         
-        guard let index = name.characters.indexOf(" ") else {
-            return firstInitial.uppercaseString
+        guard let index = name.characters.index(of: " ") else {
+            return firstInitial.uppercased()
         }
         
-        let secondInitial = "\(name[name.startIndex.advancedBy(name.startIndex.distanceTo(index) + 1)])"
+        let secondInitial = "\(name[name.characters.index(name.startIndex, offsetBy: name.characters.distance(from: name.startIndex, to: index) + 1)])"
         let initials = "\(firstInitial)\(secondInitial)"
         
-        return initials.uppercaseString
+        return initials.uppercased()
     }
     
     func profilePicture() -> UIImage? {
-        guard let data = NSData(contentsOfURL: NSURL(string: profilePictureURL)!) else { return nil }
+        guard let data = try? Data(contentsOf: URL(string: profilePictureURL)!) else { return nil }
         guard let image = UIImage(data: data) else { return nil }
         return image
     }
@@ -69,12 +69,12 @@ class UserProfile: NSObject {
     //MARK: Coding
     
     required convenience init?(coder decoder: NSCoder) {
-        guard   let id = decoder.decodeObjectForKey("id") as? String,
-                let fbID = decoder.decodeObjectForKey("fbID") as? String,
-                let first = decoder.decodeObjectForKey("firstName") as? String,
-                let last = decoder.decodeObjectForKey("lastName") as? String,
-                let url = decoder.decodeObjectForKey("url") as? String,
-                let email = decoder.decodeObjectForKey("email") as? String
+        guard   let id = decoder.decodeObject(forKey: "id") as? String,
+                let fbID = decoder.decodeObject(forKey: "fbID") as? String,
+                let first = decoder.decodeObject(forKey: "firstName") as? String,
+                let last = decoder.decodeObject(forKey: "lastName") as? String,
+                let url = decoder.decodeObject(forKey: "url") as? String,
+                let email = decoder.decodeObject(forKey: "email") as? String
             else { return nil }
         
         self.init(
@@ -87,12 +87,12 @@ class UserProfile: NSObject {
         )
     }
     
-    func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(self.id, forKey: "id")
-        coder.encodeObject(self.fbID, forKey: "fbID")
-        coder.encodeObject(self.firstName, forKey: "firstName")
-        coder.encodeObject(self.lastName, forKey: "lastName")
-        coder.encodeObject(self.profilePictureURL, forKey: "url")
-        coder.encodeObject(self.email, forKey: "email")
+    func encodeWithCoder(_ coder: NSCoder) {
+        coder.encode(self.id, forKey: "id")
+        coder.encode(self.fbID, forKey: "fbID")
+        coder.encode(self.firstName, forKey: "firstName")
+        coder.encode(self.lastName, forKey: "lastName")
+        coder.encode(self.profilePictureURL, forKey: "url")
+        coder.encode(self.email, forKey: "email")
     }
 }

@@ -15,13 +15,13 @@ struct Event {
     var location: CLLocation!
     var members: [String]!
     var eventCreator: String!
-    var dateCreated: NSDate!
+    var dateCreated: Date!
     var eventWindoID: String!
     var memberWindoIDs: [String]!
-    var possibleTimes: [NSDate]!
+    var possibleTimes: [Date]!
     var originTimeZone: String!
         
-    init(id: String, name: String, location: CLLocation, members: [String], eventCreator: String, dateCreated: NSDate, eventWindo: String, memberSubmissions: [String], possibleTimes: [NSDate], timeZone: String) {
+    init(id: String, name: String, location: CLLocation, members: [String], eventCreator: String, dateCreated: Date, eventWindo: String, memberSubmissions: [String], possibleTimes: [Date], timeZone: String) {
         self.ID = id
         self.name = name
         self.location = location

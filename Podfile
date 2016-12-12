@@ -6,6 +6,7 @@
 target 'Windo' do
 
 pod 'VENTokenField', '~> 2.0'
+pod 'FSCalendar'
 
 end
 

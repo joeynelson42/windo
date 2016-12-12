@@ -51,8 +51,8 @@ class EventDetailsView: UIView {
 //        backgroundColor = UIColor.lightPurple()
         
         respondedStackView = UIStackView(arrangedSubviews: [response1, response2, response3, response4])
-        respondedStackView.axis = .Horizontal
-        respondedStackView.distribution = .EqualSpacing
+        respondedStackView.axis = .horizontal
+        respondedStackView.distribution = .equalSpacing
         respondedStackView.spacing = 10
         
         response1.initials.text = "JN"
@@ -65,33 +65,33 @@ class EventDetailsView: UIView {
         responseStatus.textColor = UIColor.darkPurple()
         responseStatus.alpha = 0.44
         responseStatus.font = UIFont.graphikRegular(12)
-        responseStatus.textAlignment = .Center
+        responseStatus.textAlignment = .center
         
         separatingLine.backgroundColor = UIColor.darkPurple()
         
         locationTitleLabel.text = "Location"
         locationTitleLabel.textColor = UIColor.darkPurple()
         locationTitleLabel.font = UIFont.graphikRegular(12)
-        locationTitleLabel.textAlignment = .Center
+        locationTitleLabel.textAlignment = .center
         
         locationLabel.text = "Yellow Door House\n346 N 400 E Provo,UT"
         locationLabel.numberOfLines = 3
-        locationLabel.textColor = UIColor.whiteColor()
-        locationLabel.textAlignment = .Center
+        locationLabel.textColor = UIColor.white
+        locationLabel.textAlignment = .center
         locationLabel.font = UIFont.graphikRegular(14)
         
         dateTimeTitleLabel.text = "Date + Time"
         dateTimeTitleLabel.textColor = UIColor.darkPurple()
         dateTimeTitleLabel.font = UIFont.graphikRegular(12)
-        dateTimeTitleLabel.textAlignment = .Center
+        dateTimeTitleLabel.textAlignment = .center
         
         dateTimeLabel.text = "September 17, 2016\n7:00 P.M."
         dateTimeLabel.numberOfLines = 3
-        dateTimeLabel.textColor = UIColor.whiteColor()
-        dateTimeLabel.textAlignment = .Center
+        dateTimeLabel.textColor = UIColor.white
+        dateTimeLabel.textAlignment = .center
         dateTimeLabel.font = UIFont.graphikRegular(14)
         
-        addMemberCell.layer.borderColor = UIColor.purple().CGColor
+        addMemberCell.layer.borderColor = UIColor.purple().cgColor
         addMemberCell.layer.borderWidth = 1.0
         addMemberCell.backgroundColor = UIColor.lightPurple()
         
@@ -99,34 +99,34 @@ class EventDetailsView: UIView {
         addMemberLabel.textColor = UIColor.darkPurple()
         addMemberLabel.font = UIFont.graphikRegular(16)
         
-        addMemberButton.setImage(UIImage(named: "AddMemberButton"), forState: .Normal)
+        addMemberButton.setImage(UIImage(named: "AddMemberButton"), for: UIControlState())
         
         memberTableView.backgroundColor = UIColor.purple()
         memberTableView.showsVerticalScrollIndicator = false
         memberTableView.separatorColor = UIColor.darkPurple(0.7)
         memberTableView.allowsSelection = false
-        memberTableView.registerClass(GroupMemberCell.self, forCellReuseIdentifier: "memberCell")
+        memberTableView.register(GroupMemberCell.self, forCellReuseIdentifier: "memberCell")
         
         responseLabel.text = "Submit your available times!"
         responseLabel.textColor = UIColor.darkPurple()
-        responseLabel.textAlignment = .Center
+        responseLabel.textAlignment = .center
         responseLabel.font = UIFont.graphikRegular(14)
         
-        anytimeWorks.setTitle("Anytime Works", forState: .Normal)
-        anytimeWorks.setTitleColor(UIColor.darkPurple(), forState: .Normal)
+        anytimeWorks.setTitle("Anytime Works", for: UIControlState())
+        anytimeWorks.setTitleColor(UIColor.darkPurple(), for: UIControlState())
         anytimeWorks.titleLabel?.font = UIFont.graphikRegular(18)
-        anytimeWorks.layer.borderColor = UIColor.darkPurple().CGColor
+        anytimeWorks.layer.borderColor = UIColor.darkPurple().cgColor
         anytimeWorks.layer.borderWidth = 1.25
         anytimeWorks.layer.cornerRadius = 5.0
         
-        submitTimes.setTitle("Submit Times", forState: .Normal)
-        submitTimes.setTitleColor(UIColor.darkPurple(), forState: .Normal)
+        submitTimes.setTitle("Submit Times", for: UIControlState())
+        submitTimes.setTitleColor(UIColor.darkPurple(), for: UIControlState())
         submitTimes.titleLabel?.font = UIFont.graphikRegular(18)
-        submitTimes.layer.borderColor = UIColor.darkPurple().CGColor
+        submitTimes.layer.borderColor = UIColor.darkPurple().cgColor
         submitTimes.layer.borderWidth = 1.25
         submitTimes.layer.cornerRadius = 5.0
         
-        blurView.backgroundColor = UIColor.blackColor()
+        blurView.backgroundColor = UIColor.black
         blurView.alpha = 0.8
                 
         addSubview(respondedStackView)
@@ -260,8 +260,8 @@ class ResponseCircleView: UIView {
         backgroundView.layer.cornerRadius = 17
         
         initials.font = UIFont.graphikRegular(14)
-        initials.textColor = UIColor.whiteColor()
-        initials.textAlignment = .Center
+        initials.textColor = UIColor.white
+        initials.textAlignment = .center
         
         addSubview(backgroundView)
         addSubview(initials)

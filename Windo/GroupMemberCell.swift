@@ -39,17 +39,17 @@ class GroupMemberCell: UITableViewCell {
     func configureSubviews(){
         backgroundColor = UIColor.purple()
         
-        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.graphikRegular(16)
         
-        infoButton.setImage(UIImage(named: "InfoButton"), forState: .Normal)
+        infoButton.setImage(UIImage(named: "InfoButton"), for: UIControlState())
         
         initialsIcon.layer.borderWidth = 1.2
-        initialsIcon.layer.borderColor = UIColor.whiteColor().CGColor
+        initialsIcon.layer.borderColor = UIColor.white.cgColor
         initialsIcon.layer.cornerRadius = 22
         
-        initialsLabel.textColor = UIColor.whiteColor()
-        initialsLabel.textAlignment = .Center
+        initialsLabel.textColor = UIColor.white
+        initialsLabel.textAlignment = .center
         initialsLabel.font = UIFont.graphikRegular(19)
         
         addSubview(nameLabel)

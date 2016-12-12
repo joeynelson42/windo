@@ -19,31 +19,31 @@ class CreateTabBarController: UITabBarController {
     var eventName = ""
     var eventLocation: CLLocation!
     var invitees = [Invitee]()
-    var selectedDates = [NSDate]()
-    var selectedTimes = [NSDate]()
+    var selectedDates = [Date]()
+    var selectedTimes = [Date]()
     
     //MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         title = "Create Event"
-        tabBar.hidden = true
+        tabBar.isHidden = true
         
-        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.cancelTapped))
-        self.navigationItem.setLeftBarButtonItem(cancelBarButton, animated: true)
+        let cancelBarButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateTabBarController.cancelTapped))
+        self.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
         
-        let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateTabBarController.doneTapped))
-        self.navigationItem.setRightBarButtonItem(doneBarButton, animated: true)
+        let doneBarButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateTabBarController.doneTapped))
+        self.navigationItem.setRightBarButton(doneBarButton, animated: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = UIColor.lightBlue()
         navigationController?.navigationBar.tintColor = UIColor.darkBlue()
         navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.darkBlue()]
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     func cancelTapped(){
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
     
     func doneTapped(){
@@ -59,42 +59,42 @@ class CreateTabBarController: UITabBarController {
                 title = "Specify Times"
             }
         case 1:
-            navigationController?.popViewControllerAnimated(true)
+            navigationController?.popViewController(animated: true)
         default:
             return
         }
     }
     
     func displayNoInviteesAlert(){
-        let alertController = UIAlertController(title: "Invite friends", message: "It's not a party without people.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Invite friends", message: "It's not a party without people.", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
+        let cancelAction = UIAlertAction(title: "Okay", style: .default) { (action) in}
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func displayNoDaysAlert(){
-        let alertController = UIAlertController(title: "Select days", message: "Select some days on the calendar first.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Select days", message: "Select some days on the calendar first.", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (action) in}
+        let cancelAction = UIAlertAction(title: "Okay", style: .default) { (action) in}
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func displayCancelAlert(){
-        let alertController = UIAlertController(title: "Hey!", message: "Are you sure you want to discard this event?", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Hey!", message: "Are you sure you want to discard this event?", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in}
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in}
         alertController.addAction(cancelAction)
         
-        let destroyAction = UIAlertAction(title: "Discard", style: .Destructive) { (action) in
-            self.navigationController?.popViewControllerAnimated(true)
+        let destroyAction = UIAlertAction(title: "Discard", style: .destructive) { (action) in
+            self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(destroyAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func finalizeEvent() {
@@ -104,39 +104,39 @@ class CreateTabBarController: UITabBarController {
         let eventID = String.randomAlphaNumericString(15)
         let windoID = String.randomAlphaNumericString(15)
         
-        let eventWindo = Windo(id: windoID, ownerID: userInvitee.phoneNumber, eventID: eventID, times: selectedTimes, dateCreated: NSDate())
+        let eventWindo = Windo(id: windoID, ownerID: userInvitee.phoneNumber, eventID: eventID, times: selectedTimes, dateCreated: Date())
         
         var eventMembers = [String]()
         for invitee in invitees {
             eventMembers.append(invitee.phoneNumber)
         }
         
-        let _ = Event(id: eventID, name: eventName, location: eventLocation, members: eventMembers, eventCreator: userInvitee.phoneNumber, dateCreated: NSDate(), eventWindo: eventWindo.ID, memberSubmissions: [], possibleTimes: [], timeZone: "")
+        let _ = Event(id: eventID, name: eventName, location: eventLocation, members: eventMembers, eventCreator: userInvitee.phoneNumber, dateCreated: Date(), eventWindo: eventWindo.ID, memberSubmissions: [], possibleTimes: [], timeZone: "")
         
 //        CloudManager.sharedManager save event!
     }
     
     // MARK: Time Management
-    func addAllDaysTime(date: NSDate) {
+    func addAllDaysTime(_ date: Date) {
         var newTime = date
         if selectedTimes.contains(newTime){
             
-            guard let index = selectedTimes.indexOf(newTime) else { return }
-            selectedTimes.removeAtIndex(index)
+            guard let index = selectedTimes.index(of: newTime) else { return }
+            selectedTimes.remove(at: index)
             
             for day in selectedDates {
-                newTime = NSDate.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
+                newTime = Date.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
                 
                 if selectedTimes.contains(newTime){
-                    guard let index = selectedTimes.indexOf(newTime) else { return }
-                    selectedTimes.removeAtIndex(index)
+                    guard let index = selectedTimes.index(of: newTime) else { return }
+                    selectedTimes.remove(at: index)
                 }
             }
         }
         else {
             selectedTimes.append(newTime)
             for day in selectedDates {
-                newTime = NSDate.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
+                newTime = Date.createDateWithComponents(day.year(), monthNumber: day.month(), dayNumber: day.day(), hourNumber: newTime.hour(), minuteNumber: newTime.minute())
                 if !selectedTimes.contains(newTime){
                     selectedTimes.append(newTime)
                 }
@@ -154,8 +154,8 @@ class CreateTabBarController: UITabBarController {
             }
             
             if !keepTime {
-                guard let index = selectedTimes.indexOf(time) else { return }
-                selectedTimes.removeAtIndex(index)
+                guard let index = selectedTimes.index(of: time) else { return }
+                selectedTimes.remove(at: index)
             }
         }
     }

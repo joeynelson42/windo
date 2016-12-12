@@ -28,7 +28,7 @@ class PhoneNumberInputView: UIView {
     
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -42,17 +42,17 @@ class PhoneNumberInputView: UIView {
     
     // MARK: Animations
     let hideDuration:Double = 1.25
-    let hideOption = UIViewAnimationOptions.CurveLinear
+    let hideOption = UIViewAnimationOptions.curveLinear
     let hideSpring:CGFloat = 1.0
-    let shrink = CGAffineTransformMakeScale(1.0, 1.0)
-    let grow = CGAffineTransformMakeScale(1.0, 1.0)
-    let phoneMove = CGAffineTransformMakeTranslation(-screenWidth/1.5, 0)
-    let codeMove = CGAffineTransformMakeTranslation(screenWidth/1.5, 0)
-    let loadShrink = CGAffineTransformMakeScale(0.75, 0.75)
+    let shrink = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    let grow = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    let phoneMove = CGAffineTransform(translationX: -screenWidth/1.5, y: 0)
+    let codeMove = CGAffineTransform(translationX: screenWidth/1.5, y: 0)
+    let loadShrink = CGAffineTransform(scaleX: 0.75, y: 0.75)
     
     func hidePhoneInput() {
-        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
-                let concat = CGAffineTransformConcat(self.phoneMove, self.shrink)
+        UIView.animate(withDuration: hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+                let concat = self.phoneMove.concatenating(self.shrink)
                 self.numberInputLabel.transform = concat
                 self.welcomeLabel.transform = concat
             
@@ -62,9 +62,9 @@ class PhoneNumberInputView: UIView {
     }
     
     func showPhoneInput() {
-        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
-            let move = CGAffineTransformMakeTranslation(0, 0)
-            let concat = CGAffineTransformConcat(move, self.grow)
+        UIView.animate(withDuration: hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+            let move = CGAffineTransform(translationX: 0, y: 0)
+            let concat = move.concatenating(self.grow)
             self.numberInputLabel.transform = concat
             self.welcomeLabel.transform = concat
             
@@ -74,8 +74,8 @@ class PhoneNumberInputView: UIView {
     }
     
     func hideCodeInput() {
-        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
-                let concat = CGAffineTransformConcat(self.codeMove, self.shrink)
+        UIView.animate(withDuration: hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+                let concat = self.codeMove.concatenating(self.shrink)
                 self.codeInputLabel.transform = concat
                 self.codeExplanationLabel.transform = concat
             
@@ -85,9 +85,9 @@ class PhoneNumberInputView: UIView {
     }
     
     func showCodeInput() {
-        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
-            let move = CGAffineTransformMakeTranslation(0, 0)
-            let concat = CGAffineTransformConcat(move, self.grow)
+        UIView.animate(withDuration: hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+            let move = CGAffineTransform(translationX: 0, y: 0)
+            let concat = move.concatenating(self.grow)
             self.codeInputLabel.transform = concat
             self.codeExplanationLabel.transform = concat
             
@@ -97,14 +97,14 @@ class PhoneNumberInputView: UIView {
     }
     
     func hideLoading() {
-        UIView.animateWithDuration(hideDuration - 0.75, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+        UIView.animate(withDuration: hideDuration - 0.75, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
             self.loadingView.transform = self.loadShrink
             self.loadingView.alpha = 0.0
             }, completion: nil)
     }
     
     func showLoading() {
-        UIView.animateWithDuration(hideDuration - 0.25, delay: 0.25, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+        UIView.animate(withDuration: hideDuration - 0.25, delay: 0.25, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
             self.loadingView.transform = self.grow
             self.loadingView.alpha = 1.0
             }, completion: nil)
@@ -125,7 +125,7 @@ class PhoneNumberInputView: UIView {
             Constraint.w.of(screenWidth)
         )
         
-        UIView.animateWithDuration(hideDuration / 2, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+        UIView.animate(withDuration: hideDuration / 2, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
             self.layoutIfNeeded()
             }, completion: nil)
     }
@@ -145,22 +145,22 @@ class PhoneNumberInputView: UIView {
             Constraint.w.of(screenWidth/2 - 1)
         )
         
-        UIView.animateWithDuration(hideDuration / 2, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+        UIView.animate(withDuration: hideDuration / 2, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
             self.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func toggleNextButton(on: Bool) {
+    func toggleNextButton(_ on: Bool) {
         var targetAlpha:CGFloat = 0.5
         if on {
             targetAlpha = 1.0
         }
         
-        nextButton.enabled = on
+        nextButton.isEnabled = on
         
-        UIView.animateWithDuration(0.5) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.nextButton.alpha = targetAlpha
-        }
+        }) 
     }
     
     func showNameInput() {
@@ -169,8 +169,8 @@ class PhoneNumberInputView: UIView {
             Constraint.llrr.of(self)
         )
         
-        UIView.animateWithDuration(hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
-            let slide = CGAffineTransformMakeTranslation(-screenWidth, 0)
+        UIView.animate(withDuration: hideDuration, delay: 0, usingSpringWithDamping: hideSpring, initialSpringVelocity: 0.0, options: hideOption, animations: {
+            let slide = CGAffineTransform(translationX: -screenWidth, y: 0)
             self.numberPad.transform = slide
             self.codeInputLabel.transform = slide
             self.codeExplanationLabel.transform = slide
@@ -197,38 +197,38 @@ class PhoneNumberInputView: UIView {
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         welcomeLabel.attributedText = attrString
-        welcomeLabel.textColor = UIColor.whiteColor()
+        welcomeLabel.textColor = UIColor.white
         welcomeLabel.font = UIFont.graphikRegular(20)
-        welcomeLabel.textAlignment = .Center
+        welcomeLabel.textAlignment = .center
         welcomeLabel.numberOfLines = 0
         
         attrString = NSMutableAttributedString(string: "Great!\nWe sent you a code,\ncopy it here to enter Windo.")
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         codeExplanationLabel.attributedText = attrString
-        codeExplanationLabel.textColor = UIColor.whiteColor()
+        codeExplanationLabel.textColor = UIColor.white
         codeExplanationLabel.font = UIFont.graphikRegular(20)
-        codeExplanationLabel.textAlignment = .Center
+        codeExplanationLabel.textAlignment = .center
         codeExplanationLabel.numberOfLines = 0
         
-        codeExplanationLabel.transform = CGAffineTransformConcat(codeMove, shrink)
+        codeExplanationLabel.transform = codeMove.concatenating(shrink)
         codeExplanationLabel.alpha = 0.0
-        codeInputLabel.transform = CGAffineTransformConcat(codeMove, shrink)
+        codeInputLabel.transform = codeMove.concatenating(shrink)
         codeInputLabel.alpha = 0.0
         
-        nextButton.setTitle("NEXT", forState: .Normal)
-        nextButton.setTitleColor(UIColor.lightTeal(), forState: .Normal)
-        nextButton.setTitleColor(UIColor.darkTeal(), forState: .Highlighted)
+        nextButton.setTitle("NEXT", for: UIControlState())
+        nextButton.setTitleColor(UIColor.lightTeal(), for: UIControlState())
+        nextButton.setTitleColor(UIColor.darkTeal(), for: .highlighted)
         nextButton.titleLabel!.font = UIFont.graphikRegular(20)
-        nextButton.backgroundColor = UIColor.whiteColor()
-        nextButton.enabled = false
+        nextButton.backgroundColor = UIColor.white
+        nextButton.isEnabled = false
         nextButton.alpha = 0.5
         
-        goBackButton.setTitle("GO BACK", forState: .Normal)
-        goBackButton.setTitleColor(UIColor.lightTeal(), forState: .Normal)
-        goBackButton.setTitleColor(UIColor.darkTeal(), forState: .Highlighted)
+        goBackButton.setTitle("GO BACK", for: UIControlState())
+        goBackButton.setTitleColor(UIColor.lightTeal(), for: UIControlState())
+        goBackButton.setTitleColor(UIColor.darkTeal(), for: .highlighted)
         goBackButton.titleLabel!.font = UIFont.graphikRegular(20)
-        goBackButton.backgroundColor = UIColor.whiteColor()
+        goBackButton.backgroundColor = UIColor.white
         
         loadingView.transform = loadShrink
         loadingView.alpha = 0.0

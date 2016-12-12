@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ExpandingTimeCellDelegate {
-    func stateForTime(time: NSDate) -> TimeCellState
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate)
+    func stateForTime(_ time: Date) -> TimeCellState
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date)
 }
 
 enum ExpandingTimeCellState {
@@ -25,7 +25,7 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     var state = ExpandingTimeCellState.closed
     
     var colorTheme = ColorTheme(color: .blue)
-    var baseTime = NSDate() {
+    var baseTime = Date() {
         didSet {
             self.updateTimes()
         }
@@ -39,11 +39,11 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     
     //MARK: Inits
     
-    private convenience init() {
-        self.init(frame: CGRectZero)
+    fileprivate convenience init() {
+        self.init(frame: CGRect.zero)
     }
     
-    private override init(frame: CGRect) {
+    fileprivate override init(frame: CGRect) {
         super.init(frame: frame)
         self.setNeedsUpdateConstraints()
     }
@@ -63,14 +63,14 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
         
         applyConstraints()
         
-        UIView.animateWithDuration(0.25) {
+        UIView.animate(withDuration: 0.25, animations: {
             self.layoutIfNeeded()
-        }
+        }) 
     }
     
     // MARK: TimeCellDelegate Methods
     
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date) {
         delegate.timeCellStateChanged(newState, date: date)
     }
     
@@ -176,13 +176,13 @@ class ExpandingTimeCell: UIView, TimeCellDelegate {
     
     // MARK: Utilities
     
-    func createTimes() -> [NSDate]{
-        var times = [NSDate]()
+    func createTimes() -> [Date]{
+        var times = [Date]()
         
         times.append(baseTime)
-        times.append(NSDate.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 15))
-        times.append(NSDate.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 30))
-        times.append(NSDate.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 45))
+        times.append(Date.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 15))
+        times.append(Date.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 30))
+        times.append(Date.createDateWithComponents(baseTime.year(), monthNumber: baseTime.month(), dayNumber: baseTime.day(), hourNumber: baseTime.hour(), minuteNumber: 45))
         
         return times
     }

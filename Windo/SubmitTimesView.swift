@@ -15,7 +15,7 @@ class SubmitTimesView: UIView{
 
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -49,11 +49,11 @@ class SubmitTimesView: UIView{
         )
     }
     
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date) {
 
     }
     
-    func stateForTime(time: NSDate) -> TimeCellState {
+    func stateForTime(_ time: Date) -> TimeCellState {
         return .unselected
     }
 }

@@ -18,7 +18,7 @@ class WindoKeyboardAccessoryView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(frame: CGRect, state: ColorTheme) {
@@ -44,24 +44,24 @@ class WindoKeyboardAccessoryView: UIView {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.white
         
-        doneButton.setTitle("Done", forState: .Normal)
+        doneButton.setTitle("Done", for: UIControlState())
         doneButton.titleLabel?.font = UIFont.graphikMedium(18)
         
         switch state.color {
         case .blue:
-            doneButton.setTitleColor(UIColor.blue(), forState: .Normal)
-            leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), forState: .Normal)
-            rightArrowButton.setImage(UIImage(named: "blueRightArrow"), forState: .Normal)
+            doneButton.setTitleColor(UIColor.blue(), for: UIControlState())
+            leftArrowButton.setImage(UIImage(named: "blueLeftArrow"), for: UIControlState())
+            rightArrowButton.setImage(UIImage(named: "blueRightArrow"), for: UIControlState())
         case .teal:
-            doneButton.setTitleColor(UIColor.teal(), forState: .Normal)
-            leftArrowButton.setImage(UIImage(named: "tealLeftArrow"), forState: .Normal)
-            rightArrowButton.setImage(UIImage(named: "tealRightArrow"), forState: .Normal)
+            doneButton.setTitleColor(UIColor.teal(), for: UIControlState())
+            leftArrowButton.setImage(UIImage(named: "tealLeftArrow"), for: UIControlState())
+            rightArrowButton.setImage(UIImage(named: "tealRightArrow"), for: UIControlState())
         case .purple:
-            doneButton.setTitleColor(UIColor.purple(), forState: .Normal)
-            leftArrowButton.setImage(UIImage(named: "purpleLeftArrow"), forState: .Normal)
-            rightArrowButton.setImage(UIImage(named: "purpleRightArrow"), forState: .Normal)
+            doneButton.setTitleColor(UIColor.purple(), for: UIControlState())
+            leftArrowButton.setImage(UIImage(named: "purpleLeftArrow"), for: UIControlState())
+            rightArrowButton.setImage(UIImage(named: "purpleRightArrow"), for: UIControlState())
         }
         
         

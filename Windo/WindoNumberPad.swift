@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol WindoNumberPadDelegate {
-    func numberTapped(number: Int)
+    func numberTapped(_ number: Int)
 }
 
 class WindoNumberPad: UIView {
@@ -28,7 +28,7 @@ class WindoNumberPad: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -51,29 +51,29 @@ class WindoNumberPad: UIView {
     func configureSubviews(){
         let spacing:CGFloat = screenWidth * 0.039
         
-        container.alignment = .Center
-        container.axis = .Vertical
-        container.distribution = .EqualSpacing
+        container.alignment = .center
+        container.axis = .vertical
+        container.distribution = .equalSpacing
         container.spacing = spacing
         
-        topRow.alignment = .Center
-        topRow.axis = .Horizontal
-        topRow.distribution = .EqualSpacing
+        topRow.alignment = .center
+        topRow.axis = .horizontal
+        topRow.distribution = .equalSpacing
         topRow.spacing = spacing
         
-        midRow.alignment = .Center
-        midRow.axis = .Horizontal
-        midRow.distribution = .EqualSpacing
+        midRow.alignment = .center
+        midRow.axis = .horizontal
+        midRow.distribution = .equalSpacing
         midRow.spacing = spacing
         
-        bottomRow.alignment = .Center
-        bottomRow.axis = .Horizontal
-        bottomRow.distribution = .EqualSpacing
+        bottomRow.alignment = .center
+        bottomRow.axis = .horizontal
+        bottomRow.distribution = .equalSpacing
         bottomRow.spacing = spacing
         
-        zeroRow.alignment = .Center
-        zeroRow.axis = .Horizontal
-        zeroRow.distribution = .EqualSpacing
+        zeroRow.alignment = .center
+        zeroRow.axis = .horizontal
+        zeroRow.distribution = .equalSpacing
         zeroRow.spacing = spacing
         
         for i in 1...3 {
@@ -106,29 +106,29 @@ class WindoNumberPad: UIView {
         container.fillSuperview()
     }
     
-    func numberTapped(button: UIButton){
+    func numberTapped(_ button: UIButton){
         guard let _ = delegate else { return }
         delegate?.numberTapped(button.tag)
     }
     
-    func constructButton(number: Int) -> WindoNumber{
+    func constructButton(_ number: Int) -> WindoNumber{
         let newNumber = WindoNumber()
-        newNumber.setTitle(String(number), forState: .Normal)
+        newNumber.setTitle(String(number), for: UIControlState())
         newNumber.tag = number
-        newNumber.widthAnchor.constraintEqualToConstant(buttonSize).active = true
-        newNumber.heightAnchor.constraintEqualToConstant(buttonSize).active = true
-        newNumber.addTarget(self, action: #selector(WindoNumberPad.numberTapped(_:)), forControlEvents: .TouchUpInside)
+        newNumber.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        newNumber.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        newNumber.addTarget(self, action: #selector(WindoNumberPad.numberTapped(_:)), for: .touchUpInside)
         
         return newNumber
     }
     
-    func constructButton(string: String, tag: Int) -> WindoNumber {
+    func constructButton(_ string: String, tag: Int) -> WindoNumber {
         let newNumber = WindoNumber()
-        newNumber.setTitle(string, forState: .Normal)
+        newNumber.setTitle(string, for: UIControlState())
         newNumber.tag = tag
-        newNumber.widthAnchor.constraintEqualToConstant(buttonSize).active = true
-        newNumber.heightAnchor.constraintEqualToConstant(buttonSize).active = true
-        newNumber.addTarget(self, action: #selector(WindoNumberPad.numberTapped(_:)), forControlEvents: .TouchUpInside)
+        newNumber.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        newNumber.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        newNumber.addTarget(self, action: #selector(WindoNumberPad.numberTapped(_:)), for: .touchUpInside)
         
         return newNumber
     }

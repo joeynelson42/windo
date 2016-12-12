@@ -16,7 +16,7 @@ class HomeView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -38,11 +38,11 @@ class HomeView: UIView {
     func configureSubviews(){
         backgroundColor = UIColor.lightTeal()
         
-        eventTableView.backgroundColor = UIColor.clearColor()
+        eventTableView.backgroundColor = UIColor.clear
         eventTableView.showsVerticalScrollIndicator = false
         eventTableView.separatorColor = UIColor.mikeBlue(0.34)
-        eventTableView.registerClass(EventCell.self, forCellReuseIdentifier: "eventCell")
-        eventTableView.registerClass(EventHeaderCell.self, forHeaderFooterViewReuseIdentifier: "eventHeaderCell")
+        eventTableView.register(EventCell.self, forCellReuseIdentifier: "eventCell")
+        eventTableView.register(EventHeaderCell.self, forHeaderFooterViewReuseIdentifier: "eventHeaderCell")
         
         lowerBackgroundView.backgroundColor = UIColor.darkTeal()
         

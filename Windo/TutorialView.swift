@@ -33,7 +33,7 @@ class TutorialView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -54,38 +54,38 @@ class TutorialView: UIView {
     }
     
     func configureSubviews(){
-        mainScrollView.contentSize = CGSizeMake(screenWidth * 3, screenHeight)
-        mainScrollView.pagingEnabled = true
+        mainScrollView.contentSize = CGSize(width: screenWidth * 3, height: screenHeight)
+        mainScrollView.isPagingEnabled = true
         mainScrollView.showsHorizontalScrollIndicator = false
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.backgroundColor = mainView.backgroundColor
         
         mainView.backgroundColor = UIColor.teal()
         
-        xButton.setTitle("X", forState: .Normal)
-        xButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        xButton.setTitle("X", for: UIControlState())
+        xButton.setTitleColor(UIColor.white, for: UIControlState())
         xButton.titleLabel?.font = UIFont.graphikRegular(25)
         
         //Teal View
-        tealView.backgroundColor = UIColor.clearColor()
+        tealView.backgroundColor = UIColor.clear
         tealLabel.text = "Hey! I'm Teal"
-        tealLabel.textColor = UIColor.whiteColor()
+        tealLabel.textColor = UIColor.white
         tealLabel.font = UIFont.graphikRegular(18)
-        tealLabel.textAlignment = .Center
+        tealLabel.textAlignment = .center
         
         //Blue View
-        blueView.backgroundColor = UIColor.clearColor()
+        blueView.backgroundColor = UIColor.clear
         blueLabel.text = "And I'm Blue"
-        blueLabel.textColor = UIColor.whiteColor()
+        blueLabel.textColor = UIColor.white
         blueLabel.font = UIFont.graphikRegular(18)
-        blueLabel.textAlignment = .Center
+        blueLabel.textAlignment = .center
         
         //Purple View
-        purpleView.backgroundColor = UIColor.clearColor()
+        purpleView.backgroundColor = UIColor.clear
         purpleLabel.text = "But I'm Purple"
-        purpleLabel.textColor = UIColor.whiteColor()
+        purpleLabel.textColor = UIColor.white
         purpleLabel.font = UIFont.graphikRegular(18)
-        purpleLabel.textAlignment = .Center
+        purpleLabel.textAlignment = .center
         
         addSubview(mainScrollView)
         addSubview(xButton)

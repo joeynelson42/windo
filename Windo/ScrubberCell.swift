@@ -17,7 +17,7 @@ class ScrubberCell: UICollectionViewCell {
     
     //MARK: Inits
     override init(frame: CGRect) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.updateConstraints()
     }
     
@@ -34,17 +34,17 @@ class ScrubberCell: UICollectionViewCell {
     }
     
     func configureSubviews(){
-        dateLabel.textColor = UIColor.whiteColor()
+        dateLabel.textColor = UIColor.white
         dateLabel.font = UIFont.graphikRegular(12)
-        dateLabel.textAlignment = .Center
+        dateLabel.textAlignment = .center
         
-        dayOfTheWeekLabel.textColor = UIColor.whiteColor()
+        dayOfTheWeekLabel.textColor = UIColor.white
         dayOfTheWeekLabel.font = UIFont.graphikMedium(16)
-        dayOfTheWeekLabel.textAlignment = .Center
+        dayOfTheWeekLabel.textAlignment = .center
         
-        allDaysLabel.textColor = UIColor.whiteColor()
+        allDaysLabel.textColor = UIColor.white
         allDaysLabel.font = UIFont.graphikMedium(16)
-        allDaysLabel.textAlignment = .Center
+        allDaysLabel.textAlignment = .center
         allDaysLabel.text = "ALL\nDAYS"
         allDaysLabel.numberOfLines = 2
         allDaysLabel.alpha = 0.0
@@ -73,13 +73,13 @@ class ScrubberCell: UICollectionViewCell {
     
     func fadeOut(){
         if allDaysLabel.alpha == 0.0 {
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.dateLabel.alpha = 0.5
                 self.dayOfTheWeekLabel.alpha = 0.5
             })
         }
         else {
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.allDaysLabel.alpha = 0.5
             })
         }
@@ -87,13 +87,13 @@ class ScrubberCell: UICollectionViewCell {
     
     func fadeIn(){
         if allDaysLabel.alpha == 0.0 {
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.dateLabel.alpha = 1.0
                 self.dayOfTheWeekLabel.alpha = 1.0
             })
         }
         else {
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.allDaysLabel.alpha = 1.0
             })
         }

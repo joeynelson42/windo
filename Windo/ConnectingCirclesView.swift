@@ -34,12 +34,12 @@ class ConnectingCirclesView: UIView {
     
     func configureSubviews(){
         
-        let color = UIColor.grayColor()
+        let color = UIColor.gray
         let alpha:CGFloat = 1.0
         let cornerRadius = circleWidth/2
         
         indicatorCircle.layer.cornerRadius = cornerRadius
-        indicatorCircle.backgroundColor = UIColor.whiteColor()
+        indicatorCircle.backgroundColor = UIColor.white
         
         circle1.layer.cornerRadius = cornerRadius
         circle1.backgroundColor = color
@@ -55,12 +55,12 @@ class ConnectingCirclesView: UIView {
         
         connector1.backgroundColor = color
         connector1.layer.cornerRadius = cornerRadius
-        connector1.transform = CGAffineTransformMakeScale(1.0, 0.00001)
+        connector1.transform = CGAffineTransform(scaleX: 1.0, y: 0.00001)
         connector1.alpha = alpha
         
         connector2.backgroundColor = color
         connector2.layer.cornerRadius = cornerRadius
-        connector2.transform = CGAffineTransformMakeScale(1.0, 0.00001)
+        connector2.transform = CGAffineTransform(scaleX: 1.0, y: 0.00001)
         connector2.alpha = alpha
         
         addSubviews(connector1, connector2)
@@ -110,8 +110,8 @@ class ConnectingCirclesView: UIView {
     
     func hideConnectors(){
         if firstConnectorVisible {
-            UIView.animateWithDuration(0.15, animations: {
-                self.connector1.transform = CGAffineTransformMakeScale(1.0, 0.000001)
+            UIView.animate(withDuration: 0.15, animations: {
+                self.connector1.transform = CGAffineTransform(scaleX: 1.0, y: 0.000001)
             })
             firstConnectorVisible = false
             bounceLeft()
@@ -119,8 +119,8 @@ class ConnectingCirclesView: UIView {
         }
         
         if secondConnectorVisible {
-            UIView.animateWithDuration(0.15, animations: {
-                self.connector2.transform = CGAffineTransformMakeScale(1.0, 0.000001)
+            UIView.animate(withDuration: 0.15, animations: {
+                self.connector2.transform = CGAffineTransform(scaleX: 1.0, y: 0.000001)
             })
             secondConnectorVisible = false
             bounceRight()
@@ -129,45 +129,45 @@ class ConnectingCirclesView: UIView {
     }
     
     func showFirstConnector(){
-        UIView.animateWithDuration(0.15, animations: {
-            self.connector1.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        UIView.animate(withDuration: 0.15, animations: {
+            self.connector1.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
         firstConnectorVisible = true
     }
     
     func showSecondConnector(){
-        UIView.animateWithDuration(0.15, animations: {
-            self.connector2.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        UIView.animate(withDuration: 0.15, animations: {
+            self.connector2.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
         secondConnectorVisible = true
     }
     
     func bounceLeft(){
-        UIView.animateWithDuration(0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .CurveLinear, animations: {
-                self.circle1.transform = CGAffineTransformMakeScale(0.75, 0.75)
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .curveLinear, animations: {
+                self.circle1.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             }, completion: {void in
-                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .CurveEaseIn, animations: {
-                    self.circle1.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                    self.circle1.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     }, completion: nil)
         })
     }
     
     func bounceCenter(){
-        UIView.animateWithDuration(0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .CurveLinear, animations: {
-            self.circle2.transform = CGAffineTransformMakeScale(0.75, 0.75)
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .curveLinear, animations: {
+            self.circle2.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             }, completion: {void in
-                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .CurveEaseIn, animations: {
-                    self.circle2.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                    self.circle2.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     }, completion: nil)
         })
     }
     
     func bounceRight(){
-        UIView.animateWithDuration(0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .CurveLinear, animations: {
-            self.circle3.transform = CGAffineTransformMakeScale(0.75, 0.75)
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0, options: .curveLinear, animations: {
+            self.circle3.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             }, completion: {void in
-                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .CurveEaseIn, animations: {
-                    self.circle3.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                    self.circle3.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     }, completion: nil)
         })
     }

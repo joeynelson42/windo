@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WindoCalendarDelegate {
-    func daysSelectedDidChange(dates: [NSDate])
+    func daysSelectedDidChange(_ dates: [Date])
 }
 
 class WindoCalendarView: UIView, CalendarDayDelegate {
@@ -92,7 +92,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     let daySize = (screenWidth - 8)/7
     let spacingAroundMonth = screenHeight * 0.03448276
     
-    var selectedDays = [NSDate]()
+    var selectedDays = [Date]()
     
     //MARK: View Configuration
     
@@ -103,12 +103,12 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
     }
     
     func configureSubviews(){
-        let calendar = NSCalendar.currentCalendar()
-        let date = NSDate()
-        let components = calendar.components([.Month, .Year], fromDate: date)
+        let calendar = Calendar.current
+        let date = Date()
+        let components = (calendar as NSCalendar).components([.month, .year], from: date)
         
-        month = components.month
-        year = components.year
+        month = components.month!
+        year = components.year!
         
         days = [day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14,day15,day16,day17,day18,day19,day20,day21,day22,day23,day24,day25,day26,day27,day28,day29,day30,day31,day32,day33,day34,day35, day36, day37, day38, day39, day40, day41, day42]
         
@@ -116,59 +116,59 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         
         monthLabel.font = UIFont.graphikRegular(18)
         monthLabel.textColor = UIColor.darkBlue()
-        monthLabel.textAlignment = .Center
+        monthLabel.textAlignment = .center
         
-        rightMonthButton.setImage(UIImage(named: "RightCalendarArrow"), forState: .Normal)
-        rightMonthButton.addTarget(self, action: #selector(WindoCalendarView.goToNextMonth), forControlEvents: .TouchUpInside)
+        rightMonthButton.setImage(UIImage(named: "RightCalendarArrow"), for: UIControlState())
+        rightMonthButton.addTarget(self, action: #selector(WindoCalendarView.goToNextMonth), for: .touchUpInside)
         
-        leftMonthButton.setImage(UIImage(named: "LeftCalendarArrow"), forState: .Normal)
-        leftMonthButton.addTarget(self, action: #selector(WindoCalendarView.goToPreviousMonth), forControlEvents: .TouchUpInside)
+        leftMonthButton.setImage(UIImage(named: "LeftCalendarArrow"), for: UIControlState())
+        leftMonthButton.addTarget(self, action: #selector(WindoCalendarView.goToPreviousMonth), for: .touchUpInside)
         
-        rightTapExtension.backgroundColor = UIColor.clearColor()
+        rightTapExtension.backgroundColor = UIColor.clear
         let rightTapGR = UITapGestureRecognizer(target: self, action: #selector(WindoCalendarView.goToNextMonth))
         rightTapExtension.addGestureRecognizer(rightTapGR)
         
-        leftTapExtension.backgroundColor = UIColor.clearColor()
+        leftTapExtension.backgroundColor = UIColor.clear
         let leftTapGR = UITapGestureRecognizer(target: self, action: #selector(WindoCalendarView.goToPreviousMonth))
         leftTapExtension.addGestureRecognizer(leftTapGR)
         
         sundayLabel.text = "S"
         sundayLabel.font = UIFont.graphikMedium(10)
         sundayLabel.textColor = UIColor.darkBlue()
-        sundayLabel.textAlignment = .Center
+        sundayLabel.textAlignment = .center
         
         mondayLabel.text = "M"
         mondayLabel.font = UIFont.graphikMedium(10)
         mondayLabel.textColor = UIColor.darkBlue()
-        mondayLabel.textAlignment = .Center
+        mondayLabel.textAlignment = .center
         
         tuesdayLabel.text = "T"
         tuesdayLabel.font = UIFont.graphikMedium(10)
         tuesdayLabel.textColor = UIColor.darkBlue()
-        tuesdayLabel.textAlignment = .Center
+        tuesdayLabel.textAlignment = .center
         
         wednesdayLabel.text = "W"
         wednesdayLabel.font = UIFont.graphikMedium(10)
         wednesdayLabel.textColor = UIColor.darkBlue()
-        wednesdayLabel.textAlignment = .Center
+        wednesdayLabel.textAlignment = .center
         
         thursdayLabel.text = "T"
         thursdayLabel.font = UIFont.graphikMedium(10)
         thursdayLabel.textColor = UIColor.darkBlue()
-        thursdayLabel.textAlignment = .Center
+        thursdayLabel.textAlignment = .center
         
         fridayLabel.text = "F"
         fridayLabel.font = UIFont.graphikMedium(10)
         fridayLabel.textColor = UIColor.darkBlue()
-        fridayLabel.textAlignment = .Center
+        fridayLabel.textAlignment = .center
         
         saturdayLabel.text = "S"
         saturdayLabel.font = UIFont.graphikMedium(10)
         saturdayLabel.textColor = UIColor.darkBlue()
-        saturdayLabel.textAlignment = .Center
+        saturdayLabel.textAlignment = .center
         
         dayBackground.backgroundColor = UIColor.darkBlue()
-        dragView.backgroundColor = UIColor.clearColor()
+        dragView.backgroundColor = UIColor.clear
         dragView.alpha = 1.0
         
         addSubview(monthLabel)
@@ -536,26 +536,26 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         )
     }
     
-    func configureMonth(date: NSDate){
+    func configureMonth(_ date: Date){
         let monthName = date.monthName()
         let firstWeekday = date.firstWeekday()
         let dayCount = date.daysInTheMonth()
         
-        if isCurrentMonth(date) { leftMonthButton.enabled = false }
-        else { leftMonthButton.enabled = true }
+        if isCurrentMonth(date) { leftMonthButton.isEnabled = false }
+        else { leftMonthButton.isEnabled = true }
         
         update6thWeek(date)
         
         configureMonthData(monthName, startWeekday: firstWeekday, dayCount: dayCount)
     }
 
-    func configureMonthData(monthString: String, startWeekday: Int, dayCount: Int){
+    func configureMonthData(_ monthString: String, startWeekday: Int, dayCount: Int){
         monthLabel.text = monthString
         var dayNumber = 1
-        for (index,day) in days.enumerate() {
+        for (index,day) in days.enumerated() {
             day.delegate = self
             if index < startWeekday - 1 || index > dayCount + startWeekday - 2{
-                day.state = .Empty
+                day.state = .empty
                 day.updateState()
             }
             else{
@@ -567,19 +567,19 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
                 
                 day.date = date
                 
-                let today = NSDate()
-                if date.compare(today) == NSComparisonResult.OrderedAscending {
-                    day.state = .Past
+                let today = Date()
+                if date.compare(today) == ComparisonResult.orderedAscending {
+                    day.state = .past
                 }
                 else if (selectedDays.contains(day.date)){
-                    day.state = .Selected
+                    day.state = .selected
                 }
                 else {
-                    day.state = .Unselected
+                    day.state = .unselected
                 }
                 
                 day.updateState()
-                day.dateButton.setTitle("\(dayNumber)", forState: .Normal)
+                day.dateButton.setTitle("\(dayNumber)", for: UIControlState())
                 day.day = dayNumber
                 dayNumber += 1
             }
@@ -620,12 +620,12 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         update6thWeek(date)
     }
     
-    func isCurrentMonth(date: NSDate) -> Bool{
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month], fromDate: date)
+    func isCurrentMonth(_ date: Date) -> Bool{
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.year, .month], from: date)
         
-        let currentDate = NSDate()
-        let currentComponents = calendar.components([.Year, .Month], fromDate: currentDate)
+        let currentDate = Date()
+        let currentComponents = (calendar as NSCalendar).components([.year, .month], from: currentDate)
         
         if components.year == currentComponents.year && components.month == currentComponents.month {
             return true
@@ -635,32 +635,32 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         }
     }
     
-    func updateSelectedDays(dayNumber: Int) {
+    func updateSelectedDays(_ dayNumber: Int) {
         let date = createDateWithComponents(year, monthNumber: month, dayNumber: dayNumber)
         
         if selectedDays.contains(date) {
-            guard let index = selectedDays.indexOf(date) else { return }
-            selectedDays.removeAtIndex(index)
+            guard let index = selectedDays.index(of: date) else { return }
+            selectedDays.remove(at: index)
         }
         else {
             selectedDays.append(date)
         }
         
-        selectedDays = selectedDays.sort({ $0.compare($1) == NSComparisonResult.OrderedAscending })
+        selectedDays = selectedDays.sorted(by: { $0.compare($1) == ComparisonResult.orderedAscending })
         
         delegate.daysSelectedDidChange(selectedDays)
     }
     
-    func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int) -> NSDate {
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let components = NSDateComponents()
+    func createDateWithComponents(_ yearNumber: Int, monthNumber: Int, dayNumber: Int) -> Date {
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        var components = DateComponents()
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
         components.hour = 23
         components.minute = 59
         components.second = 59
-        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        guard let date = calendar.date(from: components) else { return Date() }
         
         return date
     }
@@ -669,7 +669,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         return (spacingAroundMonth * 2) + (daySize * 6) + 41
     }
     
-    func monthRequires6Weeks(date: NSDate) -> Bool {
+    func monthRequires6Weeks(_ date: Date) -> Bool {
         let firstWeekday = date.firstWeekday()
         let dayCount = date.daysInTheMonth()
         
@@ -681,7 +681,7 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
         }
     }
     
-    func update6thWeek(date: NSDate){
+    func update6thWeek(_ date: Date){
         if week6Visible{
             if !monthRequires6Weeks(date){
                 remove6thWeek()
@@ -753,9 +753,9 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.wh.of(daySize)
         )
         
-        UIView.animateWithDuration(0.15) {
+        UIView.animate(withDuration: 0.15, animations: {
             self.layoutIfNeeded()
-        }
+        }) 
     }
     
     func remove6thWeek(){
@@ -815,9 +815,9 @@ class WindoCalendarView: UIView, CalendarDayDelegate {
             Constraint.wh.of(daySize)
         )
         
-        UIView.animateWithDuration(0.15) {
+        UIView.animate(withDuration: 0.15, animations: {
             self.layoutIfNeeded()
-        }
+        }) 
     }
 }
 

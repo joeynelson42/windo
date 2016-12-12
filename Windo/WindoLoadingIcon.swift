@@ -19,7 +19,7 @@ class WindoLoadingIcon: UIView {
     internal var spacing:CGFloat = 6
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
 
     convenience init(spacing: CGFloat) {
@@ -44,10 +44,10 @@ class WindoLoadingIcon: UIView {
     
     func configureSubviews() {
         
-        topLeft.backgroundColor = UIColor.whiteColor()
-        topRight.backgroundColor = UIColor.whiteColor()
-        bottomRight.backgroundColor = UIColor.whiteColor()
-        bottomLeft.backgroundColor = UIColor.whiteColor()
+        topLeft.backgroundColor = UIColor.white
+        topRight.backgroundColor = UIColor.white
+        bottomRight.backgroundColor = UIColor.white
+        bottomLeft.backgroundColor = UIColor.white
         
         container.addSubviews(topLeft, topRight, bottomLeft, bottomRight)
         addSubview(container)

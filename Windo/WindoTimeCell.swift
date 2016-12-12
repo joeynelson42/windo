@@ -10,8 +10,8 @@ import UIKit
 
 @objc
 protocol WindoTimeCellDelegate {
-    optional func updateSelectedTimes(time: Int)
-    optional func isTimeSelected(time: Int) -> Bool
+    @objc optional func updateSelectedTimes(_ time: Int)
+    @objc optional func isTimeSelected(_ time: Int) -> Bool
 }
 
 class WindoTimeCell: UIView {
@@ -21,16 +21,16 @@ class WindoTimeCell: UIView {
     var timeButton = UIButton()
     var selectedBackground = UIView()
     
-    var date = NSDate()
+    var date = Date()
     var time = 0
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
-    convenience init(cellTime: Int, cellDelegate: WindoTimeCellDelegate, cellDate: NSDate){
-        self.init(frame: CGRectZero)
+    convenience init(cellTime: Int, cellDelegate: WindoTimeCellDelegate, cellDate: Date){
+        self.init(frame: CGRect.zero)
         time = cellTime
         delegate = cellDelegate
         date = cellDate
@@ -56,18 +56,18 @@ class WindoTimeCell: UIView {
     func configureSubviews(){
         
         if time > 12 {
-            timeButton.setTitle("\(time - 12)", forState: .Normal)
+            timeButton.setTitle("\(time - 12)", for: UIControlState())
         }
         else {
-            timeButton.setTitle("\(time)", forState: .Normal)
+            timeButton.setTitle("\(time)", for: UIControlState())
         }
         
         selectedBackground.alpha = 0.0
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         
-        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        timeButton.setTitleColor(UIColor.white, for: UIControlState())
         timeButton.titleLabel!.font = UIFont.graphikRegular(20)
-        timeButton.addTarget(self, action: #selector(WindoTimeCell.handleTap), forControlEvents: .TouchUpInside)
+        timeButton.addTarget(self, action: #selector(WindoTimeCell.handleTap), for: .touchUpInside)
         
         selectedBackground.backgroundColor = UIColor.darkBlue()
         let tap = UITapGestureRecognizer(target: self, action: #selector(WindoTimeCell.handleTap))
@@ -95,17 +95,17 @@ class WindoTimeCell: UIView {
         delegate.updateSelectedTimes!(time)
         
         if delegate.isTimeSelected!(time) {
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
                 self.selectedBackground.alpha = 1.0
-                self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                self.selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 }, completion: {void in
                     self.forceHighlight()
             })
         }
         else {
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: {
                 self.selectedBackground.alpha = 0.0
-                self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                self.selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
                 }, completion: {void in
                     self.forceUnhighlight()
             })
@@ -114,11 +114,11 @@ class WindoTimeCell: UIView {
     
     func forceHighlight(){
         selectedBackground.alpha = 1.0
-        selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func forceUnhighlight(){
         selectedBackground.alpha = 0.0
-        selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
     }
 }

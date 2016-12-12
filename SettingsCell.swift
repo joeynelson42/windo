@@ -31,7 +31,7 @@ class SettingsCell: UIView {
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -58,7 +58,7 @@ class SettingsCell: UIView {
         tapContainer.addGestureRecognizer(gr)
         
         titleLabel.font = UIFont.graphikRegular(18)
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.white
         
         expandingSeparator.backgroundColor = colorTheme.darkColor
         addSubview(titleLabel)
@@ -88,10 +88,10 @@ class SettingsCell: UIView {
     
     // MARK: Methods
     
-    func toggleSeparatorWithHeight(height: CGFloat) {
+    func toggleSeparatorWithHeight(_ height: CGFloat) {
         var titleColor = UIColor.mikeBlue(0.55)
         if height == 0 {
-            titleColor = UIColor.whiteColor()
+            titleColor = UIColor.white
         }
         
         expandingSeparator.addConstraints(
@@ -101,10 +101,10 @@ class SettingsCell: UIView {
             Constraint.w.of(screenWidth - 20)
         )
         
-        UIView.animateWithDuration(toggleOpenSpeed) {
+        UIView.animate(withDuration: toggleOpenSpeed, animations: {
             self.titleLabel.textColor = titleColor
             self.layoutIfNeeded()
-        }
+        }) 
     }
     
     // MARK: Utilities

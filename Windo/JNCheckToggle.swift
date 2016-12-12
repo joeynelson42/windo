@@ -13,11 +13,11 @@ protocol JNCheckToggleDelegate {
      
      :param: state The new state of the checkToggle.
      */
-    func checkStateChanged(state: CheckToggleState)
+    func checkStateChanged(_ state: CheckToggleState)
 }
 
 extension JNCheckToggleDelegate {
-    func checkStateChanged(state: CheckToggleState) {
+    func checkStateChanged(_ state: CheckToggleState) {
         print("hey! the checkToggle is now \(state)")
     }
 }
@@ -45,9 +45,9 @@ import UIKit
 @IBDesignable class JNCheckToggle: UIView {
     
     // MARK: Properties
-    private let containerView = UIButton()
-    private let checkmark = UIImageView()
-    private var tapGR = UITapGestureRecognizer()
+    fileprivate let containerView = UIButton()
+    fileprivate let checkmark = UIImageView()
+    fileprivate var tapGR = UITapGestureRecognizer()
     
     /// Alerted on state change
     internal var delegate: JNCheckToggleDelegate?
@@ -72,18 +72,18 @@ import UIKit
     internal var diameter:CGFloat = 40
     
     ///Contains the values for the untoggled checkmark, configure with ::configureUntoggledValues
-    private var fromValues = AnimationValues(cornerRadius: 0, color: UIColor.whiteColor(), rotation: 0, borderWidth: 1.0)
+    fileprivate var fromValues = AnimationValues(cornerRadius: 0, color: UIColor.white, rotation: 0, borderWidth: 1.0)
     
     ///Contains the values for the toggled checkmark, configure with ::configureToggledValues
-    private var toValues = AnimationValues(cornerRadius: 0, color: UIColor.whiteColor(), rotation: 0, borderWidth: 0.0)
+    fileprivate var toValues = AnimationValues(cornerRadius: 0, color: UIColor.white, rotation: 0, borderWidth: 0.0)
     
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(initialState: CheckToggleState, style: CheckToggleStyle = CheckToggleStyle.light) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         self.state = initialState
         self.style = style
     }
@@ -115,7 +115,7 @@ import UIKit
      :param: color The untoggled color.
 
      */
-    func setUntoggledColor(color: UIColor = UIColor.whiteColor()) {
+    func setUntoggledColor(_ color: UIColor = UIColor.white) {
         fromValues = AnimationValues(cornerRadius: initialCornerRadius, color: color, rotation: Float(M_PI), borderWidth: 1.5)
         if state == .untoggled {
             configureWithAnimationValues(fromValues)
@@ -128,7 +128,7 @@ import UIKit
      :param: color The toggled color.
      
      */
-    func setToggledColor(color: UIColor = UIColor.whiteColor()) {
+    func setToggledColor(_ color: UIColor = UIColor.white) {
         toValues = AnimationValues(cornerRadius: diameter/2, color: color, rotation: 0, borderWidth: 0.0)
         if state == .toggled {
             configureWithAnimationValues(toValues)
@@ -139,7 +139,7 @@ import UIKit
     // MARK: Animations
     
     ///Toggles the checkmark
-    private func toggleOn() {
+    fileprivate func toggleOn() {
         
         let containerAnimations = createContainerAnimation(fromValues, endValues: toValues)
         
@@ -148,20 +148,20 @@ import UIKit
             guard let _ = self.delegate else { return }
             self.delegate!.checkStateChanged(self.state)
         }
-        containerView.layer.addAnimation(containerAnimations, forKey: "startContainerAnimations")
+        containerView.layer.add(containerAnimations, forKey: "startContainerAnimations")
         containerView.layer.cornerRadius = self.toValues.cornerRadius
         containerView.backgroundColor = self.toValues.color
         containerView.layer.borderWidth = toValues.borderWidth
         CATransaction.commit()
         
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 4, initialSpringVelocity: 0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 4, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
             self.checkmark.alpha = 1.0
-            self.checkmark.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            self.checkmark.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }, completion: nil)
     }
     
     ///Untoggles the checkmark
-    private func toggleOff() {
+    fileprivate func toggleOff() {
         
         let containerAnimations = createContainerAnimation(toValues, endValues: fromValues)
         
@@ -170,20 +170,20 @@ import UIKit
             guard let _ = self.delegate else { return }
             self.delegate!.checkStateChanged(self.state)
         }
-        containerView.layer.addAnimation(containerAnimations, forKey: "startContainerAnimations")
+        containerView.layer.add(containerAnimations, forKey: "startContainerAnimations")
         containerView.layer.cornerRadius = self.fromValues.cornerRadius
         containerView.backgroundColor = self.fromValues.color
         containerView.layer.borderWidth = fromValues.borderWidth
 
         CATransaction.commit()
         
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
             self.checkmark.alpha = 0.0
-            self.checkmark.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            self.checkmark.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             }, completion: nil)
     }
     
-    private func createContainerAnimation(startValues: AnimationValues, endValues: AnimationValues) -> CAAnimationGroup {
+    fileprivate func createContainerAnimation(_ startValues: AnimationValues, endValues: AnimationValues) -> CAAnimationGroup {
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotationAnimation.fromValue = startValues.rotation
         rotationAnimation.toValue = endValues.rotation
@@ -215,18 +215,18 @@ import UIKit
         applyConstraints()
     }
     
-    private func configureSubviews() {
-        backgroundColor = .clearColor()
+    fileprivate func configureSubviews() {
+        backgroundColor = .clear
         clipsToBounds = false
         
-        containerView.layer.borderColor = UIColor.whiteColor().CGColor
+        containerView.layer.borderColor = UIColor.white.cgColor
         containerView.layer.borderWidth = 1.5
-        containerView.addTarget(self, action: #selector(JNCheckToggle.animateToggle), forControlEvents: .TouchUpInside)
+        containerView.addTarget(self, action: #selector(JNCheckToggle.animateToggle), for: .touchUpInside)
 
-        checkmark.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+        checkmark.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         configureStyle()
         
-        checkmark.contentMode = .ScaleAspectFit
+        checkmark.contentMode = .scaleAspectFit
         
         tapGR = UITapGestureRecognizer(target: self, action: #selector(JNCheckToggle.animateToggle))
         addGestureRecognizer(tapGR)
@@ -235,92 +235,92 @@ import UIKit
         addSubview(checkmark)
     }
     
-    private func applyConstraints() {
+    fileprivate func applyConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         checkmark.translatesAutoresizingMaskIntoConstraints = false
         
         let containerCenterX = NSLayoutConstraint(item: containerView,
-                                                  attribute: .CenterX,
-                                                  relatedBy: .Equal,
+                                                  attribute: .centerX,
+                                                  relatedBy: .equal,
                                                   toItem: self,
-                                                  attribute: .CenterX,
+                                                  attribute: .centerX,
                                                   multiplier: 1.0,
                                                   constant: 0)
         
         let containerCenterY = NSLayoutConstraint(item: containerView,
-                                                  attribute: .CenterY,
-                                                  relatedBy: .Equal,
+                                                  attribute: .centerY,
+                                                  relatedBy: .equal,
                                                   toItem: self,
-                                                  attribute: .CenterY,
+                                                  attribute: .centerY,
                                                   multiplier: 1.0,
                                                   constant: 0)
         
         let containerCenterWidth = NSLayoutConstraint(item: containerView,
-                                                  attribute: .Width,
-                                                  relatedBy: .Equal,
+                                                  attribute: .width,
+                                                  relatedBy: .equal,
                                                   toItem: nil,
-                                                  attribute: .NotAnAttribute,
+                                                  attribute: .notAnAttribute,
                                                   multiplier: 1.0,
                                                   constant: diameter)
         
         let containerCenterHeight = NSLayoutConstraint(item: containerView,
-                                                  attribute: .Height,
-                                                  relatedBy: .Equal,
+                                                  attribute: .height,
+                                                  relatedBy: .equal,
                                                   toItem: nil,
-                                                  attribute: .NotAnAttribute,
+                                                  attribute: .notAnAttribute,
                                                   multiplier: 1.0,
                                                   constant: diameter)
         
         
         let checkmarkCenterX = NSLayoutConstraint(item: checkmark,
-                                                  attribute: .CenterX,
-                                                  relatedBy: .Equal,
+                                                  attribute: .centerX,
+                                                  relatedBy: .equal,
                                                   toItem: self,
-                                                  attribute: .CenterX,
+                                                  attribute: .centerX,
                                                   multiplier: 1.0,
                                                   constant: 0)
         
         let checkmarkCenterY = NSLayoutConstraint(item: checkmark,
-                                                  attribute: .CenterY,
-                                                  relatedBy: .Equal,
+                                                  attribute: .centerY,
+                                                  relatedBy: .equal,
                                                   toItem: self,
-                                                  attribute: .CenterY,
+                                                  attribute: .centerY,
                                                   multiplier: 1.0,
                                                   constant: 0)
         
         let checkmarkCenterWidth = NSLayoutConstraint(item: checkmark,
-                                                      attribute: .Width,
-                                                      relatedBy: .Equal,
+                                                      attribute: .width,
+                                                      relatedBy: .equal,
                                                       toItem: nil,
-                                                      attribute: .NotAnAttribute,
+                                                      attribute: .notAnAttribute,
                                                       multiplier: 1.0,
                                                       constant: diameter * 0.7)
         
         let checkmarkCenterHeight = NSLayoutConstraint(item: checkmark,
-                                                       attribute: .Height,
-                                                       relatedBy: .Equal,
+                                                       attribute: .height,
+                                                       relatedBy: .equal,
                                                        toItem: nil,
-                                                       attribute: .NotAnAttribute,
+                                                       attribute: .notAnAttribute,
                                                        multiplier: 1.0,
                                                        constant: diameter * 0.7)
         
-        containerCenterX.active = true
-        containerCenterY.active = true
-        containerCenterWidth.active = true
-        containerCenterHeight.active = true
+        containerCenterX.isActive = true
+        containerCenterY.isActive = true
+        containerCenterWidth.isActive = true
+        containerCenterHeight.isActive = true
         
-        checkmarkCenterX.active = true
-        checkmarkCenterY.active = true
-        checkmarkCenterWidth.active = true
-        checkmarkCenterHeight.active = true
+        checkmarkCenterX.isActive = true
+        checkmarkCenterY.isActive = true
+        checkmarkCenterWidth.isActive = true
+        checkmarkCenterHeight.isActive = true
     }
     
-    private func configureWithAnimationValues(values: AnimationValues) {
+    fileprivate func configureWithAnimationValues(_ values: AnimationValues) {
         containerView.backgroundColor = values.color
         containerView.layer.cornerRadius = values.cornerRadius
     }
     
-    private func configureStyle() {
+    fileprivate func configureStyle() {
 
         checkmark.image = UIImage(named: "tealCheckmark")
 //        switch style {

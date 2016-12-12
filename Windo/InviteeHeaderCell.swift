@@ -24,7 +24,7 @@ class InviteeHeaderCell: UITableViewHeaderFooterView {
     }
     
     func configureSubviews(){
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.white
         titleLabel.font = UIFont.graphikRegular(12)
         addSubview(titleLabel)
     }

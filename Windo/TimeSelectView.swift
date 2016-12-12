@@ -17,7 +17,7 @@ class TimeSelectView: UIView {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -37,7 +37,7 @@ class TimeSelectView: UIView {
     }
     
     func configureSubviews(){
-        scrubberCenter.backgroundColor = UIColor.clearColor()
+        scrubberCenter.backgroundColor = UIColor.clear
         
 //        helpLabel.text = "These are the times you \nand your invitees will choose from!"
 //        helpLabel.minimumScaleFactor = 0.5

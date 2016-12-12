@@ -24,27 +24,27 @@ class EventMessagesViewController: UIViewController {
         
         cells = ["1", "2", "hey this is a bunch of text hey this is a bunch of text hey this is a bunch of text"]
         
-        messagesView.sendButton.addTarget(self, action: #selector(EventMessagesViewController.sendMessage), forControlEvents: .TouchUpInside)
+        messagesView.sendButton.addTarget(self, action: #selector(EventMessagesViewController.sendMessage), for: .touchUpInside)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardDidShow(_:)), name:UIKeyboardDidShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EventMessagesViewController.keyboardDidShow(_:)), name:NSNotification.Name.UIKeyboardDidShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EventMessagesViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
     }
     
     func sendMessage() {
         cells.append("\(messagesView.messageTextField.text!)")
-        let indexP = NSIndexPath(forRow: cells.count - 1, inSection: 0)
-        messagesView.messagesTableView.insertRowsAtIndexPaths([indexP], withRowAnimation: UITableViewRowAnimation.Bottom)
-        messagesView.messagesTableView.scrollToRowAtIndexPath(indexP, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+        let indexP = IndexPath(row: cells.count - 1, section: 0)
+        messagesView.messagesTableView.insertRows(at: [indexP], with: UITableViewRowAnimation.bottom)
+        messagesView.messagesTableView.scrollToRow(at: indexP, at: UITableViewScrollPosition.bottom, animated: true)
     }
     
     
-    func keyboardDidShow(sender: NSNotification) {
-        let info  = sender.userInfo!
-        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+    func keyboardDidShow(_ sender: Notification) {
+        let info  = (sender as NSNotification).userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]! as AnyObject
         
-        let rawFrame = value.CGRectValue
-        let keyboardFrame = messagesView.convertRect(rawFrame, fromView: nil)
+        let rawFrame = value.cgRectValue
+        let keyboardFrame = messagesView.convert(rawFrame!, from: nil)
         keyboardHeight = keyboardFrame.height
         
         messagesView.newMessageContainer.addConstraints(
@@ -53,72 +53,72 @@ class EventMessagesViewController: UIViewController {
             Constraint.h.of(40)
         )
         
-        UIView.animateWithDuration(0.15) {
+        UIView.animate(withDuration: 0.15, animations: {
             self.messagesView.layoutIfNeeded()
-        }
+        }) 
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         messagesView.newMessageContainer.addConstraints(
             Constraint.bb.of(messagesView, offset: -keyboardHeight),
             Constraint.llrr.of(messagesView),
             Constraint.h.of(40)
         )
         
-        UIView.animateWithDuration(0.15) {
+        UIView.animate(withDuration: 0.15, animations: {
             self.messagesView.layoutIfNeeded()
-        }
+        }) 
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         messagesView.newMessageContainer.addConstraints(
             Constraint.bb.of(messagesView, offset: -50),
             Constraint.llrr.of(messagesView),
             Constraint.h.of(40)
         )
         
-        UIView.animateWithDuration(0.15) {
+        UIView.animate(withDuration: 0.15, animations: {
             self.messagesView.layoutIfNeeded()
-        }
+        }) 
     }
 }
 
 extension EventMessagesViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cells.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("incomingChatCell") as! IncomingChatCell
-            cell.message.text = cells[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row % 2 == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "incomingChatCell") as! IncomingChatCell
+            cell.message.text = cells[(indexPath as NSIndexPath).row]
             cell.backgroundColor = UIColor.purple()
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("outgoingChatCell") as! OutgoingChatCell
-            cell.message.text = cells[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "outgoingChatCell") as! OutgoingChatCell
+            cell.message.text = cells[(indexPath as NSIndexPath).row]
             cell.backgroundColor = UIColor.purple()
             
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let height = heightForView(cells[indexPath.row], font: UIFont.graphikMedium(16), width: screenWidth - 40)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = heightForView(cells[(indexPath as NSIndexPath).row], font: UIFont.graphikMedium(16), width: screenWidth - 40)
         
         return height + 42
     }
     
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    func heightForView(_ text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = font
         label.text = text
         

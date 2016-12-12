@@ -24,7 +24,7 @@ class EventHeaderCell: UITableViewHeaderFooterView {
     }
     
     func configureSubviews(){
-        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.textColor = UIColor.black
         titleLabel.font = UIFont.graphikRegular(12)
         addSubview(titleLabel)
     }

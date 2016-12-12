@@ -36,11 +36,11 @@ class OutgoingChatCell: UITableViewCell {
         container.layer.cornerRadius = 18
         container.backgroundColor = UIColor.darkPurple()
         
-        message.textColor = UIColor.whiteColor()
+        message.textColor = UIColor.white
         message.font = UIFont.graphikRegular(16)
-        message.backgroundColor = UIColor.clearColor()
+        message.backgroundColor = UIColor.clear
         message.numberOfLines = 0
-        message.lineBreakMode = .ByWordWrapping
+        message.lineBreakMode = .byWordWrapping
         
         addSubview(container)
         container.addSubview(message)

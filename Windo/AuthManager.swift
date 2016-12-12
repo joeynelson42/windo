@@ -10,7 +10,7 @@ import UIKit
 
 class AuthManager {
     
-    private var code = ""
+    fileprivate var code = ""
     
     func createAuthCode() {
         code = String.randomNumericString(6)
@@ -20,7 +20,7 @@ class AuthManager {
         code = ""
     }
     
-    func verifyCode(userInput: String) -> Bool {
+    func verifyCode(_ userInput: String) -> Bool {
         if userInput == code {
             return true
         } else {
@@ -28,10 +28,10 @@ class AuthManager {
         }
     }
     
-    func sendSMS(phoneNumber: String, completion: (success: Bool) -> ()){
+    func sendSMS(_ phoneNumber: String, completion: (_ success: Bool) -> ()){
         // development
         print(code)
-        completion(success: true)
+        completion(true)
         
         // production
 //        let twilioSID = "ACd5031f1ce835074bdb6aeff04e7fba89"

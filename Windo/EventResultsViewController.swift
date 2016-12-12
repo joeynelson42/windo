@@ -26,34 +26,34 @@ class EventResultsViewController: UIViewController {
         resultsView.resultsTableView.dataSource = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         resultsView.resultsTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
     }
 }
 
 extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = resultsView.resultsTableView.dequeueReusableCellWithIdentifier("resultsCell", forIndexPath: indexPath) as! EventResultsCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = resultsView.resultsTableView.dequeueReusableCell(withIdentifier: "resultsCell", for: indexPath) as! EventResultsCell
         cell.members = detailsTabBar.members
-        cell.date = NSDate()
+        cell.date = Date()
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollView.contentOffset.y < -45 {
             let filterY = 100 + scrollView.contentOffset.y
@@ -85,7 +85,7 @@ extension EventResultsViewController: UITableViewDelegate, UITableViewDataSource
                 Constraint.cxcx.of(resultsView)
             )
             
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.resultsView.helpLabel.alpha = 0.0
             })
         }

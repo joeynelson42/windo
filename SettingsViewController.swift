@@ -38,19 +38,17 @@ class SettingsViewController: UIViewController {
         
         settingsView.signOutCell.gr.addTarget(self, action: #selector(SettingsViewController.signOutTapped))
         
-        settingsView.backButton.addTarget(.TouchUpInside) {
-            self.dismissAnimated()
-        }
+        settingsView.backButton.addTarget(self, action: #selector(dismissAnimated), for: .touchDown)
     }
     
     func addObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveFirstName), name: Constants.notifications.firstNameWasChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.saveFirstName), name: NSNotification.Name(rawValue: Constants.notifications.firstNameWasChanged), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveLastName), name: Constants.notifications.lastNameWasChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.saveLastName), name: NSNotification.Name(rawValue: Constants.notifications.lastNameWasChanged), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.savePhone), name: Constants.notifications.phoneNumberWasChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.savePhone), name: NSNotification.Name(rawValue: Constants.notifications.phoneNumberWasChanged), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsViewController.saveEmail), name: Constants.notifications.emailWasChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.saveEmail), name: NSNotification.Name(rawValue: Constants.notifications.emailWasChanged), object: nil)
     }
     
     func dismissAnimated() {
@@ -59,8 +57,8 @@ class SettingsViewController: UIViewController {
         transition.timingFunction  = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
-        settingsView.window?.layer.addAnimation(transition, forKey: nil)
-        dismissViewControllerAnimated(false, completion: nil)
+        settingsView.window?.layer.add(transition, forKey: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     // MARK: Cell Tap Handling
@@ -94,7 +92,7 @@ class SettingsViewController: UIViewController {
         mailVC.setSubject("Windo Support Ticket #\(String.randomNumericString(4))")
         mailVC.setMessageBody("", isHTML: false)
         
-        presentViewController(mailVC, animated: true, completion: nil)
+        present(mailVC, animated: true, completion: nil)
     }
     
     func signOutTapped() {
@@ -140,43 +138,43 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offset = scrollView.contentOffset.y
         let navBarMaxOffset: CGFloat = screenHeight/3 - 60
         let percent = offset/navBarMaxOffset
         
         if percent > 0 && percent < 0.25 {
-            UIView.animateWithDuration(0.25, animations: { 
+            UIView.animate(withDuration: 0.25, animations: { 
                 scrollView.contentOffset.y = 0
             })
         } else if percent > 0 && percent < 1.0 {
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 scrollView.contentOffset.y = 160
             })
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
         let navBarMaxOffset: CGFloat = screenHeight/3 - 60
         let percent = offset/navBarMaxOffset
         
         if percent > 0 && percent < 0.5 {
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 scrollView.contentOffset.y = 0
             })
         } else if percent > 0 && percent < 1.0 {
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 scrollView.contentOffset.y = 70
             })
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
-        var navBarTransform = CGAffineTransformIdentity
-        var initialsTranslate = CGAffineTransformIdentity
-        var initialsScale = CGAffineTransformIdentity
+        var navBarTransform = CGAffineTransform.identity
+        var initialsTranslate = CGAffineTransform.identity
+        var initialsScale = CGAffineTransform.identity
         
         let navBarMaxOffset: CGFloat = screenHeight/3 - 60
         let navBarMaxScale: CGFloat = 0.25
@@ -208,33 +206,33 @@ extension SettingsViewController: UIScrollViewDelegate {
         print(offset/screenHeight)
         
         if offset < 0 {
-            navBarTransform = CGAffineTransformMakeScale(-percent * navBarMaxScale + 1, -percent * navBarMaxScale + 1)
+            navBarTransform = CGAffineTransform(scaleX: -percent * navBarMaxScale + 1, y: -percent * navBarMaxScale + 1)
         } else {
-            navBarTransform = CGAffineTransformMakeTranslation(0, max(-percent * navBarMaxOffset, -navBarMaxOffset))
+            navBarTransform = CGAffineTransform(translationX: 0, y: max(-percent * navBarMaxOffset, -navBarMaxOffset))
             
-            initialsTranslate = CGAffineTransformMakeTranslation(0, min(percent * initalsMaxOffset, initalsMaxOffset))
+            initialsTranslate = CGAffineTransform(translationX: 0, y: min(percent * initalsMaxOffset, initalsMaxOffset))
             
-            initialsScale = CGAffineTransformMakeScale(max(1 - (percent * 1), initalsMaxScale), max(1 - (percent * 1), initalsMaxScale))
+            initialsScale = CGAffineTransform(scaleX: max(1 - (percent * 1), initalsMaxScale), y: max(1 - (percent * 1), initalsMaxScale))
             
             settingsView.nameLabel.alpha = 1.0 - 2.0 * percent
         }
         
         settingsView.navBar.transform = navBarTransform
-        settingsView.initials.transform = CGAffineTransformConcat(initialsScale, initialsTranslate)
+        settingsView.initials.transform = initialsScale.concatenating(initialsTranslate)
     }
 }
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         if error != nil {
             return
         }
         
-        if result == MFMailComposeResultSent {
+        if result == MFMailComposeResult.sent {
             //TODO: Notify successful message sending
             print("sent!")
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

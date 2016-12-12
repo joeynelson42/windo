@@ -31,19 +31,19 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
         tutorialView.mainView.backgroundColor = colors[0]
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     func addTargets(){
-        tutorialView.xButton.addTarget(self, action: #selector(TutorialViewController.dismissTutorial), forControlEvents: .TouchUpInside)
+        tutorialView.xButton.addTarget(self, action: #selector(TutorialViewController.dismissTutorial), for: .touchUpInside)
     }
     
     func dismissTutorial(){
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
         if scrollView.contentOffset.x < 0 || scrollView.contentOffset.x > (screenWidth * 2) {
             return
@@ -73,7 +73,7 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
         
         
         let circlesWidth = tutorialView.circles.frame.width - tutorialView.circles.indicatorCircle.frame.width
-        tutorialView.circles.indicatorCircle.transform = CGAffineTransformMakeTranslation(percent * circlesWidth, 0)
+        tutorialView.circles.indicatorCircle.transform = CGAffineTransform(translationX: percent * circlesWidth, y: 0)
         
         if percent < 0.5 {
             tutorialView.circles.showFirstConnector()
@@ -83,11 +83,11 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         tutorialView.circles.hideConnectors()
     }
     
-    func transitionColorToColor(fromColor: UIColor, toColor: UIColor, percent: CGFloat) -> (red: CGFloat, green: CGFloat, blue: CGFloat){
+    func transitionColorToColor(_ fromColor: UIColor, toColor: UIColor, percent: CGFloat) -> (red: CGFloat, green: CGFloat, blue: CGFloat){
         let fromRGB = fromColor.rgb()!
         let toRGB = toColor.rgb()!
         

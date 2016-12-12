@@ -23,12 +23,12 @@ class UserInitialsView: UIView {
     }
     
     var borderWidth: CGFloat = 1.5
-    var borderColor = UIColor.whiteColor().CGColor
+    var borderColor = UIColor.white.cgColor
     
     //MARK: Inits
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -49,15 +49,15 @@ class UserInitialsView: UIView {
     }
     
     func configureSubviews(){
-        container.backgroundColor = UIColor.clearColor()
+        container.backgroundColor = UIColor.clear
         container.layer.borderColor = borderColor
         container.layer.borderWidth = borderWidth
         container.layer.cornerRadius = cornerRadius
         
         initials.text = getInitials(name)
-        initials.textAlignment = .Center
+        initials.textAlignment = .center
         initials.font = UIFont.graphikLight(fontSize)
-        initials.textColor = UIColor.whiteColor()
+        initials.textColor = UIColor.white
         
         addSubview(container)
         addSubview(initials)
@@ -70,25 +70,25 @@ class UserInitialsView: UIView {
     
     // MARK: Utilities
     
-    func getInitials(name: String) -> String {
+    func getInitials(_ name: String) -> String {
         if name.isEmpty {
             return ""
         }
         
-        let firstInitial = "\(name[name.startIndex.advancedBy(0)])"
+        let firstInitial = "\(name[name.characters.index(name.startIndex, offsetBy: 0)])"
         
-        guard let index = name.characters.indexOf(" ") else {
-            return firstInitial.uppercaseString
+        guard let index = name.characters.index(of: " ") else {
+            return firstInitial.uppercased()
         }
         
-        if name.startIndex.distanceTo(index) + 1 >= name.characters.count {
-            return firstInitial.uppercaseString
+        if name.characters.distance(from: name.startIndex, to: index) + 1 >= name.characters.count {
+            return firstInitial.uppercased()
         }
         
-        let secondInitial = "\(name[name.startIndex.advancedBy(name.startIndex.distanceTo(index) + 1)])"
+        let secondInitial = "\(name[name.characters.index(name.startIndex, offsetBy: name.characters.distance(from: name.startIndex, to: index) + 1)])"
         
         let initials = "\(firstInitial)\(secondInitial)"
         
-        return initials.uppercaseString
+        return initials.uppercased()
     }
 }

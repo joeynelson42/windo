@@ -10,13 +10,13 @@ import UIKit
 
 @objc
 protocol TimeSelectCollectionViewCellDelegate {
-    optional func updateSelectedTimes(date: NSDate, time: Int)
+    @objc optional func updateSelectedTimes(_ date: Date, time: Int)
 }
 
 class TimeSelectCollectionViewCell: UICollectionViewCell {
     
     //MARK: Properties
-    var date = NSDate()
+    var date = Date()
     var delegate: TimeSelectCollectionViewCellDelegate!
     var initialStates = [CGFloat]()
     
@@ -58,7 +58,7 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
     
     //MARK: Inits
     override init(frame: CGRect) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.updateConstraints()
     }
     
@@ -72,7 +72,7 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         
         for time in times {
-            time.state = TimeState.Unselected
+            time.state = TimeState.unselected
             time.updateState()
         }
     }
@@ -85,24 +85,24 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
     }
     
     func configureSubviews(){
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         
         times = [time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11, time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23]
         configureTimes()
         
         amLabel.text = "AM"
-        amLabel.textColor = UIColor.whiteColor()
+        amLabel.textColor = UIColor.white
         amLabel.font = UIFont.graphikRegular(10)
-        amLabel.textAlignment = .Center
+        amLabel.textAlignment = .center
         
         pmLabel.text = "PM"
-        pmLabel.textColor = UIColor.whiteColor()
+        pmLabel.textColor = UIColor.white
         pmLabel.font = UIFont.graphikRegular(10)
-        pmLabel.textAlignment = .Center
+        pmLabel.textAlignment = .center
         
         amContainer.backgroundColor = UIColor.darkBlue()
         pmContainer.backgroundColor = UIColor.darkBlue()
-        dragView.backgroundColor = UIColor.clearColor()
+        dragView.backgroundColor = UIColor.clear
         
         time0.backgroundColor = UIColor.blue()
         time1.backgroundColor = UIColor.blue()
@@ -134,13 +134,13 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         for time in times {
                     
             if timeCount > 12 {
-                time.timeButton.setTitle("\(timeCount - 12)", forState: .Normal)
+                time.timeButton.setTitle("\(timeCount - 12)", for: UIControlState())
             }
             else if timeCount == 0 {
-                time.timeButton.setTitle("\(12)", forState: .Normal)
+                time.timeButton.setTitle("\(12)", for: UIControlState())
             }
             else {
-                time.timeButton.setTitle("\(timeCount)", forState: .Normal)
+                time.timeButton.setTitle("\(timeCount)", for: UIControlState())
             }
             time.delegate = self
             time.time = timeCount
@@ -333,35 +333,35 @@ class TimeSelectCollectionViewCell: UICollectionViewCell {
         )
     }
     
-    func handleCalendarGesture(gesture: UIGestureRecognizer){
+    func handleCalendarGesture(_ gesture: UIGestureRecognizer){
         if initialStates.isEmpty {
             for time in times {
                 initialStates.append(time.selectedBackground.alpha)
             }
         }
         
-        for (index,time) in times.enumerate() {
-            if time.frame.contains(gesture.locationInView(contentView)){
+        for (index,time) in times.enumerated() {
+            if time.frame.contains(gesture.location(in: contentView)){
                 if (time.selectedBackground.alpha == initialStates[index]){
                     time.handleTap()
                 }
             }
         }
-        if gesture.state == .Ended {
+        if gesture.state == .ended {
             initialStates.removeAll()
         }
     }
     
-    func updateTimesStates(selectedIndices: [Int]){
+    func updateTimesStates(_ selectedIndices: [Int]){
         for index in selectedIndices {
-            times[index].state = .Selected
+            times[index].state = .selected
             times[index].updateState()
         }
     }
 }
 
 extension TimeSelectCollectionViewCell: TimeViewDelegate {
-    func updateSelectedTimes(time: Int) {
+    func updateSelectedTimes(_ time: Int) {
         delegate.updateSelectedTimes!(date, time: time)
     }
 }

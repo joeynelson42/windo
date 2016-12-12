@@ -30,12 +30,12 @@ class EventResultsView: UIView {
         
         helpLabel.text = "Here are the times that might work.\nTap users to filter results."
         helpLabel.numberOfLines = 2
-        helpLabel.textColor = UIColor.whiteColor()
+        helpLabel.textColor = UIColor.white
         helpLabel.font = UIFont.graphikRegular(15)
-        helpLabel.textAlignment = .Center
+        helpLabel.textAlignment = .center
         
         resultsTableView.showsVerticalScrollIndicator = false
-        resultsTableView.registerClass(EventResultsCell.self, forCellReuseIdentifier: "resultsCell")
+        resultsTableView.register(EventResultsCell.self, forCellReuseIdentifier: "resultsCell")
         resultsTableView.allowsSelection = false
         resultsTableView.separatorColor = UIColor.darkPurple()
         resultsTableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)

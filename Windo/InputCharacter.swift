@@ -31,7 +31,7 @@ class InputCharacter : UIView {
     
     // MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(size: CGFloat, font: UIFont) {
@@ -56,12 +56,12 @@ class InputCharacter : UIView {
     }
     
     func configureSubviews() {
-        characterLabel.textAlignment = .Center
+        characterLabel.textAlignment = .center
         characterLabel.font = self.font
-        characterLabel.textColor = UIColor.whiteColor()
+        characterLabel.textColor = UIColor.white
         characterLabel.alpha = 0.0
         
-        fadedUnderline.backgroundColor = UIColor.whiteColor()
+        fadedUnderline.backgroundColor = UIColor.white
         fadedUnderline.alpha = 0.25
         
         addSubview(characterLabel)
@@ -92,7 +92,7 @@ class InputCharacter : UIView {
             Constraint.h.of(characterSize)
         )
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
                 self.characterLabel.alpha = 1.0
                 self.fadedUnderline.alpha = 1.0
@@ -107,7 +107,7 @@ class InputCharacter : UIView {
             Constraint.h.of(characterSize)
         )
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .curveEaseIn, animations: {
             self.layoutIfNeeded()
             self.characterLabel.alpha = 0.0
             self.fadedUnderline.alpha = 0.25

@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 
-extension NSDate{
+extension Date{
     
-    static func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> NSDate {
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let components = NSDateComponents()
+    static func createDateWithComponents(_ yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> Date {
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        var components = DateComponents()
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
         components.hour = hourNumber
         components.minute = minuteNumber
         components.second = 0
-        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        guard let date = calendar.date(from: components) else { return Date() }
         
         return date
     }
@@ -29,7 +29,7 @@ extension NSDate{
         return WindoDate(year: self.year(), month: self.month(), day: self.day(), hour: self.hour(), minute: self.minute(), second: 0)
     }
     
-    func getFormattedDate(endDate: NSDate) -> String{
+    func getFormattedDate(_ endDate: Date) -> String{
         var date = ""
         if(self.fullDate() == endDate.fullDate()){
             date = "\(self.fullDate())"
@@ -47,44 +47,44 @@ extension NSDate{
     }
     
     func minute() -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Minute], fromDate: self)
-        return day.minute
+        let calendar = Calendar.current
+        let day = (calendar as NSCalendar).components([.minute], from: self)
+        return day.minute!
     }
     
     func hour() -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Hour], fromDate: self)
-        return day.hour
+        let calendar = Calendar.current
+        let day = (calendar as NSCalendar).components([.hour], from: self)
+        return day.hour!
     }
     
     func pmHour() -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Hour], fromDate: self)
-        if day.hour > 12 {
-            return day.hour - 12
+        let calendar = Calendar.current
+        let day = (calendar as NSCalendar).components([.hour], from: self)
+        if day.hour! > 12 {
+            return day.hour! - 12
         }
         else {
-            return day.hour
+            return day.hour!
         }
     }
     
     func day() -> Int{
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Day], fromDate: self)
-        return day.day
+        let calendar = Calendar.current
+        let day = (calendar as NSCalendar).components([.day], from: self)
+        return day.day!
     }
     
     func month() -> Int{
-        let calendar = NSCalendar.currentCalendar()
-        let month = calendar.components([.Month], fromDate: self)
-        return month.month
+        let calendar = Calendar.current
+        let month = (calendar as NSCalendar).components([.month], from: self)
+        return month.month!
     }
     
     func year() -> Int{
-        let calendar = NSCalendar.currentCalendar()
-        let year = calendar.components([.Year], fromDate: self)
-        return year.year
+        let calendar = Calendar.current
+        let year = (calendar as NSCalendar).components([.year], from: self)
+        return year.year!
     }
     
     func fullDate() -> String{
@@ -184,7 +184,7 @@ extension NSDate{
         }
     }
     
-    static func monthName(month: Int) -> String{
+    static func monthName(_ month: Int) -> String{
         switch month{
         case 1:
             return "January"
@@ -216,9 +216,10 @@ extension NSDate{
     }
     
     func dayOfWeek() -> String{
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Weekday], fromDate: self)
-        switch day.weekday{
+        let calendar = Calendar.current
+        var comp: DateComponents = (calendar as NSCalendar).components([.weekday], from: self)
+        guard let day = comp.day else { return "" }
+        switch day{
         case 1:
             return "Sunday"
         case 2:
@@ -239,9 +240,10 @@ extension NSDate{
     }
     
     func abbrevDayOfWeek() -> String{
-        let calendar = NSCalendar.currentCalendar()
-        let day = calendar.components([.Weekday], fromDate: self)
-        switch day.weekday{
+        let calendar = Calendar.current
+        var comp: DateComponents = (calendar as NSCalendar).components([.weekday], from: self)
+        guard let day = comp.day else { return "" }
+        switch day{
         case 1:
             return "SUN"
         case 2:
@@ -261,45 +263,43 @@ extension NSDate{
         }
     }
     
-    func startOfMonth() -> NSDate? {
-        guard
-            let cal: NSCalendar = NSCalendar.currentCalendar(),
-            let comp: NSDateComponents = cal.components([.Year, .Month], fromDate: self) else { return nil }
+    func startOfMonth() -> Date? {
+        let cal: Calendar = Calendar.current
+        var comp: DateComponents = (cal as NSCalendar).components([.year, .month], from: self)
         comp.to12pm()
-        return cal.dateFromComponents(comp)!
+        return cal.date(from: comp)!
     }
     
-    func endOfMonth() -> NSDate? {
-        guard
-            let cal: NSCalendar = NSCalendar.currentCalendar(),
-            let comp: NSDateComponents = NSDateComponents() else { return nil }
+    func endOfMonth() -> Date? {
+        let cal = Calendar.current
+        var comp = DateComponents()
         comp.month = 1
-        comp.day -= 1
+        comp.day = comp.day! - 1
         comp.to12pm()
-        return cal.dateByAddingComponents(comp, toDate: self.startOfMonth()!, options: [])!
+        return (cal as NSCalendar).date(byAdding: comp, to: self.startOfMonth()!, options: [])!
     }
     
     func firstWeekday() -> Int {
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         let firstDay = self.startOfMonth()
-        let firstComponents = calendar.components([.Weekday], fromDate: firstDay!)
-        return firstComponents.weekday
+        let firstComponents = (calendar as NSCalendar).components([.weekday], from: firstDay!)
+        return firstComponents.weekday!
     }
     
     func daysInTheMonth() -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month], fromDate: self)
-        let startOfMonth = calendar.dateFromComponents(components)!
-        let comps2 = NSDateComponents()
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.year, .month], from: self)
+        let startOfMonth = calendar.date(from: components)!
+        var comps2 = DateComponents()
         comps2.month = 1
         comps2.day = -1
-        let lastDay = calendar.dateByAddingComponents(comps2, toDate: startOfMonth, options: [])!
+        let lastDay = (calendar as NSCalendar).date(byAdding: comps2, to: startOfMonth, options: [])!
         return lastDay.day()
     }
 }
 
-internal extension NSDateComponents {
-    func to12pm() {
+internal extension DateComponents {
+    mutating func to12pm() {
         self.hour = 12
         self.minute = 0
         self.second = 0

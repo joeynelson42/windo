@@ -13,10 +13,10 @@ struct Windo {
     var ID: String!
     var ownerID: String!
     var eventID: String!
-    var times: [NSDate]!
-    var dateCreated: NSDate!
+    var times: [Date]!
+    var dateCreated: Date!
     
-    init(id: String, ownerID: String, eventID: String, times: [NSDate], dateCreated: NSDate) {
+    init(id: String, ownerID: String, eventID: String, times: [Date], dateCreated: Date) {
         self.ID = id
         self.ownerID = ownerID
         self.eventID = eventID

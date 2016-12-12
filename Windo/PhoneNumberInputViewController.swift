@@ -66,13 +66,13 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     }
     
     func addTargets() {
-        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), forControlEvents: .TouchUpInside)
-        inputNumberView.goBackButton.addTarget(self, action: #selector(PhoneNumberInputViewController.goBack), forControlEvents: .TouchUpInside)
-        inputNumberView.nameInputView.enterButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), forControlEvents: .TouchUpInside)
+        inputNumberView.nextButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), for: .touchUpInside)
+        inputNumberView.goBackButton.addTarget(self, action: #selector(PhoneNumberInputViewController.goBack), for: .touchUpInside)
+        inputNumberView.nameInputView.enterButton.addTarget(self, action: #selector(PhoneNumberInputViewController.executeNext), for: .touchUpInside)
     }
     
     // MARK: WindoNumberPadDelegate Methods
-    func numberTapped(number: Int) {
+    func numberTapped(_ number: Int) {
         if number == -1 {
             backspace(number)
         } else {
@@ -81,7 +81,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     }
     
     // MARK: Label Manipulation Methods
-    func addNumber(number: Int) {
+    func addNumber(_ number: Int) {
         switch state {
         case .phoneNumber:
             if numberLength < 10 {
@@ -102,21 +102,21 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
         }
     }
 
-    func backspace(number: Int) {
+    func backspace(_ number: Int) {
         switch state {
         case .phoneNumber:
             if numberLength == 0 {
                 inputNumberView.numberInputLabel.shake()
                 return
             }
-            phoneNumber.removeAtIndex(phoneNumber.endIndex.predecessor())
+            phoneNumber.remove(at: phoneNumber.characters.index(before: phoneNumber.endIndex))
             inputNumberView.numberInputLabel.removeLastInput()
         case .code:
             if codeLength == 0 {
                 inputNumberView.codeInputLabel.shake()
                 return
             }
-            code.removeAtIndex(code.endIndex.predecessor())
+            code.remove(at: code.characters.index(before: code.endIndex))
             inputNumberView.codeInputLabel.removeLastInput()
         default:
             return
@@ -189,7 +189,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     
     func enterCodeInputState() {
         // had to call this on main queue because the twilio messaging throws something off with the threading
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.inputNumberView.hideLoading()
             self.inputNumberView.showCodeInput()
             self.inputNumberView.showGoBack()
@@ -218,7 +218,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
         AppController.sharedController.showSplashScreen(UIColor.lightTeal(), fadeIn: true)
         CloudManager.sharedManager.getUserWithPhoneNumber(phoneNumber, completionHandler: { (success, user) in
             if success {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     UserManager.sharedManager.user = user
                     let homeVC = HomeViewController()
                     let navVC = UINavigationController(rootViewController: homeVC)
@@ -229,7 +229,7 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
             else {
                 CloudManager.sharedManager.saveNewUser(userFromInput, completionHandler: { (user, success) in
                     if success {
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             UserManager.sharedManager.user = user
                             let homeVC = HomeViewController()
                             let navVC = UINavigationController(rootViewController: homeVC)
@@ -253,14 +253,14 @@ class PhoneNumberInputViewController: UIViewController, WindoNumberPadDelegate, 
     }
     
     // MARK: AuthManager methods
-    func sendAuthCode(completion: (success: Bool) -> Void) {
+    func sendAuthCode(_ completion: @escaping (_ success: Bool) -> Void) {
         if numberLength != 10 {
             return
         }
         
         authy.createAuthCode()
         authy.sendSMS(phoneNumber) { (success) in
-            completion(success: success)
+            completion(success)
         }
     }
 //    

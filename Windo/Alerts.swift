@@ -7,21 +7,21 @@
 //
 
 protocol Alerts {
-    func showAlert(alertView: WindoAlertView)
-    func hideAlert(alertView: WindoAlertView)
+    func showAlert(_ alertView: WindoAlertView)
+    func hideAlert(_ alertView: WindoAlertView)
 }
 
 extension Alerts where Self: UIViewController {
     
-    func showAlert(alertView: WindoAlertView) {
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: .CurveEaseInOut, animations: { 
+    func showAlert(_ alertView: WindoAlertView) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: UIViewAnimationOptions(), animations: { 
                 alertView.center = self.view.center
             }, completion: nil)
     }
     
-    func hideAlert(alertView: WindoAlertView) {
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: .CurveEaseInOut, animations: {
-            alertView.transform = CGAffineTransformIdentity
+    func hideAlert(_ alertView: WindoAlertView) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: UIViewAnimationOptions(), animations: {
+            alertView.transform = CGAffineTransform.identity
             }, completion: { finished in
                 alertView.removeFromSuperview()
         })

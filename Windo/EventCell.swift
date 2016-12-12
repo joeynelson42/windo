@@ -47,7 +47,7 @@ class EventCell: UITableViewCell {
         
         arrowImageView.image = UIImage(named: "CellArrow")
         
-        notificationDot.backgroundColor = UIColor.whiteColor()
+        notificationDot.backgroundColor = UIColor.white
         notificationDot.layer.cornerRadius = 5
         
         addSubview(titleLabel)
@@ -89,11 +89,11 @@ class EventCell: UITableViewCell {
 class NotificationDotView: UIView {
     
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(color: UIColor) {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         self.backgroundColor = color
         self.layer.cornerRadius = 5
     }

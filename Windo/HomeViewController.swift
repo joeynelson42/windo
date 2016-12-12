@@ -24,30 +24,30 @@ class HomeViewController: UIViewController{
         title = "Events"
                 
         let sideMenuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        sideMenuButton.setImage(UIImage(named: "HamburgerIcon"), forState: .Normal)
-        sideMenuButton.addTarget(self, action: #selector(HomeViewController.openProfile), forControlEvents: .TouchUpInside)
+        sideMenuButton.setImage(UIImage(named: "HamburgerIcon"), for: UIControlState())
+        sideMenuButton.addTarget(self, action: #selector(HomeViewController.openProfile), for: .touchUpInside)
         let sideMenuBarButton = UIBarButtonItem(customView: sideMenuButton)
-        self.navigationItem.setLeftBarButtonItem(sideMenuBarButton, animated: true)
+        self.navigationItem.setLeftBarButton(sideMenuBarButton, animated: true)
         
         let addEventButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        addEventButton.setImage(UIImage(named: "AddEventButton"), forState: .Normal)
-        addEventButton.addTarget(self, action: #selector(HomeViewController.createNewEvent), forControlEvents: .TouchUpInside)
+        addEventButton.setImage(UIImage(named: "AddEventButton"), for: UIControlState())
+        addEventButton.addTarget(self, action: #selector(HomeViewController.createNewEvent), for: .touchUpInside)
         let addEventBarButton = UIBarButtonItem(customView: addEventButton)
-        self.navigationItem.setRightBarButtonItem(addEventBarButton, animated: true)
+        self.navigationItem.setRightBarButton(addEventBarButton, animated: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.lightTeal()
         self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mikeBlue()]
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        ContactManager.sharedManager.sync { (success) -> () in
-
-        }
+//        ContactManager.sharedManager.sync { (success) -> () in
+//
+//        }
     }
     
     func openProfile() {
@@ -57,9 +57,9 @@ class HomeViewController: UIViewController{
         transition.timingFunction  = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
-        homeView.window?.layer.addAnimation(transition, forKey: nil)
+        homeView.window?.layer.add(transition, forKey: nil)
         
-        self.presentViewController(settingsVC, animated: false, completion: nil)
+        self.present(settingsVC, animated: false, completion: nil)
     }
     
     func createNewEvent() {
@@ -94,25 +94,25 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     //MARK: Cell
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section + 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("eventCell") as! EventCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell") as! EventCell
         cell.backgroundColor = UIColor.teal()
         cell.titleLabel.text = "Michael's Party"
         cell.locationLabel.text = "The Yellow Door House"
         cell.eventStatus.text = "You need to respond!"
-        cell.eventStatus.textColor = UIColor.whiteColor()
-        cell.selectionStyle = .None
-        cell.notificationDot.hidden = true
+        cell.eventStatus.textColor = UIColor.white
+        cell.selectionStyle = .none
+        cell.notificationDot.isHidden = true
 
-        switch(indexPath.section){
+        switch((indexPath as NSIndexPath).section){
         case 0:
             cell.backgroundColor = UIColor.lightTeal()
             cell.titleLabel.text = "BFA Dinner"
@@ -120,7 +120,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             cell.backgroundColor = UIColor.teal()
             cell.titleLabel.text = "St. George Trip"
-            cell.notificationDot.hidden = false
+            cell.notificationDot.isHidden = false
         case 2:
             cell.backgroundColor = UIColor.darkTeal()
             cell.eventStatus.text = "February 4, 2016 8:00pm"
@@ -132,7 +132,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailsVC = DetailsTabBarController()
         let vc1 = EventMessagesViewController()
         let vc2 = EventDetailsViewController()
@@ -158,17 +158,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         detailsVC.selectedIndex = 1
         navigationController?.pushViewController(detailsVC, animated: true)
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK: Header
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 129.0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("eventHeaderCell") as! EventHeaderCell
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "eventHeaderCell") as! EventHeaderCell
         
         var bgColor = UIColor()
         var label = ""
@@ -190,7 +190,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return header
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 24
     }
 }

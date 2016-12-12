@@ -9,9 +9,9 @@
 import UIKit
 
 protocol SubmitTimesCollectionViewCellDelegate {
-    func stateForTime(time: NSDate) -> TimeCellState
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate)
-    func rowExpanded(rowIndex: Int)
+    func stateForTime(_ time: Date) -> TimeCellState
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date)
+    func rowExpanded(_ rowIndex: Int)
     func expandedRowIndex() -> Int
 }
 
@@ -27,7 +27,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     //MARK: Properties
     var delegate: SubmitTimesCollectionViewCellDelegate!
-    var date = NSDate()
+    var date = Date()
     var colorTheme = ColorTheme(color: .blue)
     var state = SubmitTimesCollectionViewCellState.closed
     var times = [TimeCell]()
@@ -80,7 +80,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     
     //MARK: Inits
     override init(frame: CGRect) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         self.updateConstraints()
     }
     
@@ -108,7 +108,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     func configureSubviews() {
         
         cellContainer.backgroundColor = colorTheme.darkColor
-        tapContainer.backgroundColor = UIColor.clearColor()
+        tapContainer.backgroundColor = UIColor.clear
         let tap = UITapGestureRecognizer(target: self, action: #selector(SubmitTimesCollectionViewCell.handleTap(_:)))
         let pan = UIPanGestureRecognizer(target: self, action: #selector(SubmitTimesCollectionViewCell.handleTap(_:)))
         tapContainer.addGestureRecognizer(tap)
@@ -124,27 +124,27 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         
         helpLabel.font = UIFont.graphikRegular(14)
         helpLabel.numberOfLines = 0
-        helpLabel.lineBreakMode = .ByWordWrapping
-        helpLabel.textAlignment = .Center
+        helpLabel.lineBreakMode = .byWordWrapping
+        helpLabel.textAlignment = .center
         
         let times = createTimes()
         
         let expandRowPassiveAlpha:CGFloat = 0.75
         
         expandRow1Button.alpha = expandRowPassiveAlpha
-        expandRow1Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow1Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), for: .touchUpInside)
         expandRow1Button.tag = 1
         
         expandRow2Button.alpha = expandRowPassiveAlpha
-        expandRow2Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow2Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), for: .touchUpInside)
         expandRow2Button.tag = 2
         
         expandRow3Button.alpha = expandRowPassiveAlpha
-        expandRow3Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow3Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), for: .touchUpInside)
         expandRow3Button.tag = 3
         
         expandRow4Button.alpha = expandRowPassiveAlpha
-        expandRow4Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), forControlEvents: .TouchUpInside)
+        expandRow4Button.addTarget(self, action: #selector(SubmitTimesCollectionViewCell.toggleRow(_:)), for: .touchUpInside)
         expandRow4Button.tag = 4
         
         row1 = [timeCell0, timeCell1, timeCell2, timeCell3, timeCell4, timeCell5]
@@ -154,7 +154,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         cells = [timeCell0, timeCell1, timeCell2, timeCell3, timeCell4, timeCell5, timeCell6, timeCell7, timeCell8, timeCell9, timeCell10, timeCell11, timeCell12, timeCell13, timeCell14, timeCell15, timeCell16, timeCell17, timeCell18, timeCell19, timeCell20, timeCell21, timeCell22, timeCell23]
         
         addSubview(cellContainer)
-        for (index, cell) in cells.enumerate() {
+        for (index, cell) in cells.enumerated() {
             cell.delegate = self
             cell.baseTime = times[index]
             cell.colorTheme = colorTheme
@@ -243,17 +243,17 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
     }
     
     // MARK: Methods
-    func updateWithDate(date: NSDate) {
+    func updateWithDate(_ date: Date) {
         self.date = date
         
         let times = createTimes()
         
-        for (index, cell) in cells.enumerate() {
+        for (index, cell) in cells.enumerated() {
             cell.baseTime = times[index]
         }
     }
     
-    func expandRowAtIndex(rowIndex: Int) {
+    func expandRowAtIndex(_ rowIndex: Int) {
         if let button = buttonForIndex(rowIndex) {
             toggleRow(button)
         } else {
@@ -261,27 +261,27 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
     }
     
-    func handleTap(gestureRecognizer: UIGestureRecognizer) {
+    func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
         if initialStates.isEmpty {
             for time in times {
                 initialStates.append(time.selectedBackground.alpha)
             }
         }
         
-        for (index, cell) in cells.enumerate() {
-            if cell.frame.contains(gestureRecognizer.locationInView(self)) {
+        for (index, cell) in cells.enumerated() {
+            if cell.frame.contains(gestureRecognizer.location(in: self)) {
                 
                 var timeCell = TimeCell()
                 var timeIndex = index * 4
-                if cell.hourCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                if cell.hourCell.frame.contains(gestureRecognizer.location(in: cell)){
                     timeCell = cell.hourCell
-                } else if cell.quarterCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                } else if cell.quarterCell.frame.contains(gestureRecognizer.location(in: cell)){
                     timeCell = cell.quarterCell
                     timeIndex += 1
-                } else if cell.halfCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                } else if cell.halfCell.frame.contains(gestureRecognizer.location(in: cell)){
                     timeCell = cell.halfCell
                     timeIndex += 2
-                } else if cell.threeQuartersCell.frame.contains(gestureRecognizer.locationInView(cell)){
+                } else if cell.threeQuartersCell.frame.contains(gestureRecognizer.location(in: cell)){
                     timeCell = cell.threeQuartersCell
                     timeIndex += 3
                 }
@@ -291,12 +291,12 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             }
         }
         
-        if gestureRecognizer.state == .Ended {
+        if gestureRecognizer.state == .ended {
             initialStates.removeAll()
         }
     }
     
-    func toggleRow(button: UIButton) {
+    func toggleRow(_ button: UIButton) {
         var selectedRow = [ExpandingTimeCell]()
         
         if state == .closed {
@@ -306,11 +306,11 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             toggleExpandedRowConstraints(button.tag, expanded: true)
             toggledButton = button
             
-            UIView.animateWithDuration(0.25) {
+            UIView.animate(withDuration: 0.25, animations: {
                 self.layoutIfNeeded()
-                self.toggledButton.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2))
+                self.toggledButton.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI / 2))
                 self.toggledButton.alpha = 1.0
-            }
+            }) 
             
             for cell in selectedRow {
                 cell.toggle()
@@ -321,11 +321,11 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             state = .closed
             toggleExpandedRowConstraints(button.tag, expanded: false)
             
-            UIView.animateWithDuration(0.25) {
-                self.toggledButton.transform = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.25, animations: {
+                self.toggledButton.transform = CGAffineTransform.identity
                 self.toggledButton.alpha = 0.75
                 self.layoutIfNeeded()
-            }
+            }) 
             
             for cell in selectedRow {
                 cell.toggle()
@@ -344,10 +344,10 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
             state = SubmitTimesCollectionViewCellState(rawValue: button.tag)!
             toggleExpandedRowConstraints(button.tag, expanded: true)
             
-            UIView.animateWithDuration(0.25, animations: { 
-                self.toggledButton.transform = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.25, animations: { 
+                self.toggledButton.transform = CGAffineTransform.identity
                 self.toggledButton.alpha = 0.75
-                button.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2))
+                button.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI / 2))
                 button.alpha = 1.0
                 self.layoutIfNeeded()
                 }, completion: { (finished) in
@@ -362,23 +362,23 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         delegate.rowExpanded(state.rawValue)
     }
     
-    func expandButtonAction(button: UIButton) {
+    func expandButtonAction(_ button: UIButton) {
         
     }
     
     // MARK: ExpandingTimeCellDelegate
-    func stateForTime(time: NSDate) -> TimeCellState {
+    func stateForTime(_ time: Date) -> TimeCellState {
         return delegate.stateForTime(time)
     }
     
-    func timeCellStateChanged(newState: TimeCellState, date: NSDate) {
+    func timeCellStateChanged(_ newState: TimeCellState, date: Date) {
         delegate.timeCellStateChanged(newState, date: date)
     }
 
     // MARK: Utilities
     
-    func createTimes() -> [NSDate]{
-        var times = [NSDate]()
+    func createTimes() -> [Date]{
+        var times = [Date]()
         
         for n in 0...23 {
             times.append(createDateWithComponents(date.year(), monthNumber: date.month(), dayNumber: date.day(), hourNumber: n, minuteNumber: 0))
@@ -387,7 +387,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         return times
     }
     
-    func buttonForIndex(index: Int) -> UIButton? {
+    func buttonForIndex(_ index: Int) -> UIButton? {
         switch index {
         case 1:
             return expandRow1Button
@@ -402,7 +402,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
     }
     
-    func rowForIndex(index: Int) -> [ExpandingTimeCell] {
+    func rowForIndex(_ index: Int) -> [ExpandingTimeCell] {
         switch index {
         case 1:
             return row1
@@ -417,7 +417,7 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
     }
     
-    func toggleExpandedRowConstraints(rowIndex: Int, expanded: Bool) {
+    func toggleExpandedRowConstraints(_ rowIndex: Int, expanded: Bool) {
         var topConstraint: APConstraint!
         var leftConstraint: APConstraint!
         let widthConstraint = Constraint.w.of(timeSelectSize)
@@ -462,16 +462,16 @@ class SubmitTimesCollectionViewCell: UICollectionViewCell, ExpandingTimeCellDele
         }
     }
     
-    func createDateWithComponents(yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> NSDate {
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let components = NSDateComponents()
+    func createDateWithComponents(_ yearNumber: Int, monthNumber: Int, dayNumber: Int, hourNumber: Int, minuteNumber: Int) -> Date {
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        var components = DateComponents()
         components.year = yearNumber
         components.month = monthNumber
         components.day = dayNumber
         components.hour = hourNumber
         components.minute = minuteNumber
         components.second = 0
-        guard let date = calendar?.dateFromComponents(components) else { return NSDate() }
+        guard let date = calendar.date(from: components) else { return Date() }
         
         return date
     }

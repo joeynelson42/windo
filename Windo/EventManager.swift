@@ -12,7 +12,7 @@ class EventManager {
     
     static let sharedManager = EventManager()
 
-    func getAvailableTimes(windos:[Windo], users:[User]) -> [NSDate:[User]] {
+    func getAvailableTimes(_ windos:[Windo], users:[User]) -> [Date:[User]] {
         var userDict = [User: Windo]()
         for windo in windos {
             for user in users {
@@ -25,14 +25,14 @@ class EventManager {
         return self.computeAvailableTimes(userDict)
     }
     
-    private func computeAvailableTimes(userDict: [User: Windo]) -> [NSDate:[User]]{
-        var availableTimes = [NSDate:[User]]()
+    fileprivate func computeAvailableTimes(_ userDict: [User: Windo]) -> [Date:[User]]{
+        var availableTimes = [Date:[User]]()
         for (user, windo) in userDict {
             for time in windo.times {
-                if let _ = availableTimes.indexForKey(time) {
-                    availableTimes[time]?.append(user)
+                if let _ = availableTimes.index(forKey: time as Date) {
+                    availableTimes[time as Date]?.append(user)
                 } else {
-                    availableTimes[time] = [user]
+                    availableTimes[time as Date] = [user]
                 }
             }
         }

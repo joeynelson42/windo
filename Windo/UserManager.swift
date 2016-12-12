@@ -13,12 +13,12 @@ class UserManager {
     static let sharedManager = UserManager()
     var user: User?
     
-    func storeUserPhoneNumber(phoneNumber: String) {
-        NSUserDefaults.standardUserDefaults().setValue(phoneNumber, forKey: Constants.userDefaultKeys.kUserPhoneNumber)
+    func storeUserPhoneNumber(_ phoneNumber: String) {
+        UserDefaults.standard.setValue(phoneNumber, forKey: Constants.userDefaultKeys.kUserPhoneNumber)
     }
     
     func getUserPhoneNumber() -> String? {
-        if let phoneNumber = NSUserDefaults.standardUserDefaults().valueForKey(Constants.userDefaultKeys.kUserPhoneNumber) as? String {
+        if let phoneNumber = UserDefaults.standard.value(forKey: Constants.userDefaultKeys.kUserPhoneNumber) as? String {
             return phoneNumber
         } else {
             return nil

@@ -8,7 +8,7 @@
 
 import UIKit
 
-let screenSize: CGRect = UIScreen.mainScreen().bounds
+let screenSize: CGRect = UIScreen.main.bounds
 let screenWidth = screenSize.width
 let screenHeight = screenSize.height
 var keyboardHeight: CGFloat = 216
@@ -78,15 +78,15 @@ struct Constants {
 //        {self.voidFunc1()} ~> {self.voidFunc2()}
 //    }
 
-infix operator ~> {}
-private let queue = dispatch_queue_create("serial-worker", DISPATCH_QUEUE_SERIAL)
+infix operator ~>
+private let queue = DispatchQueue(label: "serial-worker", attributes: [])
 
 func ~> (
-    backgroundClosure: () -> (),
-    mainClosure:       () -> ())
+    backgroundClosure: @escaping () -> (),
+    mainClosure:       @escaping () -> ())
 {
-    dispatch_async(queue) {
+    queue.async {
         backgroundClosure()
-        dispatch_async(dispatch_get_main_queue(), mainClosure)
+        DispatchQueue.main.async(execute: mainClosure)
     }
 }

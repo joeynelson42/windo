@@ -10,36 +10,36 @@ import UIKit
 
 @objc
 protocol CalendarDayDelegate {
-    optional func updateSelectedDays(dayNumber: Int)
+    @objc optional func updateSelectedDays(_ dayNumber: Int)
 }
 
 enum DayState{
-    case Past
-    case Unselected
-    case Selected
-    case Empty
+    case past
+    case unselected
+    case selected
+    case empty
 }
 
 class CalendarDayView: UIView {
     
     //MARK: Properties
     var delegate: CalendarDayDelegate!
-    var state = DayState.Empty
+    var state = DayState.empty
     
     var selectedBackground = UIView()
     var dateButton = UIButton()
     
     var day = 0
-    var date: NSDate!
+    var date: Date!
     
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
-    convenience init(dayNumber: Int, cellDate: NSDate){
-        self.init(frame: CGRectZero)
+    convenience init(dayNumber: Int, cellDate: Date){
+        self.init(frame: CGRect.zero)
         day = dayNumber
         date = cellDate
     }
@@ -64,11 +64,11 @@ class CalendarDayView: UIView {
     func configureSubviews(){
         backgroundColor = UIColor.blue()
         
-        dateButton.setTitle("\(day)", forState: .Normal)
-        dateButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        dateButton.setTitle("\(day)", for: UIControlState())
+        dateButton.setTitleColor(UIColor.white, for: UIControlState())
         dateButton.alpha = 0.75
         dateButton.titleLabel?.font = UIFont.graphikRegular(18)
-        dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), forControlEvents: .TouchUpInside)
+        dateButton.addTarget(self, action: #selector(CalendarDayView.tapped), for: .touchUpInside)
         
         updateState()
         
@@ -93,26 +93,26 @@ class CalendarDayView: UIView {
     }
     
     func tapped(){
-        if state == .Empty || state == .Past{
-            return
-        }
+//        if state == .empty || state == .past{
+//            return
+//        }
         
         if selectedBackground.alpha == 0 {
-            state = .Selected
+            state = .selected
             
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
                     self.dateButton.alpha = 1.0
                     self.selectedBackground.alpha = 1.0
-                    self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    self.selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 }, completion: nil)
         }
         else {
-            state = .Unselected
+            state = .unselected
             
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
                 self.dateButton.alpha = 0.75
                 self.selectedBackground.alpha = 0.0
-                self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                self.selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
                 }, completion: nil)
         }
         
@@ -121,38 +121,38 @@ class CalendarDayView: UIView {
     
     func updateState(){
         switch state {
-        case .Past:
+        case .past:
             selectedBackground.alpha = 0.0
-            selectedBackground.backgroundColor = UIColor.grayColor()
-            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            selectedBackground.backgroundColor = UIColor.gray
+            selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             dateButton.alpha = 0.25
-        case .Selected:
+        case .selected:
             selectedBackground.alpha = 1.0
             selectedBackground.backgroundColor = UIColor.darkBlue()
-            selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             dateButton.alpha = 1.0
-        case .Unselected:
+        case .unselected:
             selectedBackground.alpha = 0.0
             selectedBackground.backgroundColor = UIColor.darkBlue()
-            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             dateButton.alpha = 0.75
-        case .Empty:
-            dateButton.setTitle("", forState: .Normal)
+        case .empty:
+            dateButton.setTitle("", for: UIControlState())
             selectedBackground.alpha = 0.0
-            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             dateButton.alpha = 0.0
             layer.borderWidth = 0
             return
         }
         
         guard let _ = date else { return }
-        let today = NSDate()
+        let today = Date()
         if date.fullDate() == today.fullDate() {
-            layer.borderColor = UIColor.whiteColor().CGColor
+            layer.borderColor = UIColor.white.cgColor
             layer.borderWidth = 1.0
         }
         else {
-            layer.borderColor = UIColor.clearColor().CGColor
+            layer.borderColor = UIColor.clear.cgColor
             layer.borderWidth = 0.0
         }
     }

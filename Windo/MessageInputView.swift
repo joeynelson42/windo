@@ -16,7 +16,7 @@ class MessageInputView: UIToolbar {
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     override init(frame: CGRect) {
@@ -37,12 +37,12 @@ class MessageInputView: UIToolbar {
     }
     
     func configureSubviews(){
-        messageTextField.backgroundColor = UIColor.whiteColor()
+        messageTextField.backgroundColor = UIColor.white
         
         sendButton.backgroundColor = backgroundColor
-        sendButton.setTitle("SEND", forState: .Normal)
-        sendButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        sendButton.setTitleColor(UIColor.darkPurple(), forState: .Highlighted)
+        sendButton.setTitle("SEND", for: UIControlState())
+        sendButton.setTitleColor(UIColor.white, for: UIControlState())
+        sendButton.setTitleColor(UIColor.darkPurple(), for: .highlighted)
         sendButton.titleLabel?.font = UIFont.graphikMedium(13)
         
         addSubviews(messageTextField, sendButton)

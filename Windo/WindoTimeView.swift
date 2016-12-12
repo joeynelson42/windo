@@ -35,6 +35,6 @@ class WindoTimeView: UIView {
             Constraint.h.of(50)
         )
         
-        sendSubviewToBack(headerBackground)
+        sendSubview(toBack: headerBackground)
     }
 }

@@ -34,19 +34,19 @@ class EventMessagesView: UIView {
         
         newMessageContainer.backgroundColor = UIColor.darkPurple()
         
-        messageTextField.backgroundColor = UIColor.whiteColor()
+        messageTextField.backgroundColor = UIColor.white
         
         sendButton.backgroundColor = newMessageContainer.backgroundColor
-        sendButton.setTitle("SEND", forState: .Normal)
-        sendButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        sendButton.setTitleColor(UIColor.darkPurple(), forState: .Highlighted)
+        sendButton.setTitle("SEND", for: UIControlState())
+        sendButton.setTitleColor(UIColor.white, for: UIControlState())
+        sendButton.setTitleColor(UIColor.darkPurple(), for: .highlighted)
         sendButton.titleLabel?.font = UIFont.graphikMedium(13)
         
         messagesTableView.backgroundColor = UIColor.purple()
-        messagesTableView.separatorStyle = .None
+        messagesTableView.separatorStyle = .none
         messagesTableView.allowsSelection = false
-        messagesTableView.registerClass(IncomingChatCell.self, forCellReuseIdentifier: "incomingChatCell")
-        messagesTableView.registerClass(OutgoingChatCell.self, forCellReuseIdentifier: "outgoingChatCell")
+        messagesTableView.register(IncomingChatCell.self, forCellReuseIdentifier: "incomingChatCell")
+        messagesTableView.register(OutgoingChatCell.self, forCellReuseIdentifier: "outgoingChatCell")
         
         addSubviews(recipientsContainer, messagesTableView)
         addSubview(newMessageContainer)

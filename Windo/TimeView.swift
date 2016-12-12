@@ -10,13 +10,13 @@ import UIKit
 
 @objc
 protocol TimeViewDelegate {
-    optional func updateSelectedTimes(time: Int)
+    @objc optional func updateSelectedTimes(_ time: Int)
 }
 
 enum TimeState{
-    case Unavailable
-    case Unselected
-    case Selected
+    case unavailable
+    case unselected
+    case selected
 }
 
 class TimeView: UIView {
@@ -26,16 +26,16 @@ class TimeView: UIView {
     var selectedBackground = UIView()
     
     var delegate: TimeViewDelegate!
-    var state = TimeState.Unselected
+    var state = TimeState.unselected
     var time = 0
     
     //MARK: Inits
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
     }
     
     convenience init(cellTime: Int, timeDelegate: TimeViewDelegate){
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         time = cellTime
         delegate = timeDelegate
     }
@@ -63,10 +63,10 @@ class TimeView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(TimeView.handleTap))
         addGestureRecognizer(tap)
         
-        timeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        timeButton.setTitleColor(UIColor.white, for: UIControlState())
         timeButton.titleLabel?.font = UIFont.graphikRegular(20)
         
-        timeButton.addTarget(self, action: #selector(TimeView.handleTap), forControlEvents: .TouchUpInside)
+        timeButton.addTarget(self, action: #selector(TimeView.handleTap), for: .touchUpInside)
         
         selectedBackground.backgroundColor = UIColor.darkBlue()
         
@@ -92,26 +92,26 @@ class TimeView: UIView {
     }
     
     func handleTap(){
-        if state == .Unavailable{
+        if state == .unavailable{
             return
         }
         
         if selectedBackground.alpha == 0 {
-            state = .Selected
+            state = .selected
             
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
                 self.timeButton.alpha = 1.0
                 self.selectedBackground.alpha = 1.0
-                self.selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                self.selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 }, completion: nil)
         }
         else {
-            state = .Unselected
+            state = .unselected
             
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseInOut, animations: { void in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: { void in
                 self.timeButton.alpha = 0.75
                 self.selectedBackground.alpha = 0.0
-                self.selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+                self.selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
                 }, completion: nil)
         }
         
@@ -120,20 +120,20 @@ class TimeView: UIView {
     
     func updateState(){
         switch state {
-        case .Unavailable:
+        case .unavailable:
             selectedBackground.alpha = 0.0
-            selectedBackground.backgroundColor = UIColor.grayColor()
-            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            selectedBackground.backgroundColor = UIColor.gray
+            selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             timeButton.alpha = 0.25
-        case .Selected:
+        case .selected:
             selectedBackground.alpha = 1.0
             selectedBackground.backgroundColor = UIColor.darkBlue()
-            selectedBackground.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             timeButton.alpha = 1.0
-        case .Unselected:
+        case .unselected:
             selectedBackground.alpha = 0.0
             selectedBackground.backgroundColor = UIColor.darkBlue()
-            selectedBackground.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
+            selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
             timeButton.alpha = 0.75
         }
     }

@@ -38,14 +38,14 @@ class IncomingChatCell: UITableViewCell {
         container.backgroundColor = UIColor.darkPurple()
         container.alpha = 1.0
         
-        message.textColor = UIColor.whiteColor()
+        message.textColor = UIColor.white
         message.font = UIFont.graphikRegular(16)
-        message.backgroundColor = UIColor.clearColor()
+        message.backgroundColor = UIColor.clear
         message.numberOfLines = 0
-        message.lineBreakMode = .ByWordWrapping
+        message.lineBreakMode = .byWordWrapping
         
         senderIcon.layer.cornerRadius = 15
-        senderIcon.layer.borderColor = UIColor.whiteColor().CGColor
+        senderIcon.layer.borderColor = UIColor.white.cgColor
         senderIcon.layer.borderWidth = 1
         senderIcon.backgroundColor = UIColor.purple()
         
