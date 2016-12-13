@@ -218,7 +218,7 @@ extension Date{
     func dayOfWeek() -> String{
         let calendar = Calendar.current
         var comp: DateComponents = (calendar as NSCalendar).components([.weekday], from: self)
-        guard let day = comp.day else { return "" }
+        guard let day = comp.weekday else { return "" }
         switch day{
         case 1:
             return "Sunday"
@@ -242,7 +242,7 @@ extension Date{
     func abbrevDayOfWeek() -> String{
         let calendar = Calendar.current
         var comp: DateComponents = (calendar as NSCalendar).components([.weekday], from: self)
-        guard let day = comp.day else { return "" }
+        guard let day = comp.weekday else { return "" }
         switch day{
         case 1:
             return "SUN"

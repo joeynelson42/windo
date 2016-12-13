@@ -50,9 +50,10 @@ class CreateTabBarController: UITabBarController {
         switch selectedIndex {
         case 0:
             
-            if invitees.count == 0 {
-                displayNoInviteesAlert()
-            } else if selectedDates.count == 0 {
+//            if invitees.count == 0 {
+//                displayNoInviteesAlert()
+//            } else
+                if selectedDates.count == 0 {
                 displayNoDaysAlert()
             } else {
                 selectedIndex = 1

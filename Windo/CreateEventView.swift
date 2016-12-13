@@ -71,6 +71,7 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         calendar.appearance.headerTitleFont = UIFont.graphikRegular(18)
         calendar.appearance.headerTitleColor = .extraDarkBlue()
+        calendar.headerHeight = 60
         
         calendar.appearance.titleDefaultColor = .white
         calendar.appearance.titleSelectionColor = .white
@@ -78,11 +79,12 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         calendar.appearance.weekdayTextColor = .extraDarkBlue()
         calendar.appearance.weekdayFont = UIFont.graphikRegular(10)
+        calendar.weekdayHeight = 15
         calendar.appearance.adjustsFontSizeToFitContentSize = false
         
         calendar.clipsToBounds = true // Remove top/bottom line
         calendar.swipeToChooseGesture.isEnabled = true // Swipe-To-Choose
-        calendar.swipeToChooseGesture.minimumPressDuration = 0.25
+        calendar.swipeToChooseGesture.minimumPressDuration = 0.15
         
         calendar.appearance.eventSelectionColor = UIColor.white
         calendar.appearance.eventOffset = CGPoint(x: 0, y: -7)
@@ -179,9 +181,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
         
         doneKeyboardAccessory.rightArrowButton.addTarget(self, action: #selector(CreateEventView.toggleBetweenTextFields), for: .touchUpInside)
         
-        //Calendar
-//        calendarContainer.backgroundColor = UIColor.blue()
-        
         addSubview(locationCell)
         addSubview(nameCell)
         addSubviews(inviteeSeparator, locationSeparator, nameSeparator)
@@ -189,7 +188,6 @@ class CreateEventView: UIView, UITextFieldDelegate {
         addSubview(locationTitleLabel)
         addSubview(nameTextField)
         addSubview(nameTitleLabel)
-//        addSubview(calendarContainer)
         addSubview(calendar)
         
         addSubview(tokenBar)
@@ -291,22 +289,14 @@ class CreateEventView: UIView, UITextFieldDelegate {
             Constraint.h.of(16)
         )
         
-        
+        let calendarCellSize:CGFloat = (screenWidth - 6) / 7
+        let calendarHeight =  (calendarCellSize * 6) + calendar.weekdayHeight + calendar.headerHeight + 10
         calendar.addConstraints(
             Constraint.cxcx.of(self),
             Constraint.tb.of(nameCell, offset: 2),
-            Constraint.llrr.of(self),
-            Constraint.bb.of(self)
-//            Constraint.h.of(calendarContainer.calendarHeight())
+            Constraint.w.of(screenWidth),
+            Constraint.h.of(calendarHeight)
         )
-
-//
-//        calendarContainer.addConstraints(
-//            Constraint.cxcx.of(self),
-//            Constraint.tb.of(nameCell, offset: 2),
-//            Constraint.w.of(screenWidth),
-//            Constraint.h.of(calendarContainer.calendarHeight())
-//        )
     }
     
     func toggleTokenBar() {

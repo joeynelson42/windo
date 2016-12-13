@@ -27,13 +27,6 @@ class CreateEventViewController: UIViewController {
         view = createEventView
         title = "Create Event"
         
-        let drag = UIPanGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(CreateEventViewController.handleCalendarGesture(_:)))
-        
-//        createEventView.calendarContainer.dragView.addGestureRecognizer(drag)
-//        createEventView.calendarContainer.dragView.addGestureRecognizer(tap)
-//        createEventView.calendarContainer.delegate = self
-//        
         createEventView.inviteeTableView.delegate = self
         createEventView.inviteeTableView.dataSource = self
         
@@ -74,29 +67,6 @@ class CreateEventViewController: UIViewController {
             let doneBarButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(CreateEventViewController.doneTapped))
             createTabBar.navigationItem.setRightBarButton(doneBarButton, animated: true)
         }
-    }
-    
-    func handleCalendarGesture(_ gesture: UIGestureRecognizer){
-//        let days = createEventView.calendarContainer.days
-//        if initialStates.isEmpty {
-//            for day in days {
-//                initialStates.append(day.selectedBackground.alpha)
-//            }
-//        }
-//        
-//        for (index,day) in days.enumerated() {
-//            if day.frame.contains(gesture.location(in: createEventView.calendarContainer)){
-//                if (day.selectedBackground.alpha == initialStates[index]){
-//                    day.tapped()
-//                }
-//            }
-//        }
-//        
-//        if gesture.state == .ended {
-//            initialStates.removeAll()
-//        }
-//        
-//        createTabBar.datesChangedUpdateTimes()
     }
     
     func nextTapped(){
@@ -296,11 +266,16 @@ extension CreateEventViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print((createEventView.calendar.calendarWeekdayView.frame.height + createEventView.calendar.calendarHeaderView.frame.height) / screenHeight)
+        
+        createTabBar.selectedDates.append(date)
         guard let cell = calendar.cell(for: date, at: monthPosition) as? CalendarCell else { return }
         cell.updateWithSelectedState(animated: true)
     }
     
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        guard let index = createTabBar.selectedDates.index(of: date) else { return }
+        createTabBar.selectedDates.remove(at: index)
         guard let cell = calendar.cell(for: date, at: monthPosition) as? CalendarCell else { return }
         cell.updateWithSelectedState(animated: true)
     }
@@ -313,25 +288,11 @@ extension CreateEventViewController: FSCalendarDelegate, FSCalendarDataSource {
         return Date()
     }
     
-    //
-    //    func maximumDate(for calendar: FSCalendar) -> Date {
-    //        let oneYearFromNow = self.gregorian.date(byAdding: .year, value: 1, to: Date(), wrappingComponents: true)
-    //        return oneYearFromNow!
-    //    }
-    
-    func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {
-//        if self.gregorian.isDateInToday(date) {
-//            return "今"
-//        }
-        return nil
-    }
-    
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         return 0
     }
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.createEventView.calendar.frame.size.height = bounds.height
-//        self.eventLabel.frame.origin.y = calendar.frame.maxY + 10
     }
 }

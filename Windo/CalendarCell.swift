@@ -16,6 +16,7 @@ enum SelectionType : Int {
 class CalendarCell: FSCalendarCell {
     
     //MARK: Properties
+    let darkGridBackground = UIView()
     let defaultBackground = UIView()
     let selectedBackground = UIView()
     
@@ -48,32 +49,42 @@ class CalendarCell: FSCalendarCell {
     func configureSubviews(){
         self.shapeLayer.isHidden = true
         backgroundColor = .blue()
-        clipsToBounds = true
+        
+        darkGridBackground.backgroundColor = .darkBlue()
         
         defaultBackground.backgroundColor = .lightBlue()
         
         selectedBackground.backgroundColor = .darkBlue()
-        selectedBackground.layer.borderWidth = 0.5
-        selectedBackground.layer.borderColor = UIColor.lightBlue().cgColor
+//        selectedBackground.layer.borderWidth = 0.5
+//        selectedBackground.layer.borderColor = UIColor.blue().cgColor
         selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         
         addSubview(defaultBackground)
         addSubview(selectedBackground)
+        addSubview(darkGridBackground)
         sendSubview(toBack: selectedBackground)
         sendSubview(toBack: defaultBackground)
+        sendSubview(toBack: darkGridBackground)
     }
     
     func applyConstraints(){
+        let cellSize:CGFloat = (screenWidth - 6) / 7
         
         defaultBackground.addConstraints(
             Constraint.cxcx.of(titleLabel),
             Constraint.cycy.of(titleLabel),
-            Constraint.wh.of(50)
+            Constraint.wh.of(cellSize)
         )
         
         selectedBackground.addConstraints(
             Constraint.llrr.of(defaultBackground),
             Constraint.ttbb.of(defaultBackground)
+        )
+        
+        darkGridBackground.addConstraints(
+            Constraint.cxcx.of(titleLabel),
+            Constraint.cycy.of(titleLabel),
+            Constraint.wh.of(cellSize + 2)
         )
     }
     
@@ -81,7 +92,7 @@ class CalendarCell: FSCalendarCell {
         
         if isSelected {
             if animated {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState], animations: {
                     self.selectedBackground.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 }, completion: nil)
             } else {
@@ -90,7 +101,7 @@ class CalendarCell: FSCalendarCell {
             
         } else {
             if animated {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [.allowUserInteraction, .beginFromCurrentState], animations: {
                     self.selectedBackground.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
                 }, completion: nil)
             } else {
